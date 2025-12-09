@@ -193,4 +193,3 @@ END (mark as failed)
 6. Store user in MongoDB
 
 ## 🧪 Testing
-
