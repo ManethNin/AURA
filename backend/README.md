@@ -1,4 +1,4 @@
-# AURA Backend - Development Guide
+# AURA Backend
 
 ## 📁 Project Structure
 
@@ -42,32 +42,7 @@ backend/
 └── .gitignore
 ```
 
-## 🚀 Getting Started
 
-### 1. Setup Environment
-
-```bash
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Copy environment template
-cp .env.example .env
-# Edit .env and fill in your credentials
-```
-
-### 2. Configure Environment Variables
-
-Edit `.env` file with your actual values:
-- **MongoDB**: Connection URL and database name
-- **GitHub App**: App ID, private key, webhook secret, OAuth credentials
-- **JWT**: Secret key for token signing
-- **LLM**: API key and model (OpenAI, Anthropic, etc.)
-
-### 3. Implementation Order
 
 #### Phase 1: Core Infrastructure
 1. **Database Connection** (`database/mongodb.py`)
@@ -219,32 +194,4 @@ END (mark as failed)
 
 ## 🧪 Testing
 
-```bash
-# Run the application
-uvicorn app.main:app --reload --port 8080
 
-# Test webhook (use ngrok)
-ngrok http 8080
-
-# Test endpoints
-curl http://localhost:8080/
-curl http://localhost:8080/health
-```
-
-## 📚 Additional Resources
-
-- **FastAPI Docs**: https://fastapi.tiangolo.com/
-- **LangGraph Docs**: https://langchain-ai.github.io/langgraph/
-- **Motor (MongoDB)**: https://motor.readthedocs.io/
-- **PyGithub**: https://pygithub.readthedocs.io/
-- **GitHub Apps**: https://docs.github.com/en/apps
-
-## 🎯 Next Steps
-
-1. Start with Phase 1 (Database & Models)
-2. Move to Phase 2 (Authentication)
-3. Implement Phase 4 (LangGraph) - this is the core feature
-4. Wire everything together in Phase 3 and 5
-5. Test end-to-end workflow
-
-Good luck with your implementation! 🚀
