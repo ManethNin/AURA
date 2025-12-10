@@ -1,58 +1,39 @@
 from fastapi import FastAPI, Header
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
+from app.database.mongodb import connect_db, close_db
 from typing import Optional, List, Dict, Any
+from app.api.routes import webhook, auth, repositories, users
+
 
 app = FastAPI()
 
-class Commit(BaseModel):
-    id: str
-    message: str
-    author: Dict[str, Any]
-    added: List[str] = []
-    modified: List[str] = []
-    removed: List[str] = []
 
-class Repository(BaseModel):
-    name: str
-    full_name: str
-    
-class WebhookPayload(BaseModel):
-    ref: str  # branch reference
-    repository: Repository
-    commits: List[Commit]
-    head_commit: Optional[Commit] = None
+
+# CORS for frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.on_event("startup")
+async def startup():
+    await connect_db()
+
+@app.on_event("shutdown")
+async def shutdown():
+    await close_db()
 
 @app.get("/")
 def root():
     return {"message": "Backend running"}
 
-@app.post("/webhook")
-async def github_webhook(
-    payload: WebhookPayload,
-    x_github_event: Optional[str] = Header(None)
-):
-    # Only process push events
-    if x_github_event != "push":
-        return {"message": "Ignored: not a push event by AURA"}
-    
-    pom_commits = []
-    
-    for commit in payload.commits:
-        # Check if pom.xml was added, modified, or removed
-        all_files = commit.added + commit.modified + commit.removed
-        if "pom.xml" in all_files or any("pom.xml" in f for f in all_files):
-            pom_commits.append({
-                "id": commit.id,
-                "message": commit.message,
-                "files": all_files
-            })
-    
-    if pom_commits:
-        return {
-            "message": "pom.xml changes detected by AURA",
-            "repository": payload.repository.full_name,
-            "branch": payload.ref,
-            "commits": pom_commits
-        }
-    
-    return {"message": "No pom.xml changes"}
+
+# Include routers
+app.include_router(webhook.router, prefix="/webhook", tags=["Webhook"])
+app.include_router(auth.router, prefix="/auth", tags=["Auth"])
+app.include_router(repositories.router, prefix="/repos", tags=["Repositories"])
+app.include_router(users.router, prefix="/users", tags=["Users"])
