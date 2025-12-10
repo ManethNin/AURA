@@ -13,8 +13,8 @@ Repository MongoDB model
 # - created_at
 # - updated_at
 
-from pydantic import BaseModel
-from typing import List
+from pydantic import BaseModel, Field
+from typing import List, Optional
 
 class Repository(BaseModel):
     repo_id : str
@@ -22,4 +22,11 @@ class Repository(BaseModel):
     repo_name : str
     commits :  str
     changes: List[str] = []
+
+class RepRepositoryInDB(Repository):
+    """Repository model as stored in database (with _id)"""
+    id: Optional[str] = Field(None, alias="_id")
+    
+    class Config:
+        populate_by_name = True
 

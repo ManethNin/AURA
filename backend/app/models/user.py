@@ -12,15 +12,22 @@ User MongoDB model
 # - created_at
 # - updated_at
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional, List
 
 
 class User(BaseModel):
-    user_id : str
-    user_name :  str
+    github_id : str
+    username :  str
     github_username : str
     github_id : str
     email : str
     access_token : str
     repositories : List[str] = []
+
+class UserInDB(User):
+    """User model as stored in database (with _id)"""
+    id: Optional[str] = Field(None, alias="_id")
+    
+    class Config:
+        populate_by_name = True

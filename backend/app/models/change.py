@@ -39,3 +39,11 @@ class Change(BaseModel):
     status: ChangeStatus = ChangeStatus.PENDING
     pr_url: Optional[str] = None  # PR created with fix
     
+class ChangeInDB(Change):
+    """Change model as stored in database (with _id)"""
+    id: Optional[str] = Field(None, alias="_id")
+    
+    class Config:
+        populate_by_name = True
+
+
