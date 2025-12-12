@@ -1,0 +1,26 @@
+# .prospector.yaml
+tool:
+  pep8:
+    disabled: true
+  pyflakes:
+    disabled: false
+  pylint:
+    enabled: true
+    output-format: text
+    disable:
+      - missing-docstring
+      - too-few-public-methods
+      - line-too-long
+  mccabe:
+    threshold: 10
+  dodgy:
+    skip:
+      - dodgy.skip.comment
+      - dodgy.skip.pyc
+      - dodgy.skip.urls
+paths:
+  - masterthesis
+  - tests
+ignore-patterns:
+  - 'migrations/*'
+  - 'docs/*'

@@ -1,0 +1,111 @@
+[INFO]
+[INFO] ----------------------------< micycle:PGS >-----------------------------
+[INFO] Building Processing Geometry Suite 1.4.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- clean:3.2.0:clean (default-clean) @ PGS ---
+[INFO]
+[INFO] --- jacoco:0.8.8:prepare-agent (default) @ PGS ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.8/org.jacoco.agent-0.8.8-runtime.jar=destfile=/PGS/target/jacoco.exec
+[INFO]
+[INFO] --- resources:3.3.0:resources (default-resources) @ PGS ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory src/main/resources
+[INFO]
+[INFO] --- compiler:3.11.0:compile (default-compile) @ PGS ---
+[INFO] Changes detected - recompiling the module! :dependency
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 81 source files with javac [debug release 8] to target/classes
+Jabel: initialized
+[INFO] src/main/java/micycle/pgs/commons/AreaMerge.java: src/main/java/micycle/pgs/commons/AreaMerge.java uses or overrides a deprecated API.
+[INFO] src/main/java/micycle/pgs/commons/AreaMerge.java: Recompile with -Xlint:deprecation for details.
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR :
+[INFO] -------------------------------------------------------------
+[ERROR] src/main/java/micycle/pgs/PGS_CirclePacking.java:[26,25] cannot find symbol
+symbol:   class PointDistanceFunction
+location: package org.tinspin.index
+[ERROR] src/main/java/micycle/pgs/PGS_CirclePacking.java:[27,25] cannot find symbol
+symbol:   class PointEntryDist
+location: package org.tinspin.index
+[ERROR] src/main/java/micycle/pgs/PGS_CirclePacking.java:[645,30] cannot find symbol
+symbol:   class PointDistanceFunction
+location: class micycle.pgs.PGS_CirclePacking
+[ERROR] src/main/java/micycle/pgs/PGS_Meshing.java:[38,25] cannot find symbol
+symbol:   class PointIndex
+location: package org.tinspin.index
+[ERROR] src/main/java/micycle/pgs/PGS_PointSet.java:[70,53] cannot find symbol
+symbol:   method query1NN(double[])
+location: variable tree of type org.tinspin.index.kdtree.KDTree<processing.core.PVector>
+[ERROR] src/main/java/micycle/pgs/PGS_CirclePacking.java:[226,31] cannot find symbol
+symbol:   class PointEntryDist
+location: class micycle.pgs.PGS_CirclePacking
+[ERROR] src/main/java/micycle/pgs/PGS_CirclePacking.java:[226,64] cannot find symbol
+symbol:   method query1NN(double[])
+location: variable tree of type org.tinspin.index.covertree.CoverTree<processing.core.PVector>
+[ERROR] src/main/java/micycle/pgs/PGS_Meshing.java:[164,23] cannot find symbol
+symbol:   class PointIndex
+location: class micycle.pgs.PGS_Meshing
+[ERROR] src/main/java/micycle/pgs/PGS_Meshing.java:[164,55] no suitable method found for create(int,(p1,p2)->{[...]Y); })
+method org.tinspin.index.kdtree.KDTree.<T>create(int) is not applicable
+(cannot infer type-variable(s) T
+(actual and formal argument lists differ in length))
+method org.tinspin.index.kdtree.KDTree.<T>create(org.tinspin.index.IndexConfig) is not applicable
+(cannot infer type-variable(s) T
+(actual and formal argument lists differ in length))
+[INFO] 9 errors
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  03:13 min
+[INFO] Finished at: 2023-08-07T10:02:41Z
+[INFO] ------------------------------------------------------------------------
+[WARNING]
+[WARNING] Plugin validation issues were detected in 2 plugin(s)
+[WARNING]
+[WARNING]  * org.jacoco:jacoco-maven-plugin:0.8.8
+[WARNING]  * org.apache.maven.plugins:maven-resources-plugin:3.3.0
+[WARNING]
+[WARNING] For more or less details, use 'maven.plugin.validation' property with one of the values (case insensitive): [BRIEF, DEFAULT, VERBOSE]
+[WARNING]
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project PGS: Compilation failure: Compilation failure:
+[ERROR] src/main/java/micycle/pgs/PGS_CirclePacking.java:[26,25] cannot find symbol
+[ERROR]   symbol:   class PointDistanceFunction
+[ERROR]   location: package org.tinspin.index
+[ERROR] src/main/java/micycle/pgs/PGS_CirclePacking.java:[27,25] cannot find symbol
+[ERROR]   symbol:   class PointEntryDist
+[ERROR]   location: package org.tinspin.index
+[ERROR] src/main/java/micycle/pgs/PGS_CirclePacking.java:[645,30] cannot find symbol
+[ERROR]   symbol:   class PointDistanceFunction
+[ERROR]   location: class micycle.pgs.PGS_CirclePacking
+[ERROR] src/main/java/micycle/pgs/PGS_Meshing.java:[38,25] cannot find symbol
+[ERROR]   symbol:   class PointIndex
+[ERROR]   location: package org.tinspin.index
+[ERROR] src/main/java/micycle/pgs/PGS_PointSet.java:[70,53] cannot find symbol
+[ERROR]   symbol:   method query1NN(double[])
+[ERROR]   location: variable tree of type org.tinspin.index.kdtree.KDTree<processing.core.PVector>
+[ERROR] src/main/java/micycle/pgs/PGS_CirclePacking.java:[226,31] cannot find symbol
+[ERROR]   symbol:   class PointEntryDist
+[ERROR]   location: class micycle.pgs.PGS_CirclePacking
+[ERROR] src/main/java/micycle/pgs/PGS_CirclePacking.java:[226,64] cannot find symbol
+[ERROR]   symbol:   method query1NN(double[])
+[ERROR]   location: variable tree of type org.tinspin.index.covertree.CoverTree<processing.core.PVector>
+[ERROR] src/main/java/micycle/pgs/PGS_Meshing.java:[164,23] cannot find symbol
+[ERROR]   symbol:   class PointIndex
+[ERROR]   location: class micycle.pgs.PGS_Meshing
+[ERROR] src/main/java/micycle/pgs/PGS_Meshing.java:[164,55] no suitable method found for create(int,(p1,p2)->{[...]Y); })
+[ERROR]     method org.tinspin.index.kdtree.KDTree.<T>create(int) is not applicable
+[ERROR]       (cannot infer type-variable(s) T
+[ERROR]         (actual and formal argument lists differ in length))
+[ERROR]     method org.tinspin.index.kdtree.KDTree.<T>create(org.tinspin.index.IndexConfig) is not applicable
+[ERROR]       (cannot infer type-variable(s) T
+[ERROR]         (actual and formal argument lists differ in length))
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

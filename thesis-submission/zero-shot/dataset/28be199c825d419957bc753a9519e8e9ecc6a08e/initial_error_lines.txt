@@ -1,0 +1,3 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project license-maven-plugin: Compilation failure
+[ERROR] license-maven-plugin/src/main/java/com/mycila/maven/plugin/license/dependencies/MavenProjectLicenses.java:[160,61] incompatible types: org.apache.maven.project.MavenProject cannot be converted to org.apache.maven.project.ProjectBuildingRequest
+[ERROR] -> [Help 1]

@@ -1,0 +1,1 @@
+{"japicmpResult": {}, "elementLines": {}, "revapiResult": {}, "allPotentialBreakingElements": ["getJavaScriptResult()", "com.gargoylesoftware.htmlunit.ScriptResult(java.lang.Object)"], "elementPatterns": {}, "project": "code-coverage-api-plugin"}

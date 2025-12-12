@@ -1,0 +1,4 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.0:compile (default-compile) on project byon: Compilation failure: Compilation failure:
+[ERROR] apis/byon/src/main/java/org/jclouds/byon/domain/YamlNode.java:[114,64] incompatible types: java.lang.Class<org.jclouds.byon.domain.YamlNode> cannot be converted to org.yaml.snakeyaml.LoaderOptions
+[ERROR] apis/byon/src/main/java/org/jclouds/byon/functions/NodesFromYamlStream.java:[83,55] incompatible types: java.lang.Class<org.jclouds.byon.functions.NodesFromYamlStream.Config> cannot be converted to org.yaml.snakeyaml.LoaderOptions
+[ERROR] -> [Help 1]

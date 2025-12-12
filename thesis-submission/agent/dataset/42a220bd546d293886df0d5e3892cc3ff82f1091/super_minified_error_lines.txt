@@ -1,0 +1,8 @@
+package org.apache.commons.codec.digest does not exist
+package org.apache.commons.codec.digest does not exist
+cannot find symbol
+symbol:   variable DigestUtils
+location: class com.maxmind.minfraud.request.Email
+cannot find symbol
+symbol:   variable DigestUtils
+location: class com.maxmind.minfraud.request.Account.Builder

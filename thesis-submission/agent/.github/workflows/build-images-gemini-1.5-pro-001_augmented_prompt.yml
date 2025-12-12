@@ -1,0 +1,72 @@
+name: Build and Publish Docker Images
+'on':
+  push:
+    paths:
+    - dataset/*/out/reproduction/gemini-1.5-pro-001_augmented_prompt
+    branches:
+    - '**'
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        sparse-checkout: dataset
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build and push 6c53cd904bd66fc79af8687571e607c259226b81
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/6c53cd904bd66fc79af8687571e607c259226b81/out/reproduction/gemini-1.5-pro-001_augmented_prompt
+        file: dataset/6c53cd904bd66fc79af8687571e607c259226b81/out/reproduction/gemini-1.5-pro-001_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gemini-1.5-pro-001_augmented_prompt-6c53cd904bd66fc79af8687571e607c259226b81-reproduction
+    - name: Build and push 46979207151a43361447d64afd2658df40033419
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/46979207151a43361447d64afd2658df40033419/out/reproduction/gemini-1.5-pro-001_augmented_prompt
+        file: dataset/46979207151a43361447d64afd2658df40033419/out/reproduction/gemini-1.5-pro-001_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gemini-1.5-pro-001_augmented_prompt-46979207151a43361447d64afd2658df40033419-reproduction
+    - name: Build and push 165381d26b2c3d2278fde88c16f95807506451fe
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/165381d26b2c3d2278fde88c16f95807506451fe/out/reproduction/gemini-1.5-pro-001_augmented_prompt
+        file: dataset/165381d26b2c3d2278fde88c16f95807506451fe/out/reproduction/gemini-1.5-pro-001_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gemini-1.5-pro-001_augmented_prompt-165381d26b2c3d2278fde88c16f95807506451fe-reproduction
+    - name: Build and push 36859167815292f279e570d39dd2ddbcf1622dc6
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/36859167815292f279e570d39dd2ddbcf1622dc6/out/reproduction/gemini-1.5-pro-001_augmented_prompt
+        file: dataset/36859167815292f279e570d39dd2ddbcf1622dc6/out/reproduction/gemini-1.5-pro-001_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gemini-1.5-pro-001_augmented_prompt-36859167815292f279e570d39dd2ddbcf1622dc6-reproduction
+    - name: Build and push ff8b5b61548d50cf60b77784a181e917cb35033b
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/ff8b5b61548d50cf60b77784a181e917cb35033b/out/reproduction/gemini-1.5-pro-001_augmented_prompt
+        file: dataset/ff8b5b61548d50cf60b77784a181e917cb35033b/out/reproduction/gemini-1.5-pro-001_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gemini-1.5-pro-001_augmented_prompt-ff8b5b61548d50cf60b77784a181e917cb35033b-reproduction
+    - name: Build and push 979d6237a50840cd925cc1a33c415ffbbbc42846
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/979d6237a50840cd925cc1a33c415ffbbbc42846/out/reproduction/gemini-1.5-pro-001_augmented_prompt
+        file: dataset/979d6237a50840cd925cc1a33c415ffbbbc42846/out/reproduction/gemini-1.5-pro-001_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gemini-1.5-pro-001_augmented_prompt-979d6237a50840cd925cc1a33c415ffbbbc42846-reproduction
+    - name: Build and push 42a220bd546d293886df0d5e3892cc3ff82f1091
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/42a220bd546d293886df0d5e3892cc3ff82f1091/out/reproduction/gemini-1.5-pro-001_augmented_prompt
+        file: dataset/42a220bd546d293886df0d5e3892cc3ff82f1091/out/reproduction/gemini-1.5-pro-001_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gemini-1.5-pro-001_augmented_prompt-42a220bd546d293886df0d5e3892cc3ff82f1091-reproduction

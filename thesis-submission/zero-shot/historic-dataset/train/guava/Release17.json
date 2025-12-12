@@ -1,0 +1,27 @@
+{
+    "class_breaking_changes": [
+        {
+            "class_name": "Service",
+            "package_name": "common.util.concurrent",
+            "deprecations": [],
+            "removals": [
+                {
+                    "method_signature": "*"
+                }
+            ],
+            "notes": "Service and subclasses - deprecated methods removed"
+        },
+        {
+            "class_name": "BloomFilter",
+            "package_name": null,
+            "deprecations": [
+                {
+                    "method_signature": "*"
+                }
+            ],
+            "removals": [],
+            "notes": "BloomFilter created by Guava 17 will not be deserializable by previous versions of Guava."
+        }
+    ],
+    "version": "17.0"
+}

@@ -1,0 +1,1 @@
+{"japicmpResult": {}, "elementLines": {}, "revapiResult": {}, "allPotentialBreakingElements": ["getAnnotation()", "getConstraintsForClass(java.lang.Class)", "getName()", "getConstraintDescriptors()", "getValidator()", "getConstraintsForProperty(java.lang.String)"], "elementPatterns": {}, "project": "wicket-crudifier"}

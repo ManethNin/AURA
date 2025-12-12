@@ -1,0 +1,87 @@
+{
+    "class_breaking_changes": [
+        {
+            "class_name": "Stopwatch",
+            "deprecations": [
+                {
+                    "method_signature": "new StopWatch()",
+                    "replacement": "Stopwatch.createStarted()"
+                },
+                {
+                    "method_signature": "new StopWatch()",
+                    "replacement": "Stopwatch.createUnstarted()"
+                }
+            ],
+            "removals": [],
+            "notes": "use static methods instead of constructor"
+        },
+        {
+            "class_name": "Constraint",
+            "package_name": "Constraint",
+            "deprecations": [
+                {
+                    "method_signature": "*"
+                }
+            ],
+            "removals": []
+        },
+        {
+            "class_name": "ByteSource",
+            "deprecations": [
+                {
+                    "method_signature": "asByteSource(byte[])",
+                    "replacement": "remove!!"
+                }
+            ],
+            "removals": [
+                {
+                    "method_signature": "asByteSource(byte[])",
+                    "replacement": "wrap(byte[])"
+                }
+            ]
+        },
+        {
+            "class_name": "CharSource",
+            "deprecations": [],
+            "removals": [
+                {
+                    "method_signature": "asCharSource(String)",
+                    "replacement": "wrap(CharSequence)"
+                }
+            ]
+        },
+        {
+            "class_name": "ListeningScheduledExecutorService",
+            "deprecations": [
+                {
+                    "method_signature": "schedule*()",
+                    "replacement": "ListenableScheduledFuture.*()"
+                }
+            ],
+            "removals": []
+        },
+        {
+            "class_name": "Service",
+            "deprecations": [
+                {
+                    "method_signature": "start()",
+                    "replacement": "startAsync()"
+                },
+                {
+                    "method_signature": "startAndWait()",
+                    "replacement": "startAsync()"
+                },
+                {
+                    "method_signature": "stop()",
+                    "replacement": "stopAsync()"
+                },
+                {
+                    "method_signature": "stopAndWait()",
+                    "replacement": "awaitTerminated()"
+                }
+            ],
+            "removals": []
+        }
+    ],
+    "version": "15.0"
+}

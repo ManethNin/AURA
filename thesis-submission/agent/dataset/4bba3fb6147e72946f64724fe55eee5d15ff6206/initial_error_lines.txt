@@ -1,0 +1,5 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project cdi-test-api: Compilation failure: Compilation failure:
+[ERROR] cdi-test-api/src/main/java/de/hilling/junit/cdi/annotations/GlobalTestImplementation.java:[6,24] package javax.annotation does not exist
+[ERROR] cdi-test-api/src/main/java/de/hilling/junit/cdi/annotations/GlobalTestImplementation.java:[27,2] cannot find symbol
+[ERROR]   symbol: class Priority
+[ERROR] -> [Help 1]

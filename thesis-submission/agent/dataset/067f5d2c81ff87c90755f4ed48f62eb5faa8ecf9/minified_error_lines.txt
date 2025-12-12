@@ -1,0 +1,2 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project singer-commons: Compilation failure
+singer-commons/src/main/java/com/pinterest/singer/loggingaudit/client/AuditEventKafkaSender.java unreported exception org.apache.thrift.transport.TTransportException; must be caught or declared to be thrown

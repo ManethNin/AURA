@@ -1,0 +1,2 @@
+Failed to execute goal maven-compiler-plugin:3.8.1:compile (default-compile) on project simplelocalize-cli: Compilation failure
+src/main/java/io/simplelocalize/cli/configuration/ConfigurationLoader.java incompatible types: java.lang.Class<io.simplelocalize.cli.configuration.Configuration> cannot be converted to org.yaml.snakeyaml.LoaderOptions

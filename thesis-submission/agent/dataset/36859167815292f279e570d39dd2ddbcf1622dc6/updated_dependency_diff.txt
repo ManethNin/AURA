@@ -1,0 +1,12 @@
+--- a/billy-gin/pom.xml
++++ b/billy-gin/pom.xml
+@@ ... @@
+ 		<dependency>
+ 			<groupId>org.apache.xmlgraphics</groupId>
+ 			<artifactId>fop</artifactId>
+-			<version>1.0</version>
++			<version>2.2</version>
+ 		</dependency>
+ 
+ 		<!-- QRCode -->
+

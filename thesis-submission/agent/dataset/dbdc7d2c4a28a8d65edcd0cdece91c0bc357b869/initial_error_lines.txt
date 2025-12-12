@@ -1,0 +1,5 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project ci-sauce: Compilation failure
+[ERROR] src/main/java/com/saucelabs/ci/sauceconnect/SauceConnectFourManager.java:[307,19] cannot find symbol
+[ERROR]   symbol:   method enableLogging(org.codehaus.plexus.logging.console.ConsoleLogger)
+[ERROR]   location: variable unArchiver of type org.codehaus.plexus.archiver.AbstractUnArchiver
+[ERROR] -> [Help 1]

@@ -1,0 +1,39 @@
+package com.saucelabs.ci.sauceconnect;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.codehaus.plexus.archiver.AbstractUnArchiver;
+import org.codehaus.plexus.archiver.tar.TarGZipUnArchiver;
+import org.codehaus.plexus.archiver.zip.ZipUnArchiver;
+import org.codehaus.plexus.logging.Logger;
+import org.codehaus.plexus.logging.console.ConsoleLogger;
+import org.json.JSONObject;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.net.URL;
+
+/**
+ * Handles launching Sauce Connect v4 (binary executable).
+ *
+ * @author Ross Rowe
+ */
+public class SauceConnectFourManager extends AbstractSauceTunnelManager implements SauceTunnelManager {
+    /**
+     * @param unArchiver  the unarchiver
+     * @param archive     the compressed file to extract
+     * @param destination the destination directory
+     */
+    private void extractArchive(AbstractUnArchiver unArchiver, File archive, File destination) {
+        unArchiver.enableLogging(new ConsoleLogger(Logger.LEVEL_DEBUG, "Sauce"));
+        unArchiver.setSourceFile(archive);
+        unArchiver.setDestDirectory(destination);
+        unArchiver.extract();
+    }
+
+}

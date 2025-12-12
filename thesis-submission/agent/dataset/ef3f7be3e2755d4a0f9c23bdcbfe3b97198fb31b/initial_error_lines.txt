@@ -1,0 +1,33 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project PGS: Compilation failure: Compilation failure:
+[ERROR] src/main/java/micycle/pgs/PGS_CirclePacking.java:[26,25] cannot find symbol
+[ERROR]   symbol:   class PointDistanceFunction
+[ERROR]   location: package org.tinspin.index
+[ERROR] src/main/java/micycle/pgs/PGS_CirclePacking.java:[27,25] cannot find symbol
+[ERROR]   symbol:   class PointEntryDist
+[ERROR]   location: package org.tinspin.index
+[ERROR] src/main/java/micycle/pgs/PGS_CirclePacking.java:[645,30] cannot find symbol
+[ERROR]   symbol:   class PointDistanceFunction
+[ERROR]   location: class micycle.pgs.PGS_CirclePacking
+[ERROR] src/main/java/micycle/pgs/PGS_Meshing.java:[36,25] cannot find symbol
+[ERROR]   symbol:   class PointIndex
+[ERROR]   location: package org.tinspin.index
+[ERROR] src/main/java/micycle/pgs/PGS_PointSet.java:[70,53] cannot find symbol
+[ERROR]   symbol:   method query1NN(double[])
+[ERROR]   location: variable tree of type org.tinspin.index.kdtree.KDTree<processing.core.PVector>
+[ERROR] src/main/java/micycle/pgs/PGS_CirclePacking.java:[226,31] cannot find symbol
+[ERROR]   symbol:   class PointEntryDist
+[ERROR]   location: class micycle.pgs.PGS_CirclePacking
+[ERROR] src/main/java/micycle/pgs/PGS_CirclePacking.java:[226,64] cannot find symbol
+[ERROR]   symbol:   method query1NN(double[])
+[ERROR]   location: variable tree of type org.tinspin.index.covertree.CoverTree<processing.core.PVector>
+[ERROR] src/main/java/micycle/pgs/PGS_Meshing.java:[161,23] cannot find symbol
+[ERROR]   symbol:   class PointIndex
+[ERROR]   location: class micycle.pgs.PGS_Meshing
+[ERROR] src/main/java/micycle/pgs/PGS_Meshing.java:[161,55] no suitable method found for create(int,(p1,p2)->{[...]Y); })
+[ERROR]     method org.tinspin.index.kdtree.KDTree.<T>create(int) is not applicable
+[ERROR]       (cannot infer type-variable(s) T
+[ERROR]         (actual and formal argument lists differ in length))
+[ERROR]     method org.tinspin.index.kdtree.KDTree.<T>create(org.tinspin.index.IndexConfig) is not applicable
+[ERROR]       (cannot infer type-variable(s) T
+[ERROR]         (actual and formal argument lists differ in length))
+[ERROR] -> [Help 1]

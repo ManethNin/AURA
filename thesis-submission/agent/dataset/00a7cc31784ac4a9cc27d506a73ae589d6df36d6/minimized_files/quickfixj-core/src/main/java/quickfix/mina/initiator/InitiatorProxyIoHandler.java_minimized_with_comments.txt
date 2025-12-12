@@ -1,0 +1,17 @@
+package quickfix.mina.initiator;
+
+import org.apache.mina.core.session.IoSession;
+import org.apache.mina.proxy.AbstractProxyIoHandler;
+import quickfix.mina.ssl.SSLFilter;
+
+class InitiatorProxyIoHandler extends AbstractProxyIoHandler {
+    private final SSLFilter sslFilter;
+
+    @Override
+    public void proxySessionOpened(IoSession ioSession) throws Exception {
+        if (this.sslFilter != null) {
+            this.sslFilter.initiateHandshake(ioSession);
+        }
+    }
+
+}

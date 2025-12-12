@@ -1,0 +1,12 @@
+--- a/pom.xml
++++ b/pom.xml
+@@ ... @@
+         <dependency>
+             <groupId>org.apache.maven.surefire</groupId>
+             <artifactId>maven-surefire-common</artifactId>
+-            <version>3.0.0-M5</version>
++            <version>3.0.0-M7</version>
+         </dependency>
+     </dependencies>
+ 
+

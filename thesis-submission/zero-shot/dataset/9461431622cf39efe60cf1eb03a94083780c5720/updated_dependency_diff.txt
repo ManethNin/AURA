@@ -1,0 +1,13 @@
+diff --git a/snmpman/pom.xml b/snmpman/pom.xml
+index 884b1ef..b714ee0 100644
+--- a/snmpman/pom.xml
++++ b/snmpman/pom.xml
+@@ -23,7 +23,7 @@
+     <dependency>
+       <groupId>org.snmp4j</groupId>
+       <artifactId>snmp4j-agent</artifactId>
+-      <version>3.0.3</version>
++      <version>3.6.5</version>
+     </dependency>
+     <dependency>
+       <groupId>com.fasterxml.jackson.jaxrs</groupId>

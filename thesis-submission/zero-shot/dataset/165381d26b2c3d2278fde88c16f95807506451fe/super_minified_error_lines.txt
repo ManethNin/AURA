@@ -1,0 +1,6 @@
+cannot find symbol
+symbol:   class PrettyPrinterConfiguration
+location: package com.github.javaparser.printer
+cannot find symbol
+symbol:   class PrettyPrinterConfiguration
+location: class org.btrplace.safeplace.DSN.UnitTestsVisitor

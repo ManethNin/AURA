@@ -1,0 +1,13 @@
+diff --git a/billy-gin/src/main/java/com/premiumminds/billy/gin/services/impl/pdf/FOPPDFTransformer.java b/billy-gin/src/main/java/com/premiumminds/billy/gin/services/impl/pdf/FOPPDFTransformer.java
+index 026c082b..5c8ae5e4 100644
+--- a/billy-gin/src/main/java/com/premiumminds/billy/gin/services/impl/pdf/FOPPDFTransformer.java
++++ b/billy-gin/src/main/java/com/premiumminds/billy/gin/services/impl/pdf/FOPPDFTransformer.java
+@@ -112,7 +112,7 @@ public abstract class FOPPDFTransformer {
+         StreamSource transformSource = new StreamSource(templateStream);
+ 
+         // create an instance of fop factory
+-        FopFactory fopFactory = FopFactory.newInstance();
++        FopFactory fopFactory = FopFactory.newInstance(new File(".").toURI());
+         // a user agent is needed for transformation
+         FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
+         // to store output

@@ -1,0 +1,200 @@
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+cannot find symbol
+symbol:   class OrgPolicy
+location: class com.google.cloud.resourcemanager.OrgPolicyInfo
+cannot find symbol
+symbol:   class OrgPolicy
+location: class com.google.cloud.resourcemanager.OrgPolicyInfo
+cannot find symbol
+symbol:   class RestoreDefault
+location: class com.google.cloud.resourcemanager.OrgPolicyInfo
+cannot find symbol
+symbol:   class RestoreDefault
+location: class com.google.cloud.resourcemanager.OrgPolicyInfo
+cannot find symbol
+symbol:   class OrgPolicy
+location: class com.google.cloud.resourcemanager.OrgPolicyInfo
+cannot find symbol
+symbol:   class OrgPolicy
+location: class com.google.cloud.resourcemanager.OrgPolicyInfo
+cannot find symbol
+symbol:   class RestoreDefault
+location: class com.google.cloud.resourcemanager.OrgPolicyInfo.Builder
+cannot find symbol
+symbol:   class RestoreDefault
+location: class com.google.cloud.resourcemanager.OrgPolicyInfo.Builder
+cannot find symbol
+symbol:   class ListPolicy
+location: class com.google.cloud.resourcemanager.OrgPolicyInfo.Policies
+cannot find symbol
+symbol:   class ListPolicy
+location: class com.google.cloud.resourcemanager.OrgPolicyInfo.Policies
+cannot find symbol
+symbol:   class BooleanPolicy
+location: class com.google.cloud.resourcemanager.OrgPolicyInfo.BoolPolicy
+cannot find symbol
+symbol:   class BooleanPolicy
+location: class com.google.cloud.resourcemanager.OrgPolicyInfo.BoolPolicy
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+cannot find symbol
+symbol:   class Project
+location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+cannot find symbol
+symbol:   class Project
+location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+cannot find symbol
+symbol:   class Project
+location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+cannot find symbol
+symbol:   class Project
+location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+cannot find symbol
+symbol:   class Project
+location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+cannot find symbol
+symbol:   class Project
+location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+cannot find symbol
+symbol:   class Policy
+location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+cannot find symbol
+symbol:   class Policy
+location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+cannot find symbol
+symbol:   class Policy
+location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+cannot find symbol
+symbol:   class OrgPolicy
+location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+cannot find symbol
+symbol:   class OrgPolicy
+location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+cannot find symbol
+symbol:   class OrgPolicy
+location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+cannot find symbol
+symbol:   class Constraint
+location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+cannot find symbol
+symbol:   class OrgPolicy
+location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+cannot find symbol
+symbol:   class OrgPolicy
+location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+cannot find symbol
+symbol:   class OrgPolicy
+location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+cannot find symbol
+symbol:   class Constraint
+location: class com.google.cloud.resourcemanager.ConstraintInfo
+cannot find symbol
+symbol:   class Constraint
+location: class com.google.cloud.resourcemanager.ConstraintInfo
+cannot find symbol
+symbol:   class BooleanConstraint
+location: class com.google.cloud.resourcemanager.ConstraintInfo
+cannot find symbol
+symbol:   class BooleanConstraint
+location: class com.google.cloud.resourcemanager.ConstraintInfo
+cannot find symbol
+symbol:   class Constraint
+location: class com.google.cloud.resourcemanager.ConstraintInfo
+cannot find symbol
+symbol:   class Constraint
+location: class com.google.cloud.resourcemanager.ConstraintInfo
+cannot find symbol
+symbol:   class BooleanConstraint
+location: class com.google.cloud.resourcemanager.ConstraintInfo.Builder
+cannot find symbol
+symbol:   class BooleanConstraint
+location: class com.google.cloud.resourcemanager.ConstraintInfo.Builder
+cannot find symbol
+symbol:   class ListConstraint
+location: class com.google.cloud.resourcemanager.ConstraintInfo.Constraints
+cannot find symbol
+symbol:   class ListConstraint
+location: class com.google.cloud.resourcemanager.ConstraintInfo.Constraints
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+cannot find symbol
+symbol:   class Project
+location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+cannot find symbol
+symbol:   class Policy
+location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+cannot find symbol
+symbol:   class Project
+location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+cannot find symbol
+symbol:   class Project
+location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+cannot find symbol
+symbol:   class Project
+location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+cannot find symbol
+symbol:   class Project
+location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+cannot find symbol
+symbol:   class Project
+location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+cannot find symbol
+symbol:   class Project
+location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+cannot find symbol
+symbol:   class Policy
+location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+package com.google.api.services.cloudresourcemanager.model does not exist
+cannot find symbol
+symbol:   class Operation
+location: class com.google.cloud.resourcemanager.spi.v1beta1.HttpResourceManagerRpc
+cannot find symbol
+symbol:   class CloudResourceManager
+location: class com.google.cloud.resourcemanager.spi.v1beta1.HttpResourceManagerRpc
+cannot find symbol
+symbol:   class Status
+location: class com.google.cloud.resourcemanager.spi.v1beta1.HttpResourceManagerRpc

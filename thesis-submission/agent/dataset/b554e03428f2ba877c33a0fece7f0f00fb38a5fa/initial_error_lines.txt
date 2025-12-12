@@ -1,0 +1,5 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project license-maven-plugin: Compilation failure
+[ERROR] license-maven-plugin/src/main/java/com/mycila/maven/plugin/license/dependencies/MavenProjectLicenses.java:[33,57] cannot find symbol
+[ERROR]   symbol:   class Maven31DependencyGraphBuilder
+[ERROR]   location: package org.apache.maven.shared.dependency.graph.internal
+[ERROR] -> [Help 1]

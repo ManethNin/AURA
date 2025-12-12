@@ -1,0 +1,16 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project flacoco: Compilation failure: Compilation failure:
+src/main/java/fr/spoonlabs/flacoco/core/test/strategies/classloader/finder/classes/impl/SourceFolderFinder.java cannot find symbol
+symbol:   method getWildcard()
+location: class org.apache.maven.surefire.api.testset.TestListResolver
+src/main/java/fr/spoonlabs/flacoco/core/coverage/CoverageMatrix.java cannot find symbol
+symbol:   method getWildcard()
+location: class org.apache.maven.surefire.api.testset.TestListResolver
+src/main/java/fr/spoonlabs/flacoco/core/coverage/CoverageMatrix.java cannot find symbol
+symbol:   method getWildcard()
+location: class org.apache.maven.surefire.api.testset.TestListResolver
+src/main/java/fr/spoonlabs/flacoco/core/coverage/framework/TestFrameworkStrategy.java cannot find symbol
+symbol:   method getWildcard()
+location: class org.apache.maven.surefire.api.testset.TestListResolver
+src/main/java/fr/spoonlabs/flacoco/core/coverage/framework/TestFrameworkStrategy.java cannot find symbol
+symbol:   method getWildcard()
+location: class org.apache.maven.surefire.api.testset.TestListResolver

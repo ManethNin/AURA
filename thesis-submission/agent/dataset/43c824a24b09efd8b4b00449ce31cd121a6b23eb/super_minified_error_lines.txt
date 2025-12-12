@@ -1,0 +1,9 @@
+cannot find symbol
+symbol:   class JsonBranch
+location: package de.gwdg.metadataqa.api.json
+cannot find symbol
+symbol:   class JsonBranch
+location: class de.gwdg.metadataqa.marc.MarcFactory
+cannot find symbol
+symbol:   class JsonBranch
+location: class de.gwdg.metadataqa.marc.MarcFactory

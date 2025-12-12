@@ -1,0 +1,12 @@
+--- a/pom.xml
++++ b/pom.xml
+@@ ... @@
+         <dependency>
+             <groupId>com.hazelcast</groupId>
+             <artifactId>hazelcast</artifactId>
+-            <version>3.12.5</version>
++            <version>5.1</version>
+         </dependency>
+     </dependencies>
+ 
+

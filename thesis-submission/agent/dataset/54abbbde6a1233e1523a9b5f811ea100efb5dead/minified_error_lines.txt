@@ -1,0 +1,13 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project jcabi-ssh: Compilation failure: Compilation failure:
+src/main/java/com/jcabi/ssh/SshByPassword.java cannot find symbol
+symbol:   class Tv
+location: package com.jcabi.aspects
+src/main/java/com/jcabi/ssh/Ssh.java cannot find symbol
+symbol:   class Tv
+location: package com.jcabi.aspects
+src/main/java/com/jcabi/ssh/SshByPassword.java cannot find symbol
+symbol:   variable Tv
+location: class com.jcabi.ssh.SshByPassword
+src/main/java/com/jcabi/ssh/Ssh.java cannot find symbol
+symbol:   variable Tv
+location: class com.jcabi.ssh.Ssh

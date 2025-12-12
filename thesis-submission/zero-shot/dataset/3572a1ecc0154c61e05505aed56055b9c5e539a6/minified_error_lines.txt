@@ -1,0 +1,7 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project thrift-logger: Compilation failure: Compilation failure:
+thrift-logger/src/main/java/com/pinterest/singer/client/logback/AppenderUtils.java cannot find symbol
+symbol:   class TFastFramedTransport
+location: package org.apache.thrift.transport
+thrift-logger/src/main/java/com/pinterest/singer/client/logback/AppenderUtils.java cannot find symbol
+symbol:   class TFastFramedTransport
+location: class com.pinterest.singer.client.logback.AppenderUtils.LogMessageEncoder

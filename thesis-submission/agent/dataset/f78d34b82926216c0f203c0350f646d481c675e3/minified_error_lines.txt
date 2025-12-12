@@ -1,0 +1,28 @@
+Failed to execute goal maven-compiler-plugin:3.8.1:compile (default-compile) on project PeyangSuperbAntiCheat: Compilation failure: Compilation failure:
+src/main/java/ml/peya/plugins/Learn/Neuron.java package develop.p2p.lib does not exist
+src/main/java/ml/peya/plugins/Learn/Neuron.java static import only from classes and interfaces
+src/main/java/ml/peya/plugins/Objects/Decorations.java package develop.p2p.lib does not exist
+src/main/java/ml/peya/plugins/Detect/NPCTeleport.java package develop.p2p.lib does not exist
+src/main/java/ml/peya/plugins/Utils/PlayerUtils.java package develop.p2p.lib does not exist
+src/main/java/ml/peya/plugins/Utils/PlayerUtils.java package develop.p2p.lib does not exist
+src/main/java/ml/peya/plugins/Learn/Neuron.java cannot find symbol
+symbol:   method sigmoid(double)
+location: class ml.peya.plugins.Learn.Neuron
+src/main/java/ml/peya/plugins/Objects/Decorations.java cannot find symbol
+symbol:   class WaveCreator
+location: class ml.peya.plugins.Objects.Decorations
+src/main/java/ml/peya/plugins/Objects/Decorations.java cannot find symbol
+symbol:   class WaveCreator
+location: class ml.peya.plugins.Objects.Decorations
+src/main/java/ml/peya/plugins/Detect/NPCTeleport.java cannot find symbol
+symbol:   class WaveCreator
+location: class ml.peya.plugins.Detect.NPCTeleport
+src/main/java/ml/peya/plugins/Detect/NPCTeleport.java cannot find symbol
+symbol:   class WaveCreator
+location: class ml.peya.plugins.Detect.NPCTeleport
+src/main/java/ml/peya/plugins/Detect/NPCTeleport.java cannot find symbol
+symbol: class WaveCreator
+src/main/java/ml/peya/plugins/Detect/NPCTeleport.java cannot find symbol
+symbol: class WaveCreator
+src/main/java/ml/peya/plugins/Detect/NPCTeleport.java cannot find symbol
+symbol: class WaveCreator

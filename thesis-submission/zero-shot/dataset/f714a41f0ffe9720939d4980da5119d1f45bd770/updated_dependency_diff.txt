@@ -1,0 +1,13 @@
+diff --git a/pom.xml b/pom.xml
+index 3e8edcd6a30..891c5e1aebc 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -349,7 +349,7 @@
+       <dependency>
+         <groupId>com.pubnub</groupId>
+         <artifactId>pubnub-gson</artifactId>
+-        <version>4.31.3</version>
++        <version>6.3.2</version>
+       </dependency>
+         <!-- Netty version compatible with service-wamp -->
+         <dependency>

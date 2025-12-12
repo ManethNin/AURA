@@ -1,0 +1,1 @@
+{"japicmpResult": {}, "elementLines": {}, "revapiResult": {}, "allPotentialBreakingElements": ["addEnchant(int,boolean)", "matchXEnchantment(java.lang.String)", "get()", "parseEnchantment()"], "elementPatterns": {}, "project": "WorldwideChat"}

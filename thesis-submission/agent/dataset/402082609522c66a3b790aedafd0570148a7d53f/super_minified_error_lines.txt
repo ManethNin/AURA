@@ -1,0 +1,218 @@
+cannot find symbol
+symbol:   class CommandManager
+location: package org.spongepowered.api.command
+cannot find symbol
+symbol:   class CommandSource
+location: package org.spongepowered.api.command
+package org.spongepowered.api.event.game.state does not exist
+package org.spongepowered.api.event.game.state does not exist
+package org.spongepowered.api.event.game.state does not exist
+package org.spongepowered.api.network.ChannelBinding does not exist
+cannot find symbol
+symbol:   class ChannelRegistrar
+location: package org.spongepowered.api.network
+cannot find symbol
+symbol:   class Plugin
+location: package org.spongepowered.api.plugin
+package org.spongepowered.api.text.serializer does not exist
+cannot find symbol
+symbol: class Plugin
+cannot find symbol
+symbol: class CommandSource
+cannot find symbol
+symbol:   class GamePreInitializationEvent
+location: class com.github.games647.changeskin.sponge.ChangeSkinSponge
+cannot find symbol
+symbol:   class GameInitializationEvent
+location: class com.github.games647.changeskin.sponge.ChangeSkinSponge
+cannot find symbol
+symbol:   class GameStoppingServerEvent
+location: class com.github.games647.changeskin.sponge.ChangeSkinSponge
+cannot find symbol
+symbol:   class CommandSource
+location: class com.github.games647.changeskin.sponge.ChangeSkinSponge
+cannot find symbol
+symbol:   class CommandSource
+location: class com.github.games647.changeskin.sponge.ChangeSkinSponge
+cannot find symbol
+symbol:   class CommandSource
+location: package org.spongepowered.api.command
+cannot find symbol
+symbol:   class CommandSource
+location: class com.github.games647.changeskin.sponge.task.SkinUploader
+cannot find symbol
+symbol:   class CommandSource
+location: class com.github.games647.changeskin.sponge.task.SkinUploader
+cannot find symbol
+symbol:   class CommandSource
+location: package org.spongepowered.api.command
+cannot find symbol
+symbol:   class CommandSource
+location: class com.github.games647.changeskin.sponge.task.NameResolver
+cannot find symbol
+symbol:   class CommandSource
+location: class com.github.games647.changeskin.sponge.task.NameResolver
+cannot find symbol
+symbol:   class CommandSource
+location: package org.spongepowered.api.command
+package org.spongepowered.api.text.serializer does not exist
+cannot find symbol
+symbol:   class CommandSource
+location: class com.github.games647.changeskin.sponge.task.SkinChanger
+cannot find symbol
+symbol:   class CommandSource
+location: class com.github.games647.changeskin.sponge.task.SkinChanger
+package com.flowpowered.math.vector does not exist
+cannot find symbol
+symbol:   class CommandSource
+location: package org.spongepowered.api.command
+package org.spongepowered.api.data.key does not exist
+cannot find symbol
+symbol:   class CommandSource
+location: class com.github.games647.changeskin.sponge.task.SkinApplier
+cannot find symbol
+symbol:   class CommandSource
+location: class com.github.games647.changeskin.sponge.task.SkinApplier
+cannot find symbol
+symbol:   class CommandSource
+location: package org.spongepowered.api.command
+cannot find symbol
+symbol:   class CommandSource
+location: class com.github.games647.changeskin.sponge.task.SkinDownloader
+cannot find symbol
+symbol:   class CommandSource
+location: class com.github.games647.changeskin.sponge.task.SkinDownloader
+package org.spongepowered.api.command.spec does not exist
+cannot find symbol
+symbol:   class CommandSpec
+location: interface com.github.games647.changeskin.sponge.command.ChangeSkinCommand
+package org.spongepowered.api.network.ChannelBinding does not exist
+cannot find symbol
+symbol:   class ChannelBuf
+location: package org.spongepowered.api.network
+cannot find symbol
+symbol:   class ChannelRegistrar
+location: package org.spongepowered.api.network
+cannot find symbol
+symbol:   class RawDataListener
+location: package org.spongepowered.api.network
+cannot find symbol
+symbol: class RawDataListener
+cannot find symbol
+symbol:   class RawDataChannel
+location: class com.github.games647.changeskin.sponge.bungee.CheckPermissionListener
+cannot find symbol
+symbol:   class ChannelRegistrar
+location: class com.github.games647.changeskin.sponge.bungee.CheckPermissionListener
+cannot find symbol
+symbol:   class ChannelBuf
+location: class com.github.games647.changeskin.sponge.bungee.CheckPermissionListener
+cannot find symbol
+symbol:   class ClientConnectionEvent
+location: package org.spongepowered.api.event.network
+package ClientConnectionEvent does not exist
+cannot find symbol
+symbol:   class CommandSource
+location: package org.spongepowered.api.command
+package org.spongepowered.api.command.args does not exist
+package org.spongepowered.api.command.spec does not exist
+package org.spongepowered.api.command.spec does not exist
+package org.spongepowered.api.command.args does not exist
+static import only from classes and interfaces
+package org.spongepowered.api.text does not exist
+static import only from classes and interfaces
+cannot find symbol
+symbol: class CommandExecutor
+cannot find symbol
+symbol:   class CommandSource
+location: class com.github.games647.changeskin.sponge.command.SelectCommand
+cannot find symbol
+symbol:   class CommandContext
+location: class com.github.games647.changeskin.sponge.command.SelectCommand
+cannot find symbol
+symbol:   class CommandSpec
+location: class com.github.games647.changeskin.sponge.command.SelectCommand
+cannot find symbol
+symbol:   class CommandException
+location: package org.spongepowered.api.command
+cannot find symbol
+symbol:   class CommandSource
+location: package org.spongepowered.api.command
+package org.spongepowered.api.command.args does not exist
+package org.spongepowered.api.command.spec does not exist
+package org.spongepowered.api.command.spec does not exist
+package org.spongepowered.api.text does not exist
+package org.spongepowered.api.text.serializer does not exist
+cannot find symbol
+symbol: class CommandExecutor
+cannot find symbol
+symbol:   class CommandSource
+location: class com.github.games647.changeskin.sponge.command.InfoCommand
+cannot find symbol
+symbol:   class CommandContext
+location: class com.github.games647.changeskin.sponge.command.InfoCommand
+cannot find symbol
+symbol:   class CommandException
+location: class com.github.games647.changeskin.sponge.command.InfoCommand
+cannot find symbol
+symbol:   class CommandSpec
+location: class com.github.games647.changeskin.sponge.command.InfoCommand
+cannot find symbol
+symbol:   class CommandSource
+location: package org.spongepowered.api.command
+cannot find symbol
+symbol:   class ChannelBuf
+location: package org.spongepowered.api.network
+cannot find symbol
+symbol:   class RawDataListener
+location: package org.spongepowered.api.network
+cannot find symbol
+symbol: class RawDataListener
+cannot find symbol
+symbol:   class ChannelBuf
+location: class com.github.games647.changeskin.sponge.bungee.UpdateSkinListener
+cannot find symbol
+symbol:   class CommandSource
+location: package org.spongepowered.api.command
+package org.spongepowered.api.command.args does not exist
+package org.spongepowered.api.command.spec does not exist
+package org.spongepowered.api.command.spec does not exist
+cannot find symbol
+symbol: class CommandExecutor
+cannot find symbol
+symbol:   class CommandSource
+location: class com.github.games647.changeskin.sponge.command.InvalidateCommand
+cannot find symbol
+symbol:   class CommandContext
+location: class com.github.games647.changeskin.sponge.command.InvalidateCommand
+cannot find symbol
+symbol:   class CommandSpec
+location: class com.github.games647.changeskin.sponge.command.InvalidateCommand
+cannot find symbol
+symbol:   class CommandSource
+location: package org.spongepowered.api.command
+package org.spongepowered.api.command.args does not exist
+package org.spongepowered.api.command.spec does not exist
+package org.spongepowered.api.command.spec does not exist
+package org.spongepowered.api.command.args does not exist
+static import only from classes and interfaces
+package org.spongepowered.api.text does not exist
+static import only from classes and interfaces
+cannot find symbol
+symbol: class CommandExecutor
+cannot find symbol
+symbol:   class CommandSource
+location: class com.github.games647.changeskin.sponge.command.UploadCommand
+cannot find symbol
+symbol:   class CommandContext
+location: class com.github.games647.changeskin.sponge.command.UploadCommand
+cannot find symbol
+symbol:   class CommandSpec
+location: class com.github.games647.changeskin.sponge.command.UploadCommand
+cannot find symbol
+symbol:   class CommandSource
+location: package org.spongepowered.api.command
+package org.spongepowered.api.command.args does not exist
+package org.spongepowered.api.command.args does not exist
+package org.spongepowered.api.command.spec does not exist
+package org.spongepowered.api.command.spec does not exist

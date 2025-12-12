@@ -1,0 +1,13 @@
+diff --git a/pom.xml b/pom.xml
+index f34408284a..798ee7dfcc 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -347,7 +347,7 @@
+             <dependency>
+                 <groupId>org.mockito</groupId>
+                 <artifactId>mockito-core</artifactId>
+-                <version>1.10.19</version>
++                <version>5.1.1</version>
+             </dependency>
+             <dependency>
+                 <groupId>org.apache.commons</groupId>

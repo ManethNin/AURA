@@ -1,0 +1,12 @@
+--- a/onebusaway-gtfs-hibernate/pom.xml
++++ b/onebusaway-gtfs-hibernate/pom.xml
+@@ ... @@
+     <dependency>
+       <groupId>org.hibernate</groupId>
+       <artifactId>hibernate-core</artifactId>
+-      <version>4.0.1.Final</version>
++      <version>5.4.24.Final</version>
+     </dependency>
+ 
+     <!-- Test Scope -->
+

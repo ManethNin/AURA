@@ -1,0 +1,4 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project simplelocalize-cli: Compilation failure
+[ERROR] src/main/java/io/simplelocalize/cli/client/SimpleLocalizeClient.java:[88,49] cannot access com.fasterxml.jackson.core.exc.StreamReadException
+[ERROR]   class file for com.fasterxml.jackson.core.exc.StreamReadException not found
+[ERROR] -> [Help 1]

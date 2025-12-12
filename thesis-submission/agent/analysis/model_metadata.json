@@ -1,0 +1,32 @@
+{
+  "models": [
+    {
+      "name": "claude-3-haiku",
+      "releaseDate": "2024-03-19"
+    },
+    {
+      "name": "claude-3.5-sonnet",
+      "releaseDate": "2024-06-20"
+    },
+    {
+      "name": "mistral-nemo",
+      "releaseDate": "2024-06-18"
+    },
+    {
+      "name": "gpt-4o-mini",
+      "releaseDate": "2024-06-18"
+    },
+    {
+      "name": "gpt-4o",
+      "releaseDate": "2024-05-13"
+    },
+    {
+      "name": "Llama-3.1-70B",
+      "releaseDate": "2024-06-23"
+    },
+    {
+      "name": "gemini-1.5-pro",
+      "releaseDate": "2024-05-24"
+    }
+  ]
+}

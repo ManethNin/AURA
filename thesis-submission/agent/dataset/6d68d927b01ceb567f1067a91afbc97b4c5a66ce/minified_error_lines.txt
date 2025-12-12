@@ -1,0 +1,11 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project code-coverage-api-ui-tests: Compilation failure: Compilation failure:
+ui-tests/src/main/java/io/jenkins/plugins/coverage/util/ChartUtil.java error: package com.gargoylesoftware.htmlunit does not exist
+ui-tests/src/main/java/io/jenkins/plugins/coverage/util/ChartUtil.java error: cannot find symbol
+symbol:   class ScriptResult
+location: class ChartUtil
+ui-tests/src/main/java/io/jenkins/plugins/coverage/util/ChartUtil.java error: cannot find symbol
+symbol:   class ScriptResult
+location: class ChartUtil
+ui-tests/src/main/java/io/jenkins/plugins/coverage/util/ChartUtil.java error: cannot find symbol
+symbol:   class ScriptResult
+location: class ChartUtil

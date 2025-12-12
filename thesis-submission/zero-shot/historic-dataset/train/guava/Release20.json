@@ -1,0 +1,158 @@
+{
+  "class_breaking_changes": [
+    {
+      "class_name": "Predicates",
+      "package_name": "common.base",
+      "deprecations": [
+        {
+          "method_signature": "assignableFrom(Class<?>)",
+          "replacement": "subtypeOf(Class<?>)"
+        }
+      ],
+      "removals": [],
+      "notes": null
+    },
+    {
+      "class_name": "Throwables",
+      "package_name": "common.base",
+      "deprecations": [
+        {
+          "method_signature": "propagate()"
+        },
+        {
+          "method_signature": "propagateIfInstanceOf()"
+        },
+        {
+          "method_signature": "propagateIfPossible()"
+        }
+      ],
+      "removals": [],
+      "notes": null
+    },
+    {
+      "class_name": "ConcurrentHashMultiset",
+      "package_name": "common.collect",
+      "deprecations": [
+        {
+          "method_signature": "create(MapMaker)",
+          "replacement": "create(ConcurrentMap)"
+        }
+      ],
+      "removals": [],
+      "notes": null
+    },
+    {
+      "class_name": "Iterators",
+      "package_name": "common.collect",
+      "deprecations": [],
+      "removals": [
+        {
+          "method_signature": "emptyIterator()"
+        }
+      ],
+      "notes": null
+    },
+    {
+      "class_name": "MapConstraints",
+      "package_name": "common.collect",
+      "deprecations": [],
+      "removals": [
+        {
+          "method_signature": "*"
+        }
+      ],
+      "notes": null
+    },
+    {
+      "class_name": "Ordering",
+      "package_name": "common.collect",
+      "deprecations": [
+        {
+          "method_signature": "binarySearch()"
+        }
+      ],
+      "removals": []
+    },
+    {
+      "class_name": "InputSupplier",
+      "package_name": "common.io",
+      "deprecations": [],
+      "removals": [
+        {
+          "method_signature": "*"
+        }
+      ]
+    },
+    {
+      "class_name": "OutputSupplier",
+      "package_name": "common.io",
+      "deprecations": [],
+      "removals": [
+        {
+          "method_signature": "*"
+        }
+      ]
+    },
+    {
+      "class_name": "DoubleMath",
+      "package_name": "common.math",
+      "deprecations": [
+        {
+          "method_signature": "mean()",
+          "replacement": "Stats.mean()"
+        }
+      ],
+      "removals": []
+    },
+    {
+      "class_name": "HostAndPort",
+      "package_name": "common.net",
+      "deprecations": [
+        {
+          "method_signature": "getHostText()",
+          "replacement": "getHost()"
+        }
+      ],
+      "removals": []
+    },
+    {
+      "class_name": "TypeToken",
+      "package_name": "common.reflect",
+      "deprecations": [],
+      "removals": [
+        {
+          "method_signature": "isAssignableFrom()",
+          "replacement": "isSubtypeOf()"
+        }
+      ]
+    },
+    {
+      "class_name": "FutureFallback",
+      "package_name": "common.util.concurrent",
+      "removals": [
+        {
+          "method_signature": "*"
+        }
+      ]
+    },
+    {
+      "class_name": "Futures",
+      "package_name": "common.util.concurrent",
+      "deprecations": [],
+      "removals": [
+        {
+          "method_signature": "withFallback()"
+        },
+        {
+          "method_signature": "get(exception Class)",
+          "replacement": "getChecked(exception Class)"
+        },
+        {
+          "method_signature": "transform(AsyncFunction)",
+          "replacement": "transformAsync()"
+        }
+      ]
+    }
+  ],
+  "version": "20.0"
+}

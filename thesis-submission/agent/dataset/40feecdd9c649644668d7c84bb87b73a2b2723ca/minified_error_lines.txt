@@ -1,0 +1,2 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project courses-portlet-api: Compilation failure
+courses-portlet-api/src/main/java/org/jasig/portlet/courses/model/xml/CourseMeetingWrapper.java exception java.io.IOException is never thrown in body of corresponding try statement

@@ -1,0 +1,6 @@
+cannot find symbol
+symbol:   class Matchers
+location: package org.hamcrest
+cannot find symbol
+symbol:   class Matchers
+location: package org.hamcrest

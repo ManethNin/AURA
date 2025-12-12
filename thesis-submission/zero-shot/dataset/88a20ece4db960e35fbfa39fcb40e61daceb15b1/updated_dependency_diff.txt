@@ -1,0 +1,13 @@
+diff --git a/pom.xml b/pom.xml
+index 08bada3..2d6ae58 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -101,7 +101,7 @@
+     <dependency>
+       <groupId>com.google.cloud</groupId>
+       <artifactId>google-cloud-pubsublite</artifactId>
+-      <version>0.6.0</version>
++      <version>1.6.3</version>
+     </dependency>
+     <dependency>
+       <groupId>com.google.guava</groupId>

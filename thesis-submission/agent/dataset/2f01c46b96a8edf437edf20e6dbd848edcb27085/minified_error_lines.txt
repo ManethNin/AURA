@@ -1,0 +1,2 @@
+Failed to execute goal maven-compiler-plugin:3.11.0:compile (default-compile) on project depclean-maven-plugin: Compilation failure
+depclean-maven-plugin/src/main/java/se/kth/depclean/wrapper/MavenDependencyManager.java package org.codehaus.plexus.util.xml does not exist

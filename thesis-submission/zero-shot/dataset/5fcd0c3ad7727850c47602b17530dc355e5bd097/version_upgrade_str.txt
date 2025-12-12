@@ -1,0 +1,1 @@
+org.pitest:pitest-entry 1.9.11 -> 1.10.0

@@ -1,0 +1,101 @@
+[INFO]
+[INFO] ---------------< ml.peya.plugins:PeyangSuperbAntiCheat >----------------
+[INFO] Building PeyangSuperbAntiCheat 0.2.1a
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- clean:3.2.0:clean (default-clean) @ PeyangSuperbAntiCheat ---
+[INFO]
+[INFO] --- resources:3.3.0:resources (default-resources) @ PeyangSuperbAntiCheat ---
+[INFO] Artifact org.apache.commons:commons-lang3:jar:3.12.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+[INFO] Artifact org.apache.commons:commons-lang3:jar:3.12.0 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 8 resources
+[INFO]
+[INFO] --- compiler:3.8.1:compile (default-compile) @ PeyangSuperbAntiCheat ---
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 93 source files to target/classes
+[INFO] src/main/java/ml/peya/plugins/BungeeStructure/CommandManager.java: Some input files use or override a deprecated API.
+[INFO] src/main/java/ml/peya/plugins/BungeeStructure/CommandManager.java: Recompile with -Xlint:deprecation for details.
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR :
+[INFO] -------------------------------------------------------------
+[ERROR] src/main/java/ml/peya/plugins/Learn/Neuron.java:[5,30] package develop.p2p.lib does not exist
+[ERROR] src/main/java/ml/peya/plugins/Learn/Neuron.java:[5,1] static import only from classes and interfaces
+[ERROR] src/main/java/ml/peya/plugins/Objects/Decorations.java:[3,23] package develop.p2p.lib does not exist
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[3,1] package develop.p2p.lib does not exist
+[ERROR] src/main/java/ml/peya/plugins/Utils/PlayerUtils.java:[113,36] package develop.p2p.lib does not exist
+[ERROR] src/main/java/ml/peya/plugins/Utils/PlayerUtils.java:[114,35] package develop.p2p.lib does not exist
+[ERROR] src/main/java/ml/peya/plugins/Learn/Neuron.java:[50,18] cannot find symbol
+symbol:   method sigmoid(double)
+location: class ml.peya.plugins.Learn.Neuron
+[ERROR] src/main/java/ml/peya/plugins/Objects/Decorations.java:[185,9] cannot find symbol
+symbol:   class WaveCreator
+location: class ml.peya.plugins.Objects.Decorations
+[ERROR] src/main/java/ml/peya/plugins/Objects/Decorations.java:[185,32] cannot find symbol
+symbol:   class WaveCreator
+location: class ml.peya.plugins.Objects.Decorations
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[161,9] cannot find symbol
+symbol:   class WaveCreator
+location: class ml.peya.plugins.Detect.NPCTeleport
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[161,31] cannot find symbol
+symbol:   class WaveCreator
+location: class ml.peya.plugins.Detect.NPCTeleport
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[179,40] cannot find symbol
+symbol: class WaveCreator
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[186,45] cannot find symbol
+symbol: class WaveCreator
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[220,27] cannot find symbol
+symbol: class WaveCreator
+[INFO] 14 errors
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:46 min
+[INFO] Finished at: 2023-07-28T02:35:18Z
+[INFO] ------------------------------------------------------------------------
+[WARNING]
+[WARNING] Plugin validation issues were detected in 2 plugin(s)
+[WARNING]
+[WARNING]  * org.apache.maven.plugins:maven-compiler-plugin:3.8.1
+[WARNING]  * org.apache.maven.plugins:maven-resources-plugin:3.3.0
+[WARNING]
+[WARNING] For more or less details, use 'maven.plugin.validation' property with one of the values (case insensitive): [BRIEF, DEFAULT, VERBOSE]
+[WARNING]
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project PeyangSuperbAntiCheat: Compilation failure: Compilation failure:
+[ERROR] src/main/java/ml/peya/plugins/Learn/Neuron.java:[5,30] package develop.p2p.lib does not exist
+[ERROR] src/main/java/ml/peya/plugins/Learn/Neuron.java:[5,1] static import only from classes and interfaces
+[ERROR] src/main/java/ml/peya/plugins/Objects/Decorations.java:[3,23] package develop.p2p.lib does not exist
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[3,1] package develop.p2p.lib does not exist
+[ERROR] src/main/java/ml/peya/plugins/Utils/PlayerUtils.java:[113,36] package develop.p2p.lib does not exist
+[ERROR] src/main/java/ml/peya/plugins/Utils/PlayerUtils.java:[114,35] package develop.p2p.lib does not exist
+[ERROR] src/main/java/ml/peya/plugins/Learn/Neuron.java:[50,18] cannot find symbol
+[ERROR]   symbol:   method sigmoid(double)
+[ERROR]   location: class ml.peya.plugins.Learn.Neuron
+[ERROR] src/main/java/ml/peya/plugins/Objects/Decorations.java:[185,9] cannot find symbol
+[ERROR]   symbol:   class WaveCreator
+[ERROR]   location: class ml.peya.plugins.Objects.Decorations
+[ERROR] src/main/java/ml/peya/plugins/Objects/Decorations.java:[185,32] cannot find symbol
+[ERROR]   symbol:   class WaveCreator
+[ERROR]   location: class ml.peya.plugins.Objects.Decorations
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[161,9] cannot find symbol
+[ERROR]   symbol:   class WaveCreator
+[ERROR]   location: class ml.peya.plugins.Detect.NPCTeleport
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[161,31] cannot find symbol
+[ERROR]   symbol:   class WaveCreator
+[ERROR]   location: class ml.peya.plugins.Detect.NPCTeleport
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[179,40] cannot find symbol
+[ERROR]   symbol: class WaveCreator
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[186,45] cannot find symbol
+[ERROR]   symbol: class WaveCreator
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[220,27] cannot find symbol
+[ERROR]   symbol: class WaveCreator
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

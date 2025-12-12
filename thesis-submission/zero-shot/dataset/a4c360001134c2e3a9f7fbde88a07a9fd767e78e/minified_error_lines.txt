@@ -1,0 +1,7 @@
+Failed to execute goal maven-compiler-plugin:3.9.0:compile (default-compile) on project gauge-java: Compilation failure: Compilation failure:
+src/main/java/com/thoughtworks/gauge/scan/ClasspathScanner.java cannot find symbol
+symbol:   method apply(java.lang.String)
+location: class org.reflections.util.FilterBuilder
+src/main/java/com/thoughtworks/gauge/scan/ClasspathScanner.java cannot find symbol
+symbol:   method apply(java.lang.String)
+location: class org.reflections.util.FilterBuilder

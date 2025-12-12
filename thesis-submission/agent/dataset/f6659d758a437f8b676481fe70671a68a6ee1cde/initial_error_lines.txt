@@ -1,0 +1,8 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:testCompile (default-testCompile) on project billy-core: Compilation failure: Compilation failure:
+[ERROR] billy-core/src/test/java/com/premiumminds/billy/core/test/AbstractTest.java:[36,36] cannot find symbol
+[ERROR]   symbol:   class TrustedTagInspector
+[ERROR]   location: package org.yaml.snakeyaml.inspector
+[ERROR] billy-core/src/test/java/com/premiumminds/billy/core/test/AbstractTest.java:[66,43] cannot find symbol
+[ERROR]   symbol:   class TrustedTagInspector
+[ERROR]   location: class com.premiumminds.billy.core.test.AbstractTest
+[ERROR] -> [Help 1]

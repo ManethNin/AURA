@@ -1,0 +1,13 @@
+diff --git a/singer-commons/pom.xml b/singer-commons/pom.xml
+index 97a007d7..108da8d2 100644
+--- a/singer-commons/pom.xml
++++ b/singer-commons/pom.xml
+@@ -89,7 +89,7 @@
+     <dependency>
+       <groupId>org.apache.thrift</groupId>
+       <artifactId>libthrift</artifactId>
+-      <version>0.12.0</version>
++      <version>0.16.0</version>
+     </dependency>
+     <dependency>
+       <groupId>org.slf4j</groupId>

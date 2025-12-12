@@ -1,0 +1,5 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project pgpverify-maven-plugin: Compilation failure: Compilation failure:
+src/main/java/org/simplify4u/plugins/utils/MavenCompilerUtils.java package org.codehaus.plexus.util.xml does not exist
+src/main/java/org/simplify4u/plugins/utils/MavenCompilerUtils.java cannot find symbol
+symbol:   class Xpp3Dom
+location: class org.simplify4u.plugins.utils.MavenCompilerUtils

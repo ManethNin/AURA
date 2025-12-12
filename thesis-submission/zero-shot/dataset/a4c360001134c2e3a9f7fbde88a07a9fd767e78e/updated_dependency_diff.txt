@@ -1,0 +1,13 @@
+diff --git a/pom.xml b/pom.xml
+index 83d2705b..b534b86d 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -23,7 +23,7 @@
+         <dependency>
+             <groupId>org.reflections</groupId>
+             <artifactId>reflections</artifactId>
+-            <version>0.9.9</version>
++            <version>0.10.2</version>
+         </dependency>
+         <dependency>
+             <groupId>com.github.javaparser</groupId>

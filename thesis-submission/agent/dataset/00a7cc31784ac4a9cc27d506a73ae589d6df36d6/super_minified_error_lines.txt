@@ -1,0 +1,16 @@
+cannot find symbol
+symbol:   method setUseClientMode(boolean)
+location: variable sslFilter of type quickfix.mina.ssl.SSLFilter
+cannot find symbol
+symbol:   method setUseClientMode(boolean)
+location: variable sslFilter of type quickfix.mina.ssl.SSLFilter
+constructor SslFilter in class org.apache.mina.filter.ssl.SslFilter cannot be applied to given types;
+required: javax.net.ssl.SSLContext
+found: javax.net.ssl.SSLContext,boolean
+reason: actual and formal argument lists differ in length
+cannot find symbol
+symbol:   variable PEER_ADDRESS
+location: class quickfix.mina.ssl.SSLFilter
+cannot find symbol
+symbol:   method initiateHandshake(org.apache.mina.core.session.IoSession)
+location: variable sslFilter of type quickfix.mina.ssl.SSLFilter

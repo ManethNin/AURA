@@ -1,0 +1,13 @@
+diff --git a/sorald/pom.xml b/sorald/pom.xml
+index 2d219914..f31446b7 100644
+--- a/sorald/pom.xml
++++ b/sorald/pom.xml
+@@ -57,7 +57,7 @@
+         <dependency>
+             <groupId>org.sonarsource.sonarlint.core</groupId>
+             <artifactId>sonarlint-core</artifactId>
+-            <version>8.15.0.65216</version>
++            <version>8.19.0.72745</version>
+         </dependency>
+         <dependency>
+             <groupId>info.picocli</groupId>

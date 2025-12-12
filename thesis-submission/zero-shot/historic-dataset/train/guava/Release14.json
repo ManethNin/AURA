@@ -1,0 +1,20 @@
+{
+    "class_breaking_changes": [
+        {
+            "class_name": "Stopwatch",
+            "package_name": "common.util.concurrent",
+            "deprecations": [
+                {
+                    "method_signature": "elapsedMillis()",
+                    "replacement": "elapsed()"
+                },
+                {
+                    "method_signature": "elapsedTime()",
+                    "replacement": "elapsed()"
+                }
+            ],
+            "removals": []
+        }
+    ],
+    "version": "14.0"
+}

@@ -1,0 +1,18 @@
+package org.codehaus.plexus.archiver.zip;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import org.apache.commons.compress.parallel.ScatterGatherBackingStore;
+
+public class DeferredScatterOutputStream implements ScatterGatherBackingStore
+{
+    private final OffloadingOutputStream dfos;
+
+    @Override
+    public void writeOut( byte[] data, int offset, int length ) throws IOException
+    {
+        dfos.write( data, offset, length );
+    }
+
+}

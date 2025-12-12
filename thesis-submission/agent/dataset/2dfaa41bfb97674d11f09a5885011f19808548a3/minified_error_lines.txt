@@ -1,0 +1,4 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:testCompile (default-testCompile) on project bval-jsr: Compilation failure
+bval-jsr/src/test/java/org/apache/bval/jsr/DefaultMessageInterpolatorTest.java cannot find symbol
+symbol:   method getArgumentAt(int,java.lang.Class<java.lang.Class>)
+location: variable invocation of type org.mockito.invocation.InvocationOnMock

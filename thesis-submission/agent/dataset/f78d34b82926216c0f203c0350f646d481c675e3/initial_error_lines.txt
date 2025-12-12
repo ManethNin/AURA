@@ -1,0 +1,29 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project PeyangSuperbAntiCheat: Compilation failure: Compilation failure:
+[ERROR] src/main/java/ml/peya/plugins/Learn/Neuron.java:[5,30] package develop.p2p.lib does not exist
+[ERROR] src/main/java/ml/peya/plugins/Learn/Neuron.java:[5,1] static import only from classes and interfaces
+[ERROR] src/main/java/ml/peya/plugins/Objects/Decorations.java:[3,23] package develop.p2p.lib does not exist
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[3,1] package develop.p2p.lib does not exist
+[ERROR] src/main/java/ml/peya/plugins/Utils/PlayerUtils.java:[113,36] package develop.p2p.lib does not exist
+[ERROR] src/main/java/ml/peya/plugins/Utils/PlayerUtils.java:[114,35] package develop.p2p.lib does not exist
+[ERROR] src/main/java/ml/peya/plugins/Learn/Neuron.java:[50,18] cannot find symbol
+[ERROR]   symbol:   method sigmoid(double)
+[ERROR]   location: class ml.peya.plugins.Learn.Neuron
+[ERROR] src/main/java/ml/peya/plugins/Objects/Decorations.java:[185,9] cannot find symbol
+[ERROR]   symbol:   class WaveCreator
+[ERROR]   location: class ml.peya.plugins.Objects.Decorations
+[ERROR] src/main/java/ml/peya/plugins/Objects/Decorations.java:[185,32] cannot find symbol
+[ERROR]   symbol:   class WaveCreator
+[ERROR]   location: class ml.peya.plugins.Objects.Decorations
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[161,9] cannot find symbol
+[ERROR]   symbol:   class WaveCreator
+[ERROR]   location: class ml.peya.plugins.Detect.NPCTeleport
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[161,31] cannot find symbol
+[ERROR]   symbol:   class WaveCreator
+[ERROR]   location: class ml.peya.plugins.Detect.NPCTeleport
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[179,40] cannot find symbol
+[ERROR]   symbol: class WaveCreator
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[186,45] cannot find symbol
+[ERROR]   symbol: class WaveCreator
+[ERROR] src/main/java/ml/peya/plugins/Detect/NPCTeleport.java:[220,27] cannot find symbol
+[ERROR]   symbol: class WaveCreator
+[ERROR] -> [Help 1]

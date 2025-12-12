@@ -1,0 +1,13 @@
+diff --git a/nis/pom.xml b/nis/pom.xml
+index 598479c7ad..6dbb26fabf 100644
+--- a/nis/pom.xml
++++ b/nis/pom.xml
+@@ -194,7 +194,7 @@
+         <dependency>
+             <groupId>org.flywaydb</groupId>
+             <artifactId>flyway-core</artifactId>
+-            <version>3.2.1</version>
++            <version>9.10.2</version>
+         </dependency>
+ 
+         <!-- test related -->

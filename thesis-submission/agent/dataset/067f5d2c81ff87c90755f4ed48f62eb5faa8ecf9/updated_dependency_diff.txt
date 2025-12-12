@@ -1,0 +1,12 @@
+--- a/singer-commons/pom.xml
++++ b/singer-commons/pom.xml
+@@ ... @@
+     <dependency>
+       <groupId>org.apache.thrift</groupId>
+       <artifactId>libthrift</artifactId>
+-      <version>0.12.0</version>
++      <version>0.16.0</version>
+     </dependency>
+     <dependency>
+       <groupId>org.slf4j</groupId>
+

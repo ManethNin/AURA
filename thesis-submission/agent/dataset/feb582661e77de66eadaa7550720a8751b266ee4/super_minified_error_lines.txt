@@ -1,0 +1,15 @@
+cannot find symbol
+symbol:   class StringUtils
+location: package liquibase.util
+cannot find symbol
+symbol:   class StringUtils
+location: package liquibase.util
+cannot find symbol
+symbol:   variable StringUtils
+location: class liquibase.ext.mssql.sqlgenerator.CreateIndexGeneratorMSSQL
+cannot find symbol
+symbol:   variable StringUtils
+location: class liquibase.ext.mssql.sqlgenerator.AddPrimaryKeyGeneratorMSSQL
+cannot find symbol
+symbol:   method getInstance()
+location: class liquibase.executor.ExecutorService

@@ -1,0 +1,1 @@
+{"japicmpResult": {}, "elementLines": {}, "revapiResult": {}, "allPotentialBreakingElements": ["isEmpty(java.util.List)", "isNoneBlank(java.lang.CharSequence[])", "toString()", "isAllBlank(java.lang.CharSequence[])", "getUrl()", "getArtifactory()", "org.jenkinsci.plugins.p4.client.ClientHelper()", "getDistribution()"], "elementPatterns": {}, "project": "artifactory-plugin"}

@@ -1,0 +1,12 @@
+--- a/pom.xml
++++ b/pom.xml
+@@ ... @@
+         <dependency>
+             <groupId>org.pitest</groupId>
+             <artifactId>pitest-entry</artifactId>
+-            <version>1.9.11</version>
++            <version>1.10.0</version>
+         </dependency>
+ 
+         <dependency>
+

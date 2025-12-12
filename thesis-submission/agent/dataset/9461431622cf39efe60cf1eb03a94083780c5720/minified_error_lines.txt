@@ -1,0 +1,2 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project snmpman: Compilation failure
+snmpman/src/main/java/com/oneandone/snmpman/SnmpmanAgent.java incompatible types: java.util.SortedMap<org.snmp4j.agent.MOScope,org.snmp4j.agent.ManagedObject<?>> cannot be converted to java.util.SortedMap<org.snmp4j.agent.MOScope,org.snmp4j.agent.ManagedObject>

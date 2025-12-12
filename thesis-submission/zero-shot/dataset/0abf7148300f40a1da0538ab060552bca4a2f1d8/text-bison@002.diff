@@ -1,0 +1,21 @@
+diff --git a/src/main/java/xdev/tableexport/export/ReportBuilder.java b/src/main/java/xdev/tableexport/export/ReportBuilder.java
+index 4e91b33..766cf9a 100644
+--- a/src/main/java/xdev/tableexport/export/ReportBuilder.java
++++ b/src/main/java/xdev/tableexport/export/ReportBuilder.java
+@@ -363,12 +363,12 @@ public class ReportBuilder
+   final ColumnBorder border = style.getColBorder();
+   if(border == null)
+   {
+-			return;
++throw new UnsupportedOperationException("Border is not supported in JasperReports 6.19.1");
+   }
+   
+-		textField.getLineBox().getPen().setLineWidth(border.getLineWidth());
+-		textField.getLineBox().getPen().setLineColor(border.getLineColor());
+-		textField.getLineBox().getPen().setLineStyle(border.getLineStyle().getLineStyleEnum());
++//textField.getLineBox().getPen().setLineWidth(border.getLineWidth());
++//textField.getLineBox().getPen().setLineColor(border.getLineColor());
++//textField.getLineBox().getPen().setLineStyle(border.getLineStyle().getLineStyleEnum());
+  }
+  
+  private void prepareTextfieldPadding(final JRDesignTextElement textField, final ColumnStyle style)

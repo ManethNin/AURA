@@ -1,0 +1,22 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project pubsub-group-kafka-connector: Compilation failure: Compilation failure:
+[ERROR] src/main/java/com/google/pubsublite/kafka/sink/PublisherFactoryImpl.java:[20,35] cannot find symbol
+[ERROR]   symbol:   class PublishMetadata
+[ERROR]   location: package com.google.cloud.pubsublite
+[ERROR] src/main/java/com/google/pubsublite/kafka/sink/PublisherFactory.java:[18,35] cannot find symbol
+[ERROR]   symbol:   class PublishMetadata
+[ERROR]   location: package com.google.cloud.pubsublite
+[ERROR] src/main/java/com/google/pubsublite/kafka/sink/PublisherFactoryImpl.java:[36,20] cannot find symbol
+[ERROR]   symbol:   class PublishMetadata
+[ERROR]   location: class com.google.pubsublite.kafka.sink.PublisherFactoryImpl
+[ERROR] src/main/java/com/google/pubsublite/kafka/sink/PublisherFactory.java:[24,13] cannot find symbol
+[ERROR]   symbol:   class PublishMetadata
+[ERROR]   location: interface com.google.pubsublite.kafka.sink.PublisherFactory
+[ERROR] src/main/java/com/google/pubsublite/kafka/sink/PubSubLiteSinkTask.java:[22,35] cannot find symbol
+[ERROR]   symbol:   class PublishMetadata
+[ERROR]   location: package com.google.cloud.pubsublite
+[ERROR] src/main/java/com/google/pubsublite/kafka/sink/PubSubLiteSinkTask.java:[43,31] cannot find symbol
+[ERROR]   symbol:   class PublishMetadata
+[ERROR]   location: class com.google.pubsublite.kafka.sink.PubSubLiteSinkTask
+[ERROR] src/main/java/com/google/pubsublite/kafka/sink/PublisherFactoryImpl.java:[48,12] incompatible types: com.google.cloud.pubsublite.internal.wire.PartitionPublisherFactory is not a functional interface
+[ERROR]     multiple non-overriding abstract methods found in interface com.google.cloud.pubsublite.internal.wire.PartitionPublisherFactory
+[ERROR] -> [Help 1]

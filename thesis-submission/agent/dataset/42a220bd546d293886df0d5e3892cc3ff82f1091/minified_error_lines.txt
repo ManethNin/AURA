@@ -1,0 +1,9 @@
+Failed to execute goal maven-compiler-plugin:3.9.0:compile (default-compile) on project minfraud: Compilation failure: Compilation failure:
+src/main/java/com/maxmind/minfraud/request/Email.java package org.apache.commons.codec.digest does not exist
+src/main/java/com/maxmind/minfraud/request/Account.java package org.apache.commons.codec.digest does not exist
+src/main/java/com/maxmind/minfraud/request/Email.java cannot find symbol
+symbol:   variable DigestUtils
+location: class com.maxmind.minfraud.request.Email
+src/main/java/com/maxmind/minfraud/request/Account.java cannot find symbol
+symbol:   variable DigestUtils
+location: class com.maxmind.minfraud.request.Account.Builder

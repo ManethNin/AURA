@@ -1,0 +1,17 @@
+# serializer version: 1
+# name: test_extract_codeblock
+  '''
+  print("Hello, world!")
+  print("Whatsupppp")
+
+  '''
+# ---
+# name: test_prediction
+  '''
+  3c3
+  <     obj.getInner1().doSomething();
+  ---
+  >     obj.getInner3().doSomething();
+
+  '''
+# ---

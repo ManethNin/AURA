@@ -1,0 +1,4 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project jcabi-github: Compilation failure
+src/main/java/com/jcabi/github/mock/MkGithub.java cannot find symbol
+symbol:   class Tv
+location: package com.jcabi.aspects

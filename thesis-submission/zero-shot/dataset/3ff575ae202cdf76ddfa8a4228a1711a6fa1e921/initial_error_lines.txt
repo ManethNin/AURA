@@ -1,0 +1,5 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:testCompile (default-testCompile) on project plexus-archiver: Compilation failure
+[ERROR] src/test/java/org/codehaus/plexus/archiver/DuplicateFilesTest.java:[37,23] cannot find symbol
+[ERROR]   symbol:   method getLoggerManager()
+[ERROR]   location: interface org.codehaus.plexus.PlexusContainer
+[ERROR] -> [Help 1]

@@ -1,0 +1,63 @@
+package org.assertj.core.internal.bytebuddy does not exist
+package org.assertj.core.internal.bytebuddy does not exist
+package org.assertj.core.internal.bytebuddy.TypeCache does not exist
+package org.assertj.core.internal.bytebuddy.dynamic.scaffold does not exist
+package org.assertj.core.internal.bytebuddy.implementation does not exist
+package org.assertj.core.internal.bytebuddy.implementation does not exist
+package org.assertj.core.internal.bytebuddy.implementation.auxiliary does not exist
+package org.assertj.core.internal.bytebuddy.implementation.bind.annotation does not exist
+package org.assertj.core.internal.bytebuddy.implementation.bind.annotation does not exist
+package org.assertj.core.internal.bytebuddy.implementation.bind.annotation does not exist
+package org.assertj.core.internal.bytebuddy.matcher does not exist
+static import only from classes and interfaces
+package org.assertj.core.internal.bytebuddy.dynamic.loading does not exist
+package org.assertj.core.internal.bytebuddy.dynamic.loading does not exist
+cannot find symbol
+symbol:   class ByteBuddy
+location: class org.assertj.vavr.api.VavrAssumptions
+cannot find symbol
+symbol:   class Implementation
+location: class org.assertj.vavr.api.VavrAssumptions
+cannot find symbol
+symbol:   class TypeCache
+location: class org.assertj.vavr.api.VavrAssumptions
+cannot find symbol
+symbol:   class SimpleKey
+location: class org.assertj.vavr.api.VavrAssumptions
+cannot find symbol
+symbol:   class ClassLoadingStrategy
+location: class org.assertj.vavr.api.ClassLoadingStrategyFactory
+cannot find symbol
+symbol:   class This
+location: class org.assertj.vavr.api.VavrAssumptions.AssumptionMethodInterceptor
+cannot find symbol
+symbol:   class SuperCall
+location: class org.assertj.vavr.api.VavrAssumptions.AssumptionMethodInterceptor
+cannot find symbol
+symbol:   class RuntimeType
+location: class org.assertj.vavr.api.VavrAssumptions.AssumptionMethodInterceptor
+package ClassInjector does not exist
+package ClassLoadingStrategy does not exist
+package ClassInjector does not exist
+package ClassLoadingStrategy does not exist
+package AuxiliaryType.NamingStrategy does not exist
+cannot find symbol
+symbol:   variable TypeValidation
+location: class org.assertj.vavr.api.VavrAssumptions
+cannot find symbol
+symbol:   class ByteBuddy
+location: class org.assertj.vavr.api.VavrAssumptions
+cannot find symbol
+symbol:   variable MethodDelegation
+location: class org.assertj.vavr.api.VavrAssumptions
+package TypeCache does not exist
+package TypeCache does not exist
+cannot find symbol
+symbol:   class SimpleKey
+location: class org.assertj.vavr.api.VavrAssumptions
+cannot find symbol
+symbol:   class SimpleKey
+location: class org.assertj.vavr.api.VavrAssumptions
+cannot find symbol
+symbol:   method any()
+location: class org.assertj.vavr.api.VavrAssumptions

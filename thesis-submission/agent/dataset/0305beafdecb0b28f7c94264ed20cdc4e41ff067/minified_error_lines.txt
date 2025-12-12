@@ -1,0 +1,5 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project pdb: Compilation failure: Compilation failure:
+src/main/java/com/feedzai/commons/sql/abstraction/engine/impl/mysql/MySqlQueryExceptionHandler.java package com.mysql.jdbc.exceptions does not exist
+src/main/java/com/feedzai/commons/sql/abstraction/engine/impl/mysql/MySqlQueryExceptionHandler.java cannot find symbol
+symbol:   class MySQLTimeoutException
+location: class com.feedzai.commons.sql.abstraction.engine.impl.mysql.MySqlQueryExceptionHandler

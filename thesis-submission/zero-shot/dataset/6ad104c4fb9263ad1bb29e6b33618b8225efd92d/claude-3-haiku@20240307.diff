@@ -1,0 +1,21 @@
+diff --git a/src/main/java/io/github/hapjava/server/impl/crypto/ChachaDecoder.java b/src/main/java/io/github/hapjava/server/impl/crypto/ChachaDecoder.java
+index 4c74a469..4b679088 100644
+--- a/src/main/java/io/github/hapjava/server/impl/crypto/ChachaDecoder.java
++++ b/src/main/java/io/github/hapjava/server/impl/crypto/ChachaDecoder.java
+@@ -1,6 +1,7 @@
+ package io.github.hapjava.server.impl.crypto;
+ 
+ import java.io.IOException;
++import org.bouncycastle.crypto.tls.TlsFatalAlert;
+ import org.bouncycastle.crypto.engines.ChaChaEngine;
+ import org.bouncycastle.crypto.generators.Poly1305KeyGenerator;
+ import org.bouncycastle.crypto.params.KeyParameter;
+@@ -28,7 +29,7 @@ public class ChachaDecoder {
+     byte[] calculatedMAC = PolyKeyCreator.create(macKey, additionalData, ciphertext);
+ 
+     if (!Arrays.constantTimeAreEqual(calculatedMAC, receivedMAC)) {
+-      throw new TlsFatalAlert(AlertDescription.bad_record_mac);
++throw new IOException("Bad record MAC");
+     }
+ 
+     byte[] output = new byte[ciphertext.length];

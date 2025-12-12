@@ -1,0 +1,5 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project openpdfsign: Compilation failure
+[ERROR] src/main/java/org/openpdfsign/Signer.java:[7,32] cannot find symbol
+[ERROR]   symbol:   class CertificationPermission
+[ERROR]   location: package eu.europa.esig.dss.pades
+[ERROR] -> [Help 1]

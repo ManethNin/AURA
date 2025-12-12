@@ -1,0 +1,40 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project plexus-archiver: Compilation failure: Compilation failure:
+[ERROR] src/main/java/org/codehaus/plexus/archiver/zip/ByteArrayOutputStream.java:[29,35] cannot find symbol
+[ERROR]   symbol:   class ClosedInputStream
+[ERROR]   location: package org.apache.commons.io.input
+[ERROR] src/main/java/org/codehaus/plexus/archiver/zip/AbstractZipUnArchiver.java:[28,35] cannot find symbol
+[ERROR]   symbol:   class BoundedInputStream
+[ERROR]   location: package org.apache.commons.io.input
+[ERROR] src/main/java/org/codehaus/plexus/archiver/jar/JarToolModularJarArchiver.java:[41,36] cannot find symbol
+[ERROR]   symbol:   class NullPrintStream
+[ERROR]   location: package org.apache.commons.io.output
+[ERROR] src/main/java/org/codehaus/plexus/archiver/zip/OffloadingOutputStream.java:[27,36] cannot find symbol
+[ERROR]   symbol:   class ThresholdingOutputStream
+[ERROR]   location: package org.apache.commons.io.output
+[ERROR] src/main/java/org/codehaus/plexus/archiver/zip/OffloadingOutputStream.java:[32,38] cannot find symbol
+[ERROR]   symbol: class ThresholdingOutputStream
+[ERROR] src/main/java/org/codehaus/plexus/archiver/zip/ByteArrayOutputStream.java:[401,24] cannot find symbol
+[ERROR]   symbol:   class ClosedInputStream
+[ERROR]   location: class org.codehaus.plexus.archiver.zip.ByteArrayOutputStream
+[ERROR] src/main/java/org/codehaus/plexus/archiver/zip/AbstractZipUnArchiver.java:[204,25] cannot find symbol
+[ERROR]   symbol:   class BoundedInputStream
+[ERROR]   location: class org.codehaus.plexus.archiver.zip.AbstractZipUnArchiver
+[ERROR] src/main/java/org/codehaus/plexus/archiver/zip/AbstractZipUnArchiver.java:[204,54] cannot find symbol
+[ERROR]   symbol:   class BoundedInputStream
+[ERROR]   location: class org.codehaus.plexus.archiver.zip.AbstractZipUnArchiver
+[ERROR] src/main/java/org/codehaus/plexus/archiver/zip/AbstractZipUnArchiver.java:[211,46] cannot find symbol
+[ERROR]   symbol:   method getByteCount()
+[ERROR]   location: variable cis of type org.apache.commons.io.input.CountingInputStream
+[ERROR] src/main/java/org/codehaus/plexus/archiver/jar/JarToolModularJarArchiver.java:[300,43] cannot find symbol
+[ERROR]   symbol:   variable NullPrintStream
+[ERROR]   location: class org.codehaus.plexus.archiver.jar.JarToolModularJarArchiver
+[ERROR] src/main/java/org/codehaus/plexus/archiver/zip/DeferredScatterOutputStream.java:[44,13] cannot find symbol
+[ERROR]   symbol:   method write(byte[],int,int)
+[ERROR]   location: variable dfos of type org.codehaus.plexus.archiver.zip.OffloadingOutputStream
+[ERROR] src/main/java/org/codehaus/plexus/archiver/zip/OffloadingOutputStream.java:[129,5] method does not override or implement a method from a supertype
+[ERROR] src/main/java/org/codehaus/plexus/archiver/zip/OffloadingOutputStream.java:[143,5] method does not override or implement a method from a supertype
+[ERROR] src/main/java/org/codehaus/plexus/archiver/zip/OffloadingOutputStream.java:[207,5] method does not override or implement a method from a supertype
+[ERROR] src/main/java/org/codehaus/plexus/archiver/zip/OffloadingOutputStream.java:[210,9] cannot find symbol
+[ERROR]   symbol:   variable super
+[ERROR]   location: class org.codehaus.plexus.archiver.zip.OffloadingOutputStream
+[ERROR] -> [Help 1]

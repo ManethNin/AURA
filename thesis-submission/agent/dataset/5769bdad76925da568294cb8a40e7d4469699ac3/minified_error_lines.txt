@@ -1,0 +1,2 @@
+Failed to execute goal maven-compiler-plugin:3.3:compile (default-compile) on project lib: Compilation failure
+lib/src/main/java/io/jenkins/tools/incrementals/lib/UpdateChecker.java status has private access in org.kohsuke.github.GHCompare

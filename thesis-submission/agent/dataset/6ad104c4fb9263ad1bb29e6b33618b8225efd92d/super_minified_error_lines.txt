@@ -1,0 +1,8 @@
+package org.bouncycastle.crypto.tls does not exist
+package org.bouncycastle.crypto.tls does not exist
+cannot find symbol
+symbol:   class TlsFatalAlert
+location: class io.github.hapjava.server.impl.crypto.ChachaDecoder
+cannot find symbol
+symbol:   variable AlertDescription
+location: class io.github.hapjava.server.impl.crypto.ChachaDecoder

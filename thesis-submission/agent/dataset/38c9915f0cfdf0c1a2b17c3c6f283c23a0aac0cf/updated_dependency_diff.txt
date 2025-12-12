@@ -1,0 +1,12 @@
+--- a/pom.xml
++++ b/pom.xml
+@@ ... @@
+     <dependency>
+       <groupId>org.cactoos</groupId>
+       <artifactId>cactoos</artifactId>
+-      <version>0.35</version>
++      <version>0.55.0</version>
+     </dependency>
+     <dependency>
+       <groupId>javax.json</groupId>
+

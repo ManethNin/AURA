@@ -1,0 +1,29 @@
+diff --git a/safeplace/src/test/java/org/btrplace/safeplace/DSN.java b/safeplace/src/test/java/org/btrplace/safeplace/DSN.java
+index 5edd1743..28e7292b 100644
+--- a/safeplace/src/test/java/org/btrplace/safeplace/DSN.java
++++ b/safeplace/src/test/java/org/btrplace/safeplace/DSN.java
+@@ -12,7 +12,6 @@ import com.github.javaparser.ast.CompilationUnit;
+ import com.github.javaparser.ast.body.MethodDeclaration;
+ import com.github.javaparser.ast.expr.AnnotationExpr;
+ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+-import com.github.javaparser.printer.PrettyPrinterConfiguration;
+ import org.btrplace.safeplace.spec.Constraint;
+ import org.btrplace.safeplace.spec.SpecScanner;
+ import org.btrplace.safeplace.testing.Bench;
+@@ -332,7 +331,6 @@ public class DSN {
+ 
+       private final List<Integer> l;
+ 
+-      private final PrettyPrinterConfiguration noComments = new PrettyPrinterConfiguration().setPrintComments(false);
+ 
+         UnitTestsVisitor(List<Integer> numbers) {
+             this.l = numbers;
+@@ -341,7 +339,7 @@ public class DSN {
+ @Override
+         public void visit(MethodDeclaration n, Void arg) {
+             System.out.println(n.getNameAsString());
+-            if (n.toString(noComments).contains("solve")) {
++if (n.toString().contains("solve")) {
+                 n.getRange().ifPresent(r -> l.add(r.end.line - r.begin.line));
+ }
+             super.visit(n, arg);

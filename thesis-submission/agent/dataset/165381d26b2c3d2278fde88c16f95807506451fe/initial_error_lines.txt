@@ -1,0 +1,8 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:testCompile (default-testCompile) on project safeplace: Compilation failure: Compilation failure:
+[ERROR] safeplace/src/test/java/org/btrplace/safeplace/DSN.java:[15,37] cannot find symbol
+[ERROR]   symbol:   class PrettyPrinterConfiguration
+[ERROR]   location: package com.github.javaparser.printer
+[ERROR] safeplace/src/test/java/org/btrplace/safeplace/DSN.java:[335,21] cannot find symbol
+[ERROR]   symbol:   class PrettyPrinterConfiguration
+[ERROR]   location: class org.btrplace.safeplace.DSN.UnitTestsVisitor
+[ERROR] -> [Help 1]

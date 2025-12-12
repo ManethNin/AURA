@@ -1,0 +1,192 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project lithium: Compilation failure: Compilation failure:
+src/main/java/com/wire/lithium/server/monitoring/VersionResource.java package javax.ws.rs does not exist
+src/main/java/com/wire/lithium/server/monitoring/VersionResource.java package javax.ws.rs does not exist
+src/main/java/com/wire/lithium/server/monitoring/VersionResource.java package javax.ws.rs does not exist
+src/main/java/com/wire/lithium/server/monitoring/VersionResource.java package javax.ws.rs.core does not exist
+src/main/java/com/wire/lithium/server/monitoring/VersionResource.java package javax.ws.rs.core does not exist
+src/main/java/com/wire/lithium/server/monitoring/VersionResource.java cannot find symbol
+symbol: class Path
+src/main/java/com/wire/lithium/server/monitoring/VersionResource.java cannot find symbol
+symbol: class Produces
+src/main/java/com/wire/lithium/server/monitoring/VersionResource.java cannot find symbol
+symbol:   class Response
+location: class com.wire.lithium.server.monitoring.VersionResource
+src/main/java/com/wire/lithium/Server.java package com.fasterxml.jackson.jaxrs.json does not exist
+src/main/java/com/wire/lithium/Server.java package io.dropwizard does not exist
+src/main/java/com/wire/lithium/Server.java package io.dropwizard.setup does not exist
+src/main/java/com/wire/lithium/Server.java package io.dropwizard.setup does not exist
+src/main/java/com/wire/lithium/Server.java package javax.ws.rs.client does not exist
+src/main/java/com/wire/lithium/Server.java cannot find symbol
+symbol: class Application
+src/main/java/com/wire/lithium/Configuration.java cannot find symbol
+symbol:   class Configuration
+location: package io.dropwizard
+src/main/java/com/wire/lithium/Server.java cannot find symbol
+symbol:   class Environment
+location: class com.wire.lithium.Server<Config>
+src/main/java/com/wire/lithium/Server.java cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.Server<Config>
+src/main/java/com/wire/lithium/Server.java cannot find symbol
+symbol:   class Environment
+location: class com.wire.lithium.Server<Config>
+src/main/java/com/wire/lithium/Server.java cannot find symbol
+symbol:   class Environment
+location: class com.wire.lithium.Server<Config>
+src/main/java/com/wire/lithium/Server.java cannot find symbol
+symbol:   class Environment
+location: class com.wire.lithium.Server<Config>
+src/main/java/com/wire/lithium/Server.java cannot find symbol
+symbol:   class Bootstrap
+location: class com.wire.lithium.Server<Config>
+src/main/java/com/wire/lithium/Server.java cannot find symbol
+symbol:   class Environment
+location: class com.wire.lithium.Server<Config>
+src/main/java/com/wire/lithium/Server.java cannot find symbol
+symbol:   class Environment
+location: class com.wire.lithium.Server<Config>
+src/main/java/com/wire/lithium/Server.java cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.Server<Config>
+src/main/java/com/wire/lithium/Server.java cannot find symbol
+symbol:   class Environment
+location: class com.wire.lithium.Server<Config>
+src/main/java/com/wire/lithium/Server.java cannot find symbol
+symbol:   class Environment
+location: class com.wire.lithium.Server<Config>
+src/main/java/com/wire/lithium/Server.java cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.Server<Config>
+src/main/java/com/wire/lithium/ClientRepo.java cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.ClientRepo
+src/main/java/com/wire/lithium/ClientRepo.java cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.ClientRepo
+src/main/java/com/wire/lithium/ClientRepo.java cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.ClientRepo
+src/main/java/com/wire/lithium/server/resources/MessageResource.java package javax.ws.rs.core does not exist
+src/main/java/com/wire/lithium/server/resources/MessageResource.java package javax.ws.rs.core does not exist
+src/main/java/com/wire/lithium/server/resources/MessageResource.java cannot find symbol
+symbol: class Produces
+src/main/java/com/wire/lithium/server/resources/MessageResource.java cannot find symbol
+symbol: class Consumes
+src/main/java/com/wire/lithium/server/resources/MessageResource.java cannot find symbol
+symbol: class Path
+src/main/java/com/wire/lithium/server/resources/MessageResource.java cannot find symbol
+symbol:   class Response
+location: class com.wire.lithium.server.resources.MessageResource
+src/main/java/com/wire/lithium/server/resources/MessageResource.java package javax.ws.rs does not exist
+src/main/java/com/wire/lithium/server/resources/BotsResource.java package javax.ws.rs does not exist
+src/main/java/com/wire/lithium/server/resources/BotsResource.java package javax.ws.rs does not exist
+src/main/java/com/wire/lithium/server/resources/BotsResource.java package javax.ws.rs does not exist
+src/main/java/com/wire/lithium/server/resources/BotsResource.java package javax.ws.rs does not exist
+src/main/java/com/wire/lithium/server/resources/BotsResource.java package javax.ws.rs.container does not exist
+src/main/java/com/wire/lithium/server/resources/BotsResource.java package javax.ws.rs.core does not exist
+src/main/java/com/wire/lithium/server/resources/BotsResource.java package javax.ws.rs.core does not exist
+src/main/java/com/wire/lithium/server/resources/BotsResource.java package javax.ws.rs.core does not exist
+src/main/java/com/wire/lithium/server/resources/BotsResource.java cannot find symbol
+symbol: class Produces
+src/main/java/com/wire/lithium/server/resources/BotsResource.java cannot find symbol
+symbol: class Consumes
+src/main/java/com/wire/lithium/server/resources/BotsResource.java cannot find symbol
+symbol: class Path
+src/main/java/com/wire/lithium/server/resources/BotsResource.java cannot find symbol
+symbol:   class ContainerRequestContext
+location: class com.wire.lithium.server.resources.BotsResource
+src/main/java/com/wire/lithium/server/resources/BotsResource.java cannot find symbol
+symbol:   class Response
+location: class com.wire.lithium.server.resources.BotsResource
+src/main/java/com/wire/lithium/server/monitoring/RequestMdcFactoryFilter.java cannot find symbol
+symbol:   class Strings
+location: package io.dropwizard.util
+src/main/java/com/wire/lithium/server/monitoring/RequestMdcFactoryFilter.java package javax.ws.rs.container does not exist
+src/main/java/com/wire/lithium/server/monitoring/RequestMdcFactoryFilter.java package javax.ws.rs.container does not exist
+src/main/java/com/wire/lithium/server/monitoring/RequestMdcFactoryFilter.java package javax.ws.rs.ext does not exist
+src/main/java/com/wire/lithium/server/monitoring/RequestMdcFactoryFilter.java cannot find symbol
+symbol: class ContainerRequestFilter
+src/main/java/com/wire/lithium/server/monitoring/RequestMdcFactoryFilter.java cannot find symbol
+symbol: class Provider
+src/main/java/com/wire/lithium/server/monitoring/RequestMdcFactoryFilter.java cannot find symbol
+symbol:   class ContainerRequestContext
+location: class com.wire.lithium.server.monitoring.RequestMdcFactoryFilter
+src/main/java/com/wire/lithium/server/monitoring/WireAppenderFactory.java package io.dropwizard.logging does not exist
+src/main/java/com/wire/lithium/server/monitoring/WireAppenderFactory.java package io.dropwizard.logging.async does not exist
+src/main/java/com/wire/lithium/server/monitoring/WireAppenderFactory.java package io.dropwizard.logging.filter does not exist
+src/main/java/com/wire/lithium/server/monitoring/WireAppenderFactory.java package io.dropwizard.logging.layout does not exist
+src/main/java/com/wire/lithium/server/monitoring/WireAppenderFactory.java cannot find symbol
+symbol: class AbstractAppenderFactory
+src/main/java/com/wire/lithium/server/monitoring/WireAppenderFactory.java cannot find symbol
+symbol:   class LayoutFactory
+location: class com.wire.lithium.server.monitoring.WireAppenderFactory<T>
+src/main/java/com/wire/lithium/server/monitoring/WireAppenderFactory.java cannot find symbol
+symbol:   class LevelFilterFactory
+location: class com.wire.lithium.server.monitoring.WireAppenderFactory<T>
+src/main/java/com/wire/lithium/server/monitoring/WireAppenderFactory.java cannot find symbol
+symbol:   class AsyncAppenderFactory
+location: class com.wire.lithium.server.monitoring.WireAppenderFactory<T>
+src/main/java/com/wire/lithium/API.java package javax.ws.rs does not exist
+src/main/java/com/wire/lithium/API.java package javax.ws.rs.client does not exist
+src/main/java/com/wire/lithium/API.java package javax.ws.rs.client does not exist
+src/main/java/com/wire/lithium/API.java package javax.ws.rs.client does not exist
+src/main/java/com/wire/lithium/API.java cannot find symbol
+symbol:   class WebTarget
+location: class com.wire.lithium.API
+src/main/java/com/wire/lithium/API.java cannot find symbol
+symbol:   class WebTarget
+location: class com.wire.lithium.API
+src/main/java/com/wire/lithium/API.java cannot find symbol
+symbol:   class WebTarget
+location: class com.wire.lithium.API
+src/main/java/com/wire/lithium/API.java cannot find symbol
+symbol:   class WebTarget
+location: class com.wire.lithium.API
+src/main/java/com/wire/lithium/API.java cannot find symbol
+symbol:   class WebTarget
+location: class com.wire.lithium.API
+src/main/java/com/wire/lithium/API.java cannot find symbol
+symbol:   class WebTarget
+location: class com.wire.lithium.API
+src/main/java/com/wire/lithium/API.java cannot find symbol
+symbol:   class WebTarget
+location: class com.wire.lithium.API
+src/main/java/com/wire/lithium/API.java cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.API
+src/main/java/com/wire/lithium/API.java cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.API
+src/main/java/com/wire/lithium/API.java cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.API
+src/main/java/com/wire/lithium/API.java cannot find symbol
+symbol:   class Response
+location: class com.wire.lithium.API
+src/main/java/com/wire/lithium/API.java package javax.ws.rs.core does not exist
+src/main/java/com/wire/lithium/server/monitoring/StatusCheckFilter.java package io.dropwizard.logging.filter does not exist
+src/main/java/com/wire/lithium/server/monitoring/StatusCheckFilter.java cannot find symbol
+symbol: class FilterFactory
+src/main/java/com/wire/lithium/server/monitoring/AccessEventJsonLayout.java package javax.servlet.http does not exist
+src/main/java/com/wire/lithium/server/filters/AuthenticationFilter.java package javax.ws.rs does not exist
+src/main/java/com/wire/lithium/server/filters/AuthenticationFilter.java package javax.ws.rs.container does not exist
+src/main/java/com/wire/lithium/server/filters/AuthenticationFilter.java package javax.ws.rs.container does not exist
+src/main/java/com/wire/lithium/server/filters/AuthenticationFilter.java package javax.ws.rs.core does not exist
+src/main/java/com/wire/lithium/server/filters/AuthenticationFilter.java package javax.ws.rs.core does not exist
+src/main/java/com/wire/lithium/server/filters/AuthenticationFilter.java package javax.ws.rs.ext does not exist
+src/main/java/com/wire/lithium/server/filters/AuthenticationFilter.java cannot find symbol
+symbol: class ContainerRequestFilter
+src/main/java/com/wire/lithium/server/filters/AuthenticationFilter.java cannot find symbol
+symbol: class Provider
+src/main/java/com/wire/lithium/server/filters/AuthenticationFilter.java cannot find symbol
+symbol:   class ContainerRequestContext
+location: class com.wire.lithium.server.filters.AuthenticationFilter
+src/main/java/com/wire/lithium/server/monitoring/StatusResource.java package javax.ws.rs does not exist
+src/main/java/com/wire/lithium/server/monitoring/StatusResource.java package javax.ws.rs does not exist
+src/main/java/com/wire/lithium/server/monitoring/StatusResource.java package javax.ws.rs does not exist
+src/main/java/com/wire/lithium/server/monitoring/StatusResource.java package javax.ws.rs.core does not exist
+src/main/java/com/wire/lithium/server/monitoring/StatusResource.java package javax.ws.rs.core does not exist
+src/main/java/com/wire/lithium/server/monitoring/StatusResource.java cannot find symbol
+symbol: class Path
+src/main/java/com/wire/lithium/server/monitoring/StatusResource.java cannot find symbol
+symbol: class Produces

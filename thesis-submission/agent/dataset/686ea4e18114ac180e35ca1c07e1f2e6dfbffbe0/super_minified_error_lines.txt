@@ -1,0 +1,191 @@
+package javax.ws.rs does not exist
+package javax.ws.rs does not exist
+package javax.ws.rs does not exist
+package javax.ws.rs.core does not exist
+package javax.ws.rs.core does not exist
+cannot find symbol
+symbol: class Path
+cannot find symbol
+symbol: class Produces
+cannot find symbol
+symbol:   class Response
+location: class com.wire.lithium.server.monitoring.VersionResource
+package com.fasterxml.jackson.jaxrs.json does not exist
+package io.dropwizard does not exist
+package io.dropwizard.setup does not exist
+package io.dropwizard.setup does not exist
+package javax.ws.rs.client does not exist
+cannot find symbol
+symbol: class Application
+cannot find symbol
+symbol:   class Configuration
+location: package io.dropwizard
+cannot find symbol
+symbol:   class Environment
+location: class com.wire.lithium.Server<Config>
+cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.Server<Config>
+cannot find symbol
+symbol:   class Environment
+location: class com.wire.lithium.Server<Config>
+cannot find symbol
+symbol:   class Environment
+location: class com.wire.lithium.Server<Config>
+cannot find symbol
+symbol:   class Environment
+location: class com.wire.lithium.Server<Config>
+cannot find symbol
+symbol:   class Bootstrap
+location: class com.wire.lithium.Server<Config>
+cannot find symbol
+symbol:   class Environment
+location: class com.wire.lithium.Server<Config>
+cannot find symbol
+symbol:   class Environment
+location: class com.wire.lithium.Server<Config>
+cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.Server<Config>
+cannot find symbol
+symbol:   class Environment
+location: class com.wire.lithium.Server<Config>
+cannot find symbol
+symbol:   class Environment
+location: class com.wire.lithium.Server<Config>
+cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.Server<Config>
+cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.ClientRepo
+cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.ClientRepo
+cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.ClientRepo
+package javax.ws.rs.core does not exist
+package javax.ws.rs.core does not exist
+cannot find symbol
+symbol: class Produces
+cannot find symbol
+symbol: class Consumes
+cannot find symbol
+symbol: class Path
+cannot find symbol
+symbol:   class Response
+location: class com.wire.lithium.server.resources.MessageResource
+package javax.ws.rs does not exist
+package javax.ws.rs does not exist
+package javax.ws.rs does not exist
+package javax.ws.rs does not exist
+package javax.ws.rs does not exist
+package javax.ws.rs.container does not exist
+package javax.ws.rs.core does not exist
+package javax.ws.rs.core does not exist
+package javax.ws.rs.core does not exist
+cannot find symbol
+symbol: class Produces
+cannot find symbol
+symbol: class Consumes
+cannot find symbol
+symbol: class Path
+cannot find symbol
+symbol:   class ContainerRequestContext
+location: class com.wire.lithium.server.resources.BotsResource
+cannot find symbol
+symbol:   class Response
+location: class com.wire.lithium.server.resources.BotsResource
+cannot find symbol
+symbol:   class Strings
+location: package io.dropwizard.util
+package javax.ws.rs.container does not exist
+package javax.ws.rs.container does not exist
+package javax.ws.rs.ext does not exist
+cannot find symbol
+symbol: class ContainerRequestFilter
+cannot find symbol
+symbol: class Provider
+cannot find symbol
+symbol:   class ContainerRequestContext
+location: class com.wire.lithium.server.monitoring.RequestMdcFactoryFilter
+package io.dropwizard.logging does not exist
+package io.dropwizard.logging.async does not exist
+package io.dropwizard.logging.filter does not exist
+package io.dropwizard.logging.layout does not exist
+cannot find symbol
+symbol: class AbstractAppenderFactory
+cannot find symbol
+symbol:   class LayoutFactory
+location: class com.wire.lithium.server.monitoring.WireAppenderFactory<T>
+cannot find symbol
+symbol:   class LevelFilterFactory
+location: class com.wire.lithium.server.monitoring.WireAppenderFactory<T>
+cannot find symbol
+symbol:   class AsyncAppenderFactory
+location: class com.wire.lithium.server.monitoring.WireAppenderFactory<T>
+package javax.ws.rs does not exist
+package javax.ws.rs.client does not exist
+package javax.ws.rs.client does not exist
+package javax.ws.rs.client does not exist
+cannot find symbol
+symbol:   class WebTarget
+location: class com.wire.lithium.API
+cannot find symbol
+symbol:   class WebTarget
+location: class com.wire.lithium.API
+cannot find symbol
+symbol:   class WebTarget
+location: class com.wire.lithium.API
+cannot find symbol
+symbol:   class WebTarget
+location: class com.wire.lithium.API
+cannot find symbol
+symbol:   class WebTarget
+location: class com.wire.lithium.API
+cannot find symbol
+symbol:   class WebTarget
+location: class com.wire.lithium.API
+cannot find symbol
+symbol:   class WebTarget
+location: class com.wire.lithium.API
+cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.API
+cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.API
+cannot find symbol
+symbol:   class Client
+location: class com.wire.lithium.API
+cannot find symbol
+symbol:   class Response
+location: class com.wire.lithium.API
+package javax.ws.rs.core does not exist
+package io.dropwizard.logging.filter does not exist
+cannot find symbol
+symbol: class FilterFactory
+package javax.servlet.http does not exist
+package javax.ws.rs does not exist
+package javax.ws.rs.container does not exist
+package javax.ws.rs.container does not exist
+package javax.ws.rs.core does not exist
+package javax.ws.rs.core does not exist
+package javax.ws.rs.ext does not exist
+cannot find symbol
+symbol: class ContainerRequestFilter
+cannot find symbol
+symbol: class Provider
+cannot find symbol
+symbol:   class ContainerRequestContext
+location: class com.wire.lithium.server.filters.AuthenticationFilter
+package javax.ws.rs does not exist
+package javax.ws.rs does not exist
+package javax.ws.rs does not exist
+package javax.ws.rs.core does not exist
+package javax.ws.rs.core does not exist
+cannot find symbol
+symbol: class Path
+cannot find symbol
+symbol: class Produces

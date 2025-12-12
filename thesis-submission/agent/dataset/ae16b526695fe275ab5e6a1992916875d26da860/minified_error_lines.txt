@@ -1,0 +1,18 @@
+Failed to execute goal maven-compiler-plugin:2.5.1:compile (default-compile) on project jadler-jetty: Compilation failure: Compilation failure:
+To suppress warnings about obsolete options, use -Xlint:-options.
+jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java error: cannot find symbol
+symbol:   class SelectChannelConnector
+location: package org.eclipse.jetty.server.nio
+jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java error: cannot find symbol
+symbol:   method setSendServerVersion(boolean)
+location: variable server of type Server
+jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java error: cannot find symbol
+symbol:   method setSendDateHeader(boolean)
+location: variable server of type Server
+jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java error: cannot find symbol
+symbol:   class SelectChannelConnector
+location: class JettyStubHttpServer
+jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java error: cannot find symbol
+symbol:   method setPort(int)
+location: variable httpConnector of type Connector
+jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java error: cannot find symbol

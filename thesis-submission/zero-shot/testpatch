@@ -1,0 +1,12 @@
+--- a/src/main/java/com/wire/lithium/Server.java
++++ b/src/main/java/com/wire/lithium/Server.java
+@@ -92,7 +92,7 @@
+     private Client createHttpClient(Config config, Environment env) {
+         return new JerseyClientBuilder(env)
+-                .using(config.getJerseyClient())
++                .using(config.getJerseyClient().build())
+                 .withProvider(MultiPartFeature.class)
+-                .withProvider(JacksonJsonProvider.class)
++                .withProvider(new JacksonJsonProvider())
+                 .build(getName());
+     }

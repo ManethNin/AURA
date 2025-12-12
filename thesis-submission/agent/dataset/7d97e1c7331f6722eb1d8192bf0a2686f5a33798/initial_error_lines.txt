@@ -1,0 +1,5 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:testCompile (default-testCompile) on project jcabi-simpledb: Compilation failure
+[ERROR] src/test/java/com/jcabi/simpledb/RegionITCase.java:[33,25] cannot find symbol
+[ERROR]   symbol:   class Tv
+[ERROR]   location: package com.jcabi.aspects
+[ERROR] -> [Help 1]

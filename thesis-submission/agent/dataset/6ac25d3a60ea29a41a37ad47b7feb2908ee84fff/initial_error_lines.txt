@@ -1,0 +1,8 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:testCompile (default-testCompile) on project tobago-core: Compilation failure: Compilation failure:
+[ERROR] tobago-core/src/test/java/org/apache/myfaces/tobago/internal/mock/servlet/MockHttpSession.java:[24,28] cannot find symbol
+[ERROR]   symbol:   class HttpSessionContext
+[ERROR]   location: package jakarta.servlet.http
+[ERROR] tobago-core/src/test/java/org/apache/myfaces/tobago/internal/mock/servlet/MockHttpSession.java:[67,10] cannot find symbol
+[ERROR]   symbol:   class HttpSessionContext
+[ERROR]   location: class org.apache.myfaces.tobago.internal.mock.servlet.MockHttpSession
+[ERROR] -> [Help 1]

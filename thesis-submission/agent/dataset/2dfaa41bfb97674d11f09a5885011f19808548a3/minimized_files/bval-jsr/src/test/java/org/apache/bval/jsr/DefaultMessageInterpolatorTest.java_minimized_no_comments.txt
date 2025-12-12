@@ -1,0 +1,48 @@
+package org.apache.bval.jsr;
+
+import static org.hamcrest.CoreMatchers.anyOf;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeThat;
+import static org.junit.Assume.assumeTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
+import java.lang.annotation.Annotation;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import jakarta.el.ExpressionFactory;
+import jakarta.validation.MessageInterpolator;
+import jakarta.validation.Validator;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.metadata.ConstraintDescriptor;
+import org.apache.bval.constraints.NotEmpty;
+import org.apache.bval.jsr.example.Author;
+import org.apache.bval.jsr.example.PreferredGuest;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+import org.mockito.Mockito;
+
+@RunWith(Parameterized.class)
+public class DefaultMessageInterpolatorTest {
+    @SuppressWarnings("unchecked")
+    private ApacheMessageContext context(Object validatedValue, Supplier<ConstraintDescriptor<?>> descriptor) {
+        final ApacheMessageContext result = Mockito.mock(ApacheMessageContext.class);
+        when(result.unwrap(any(Class.class)))
+            .thenAnswer(invocation -> invocation.getArgumentAt(0, Class.class).cast(result));
+        when(result.getValidatedValue()).thenReturn(validatedValue);
+        when(result.getConstraintDescriptor()).thenAnswer(invocation -> descriptor.get());
+        return result;
+    }
+
+}

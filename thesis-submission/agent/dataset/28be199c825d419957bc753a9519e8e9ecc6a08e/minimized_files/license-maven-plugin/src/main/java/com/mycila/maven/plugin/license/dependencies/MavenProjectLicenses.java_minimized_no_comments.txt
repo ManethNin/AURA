@@ -1,0 +1,66 @@
+package com.mycila.maven.plugin.license.dependencies;
+
+import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
+import org.apache.maven.artifact.resolver.filter.CumulativeScopeArtifactFilter;
+import org.apache.maven.execution.MavenSession;
+import org.apache.maven.model.License;
+import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.project.DefaultProjectBuilder;
+import org.apache.maven.project.DefaultProjectBuildingRequest;
+import org.apache.maven.project.MavenProject;
+import org.apache.maven.project.ProjectBuilder;
+import org.apache.maven.project.ProjectBuildingException;
+import org.apache.maven.project.ProjectBuildingRequest;
+import org.apache.maven.shared.dependency.graph.DependencyGraphBuilder;
+import org.apache.maven.shared.dependency.graph.DependencyGraphBuilderException;
+import org.apache.maven.shared.dependency.graph.DependencyNode;
+import org.apache.maven.shared.dependency.graph.internal.Maven31DependencyGraphBuilder;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+public class MavenProjectLicenses implements LicenseMap, LicenseMessage {
+  private Set<Artifact> getDependencies() {
+    final Set<Artifact> artifacts = new HashSet<Artifact>();
+    final Set<DependencyNode> dependencies = new HashSet<DependencyNode>();
+
+    // build the set of maven dependencies for each module in the reactor (might
+    // only be the single one) and all its transitives
+    getLog().debug(String.format("Building dependency graphs for %d projects", getProjects().size()));
+    getProjects().parallelStream().forEach(project -> {
+      try {
+        dependencies.addAll(getGraph().buildDependencyGraph(project, getFilter()).getChildren());
+      } catch (DependencyGraphBuilderException ex) {
+        getLog().warn(
+            String.format("Could not get children from project %s, it's dependencies will not be checked!",
+                project.getId()));
+      }
+    });
+
+    // build the complete set of direct+transitive dependent artifacts in all
+    // modules in the reactor
+    dependencies.parallelStream().forEach(d -> artifacts.add(d.getArtifact()));
+    getLog().info(String.format("%s: %d", INFO_DEPS_DISCOVERED, dependencies.size()));
+
+    return artifacts;
+
+    // tempting, but does not resolve dependencies after the scope in which this
+    // plugin is invoked
+    // return project.getArtifacts();
+  }
+
+  protected Set<MavenProject> getProjects() {
+    return projects;
+  }
+
+  private Log getLog() {
+    return log;
+  }
+
+}

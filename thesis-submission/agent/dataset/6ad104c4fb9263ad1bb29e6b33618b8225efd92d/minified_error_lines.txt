@@ -1,0 +1,9 @@
+Failed to execute goal maven-compiler-plugin:3.8.0:compile (default-compile) on project hap: Compilation failure: Compilation failure:
+src/main/java/io/github/hapjava/server/impl/crypto/ChachaDecoder.java package org.bouncycastle.crypto.tls does not exist
+src/main/java/io/github/hapjava/server/impl/crypto/ChachaDecoder.java package org.bouncycastle.crypto.tls does not exist
+src/main/java/io/github/hapjava/server/impl/crypto/ChachaDecoder.java cannot find symbol
+symbol:   class TlsFatalAlert
+location: class io.github.hapjava.server.impl.crypto.ChachaDecoder
+src/main/java/io/github/hapjava/server/impl/crypto/ChachaDecoder.java cannot find symbol
+symbol:   variable AlertDescription
+location: class io.github.hapjava.server.impl.crypto.ChachaDecoder

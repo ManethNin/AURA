@@ -1,0 +1,1 @@
+{"japicmpResult": {}, "elementLines": {}, "revapiResult": {}, "allPotentialBreakingElements": ["managedZones()", "getProjectId()", "delete(java.lang.String)"], "elementPatterns": {}, "project": "google-cloud-java"}

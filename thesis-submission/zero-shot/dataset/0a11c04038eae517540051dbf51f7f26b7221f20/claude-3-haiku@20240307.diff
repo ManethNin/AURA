@@ -1,0 +1,21 @@
+diff --git a/src/main/java/io/simplelocalize/cli/configuration/ConfigurationLoader.java b/src/main/java/io/simplelocalize/cli/configuration/ConfigurationLoader.java
+index 16fcd06..90b7b36 100644
+--- a/src/main/java/io/simplelocalize/cli/configuration/ConfigurationLoader.java
++++ b/src/main/java/io/simplelocalize/cli/configuration/ConfigurationLoader.java
+@@ -1,6 +1,7 @@
+ package io.simplelocalize.cli.configuration;
+ 
+ import io.simplelocalize.cli.exception.ConfigurationException;
++import org.yaml.snakeyaml.constructor.Constructor;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ import org.yaml.snakeyaml.Yaml;
+@@ -36,7 +37,7 @@ public final class ConfigurationLoader
+   private Configuration load(Path configurationFilePath)
+   {
+     File file = new File(URLDecoder.decode(String.valueOf(configurationFilePath.toFile()), StandardCharsets.UTF_8));
+-    Constructor yamlTargetClass = new Constructor(Configuration.class);
++Constructor yamlTargetClass = new Constructor(Configuration.class, new org.yaml.snakeyaml.LoaderOptions());
+     Yaml yaml = new Yaml(yamlTargetClass);
+ 
+     log.info("Loading configuration file from: {}", configurationFilePath);

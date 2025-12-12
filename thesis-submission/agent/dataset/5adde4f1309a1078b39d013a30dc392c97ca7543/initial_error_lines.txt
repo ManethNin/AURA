@@ -1,0 +1,5 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project sorald: Compilation failure
+[ERROR] sorald/src/main/java/sorald/sonar/SonarLintEngine.java:[163,17] cannot find symbol
+[ERROR]   symbol:   method addEnabledLanguages(java.util.Set<org.sonarsource.sonarlint.core.commons.Language>)
+[ERROR]   location: class org.sonarsource.sonarlint.core.analysis.api.AnalysisEngineConfiguration.Builder
+[ERROR] -> [Help 1]

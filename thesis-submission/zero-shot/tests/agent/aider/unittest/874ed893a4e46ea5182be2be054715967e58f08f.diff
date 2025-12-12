@@ -1,0 +1,6 @@
+```diff
+Path: src/main/java/de/gwdg/metadataqa/marc/dao/MarcRecord.java
+@@ -427,39 @@
+        } catch (JsonProcessingException e) {
++       } catch (JacksonException e) {
+```

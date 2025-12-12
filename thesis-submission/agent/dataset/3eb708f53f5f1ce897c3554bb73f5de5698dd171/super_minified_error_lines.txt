@@ -1,0 +1,123 @@
+package com.google.api.services.translate.model does not exist
+package com.google.api.services.translate.model does not exist
+package com.google.api.services.translate.model does not exist
+cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.Translation
+cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.Translation
+package com.google.api.services.translate.model does not exist
+package com.google.api.services.translate.model does not exist
+package com.google.api.services.translate.model does not exist
+cannot find symbol
+symbol:   class LanguagesResource
+location: interface com.google.cloud.translate.spi.v2.TranslateRpc
+cannot find symbol
+symbol:   class DetectionsResourceItems
+location: interface com.google.cloud.translate.spi.v2.TranslateRpc
+cannot find symbol
+symbol:   class TranslationsResource
+location: interface com.google.cloud.translate.spi.v2.TranslateRpc
+cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.Detection
+cannot find symbol
+symbol:   class LanguagesResource
+location: class com.google.cloud.translate.Language
+cannot find symbol
+symbol:   class LanguagesResource
+location: class com.google.cloud.translate.Language
+package com.google.api.services.translate does not exist
+package com.google.api.services.translate.model does not exist
+package com.google.api.services.translate.model does not exist
+package com.google.api.services.translate.model does not exist
+cannot find symbol
+symbol:   class Translate
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+cannot find symbol
+symbol:   class LanguagesResource
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+package com.google.api.services.translate.model does not exist
+package com.google.api.services.translate.model does not exist
+package com.google.api.services.translate.model does not exist
+cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.TranslateImpl
+cannot find symbol
+symbol:   class LanguagesResource
+location: class com.google.cloud.translate.Language
+cannot find symbol
+symbol: class LanguagesResource
+cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.Translation
+cannot find symbol
+symbol: class TranslationsResource
+package Translate does not exist
+cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+cannot find symbol
+symbol:   class LanguagesResource
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+cannot find symbol
+symbol:   class LanguagesResource
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+cannot find symbol
+symbol: class TranslationsResource
+cannot find symbol
+symbol: class TranslationsResource
+cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.TranslateImpl
+cannot find symbol
+symbol: class DetectionsResourceItems
+cannot find symbol
+symbol:   class LanguagesResource
+location: class com.google.cloud.translate.TranslateImpl
+cannot find symbol
+symbol: class LanguagesResource
+incompatible types: <anonymous java.util.concurrent.Callable<java.util.List<LanguagesResource>>> cannot be converted to java.util.concurrent.Callable<java.lang.Object>
+cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.TranslateImpl
+cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.TranslateImpl
+cannot find symbol
+symbol: class DetectionsResourceItems
+incompatible types: <anonymous java.util.concurrent.Callable<java.util.List<java.util.List<DetectionsResourceItems>>>> cannot be converted to java.util.concurrent.Callable<java.lang.Object>
+cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.TranslateImpl
+cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.TranslateImpl
+cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.TranslateImpl
+cannot find symbol
+symbol: class TranslationsResource
+incompatible types: <anonymous java.util.concurrent.Callable<java.util.List<TranslationsResource>>> cannot be converted to java.util.concurrent.Callable<java.lang.Object>

@@ -1,0 +1,2 @@
+Failed to execute goal maven-compiler-plugin:3.8.1:compile (default-compile) on project metadata-qa-marc: Compilation failure
+src/main/java/de/gwdg/metadataqa/marc/dao/MarcRecord.java unreported exception com.fasterxml.jackson.core.JacksonException; must be caught or declared to be thrown

@@ -1,0 +1,12 @@
+--- a/singer/pom.xml
++++ b/singer/pom.xml
+@@ ... @@
+         <dependency>
+             <groupId>org.apache.thrift</groupId>
+             <artifactId>libthrift</artifactId>
+-            <version>0.12.0</version>
++            <version>0.16.0</version>
+         </dependency>
+         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+         <dependency>
+

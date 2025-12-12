@@ -1,0 +1,12 @@
+--- a/src/pom.xml
++++ b/src/pom.xml
+@@ ... @@
+             <dependency>
+               <groupId>org.jasypt</groupId>
+               <artifactId>jasypt</artifactId>
+-              <version>1.8</version>
++              <version>1.9.2</version>
+             </dependency>
+             <dependency>
+                 <groupId>org.acegisecurity</groupId>
+

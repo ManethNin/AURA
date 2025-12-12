@@ -1,0 +1,17 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project flacoco: Compilation failure: Compilation failure:
+[ERROR] src/main/java/fr/spoonlabs/flacoco/core/test/strategies/classloader/finder/classes/impl/SourceFolderFinder.java:[25,97] cannot find symbol
+[ERROR]   symbol:   method getWildcard()
+[ERROR]   location: class org.apache.maven.surefire.api.testset.TestListResolver
+[ERROR] src/main/java/fr/spoonlabs/flacoco/core/coverage/CoverageMatrix.java:[199,101] cannot find symbol
+[ERROR]   symbol:   method getWildcard()
+[ERROR]   location: class org.apache.maven.surefire.api.testset.TestListResolver
+[ERROR] src/main/java/fr/spoonlabs/flacoco/core/coverage/CoverageMatrix.java:[205,101] cannot find symbol
+[ERROR]   symbol:   method getWildcard()
+[ERROR]   location: class org.apache.maven.surefire.api.testset.TestListResolver
+[ERROR] src/main/java/fr/spoonlabs/flacoco/core/coverage/framework/TestFrameworkStrategy.java:[92,119] cannot find symbol
+[ERROR]   symbol:   method getWildcard()
+[ERROR]   location: class org.apache.maven.surefire.api.testset.TestListResolver
+[ERROR] src/main/java/fr/spoonlabs/flacoco/core/coverage/framework/TestFrameworkStrategy.java:[97,127] cannot find symbol
+[ERROR]   symbol:   method getWildcard()
+[ERROR]   location: class org.apache.maven.surefire.api.testset.TestListResolver
+[ERROR] -> [Help 1]

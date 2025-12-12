@@ -1,0 +1,13 @@
+diff --git a/pom.xml b/pom.xml
+index e336d0378..e9f28ae82 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -178,7 +178,7 @@
+         <dependency>
+             <groupId>ch.qos.logback</groupId>
+             <artifactId>logback-classic</artifactId>
+-            <version>1.2.11</version>
++            <version>1.4.5</version>
+         </dependency>
+         <dependency>
+             <groupId>uk.gov.service.notify</groupId>

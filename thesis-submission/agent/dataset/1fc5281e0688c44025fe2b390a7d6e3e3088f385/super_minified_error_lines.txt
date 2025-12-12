@@ -1,0 +1,18 @@
+error: package org.eclipse.jetty.server.nio does not exist
+error: JadlerHandler is not abstract and does not override abstract method handle(String,Request,HttpServletRequest,HttpServletResponse) in AbstractHandler
+error: method does not override or implement a method from a supertype
+error: cannot find symbol
+symbol:   method setSendServerVersion(boolean)
+location: variable server of type Server
+error: cannot find symbol
+symbol:   method setSendDateHeader(boolean)
+location: variable server of type Server
+error: cannot find symbol
+symbol:   class SelectChannelConnector
+location: class JettyStubHttpServer
+error: cannot find symbol
+symbol:   method setPort(int)
+location: variable httpConnector of type Connector
+error: cannot find symbol
+symbol:   method getLocalPort()
+location: variable httpConnector of type Connector

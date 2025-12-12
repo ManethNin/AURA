@@ -1,0 +1,3 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project ocr4all: Compilation failure
+src/main/java/de/uniwue/helper/RecognitionHelper.java cannot access com.fasterxml.jackson.core.exc.StreamWriteException
+class file for com.fasterxml.jackson.core.exc.StreamWriteException not found

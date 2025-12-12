@@ -1,0 +1,150 @@
+# serializer version: 1
+# name: test_validate_changes
+  dict({
+    'diagnostics': list([
+      dict({
+        'code': '0',
+        'message': 'The project was not built since its build path is incomplete. Cannot find the class file for io.dropwizard.core.setup.Environment. Fix the build path then try building this project',
+        'range': dict({
+          'end': dict({
+            'character': 0,
+            'line': 0,
+          }),
+          'start': dict({
+            'character': 0,
+            'line': 0,
+          }),
+        }),
+        'severity': 1,
+        'source': 'Java',
+      }),
+      dict({
+        'code': '16777563',
+        'message': 'The type io.dropwizard.core.setup.Environment cannot be resolved. It is indirectly referenced from required type io.dropwizard.client.JerseyClientBuilder',
+        'range': dict({
+          'end': dict({
+            'character': 43,
+            'line': 159,
+          }),
+          'start': dict({
+            'character': 15,
+            'line': 159,
+          }),
+        }),
+        'severity': 1,
+        'source': 'Java',
+      }),
+    ]),
+    'error': None,
+    'warnings': list([
+    ]),
+  })
+# ---
+# name: test_validate_changes.1
+  dict({
+    'diagnostics': list([
+      dict({
+        'code': '0',
+        'message': 'The project was not built since its build path is incomplete. Cannot find the class file for io.dropwizard.core.setup.Environment. Fix the build path then try building this project',
+        'range': dict({
+          'end': dict({
+            'character': 0,
+            'line': 0,
+          }),
+          'start': dict({
+            'character': 0,
+            'line': 0,
+          }),
+        }),
+        'severity': 1,
+        'source': 'Java',
+      }),
+      dict({
+        'code': '16777563',
+        'message': 'The type io.dropwizard.core.setup.Environment cannot be resolved. It is indirectly referenced from required type io.dropwizard.client.JerseyClientBuilder',
+        'range': dict({
+          'end': dict({
+            'character': 43,
+            'line': 159,
+          }),
+          'start': dict({
+            'character': 15,
+            'line': 159,
+          }),
+        }),
+        'severity': 1,
+        'source': 'Java',
+      }),
+      dict({
+        'code': '33554515',
+        'message': 'assets cannot be resolved to a variable',
+        'range': dict({
+          'end': dict({
+            'character': 18,
+            'line': 32,
+          }),
+          'start': dict({
+            'character': 12,
+            'line': 32,
+          }),
+        }),
+        'severity': 1,
+        'source': 'Java',
+      }),
+      dict({
+        'code': '33554515',
+        'message': 'assets cannot be resolved to a variable',
+        'range': dict({
+          'end': dict({
+            'character': 18,
+            'line': 33,
+          }),
+          'start': dict({
+            'character': 12,
+            'line': 33,
+          }),
+        }),
+        'severity': 1,
+        'source': 'Java',
+      }),
+      dict({
+        'code': '570425394',
+        'data': list([
+          'assets',
+        ]),
+        'message': 'assets cannot be resolved',
+        'range': dict({
+          'end': dict({
+            'character': 14,
+            'line': 39,
+          }),
+          'start': dict({
+            'character': 8,
+            'line': 39,
+          }),
+        }),
+        'severity': 1,
+        'source': 'Java',
+      }),
+      dict({
+        'code': '0',
+        'message': 'The project was not built since its build path is incomplete. Cannot find the class file for io.dropwizard.core.setup.Environment. Fix the build path then try building this project',
+        'range': dict({
+          'end': dict({
+            'character': 0,
+            'line': 0,
+          }),
+          'start': dict({
+            'character': 0,
+            'line': 0,
+          }),
+        }),
+        'severity': 1,
+        'source': 'Java',
+      }),
+    ]),
+    'error': None,
+    'warnings': list([
+    ]),
+  })
+# ---

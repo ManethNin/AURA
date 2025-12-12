@@ -1,0 +1,36 @@
+{
+    "class_breaking_changes": [
+        {
+            "class_name": "Cache",
+            "deprecations": [
+                {
+                    "method_signature": "*",
+                    "replacement": "LoadingCache.*()"
+                }
+            ],
+            "removals": []
+        },
+        {
+            "class_name": "CacheBuilder",
+            "deprecations": [
+                {
+                    "method_signature": "build(CacheLoader)",
+                    "replacement": "build(CacheLoader)"
+                }
+            ],
+            "removals": [],
+            "notes": "build() now returns a LoadingCache"
+        },
+        {
+            "class_name": "Futures",
+            "deprecations": [
+                {
+                    "method_signature": "chain()",
+                    "replacement": "transform(..., AsyncFunction)"
+                }
+            ],
+            "removals": []
+        }
+    ],
+    "version": "11.0.2"
+}

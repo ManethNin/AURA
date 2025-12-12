@@ -1,0 +1,13 @@
+diff --git a/pom.xml b/pom.xml
+index bb760ace2..1bc29102d 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -106,7 +106,7 @@
+ 		<dependency>
+ 			<groupId>org.bouncycastle</groupId>
+ 			<artifactId>bcprov-jdk15on</artifactId>
+-			<version>1.51</version>
++			<version>1.67</version>
+ 		</dependency>
+ 
+ 		<dependency>

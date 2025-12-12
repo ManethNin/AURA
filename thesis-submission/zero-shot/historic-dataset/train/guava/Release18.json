@@ -1,0 +1,65 @@
+{
+    "class_breaking_changes": [
+        {
+            "class_name": "Enums",
+            "package_name": "common.base",
+            "deprecations": [],
+            "removals": [
+                {
+                    "method_signature": "valueOfFunction()"
+                }
+            ]
+        },
+        {
+            "class_name": "Objects",
+            "package_name": "common.base",
+            "deprecations": [
+                {
+                    "method_signature": "*",
+                    "replacement": "MoreObjects.*()"
+                }
+            ],
+            "removals": [],
+            "notes": "Methods in Objects without equivalent in java.util.Objects have been moved to MoreObjects and deprecated in the Objects class"
+        },
+        {
+            "class_name": "BloomFilter",
+            "package_name": "common.hash",
+            "deprecations": [
+                {
+                    "method_signature": "*"
+                }
+            ],
+            "removals": [],
+            "notes": "The System property com.google.common.hash.BloomFilter.useMitz32 is no longer recognized."
+        },
+        {
+            "class_name": "*",
+            "package_name": "common.io",
+            "deprecations": [],
+            "removals": [
+                {
+                    "method_signature": "*(InputSupplier)",
+                    "replacement": "*(ByteSource,CharSource)"
+                },
+                {
+                    "method_signature": "*(OutputSupplier)",
+                    "replacement": "*(ByteSink,CharSink)"
+                }
+            ],
+            "notes": "Methods which took or returned InputSupplier or OutputSupplier have been removed."
+        },
+        {
+            "class_name": "MoreExecutors",
+            "package_name": "common.util.concurrent",
+            "deprecations": [
+                {
+                    "method_signature": "sameThreadExecutor()",
+                    "replacement": "newDirectExecutorService()"
+                }
+            ],
+            "removals": []
+        }
+    ],
+    "version": "18.0"
+}

@@ -1,0 +1,38 @@
+cannot find symbol
+symbol:   class ClosedInputStream
+location: package org.apache.commons.io.input
+cannot find symbol
+symbol:   class BoundedInputStream
+location: package org.apache.commons.io.input
+cannot find symbol
+symbol:   class NullPrintStream
+location: package org.apache.commons.io.output
+cannot find symbol
+symbol:   class ThresholdingOutputStream
+location: package org.apache.commons.io.output
+cannot find symbol
+symbol: class ThresholdingOutputStream
+cannot find symbol
+symbol:   class ClosedInputStream
+location: class org.codehaus.plexus.archiver.zip.ByteArrayOutputStream
+cannot find symbol
+symbol:   class BoundedInputStream
+location: class org.codehaus.plexus.archiver.zip.AbstractZipUnArchiver
+cannot find symbol
+symbol:   class BoundedInputStream
+location: class org.codehaus.plexus.archiver.zip.AbstractZipUnArchiver
+cannot find symbol
+symbol:   method getByteCount()
+location: variable cis of type org.apache.commons.io.input.CountingInputStream
+cannot find symbol
+symbol:   variable NullPrintStream
+location: class org.codehaus.plexus.archiver.jar.JarToolModularJarArchiver
+cannot find symbol
+symbol:   method write(byte[],int,int)
+location: variable dfos of type org.codehaus.plexus.archiver.zip.OffloadingOutputStream
+method does not override or implement a method from a supertype
+method does not override or implement a method from a supertype
+method does not override or implement a method from a supertype
+cannot find symbol
+symbol:   variable super
+location: class org.codehaus.plexus.archiver.zip.OffloadingOutputStream

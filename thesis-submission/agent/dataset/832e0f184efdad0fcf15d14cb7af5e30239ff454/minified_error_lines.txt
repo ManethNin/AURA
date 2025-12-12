@@ -1,0 +1,49 @@
+Failed to execute goal maven-compiler-plugin:3.8.1:compile (default-compile) on project WorldwideChat: Compilation failure: Compilation failure:
+src/main/java/com/expl0itz/worldwidechat/inventory/configuration/ConfigurationMessagesOverridePossibleListGUI.java cannot find symbol
+symbol:   method parseEnchantment()
+location: class com.cryptomorin.xseries.XEnchantment
+src/main/java/com/expl0itz/worldwidechat/inventory/WWCInventoryManager.java cannot find symbol
+symbol:   method parseEnchantment()
+location: class com.cryptomorin.xseries.XEnchantment
+src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIMainMenu.java cannot find symbol
+symbol:   method parseEnchantment()
+location: class com.cryptomorin.xseries.XEnchantment
+src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIMainMenu.java cannot find symbol
+symbol:   method parseEnchantment()
+location: class com.cryptomorin.xseries.XEnchantment
+src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIMainMenu.java cannot find symbol
+symbol:   method parseEnchantment()
+location: class com.cryptomorin.xseries.XEnchantment
+src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIMainMenu.java cannot find symbol
+symbol:   method parseEnchantment()
+location: class com.cryptomorin.xseries.XEnchantment
+src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIMainMenu.java cannot find symbol
+symbol:   method parseEnchantment()
+location: class com.cryptomorin.xseries.XEnchantment
+src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIMainMenu.java cannot find symbol
+symbol:   method parseEnchantment()
+location: class com.cryptomorin.xseries.XEnchantment
+src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIMainMenu.java cannot find symbol
+symbol:   method parseEnchantment()
+location: class com.cryptomorin.xseries.XEnchantment
+src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUISourceLanguage.java cannot find symbol
+symbol:   method parseEnchantment()
+location: class com.cryptomorin.xseries.XEnchantment
+src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUISourceLanguage.java cannot find symbol
+symbol:   method parseEnchantment()
+location: class com.cryptomorin.xseries.XEnchantment
+src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUISourceLanguage.java cannot find symbol
+symbol:   method parseEnchantment()
+location: class com.cryptomorin.xseries.XEnchantment
+src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUISourceLanguage.java cannot find symbol
+symbol:   method parseEnchantment()
+location: class com.cryptomorin.xseries.XEnchantment
+src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIChatMenu.java cannot find symbol
+symbol:   method parseEnchantment()
+location: class com.cryptomorin.xseries.XEnchantment
+src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIChatMenu.java cannot find symbol
+symbol:   method parseEnchantment()
+location: class com.cryptomorin.xseries.XEnchantment
+src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUITargetLanguage.java cannot find symbol
+symbol:   method parseEnchantment()
+location: class com.cryptomorin.xseries.XEnchantment

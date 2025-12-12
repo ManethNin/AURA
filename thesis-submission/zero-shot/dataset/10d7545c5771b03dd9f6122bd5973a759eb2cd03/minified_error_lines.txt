@@ -1,0 +1,3 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project lithium: Compilation failure
+src/main/java/com/wire/lithium/Server.java cannot access io.dropwizard.core.setup.Environment
+class file for io.dropwizard.core.setup.Environment not found

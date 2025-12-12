@@ -1,0 +1,4 @@
+Failed to execute goal maven-compiler-plugin:3.8.0:compile (default-compile) on project onebusaway-gtfs-hibernate: Compilation failure: Compilation failure:
+onebusaway-gtfs-hibernate/src/main/java/org/onebusaway/gtfs/impl/ServiceDateUserType.java org.onebusaway.gtfs.impl.ServiceDateUserType is not abstract and does not override abstract method nullSafeSet(java.sql.PreparedStatement,java.lang.Object,int,org.hibernate.engine.spi.SharedSessionContractImplementor) in org.hibernate.usertype.UserType
+onebusaway-gtfs-hibernate/src/main/java/org/onebusaway/gtfs/impl/ServiceDateUserType.java method does not override or implement a method from a supertype
+onebusaway-gtfs-hibernate/src/main/java/org/onebusaway/gtfs/impl/ServiceDateUserType.java method does not override or implement a method from a supertype

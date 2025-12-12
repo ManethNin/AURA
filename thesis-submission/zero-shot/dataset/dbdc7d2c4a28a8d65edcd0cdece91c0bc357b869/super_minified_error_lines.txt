@@ -1,0 +1,3 @@
+cannot find symbol
+symbol:   method enableLogging(org.codehaus.plexus.logging.console.ConsoleLogger)
+location: variable unArchiver of type org.codehaus.plexus.archiver.AbstractUnArchiver

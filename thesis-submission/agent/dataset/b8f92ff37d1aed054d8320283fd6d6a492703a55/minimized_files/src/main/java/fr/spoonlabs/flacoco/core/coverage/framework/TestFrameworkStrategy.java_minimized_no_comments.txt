@@ -1,0 +1,32 @@
+package fr.spoonlabs.flacoco.core.coverage.framework;
+
+import eu.stamp_project.testrunner.EntryPoint;
+import eu.stamp_project.testrunner.listener.CoveredTestResultPerTestMethod;
+import eu.stamp_project.testrunner.runner.ParserOptions;
+import fr.spoonlabs.flacoco.core.config.FlacocoConfig;
+import fr.spoonlabs.flacoco.core.test.TestContext;
+import org.apache.log4j.Logger;
+import org.apache.maven.plugin.surefire.util.DirectoryScanner;
+import org.apache.maven.surefire.api.testset.TestListResolver;
+import java.io.File;
+import java.util.concurrent.TimeoutException;
+
+public abstract class TestFrameworkStrategy {
+	protected FlacocoConfig config;
+
+	protected String computeJacocoIncludes() {
+		StringBuilder includes = new StringBuilder();
+		for (String directory : config.getBinJavaDir()) {
+			DirectoryScanner directoryScanner = new DirectoryScanner(new File(directory), TestListResolver.getWildcard());
+			includes.append(":").append(directoryScanner.scan().getClasses().stream().reduce((x, y) -> x + ":" + y).orElse(""));
+		}
+		if (config.isCoverTests()) {
+			for (String directory : config.getBinTestDir()) {
+				DirectoryScanner directoryScanner = new DirectoryScanner(new File(directory), TestListResolver.getWildcard());
+				includes.append(":").append(directoryScanner.scan().getClasses().stream().reduce((x, y) -> x + ":" + y).orElse(""));
+			}
+		}
+		return includes.toString();
+	}
+
+}

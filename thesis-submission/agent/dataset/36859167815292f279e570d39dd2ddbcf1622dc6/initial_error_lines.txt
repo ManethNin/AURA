@@ -1,0 +1,11 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project billy-gin: Compilation failure
+[ERROR] billy-gin/src/main/java/com/premiumminds/billy/gin/services/impl/pdf/FOPPDFTransformer.java:[115,43] no suitable method found for newInstance(no arguments)
+[ERROR]     method org.apache.fop.apps.FopFactory.newInstance(org.apache.fop.apps.FopFactoryConfig) is not applicable
+[ERROR]       (actual and formal argument lists differ in length)
+[ERROR]     method org.apache.fop.apps.FopFactory.newInstance(java.io.File) is not applicable
+[ERROR]       (actual and formal argument lists differ in length)
+[ERROR]     method org.apache.fop.apps.FopFactory.newInstance(java.net.URI) is not applicable
+[ERROR]       (actual and formal argument lists differ in length)
+[ERROR]     method org.apache.fop.apps.FopFactory.newInstance(java.net.URI,java.io.InputStream) is not applicable
+[ERROR]       (actual and formal argument lists differ in length)
+[ERROR] -> [Help 1]

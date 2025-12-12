@@ -1,0 +1,29 @@
+{
+    "class_breaking_changes": [
+        {
+            "class_name": "ValueGraph",
+            "package_name": "common.graph",
+            "deprecations": [
+                {
+                    "method_signature": "edgeValue(N nodeU, N nodeV)",
+                    "replacement": "edgeValue(N nodeU, N nodeV)"
+                }
+            ],
+            "removals": [],
+            "notes": "edgeValue(N nodeU, N nodeV) throws IllegalArgumentException if no such edge exists"
+        },
+        {
+            "class_name": "AbstractFuture",
+            "package_name": "common.util.concurrent",
+            "deprecations": [
+                {
+                    "method_signature": "*",
+                    "replacement": null
+                }
+            ],
+            "removals": [],
+            "notes": "AbstractFuture now extends FluentFuture, which might break when subclassing AbstractFeature"
+        }
+    ],
+    "version": "23.0"
+}

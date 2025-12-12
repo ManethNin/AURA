@@ -1,0 +1,24 @@
+diff --git a/src/main/java/org/scoverage/plugin/SCoverageReportMojo.java b/src/main/java/org/scoverage/plugin/SCoverageReportMojo.java
+index 855883e..18ae710 100644
+--- a/src/main/java/org/scoverage/plugin/SCoverageReportMojo.java
++++ b/src/main/java/org/scoverage/plugin/SCoverageReportMojo.java
+@@ -29,9 +29,9 @@ import java.util.Locale;
+ import java.util.ResourceBundle;
+ import java.util.concurrent.atomic.AtomicInteger;
+ 
+-import org.apache.maven.doxia.module.xhtml.decoration.render.RenderingContext;
+ import org.apache.maven.doxia.sink.Sink;
+ import org.apache.maven.doxia.siterenderer.sink.SiteRendererSink;
++import org.apache.maven.plugin.AbstractMojo;
+ 
+ import org.apache.maven.plugin.AbstractMojo;
+ import org.apache.maven.plugin.MojoExecutionException;
+@@ -382,7 +382,7 @@ public class SCoverageReportMojo
+ 
+         try
+         {
+-            RenderingContext context = new RenderingContext( outputDirectory, getOutputName() + ".html" );
++org.apache.maven.doxia.siterenderer.RenderingContext context = new org.apache.maven.doxia.siterenderer.RenderingContext( outputDirectory, getOutputName() + ".html" );
+             SiteRendererSink sink = new SiteRendererSink( context );
+             Locale locale = Locale.getDefault();
+             generate( sink, locale );

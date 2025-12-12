@@ -1,0 +1,70 @@
+Failed to execute goal maven-compiler-plugin:3.8.0:compile (default-compile) on project hazelcast: Compilation failure: Compilation failure:
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusteredCacheFactory.java cannot find symbol
+symbol:   class MaxSizeConfig
+location: package com.hazelcast.config
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusteredCacheFactory.java cannot find symbol
+symbol:   class Cluster
+location: package com.hazelcast.core
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusteredCacheFactory.java cannot find symbol
+symbol:   class Member
+location: package com.hazelcast.core
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusteredCacheFactory.java cannot find symbol
+symbol:   class Cluster
+location: class org.jivesoftware.openfire.plugin.util.cache.ClusteredCacheFactory
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusterListener.java cannot find symbol
+symbol:   class Cluster
+location: package com.hazelcast.core
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusterListener.java cannot find symbol
+symbol:   class Member
+location: package com.hazelcast.core
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusterListener.java cannot find symbol
+symbol:   class MemberAttributeEvent
+location: package com.hazelcast.core
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusterListener.java cannot find symbol
+symbol:   class MembershipEvent
+location: package com.hazelcast.core
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusterListener.java cannot find symbol
+symbol:   class MembershipListener
+location: package com.hazelcast.core
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusterListener.java cannot find symbol
+symbol: class MembershipListener
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusteredCacheFactory.java cannot find symbol
+symbol:   class Member
+location: class org.jivesoftware.openfire.plugin.util.cache.ClusteredCacheFactory
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusteredCacheFactory.java cannot find symbol
+symbol:   class Member
+location: class org.jivesoftware.openfire.plugin.util.cache.ClusteredCacheFactory
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusterListener.java cannot find symbol
+symbol:   class Cluster
+location: class org.jivesoftware.openfire.plugin.util.cache.ClusterListener
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusterListener.java cannot find symbol
+symbol:   class Cluster
+location: class org.jivesoftware.openfire.plugin.util.cache.ClusterListener
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusterListener.java cannot find symbol
+symbol:   class MembershipEvent
+location: class org.jivesoftware.openfire.plugin.util.cache.ClusterListener
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusterListener.java cannot find symbol
+symbol:   class MembershipEvent
+location: class org.jivesoftware.openfire.plugin.util.cache.ClusterListener
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusterListener.java cannot find symbol
+symbol:   class MemberAttributeEvent
+location: class org.jivesoftware.openfire.plugin.util.cache.ClusterListener
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusteredCache.java cannot find symbol
+symbol:   class IMap
+location: package com.hazelcast.core
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusteredCache.java cannot find symbol
+symbol:   class MapEvent
+location: package com.hazelcast.core
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusteredCache.java package com.hazelcast.monitor does not exist
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusteredCache.java cannot find symbol
+symbol:   class IMap
+location: class org.jivesoftware.openfire.plugin.util.cache.ClusteredCache<K,V>
+src/java/org/jivesoftware/openfire/plugin/util/cache/ClusteredCache.java cannot find symbol
+symbol:   class IMap
+location: class org.jivesoftware.openfire.plugin.util.cache.ClusteredCache<K,V>
+src/java/org/jivesoftware/openfire/plugin/util/cluster/HazelcastClusterNodeInfo.java cannot find symbol
+symbol:   class Member
+location: package com.hazelcast.core
+src/java/org/jivesoftware/openfire/plugin/util/cluster/HazelcastClusterNodeInfo.java cannot find symbol
+symbol:   class Member
+location: class org.jivesoftware.openfire.plugin.util.cluster.HazelcastClusterNodeInfo

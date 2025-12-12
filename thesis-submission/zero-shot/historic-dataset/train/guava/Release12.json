@@ -1,0 +1,82 @@
+{
+  "class_breaking_changes": [
+    {
+      "class_name": "CacheBuilder",
+      "deprecations": [
+        {
+          "method_signature": "stats()",
+          "replacement": "recordStats()"
+        }
+      ],
+      "removals": [],
+      "notes": "before calling stats() users must opt in by calling recordStats()"
+    },
+    {
+      "class_name": "BloomFilter",
+      "deprecations": [
+        {
+          "method_signature": "put()",
+          "replacement": "put()"
+        }
+      ],
+      "removals": [],
+      "notes": "put() now returns a boolean"
+    },
+    {
+      "class_name": "Sink",
+      "deprecations": [],
+      "removals": [
+        {
+          "method_signature": "*",
+          "replacement": "PrimitiveSink.*"
+        }
+      ],
+      "notes": "Sink is renamed to PrimitiveSink"
+    },
+    {
+      "class_name": "AbstractLinkedIterator",
+      "deprecations": [
+        {
+          "method_signature": "*",
+          "replacement": "AbstractSequentialIterator.*"
+        }
+      ],
+      "removals": []
+    },
+    {
+      "class_name": "ByteStreams",
+      "deprecations": [
+        {
+          "method_signature": "getDigest()",
+          "replacement": "hash()"
+        }
+      ],
+      "removals": []
+    },
+    {
+      "class_name": "Files",
+      "deprecations": [
+        {
+          "method_signature": "getDigest()",
+          "replacement": "hash()"
+        }
+      ],
+      "removals": []
+    },
+    {
+      "class_name": "ComparisonChain",
+      "deprecations": [
+        {
+          "method_signature": "compare(boolean, boolean)",
+          "replacement": "compareFalseFirst(boolean, boolean)"
+        },
+        {
+          "method_signature": "compare(boolean, boolean)",
+          "replacement": "compareTrueFirst(boolean, boolean)"
+        }
+      ],
+      "removals": []
+    }
+  ],
+  "version": "12.0"
+}

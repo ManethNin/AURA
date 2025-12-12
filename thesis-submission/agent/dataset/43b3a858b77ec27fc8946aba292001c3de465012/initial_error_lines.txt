@@ -1,0 +1,4 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:testCompile (default-testCompile) on project pdb: Compilation failure
+[ERROR] src/test/java/com/feedzai/commons/sql/abstraction/engine/impl/abs/EngineGeneralTest.java:[181,49] cannot access org.slf4j.spi.LoggingEventAware
+[ERROR]   class file for org.slf4j.spi.LoggingEventAware not found
+[ERROR] -> [Help 1]

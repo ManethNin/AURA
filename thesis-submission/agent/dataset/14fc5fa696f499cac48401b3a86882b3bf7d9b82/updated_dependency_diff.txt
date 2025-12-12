@@ -1,0 +1,12 @@
+--- a/nis/pom.xml
++++ b/nis/pom.xml
+@@ ... @@
+         <dependency>
+             <groupId>org.flywaydb</groupId>
+             <artifactId>flyway-core</artifactId>
+-            <version>3.2.1</version>
++            <version>9.21.1</version>
+         </dependency>
+ 
+         <!-- test related -->
+

@@ -1,0 +1,2 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project application: Compilation failure
+application/src/main/java/io/github/wesleyosantos91/api/v1/mapper/PersonHttpMapper.java Couldn't retrieve @Mapper annotation

@@ -1,0 +1,41 @@
+package org.jfrog.hudson.pipeline.declarative.steps;
+
+import com.google.inject.Inject;
+import hudson.Extension;
+import org.jenkinsci.plugins.workflow.steps.AbstractStepDescriptorImpl;
+import org.jenkinsci.plugins.workflow.steps.AbstractStepImpl;
+import org.jenkinsci.plugins.workflow.steps.StepContext;
+import org.jfrog.hudson.pipeline.ArtifactorySynchronousStepExecution;
+import org.jfrog.hudson.pipeline.common.types.ArtifactoryServer;
+import org.jfrog.hudson.pipeline.common.types.DistributionServer;
+import org.jfrog.hudson.pipeline.common.types.JFrogPlatformInstance;
+import org.jfrog.hudson.pipeline.declarative.BuildDataFile;
+import org.jfrog.hudson.pipeline.declarative.utils.DeclarativePipelineUtils;
+import org.jfrog.hudson.util.BuildUniqueIdentifierHelper;
+import org.jfrog.hudson.util.JenkinsBuildInfoLog;
+import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
+import java.io.IOException;
+import static org.apache.commons.lang3.StringUtils.*;
+
+@SuppressWarnings("unused")
+public class CreateServerStep extends AbstractStepImpl {
+    public static class Execution extends ArtifactorySynchronousStepExecution<Void> {
+        private transient final CreateServerStep step;
+
+        private void checkInputs(ArtifactoryServer server) throws IOException {
+            if (isAllBlank(server.getUrl(), step.url)) {
+                throw new IOException("Server URL is missing");
+            }
+            if (isNotBlank(step.credentialsId)) {
+                if (isNotBlank(step.username)) {
+                    throw new IOException("'rtServer' step can't include both credentialsId and username");
+                }
+                if (isNotBlank(step.password)) {
+                    throw new IOException("'rtServer' step can't include both credentialsId and password");
+                }
+            }
+        }
+
+}
+}

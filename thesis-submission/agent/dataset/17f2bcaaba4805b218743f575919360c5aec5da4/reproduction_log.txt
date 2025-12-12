@@ -1,0 +1,217 @@
+[INFO]
+[INFO] ----------------------------< micycle:PGS >-----------------------------
+[INFO] Building Processing Geometry Suite 1.3.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- clean:3.2.0:clean (default-clean) @ PGS ---
+[INFO]
+[INFO] --- jacoco:0.8.8:prepare-agent (default) @ PGS ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.8/org.jacoco.agent-0.8.8-runtime.jar=destfile=/PGS/target/jacoco.exec
+[INFO]
+[INFO] --- resources:3.3.0:resources (default-resources) @ PGS ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory src/main/resources
+[INFO]
+[INFO] --- compiler:3.11.0:compile (default-compile) @ PGS ---
+[INFO] Changes detected - recompiling the module! :dependency
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 79 source files with javac [debug release 8] to target/classes
+Jabel: initialized
+[INFO] src/main/java/micycle/pgs/commons/AreaMerge.java: Some input files use or override a deprecated API.
+[INFO] src/main/java/micycle/pgs/commons/AreaMerge.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- resources:3.3.0:testResources (default-testResources) @ PGS ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory src/test/resources
+[INFO]
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ PGS ---
+[INFO] Changes detected - recompiling the module! :dependency
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 12 source files with javac [debug release 8] to target/test-classes
+Jabel: initialized
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR :
+[INFO] -------------------------------------------------------------
+[ERROR] src/test/java/micycle/pgs/FastPolygonizerTests.java:[13,17] cannot find symbol
+symbol:   class Ignore
+location: package org.junit
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[3,24] cannot find symbol
+symbol:   class Assume
+location: package org.junit
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[3,1] static import only from classes and interfaces
+[ERROR] src/test/java/micycle/pgs/PGS_MeshingTests.java:[3,24] cannot find symbol
+symbol:   class Assert
+location: package org.junit
+[ERROR] src/test/java/micycle/pgs/PGS_MeshingTests.java:[3,1] static import only from classes and interfaces
+[ERROR] src/test/java/micycle/pgs/PGS_MeshingTests.java:[4,24] cannot find symbol
+symbol:   class Assert
+location: package org.junit
+[ERROR] src/test/java/micycle/pgs/PGS_MeshingTests.java:[4,1] static import only from classes and interfaces
+[ERROR] src/test/java/micycle/pgs/PGS_ProcessingGroupShapeTests.java:[3,24] cannot find symbol
+symbol:   class Assume
+location: package org.junit
+[ERROR] src/test/java/micycle/pgs/PGS_ProcessingGroupShapeTests.java:[3,1] static import only from classes and interfaces
+[ERROR] src/test/java/micycle/pgs/FastPolygonizerTests.java:[101,10] cannot find symbol
+symbol:   class Ignore
+location: class micycle.pgs.FastPolygonizerTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[52,17] cannot find symbol
+symbol:   method assumeTrue(boolean)
+location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[59,17] cannot find symbol
+symbol:   method assumeTrue(boolean)
+location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[66,17] cannot find symbol
+symbol:   method assumeTrue(boolean)
+location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[73,17] cannot find symbol
+symbol:   method assumeTrue(boolean)
+location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[80,17] cannot find symbol
+symbol:   method assumeTrue(boolean)
+location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[95,17] cannot find symbol
+symbol:   method assumeTrue(boolean)
+location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[110,17] cannot find symbol
+symbol:   method assumeTrue(boolean)
+location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[117,17] cannot find symbol
+symbol:   method assumeTrue(boolean)
+location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[124,17] cannot find symbol
+symbol:   method assumeTrue(boolean)
+location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[131,17] cannot find symbol
+symbol:   method assumeTrue(boolean)
+location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[138,17] cannot find symbol
+symbol:   method assumeTrue(boolean)
+location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[145,17] cannot find symbol
+symbol:   method assumeTrue(boolean)
+location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[152,17] cannot find symbol
+symbol:   method assumeTrue(boolean)
+location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MeshingTests.java:[22,17] cannot find symbol
+symbol:   method assertTrue(boolean)
+location: class micycle.pgs.PGS_MeshingTests
+[ERROR] src/test/java/micycle/pgs/PGS_MeshingTests.java:[23,17] cannot find symbol
+symbol:   method assertTrue(boolean)
+location: class micycle.pgs.PGS_MeshingTests
+[ERROR] src/test/java/micycle/pgs/PGS_MeshingTests.java:[24,17] cannot find symbol
+symbol:   method assertEquals(double,double,double)
+location: class micycle.pgs.PGS_MeshingTests
+[ERROR] src/test/java/micycle/pgs/PGS_ProcessingGroupShapeTests.java:[52,17] cannot find symbol
+symbol:   method assumeTrue(boolean)
+location: class micycle.pgs.PGS_ProcessingGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_ProcessingGroupShapeTests.java:[59,17] cannot find symbol
+symbol:   method assumeTrue(boolean)
+location: class micycle.pgs.PGS_ProcessingGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_ProcessingGroupShapeTests.java:[66,17] cannot find symbol
+symbol:   method assumeTrue(boolean)
+location: class micycle.pgs.PGS_ProcessingGroupShapeTests
+[INFO] 29 errors
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:57 min
+[INFO] Finished at: 2023-08-09T14:43:46Z
+[INFO] ------------------------------------------------------------------------
+[WARNING]
+[WARNING] Plugin validation issues were detected in 2 plugin(s)
+[WARNING]
+[WARNING]  * org.jacoco:jacoco-maven-plugin:0.8.8
+[WARNING]  * org.apache.maven.plugins:maven-resources-plugin:3.3.0
+[WARNING]
+[WARNING] For more or less details, use 'maven.plugin.validation' property with one of the values (case insensitive): [BRIEF, DEFAULT, VERBOSE]
+[WARNING]
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:testCompile (default-testCompile) on project PGS: Compilation failure: Compilation failure:
+[ERROR] src/test/java/micycle/pgs/FastPolygonizerTests.java:[13,17] cannot find symbol
+[ERROR]   symbol:   class Ignore
+[ERROR]   location: package org.junit
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[3,24] cannot find symbol
+[ERROR]   symbol:   class Assume
+[ERROR]   location: package org.junit
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[3,1] static import only from classes and interfaces
+[ERROR] src/test/java/micycle/pgs/PGS_MeshingTests.java:[3,24] cannot find symbol
+[ERROR]   symbol:   class Assert
+[ERROR]   location: package org.junit
+[ERROR] src/test/java/micycle/pgs/PGS_MeshingTests.java:[3,1] static import only from classes and interfaces
+[ERROR] src/test/java/micycle/pgs/PGS_MeshingTests.java:[4,24] cannot find symbol
+[ERROR]   symbol:   class Assert
+[ERROR]   location: package org.junit
+[ERROR] src/test/java/micycle/pgs/PGS_MeshingTests.java:[4,1] static import only from classes and interfaces
+[ERROR] src/test/java/micycle/pgs/PGS_ProcessingGroupShapeTests.java:[3,24] cannot find symbol
+[ERROR]   symbol:   class Assume
+[ERROR]   location: package org.junit
+[ERROR] src/test/java/micycle/pgs/PGS_ProcessingGroupShapeTests.java:[3,1] static import only from classes and interfaces
+[ERROR] src/test/java/micycle/pgs/FastPolygonizerTests.java:[101,10] cannot find symbol
+[ERROR]   symbol:   class Ignore
+[ERROR]   location: class micycle.pgs.FastPolygonizerTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[52,17] cannot find symbol
+[ERROR]   symbol:   method assumeTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[59,17] cannot find symbol
+[ERROR]   symbol:   method assumeTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[66,17] cannot find symbol
+[ERROR]   symbol:   method assumeTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[73,17] cannot find symbol
+[ERROR]   symbol:   method assumeTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[80,17] cannot find symbol
+[ERROR]   symbol:   method assumeTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[95,17] cannot find symbol
+[ERROR]   symbol:   method assumeTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[110,17] cannot find symbol
+[ERROR]   symbol:   method assumeTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[117,17] cannot find symbol
+[ERROR]   symbol:   method assumeTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[124,17] cannot find symbol
+[ERROR]   symbol:   method assumeTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[131,17] cannot find symbol
+[ERROR]   symbol:   method assumeTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[138,17] cannot find symbol
+[ERROR]   symbol:   method assumeTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[145,17] cannot find symbol
+[ERROR]   symbol:   method assumeTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MorphologyGroupShapeTests.java:[152,17] cannot find symbol
+[ERROR]   symbol:   method assumeTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_MorphologyGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_MeshingTests.java:[22,17] cannot find symbol
+[ERROR]   symbol:   method assertTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_MeshingTests
+[ERROR] src/test/java/micycle/pgs/PGS_MeshingTests.java:[23,17] cannot find symbol
+[ERROR]   symbol:   method assertTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_MeshingTests
+[ERROR] src/test/java/micycle/pgs/PGS_MeshingTests.java:[24,17] cannot find symbol
+[ERROR]   symbol:   method assertEquals(double,double,double)
+[ERROR]   location: class micycle.pgs.PGS_MeshingTests
+[ERROR] src/test/java/micycle/pgs/PGS_ProcessingGroupShapeTests.java:[52,17] cannot find symbol
+[ERROR]   symbol:   method assumeTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_ProcessingGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_ProcessingGroupShapeTests.java:[59,17] cannot find symbol
+[ERROR]   symbol:   method assumeTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_ProcessingGroupShapeTests
+[ERROR] src/test/java/micycle/pgs/PGS_ProcessingGroupShapeTests.java:[66,17] cannot find symbol
+[ERROR]   symbol:   method assumeTrue(boolean)
+[ERROR]   location: class micycle.pgs.PGS_ProcessingGroupShapeTests
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

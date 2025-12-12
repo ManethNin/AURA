@@ -1,0 +1,27 @@
+package develop.p2p.lib does not exist
+static import only from classes and interfaces
+package develop.p2p.lib does not exist
+package develop.p2p.lib does not exist
+package develop.p2p.lib does not exist
+package develop.p2p.lib does not exist
+cannot find symbol
+symbol:   method sigmoid(double)
+location: class ml.peya.plugins.Learn.Neuron
+cannot find symbol
+symbol:   class WaveCreator
+location: class ml.peya.plugins.Objects.Decorations
+cannot find symbol
+symbol:   class WaveCreator
+location: class ml.peya.plugins.Objects.Decorations
+cannot find symbol
+symbol:   class WaveCreator
+location: class ml.peya.plugins.Detect.NPCTeleport
+cannot find symbol
+symbol:   class WaveCreator
+location: class ml.peya.plugins.Detect.NPCTeleport
+cannot find symbol
+symbol: class WaveCreator
+cannot find symbol
+symbol: class WaveCreator
+cannot find symbol
+symbol: class WaveCreator

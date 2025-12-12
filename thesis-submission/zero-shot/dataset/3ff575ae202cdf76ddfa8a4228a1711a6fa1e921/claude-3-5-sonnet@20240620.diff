@@ -1,0 +1,12 @@
+diff --git a/src/test/java/org/codehaus/plexus/archiver/DuplicateFilesTest.java b/src/test/java/org/codehaus/plexus/archiver/DuplicateFilesTest.java
+index 2728c24c..ac97447c 100644
+--- a/src/test/java/org/codehaus/plexus/archiver/DuplicateFilesTest.java
++++ b/src/test/java/org/codehaus/plexus/archiver/DuplicateFilesTest.java
+@@ -34,7 +34,6 @@ public void setUp()
+         throws Exception
+     {
+         super.setUp();        
+-        getContainer().getLoggerManager().setThreshold( Logger.LEVEL_DEBUG );
+     }
+ 
+     public void testZipArchiver()

@@ -1,0 +1,124 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project google-cloud-translate: Compilation failure: Compilation failure:
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/Language.java package com.google.api.services.translate.model does not exist
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/Detection.java package com.google.api.services.translate.model does not exist
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/Translation.java package com.google.api.services.translate.model does not exist
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/Translation.java cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.Translation
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/Translation.java cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.Translation
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/TranslateRpc.java package com.google.api.services.translate.model does not exist
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/TranslateRpc.java package com.google.api.services.translate.model does not exist
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/TranslateRpc.java package com.google.api.services.translate.model does not exist
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/TranslateRpc.java cannot find symbol
+symbol:   class LanguagesResource
+location: interface com.google.cloud.translate.spi.v2.TranslateRpc
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/TranslateRpc.java cannot find symbol
+symbol:   class DetectionsResourceItems
+location: interface com.google.cloud.translate.spi.v2.TranslateRpc
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/TranslateRpc.java cannot find symbol
+symbol:   class TranslationsResource
+location: interface com.google.cloud.translate.spi.v2.TranslateRpc
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/Detection.java cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.Detection
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/Language.java cannot find symbol
+symbol:   class LanguagesResource
+location: class com.google.cloud.translate.Language
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/Language.java cannot find symbol
+symbol:   class LanguagesResource
+location: class com.google.cloud.translate.Language
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java package com.google.api.services.translate does not exist
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java package com.google.api.services.translate.model does not exist
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java package com.google.api.services.translate.model does not exist
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java package com.google.api.services.translate.model does not exist
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java cannot find symbol
+symbol:   class Translate
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java cannot find symbol
+symbol:   class LanguagesResource
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java package com.google.api.services.translate.model does not exist
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java package com.google.api.services.translate.model does not exist
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java package com.google.api.services.translate.model does not exist
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.TranslateImpl
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/Language.java cannot find symbol
+symbol:   class LanguagesResource
+location: class com.google.cloud.translate.Language
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/Language.java cannot find symbol
+symbol: class LanguagesResource
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/Translation.java cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.Translation
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/Translation.java cannot find symbol
+symbol: class TranslationsResource
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java package Translate does not exist
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java cannot find symbol
+symbol:   class LanguagesResource
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java cannot find symbol
+symbol:   class LanguagesResource
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java cannot find symbol
+symbol: class TranslationsResource
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java cannot find symbol
+symbol: class TranslationsResource
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/spi/v2/HttpTranslateRpc.java cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.spi.v2.HttpTranslateRpc
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.TranslateImpl
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java cannot find symbol
+symbol: class DetectionsResourceItems
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java cannot find symbol
+symbol:   class LanguagesResource
+location: class com.google.cloud.translate.TranslateImpl
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java cannot find symbol
+symbol: class LanguagesResource
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java incompatible types: <anonymous java.util.concurrent.Callable<java.util.List<LanguagesResource>>> cannot be converted to java.util.concurrent.Callable<java.lang.Object>
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.TranslateImpl
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.TranslateImpl
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java cannot find symbol
+symbol: class DetectionsResourceItems
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java incompatible types: <anonymous java.util.concurrent.Callable<java.util.List<java.util.List<DetectionsResourceItems>>>> cannot be converted to java.util.concurrent.Callable<java.lang.Object>
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.TranslateImpl
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java cannot find symbol
+symbol:   class DetectionsResourceItems
+location: class com.google.cloud.translate.TranslateImpl
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java cannot find symbol
+symbol:   class TranslationsResource
+location: class com.google.cloud.translate.TranslateImpl
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java cannot find symbol
+symbol: class TranslationsResource
+java-translate/google-cloud-translate/src/main/java/com/google/cloud/translate/TranslateImpl.java incompatible types: <anonymous java.util.concurrent.Callable<java.util.List<TranslationsResource>>> cannot be converted to java.util.concurrent.Callable<java.lang.Object>

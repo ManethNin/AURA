@@ -1,0 +1,46 @@
+# serializer version: 1
+# name: test_apply_edits
+  '''
+  
+  public class NisAppConfig {
+   @Bean
+   public DataSource dataSource() throws IOException {
+    final NisConfiguration configuration = this.nisConfiguration();
+    final String nemFolder = configuration.getNemFolder();
+    final Properties prop = new Properties();
+    prop.load(NisAppConfig.class.getClassLoader().getResourceAsStream("db.properties"));
+  
+    // replace url parameters with values from configuration
+    final String jdbcUrl = prop.getProperty("jdbc.url").replace("${nem.folder}", nemFolder).replace("${nem.network}",
+      configuration.getNetworkName());
+  
+    final DriverManagerDataSource dataSource = new DriverManagerDataSource();
+    dataSource.setDriverClassName(prop.getProperty("jdbc.driverClassName"));
+    dataSource.setUrl(jdbcUrl);
+    dataSource.setUsername(prop.getProperty("jdbc.username"));
+    dataSource.setPassword(prop.getProperty("jdbc.password"));
+    return dataSource;
+   }
+  
+   @Bean(initMethod = "migrate")
+   public Flyway flyway() throws IOException {
+    final Properties prop = new Properties();
+    prop.load(NisAppConfig.class.getClassLoader().getResourceAsStream("db.properties"));
+  
+  final org.flywaydb.core.Flyway flyway = Flyway.configure()
+  .dataSource(this.dataSource())
+  .classLoader(NisAppConfig.class.getClassLoader())
+  .locations(prop.getProperty("flyway.locations"))
+  .validateOnMigrate(Boolean.valueOf(prop.getProperty("flyway.validate")))
+  .load();
+    return flyway;
+  }
+  
+  @Bean
+   @DependsOn("flyway")
+   public SessionFactory sessionFactory() throws IOException {
+    return SessionFactoryLoader.load(this.dataSource());
+  }
+  }
+  '''
+# ---

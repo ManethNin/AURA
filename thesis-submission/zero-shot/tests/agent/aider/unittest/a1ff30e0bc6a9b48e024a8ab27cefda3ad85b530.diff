@@ -1,0 +1,148 @@
+```diff
+--- a1ff30e0bc6a9b48e024a8ab27cefda3ad85b530.java
++++ a1ff30e0bc6a9b48e024a8ab27cefda3ad85b530.java
+@@ -12,1 +12,0 @@
+-import static org.jooq.tools.StringUtils.isBlank;
+@@ -38,0 +37,1 @@
++import org.jooq.tools.StringUtils;
+@@ -48,5 +48,5 @@
+-    @Override
+-    protected DSLContext create0() {
+-        return DSL.using(connection(), SQLDialect.POSTGRES);
+-    }
+-
++    @Override
++    protected DSLContext create0() {
++        return DSL.using(connection(), SQLDialect.POSTGRES);
++    }
+@@ -59,54 +59,54 @@
+-    protected Connection connection() {
+-        if (connection == null) {
+-            try {
+-                final String customDockerImageName = getProperties().getProperty("dockerImage");
+-                DockerImageName dockerImageName;
+-                if (isBlank(customDockerImageName)) {
+-                    dockerImageName = DEFAULT_IMAGE_NAME.withTag(DEFAULT_TAG);
+-                } else {
+-                    dockerImageName = DockerImageName.parse(customDockerImageName).asCompatibleSubstituteFor("postgres");
+-                }
+-                postgresContainer = new PostgreSQLContainer<>(dockerImageName)
+-                    .withDatabaseName("jooqdb")
+-                    .withUsername("user")
+-                    .withPassword("pwd");
+-                postgresContainer.start();
+-                Properties info = new Properties();
+-                info.put("user", postgresContainer.getUsername());
+-                info.put("password", postgresContainer.getPassword());
+-                connection = new org.postgresql.Driver().connect(postgresContainer.getJdbcUrl(), info);
+-                String locationsProperty = getProperties().getProperty("locations");
+-                if (isBlank(locationsProperty)) {
+-                    locationsProperty = "";
+-                    log.warn("No scripts location defined", "It is recommended that you provide an explicit script directory to scan");
+-                }
+-                String[] locations = Arrays.stream(locationsProperty.split(","))
+-                    .map(l -> Location.FILESYSTEM_PREFIX + getBasedir() + "/" + l)
+-                    .toArray(String[]::new);
+-                Map<String, String> placeholders;
+-                String placeholdersProperty = getProperties().getProperty("placeholders");
+-                if (isBlank(placeholdersProperty)) {
+-                    placeholders = Collections.emptyMap();
+-                } else {
+-                    placeholders = Arrays.stream(placeholdersProperty.split(","))
+-                        .map(p -> p.split(KEY_VALUE_SEPARATOR))
+-                        .collect(Collectors.toMap(pair -> pair[0], pair -> pair[1]));
+-                }
+-                String defaultSchema = getProperties().getProperty("defaultSchema");
+-                if (isBlank(defaultSchema)) {
+-                    defaultSchema = "public";
+-                }
+-                Flyway.configure()
+-                    .dataSource(postgresContainer.getJdbcUrl(), postgresContainer.getUsername(), postgresContainer.getPassword())
+-                    .locations(locations)
+-                    .schemas(defaultSchema)
+-                    .placeholders(placeholders)
+-                    .load()
+-                    .migrate();
+-                setConnection(connection);
+-            } catch (Exception e) {
+-                throw new DataAccessException("Error while exporting schema", e);
+-            }
+-        }
+-        return connection;
+-    }
++    protected Connection connection() {
++        if (connection == null) {
++            try {
++                final String customDockerImageName = getProperties().getProperty("dockerImage");
++                DockerImageName dockerImageName;
++                if (StringUtils.isBlank(customDockerImageName)) {
++                    dockerImageName = DEFAULT_IMAGE_NAME.withTag(DEFAULT_TAG);
++                } else {
++                    dockerImageName = DockerImageName.parse(customDockerImageName).asCompatibleSubstituteFor("postgres");
++                }
++                postgresContainer = new PostgreSQLContainer<>(dockerImageName)
++                    .withDatabaseName("jooqdb")
++                    .withUsername("user")
++                    .withPassword("pwd");
++                postgresContainer.start();
++                Properties info = new Properties();
++                info.put("user", postgresContainer.getUsername());
++                info.put("password", postgresContainer.getPassword());
++                connection = new org.postgresql.Driver().connect(postgresContainer.getJdbcUrl(), info);
++                String locationsProperty = getProperties().getProperty("locations");
++                if (StringUtils.isBlank(locationsProperty)) {
++                    locationsProperty = "";
++                    log.warn("No scripts location defined", "It is recommended that you provide an explicit script directory to scan");
++                }
++                String[] locations = Arrays.stream(locationsProperty.split(","))
++                    .map(l -> Location.FILESYSTEM_PREFIX + getBasedir() + "/" + l)
++                    .toArray(String[]::new);
++                Map<String, String> placeholders;
++                String placeholdersProperty = getProperties().getProperty("placeholders");
++                if (StringUtils.isBlank(placeholdersProperty)) {
++                    placeholders = Collections.emptyMap();
++                } else {
++                    placeholders = Arrays.stream(placeholdersProperty.split(","))
++                        .map(p -> p.split(KEY_VALUE_SEPARATOR))
++                        .collect(Collectors.toMap(pair -> pair[0], pair -> pair[1]));
++                }
++                String defaultSchema = getProperties().getProperty("defaultSchema");
++                if (StringUtils.isBlank(defaultSchema)) {
++                    defaultSchema = "public";
++                }
++                Flyway.configure()
++                    .dataSource(postgresContainer.getJdbcUrl(), postgresContainer.getUsername(), postgresContainer.getPassword())
++                    .locations(locations)
++                    .schemas(defaultSchema)
++                    .placeholders(placeholders)
++                    .load()
++                    .migrate();
++                setConnection(connection);
++            } catch (Exception e) {
++                throw new DataAccessException("Error while exporting schema", e);
++            }
++        }
++        return connection;
++    }
+@@ -118,9 +118,9 @@
+-    @Override
+-    public void close() {
+-        JDBCUtils.safeClose(connection);
+-        connection = null;
+-        if (postgresContainer != null) {
+-            postgresContainer.close();
+-            postgresContainer = null;
+-        }
+-        super.close();
+-    }
++    @Override
++    public void close() {
++        JDBCUtils.safeClose(connection);
++        connection = null;
++        if (postgresContainer != null) {
++            postgresContainer.close();
++            postgresContainer = null;
++        }
++        super.close();
++    }
+```

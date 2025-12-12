@@ -1,0 +1,5 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project thrift-logger: Compilation failure: Compilation failure:
+thrift-logger/src/main/java/com/pinterest/singer/client/logback/AppenderUtils.java com.pinterest.singer.client.logback.AppenderUtils.LogMessageEncoder is not abstract and does not override abstract method footerBytes() in ch.qos.logback.core.encoder.Encoder
+thrift-logger/src/main/java/com/pinterest/singer/client/logback/AppenderUtils.java method does not override or implement a method from a supertype
+thrift-logger/src/main/java/com/pinterest/singer/client/logback/AppenderUtils.java method does not override or implement a method from a supertype
+thrift-logger/src/main/java/com/pinterest/singer/client/logback/AppenderUtils.java method does not override or implement a method from a supertype

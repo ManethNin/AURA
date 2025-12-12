@@ -1,0 +1,64 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project assertj-vavr: Compilation failure: Compilation failure:
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java package org.assertj.core.internal.bytebuddy does not exist
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java package org.assertj.core.internal.bytebuddy does not exist
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java package org.assertj.core.internal.bytebuddy.TypeCache does not exist
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java package org.assertj.core.internal.bytebuddy.dynamic.scaffold does not exist
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java package org.assertj.core.internal.bytebuddy.implementation does not exist
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java package org.assertj.core.internal.bytebuddy.implementation does not exist
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java package org.assertj.core.internal.bytebuddy.implementation.auxiliary does not exist
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java package org.assertj.core.internal.bytebuddy.implementation.bind.annotation does not exist
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java package org.assertj.core.internal.bytebuddy.implementation.bind.annotation does not exist
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java package org.assertj.core.internal.bytebuddy.implementation.bind.annotation does not exist
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java package org.assertj.core.internal.bytebuddy.matcher does not exist
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java static import only from classes and interfaces
+src/main/java/org/assertj/vavr/api/ClassLoadingStrategyFactory.java package org.assertj.core.internal.bytebuddy.dynamic.loading does not exist
+src/main/java/org/assertj/vavr/api/ClassLoadingStrategyFactory.java package org.assertj.core.internal.bytebuddy.dynamic.loading does not exist
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java cannot find symbol
+symbol:   class ByteBuddy
+location: class org.assertj.vavr.api.VavrAssumptions
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java cannot find symbol
+symbol:   class Implementation
+location: class org.assertj.vavr.api.VavrAssumptions
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java cannot find symbol
+symbol:   class TypeCache
+location: class org.assertj.vavr.api.VavrAssumptions
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java cannot find symbol
+symbol:   class SimpleKey
+location: class org.assertj.vavr.api.VavrAssumptions
+src/main/java/org/assertj/vavr/api/ClassLoadingStrategyFactory.java cannot find symbol
+symbol:   class ClassLoadingStrategy
+location: class org.assertj.vavr.api.ClassLoadingStrategyFactory
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java cannot find symbol
+symbol:   class This
+location: class org.assertj.vavr.api.VavrAssumptions.AssumptionMethodInterceptor
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java cannot find symbol
+symbol:   class SuperCall
+location: class org.assertj.vavr.api.VavrAssumptions.AssumptionMethodInterceptor
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java cannot find symbol
+symbol:   class RuntimeType
+location: class org.assertj.vavr.api.VavrAssumptions.AssumptionMethodInterceptor
+src/main/java/org/assertj/vavr/api/ClassLoadingStrategyFactory.java package ClassInjector does not exist
+src/main/java/org/assertj/vavr/api/ClassLoadingStrategyFactory.java package ClassLoadingStrategy does not exist
+src/main/java/org/assertj/vavr/api/ClassLoadingStrategyFactory.java package ClassInjector does not exist
+src/main/java/org/assertj/vavr/api/ClassLoadingStrategyFactory.java package ClassLoadingStrategy does not exist
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java package AuxiliaryType.NamingStrategy does not exist
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java cannot find symbol
+symbol:   variable TypeValidation
+location: class org.assertj.vavr.api.VavrAssumptions
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java cannot find symbol
+symbol:   class ByteBuddy
+location: class org.assertj.vavr.api.VavrAssumptions
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java cannot find symbol
+symbol:   variable MethodDelegation
+location: class org.assertj.vavr.api.VavrAssumptions
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java package TypeCache does not exist
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java package TypeCache does not exist
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java cannot find symbol
+symbol:   class SimpleKey
+location: class org.assertj.vavr.api.VavrAssumptions
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java cannot find symbol
+symbol:   class SimpleKey
+location: class org.assertj.vavr.api.VavrAssumptions
+src/main/java/org/assertj/vavr/api/VavrAssumptions.java cannot find symbol
+symbol:   method any()
+location: class org.assertj.vavr.api.VavrAssumptions

@@ -1,0 +1,1 @@
+{"japicmpResult": {}, "elementLines": {}, "revapiResult": {}, "allPotentialBreakingElements": ["setClients()", "getName()", "of(java.lang.Enum)", "addFilter(org.pac4j.jee.filter.AbstractConfigFilter)", "servlets()", "getClients()", "getClass()"], "elementPatterns": {}, "project": "dropwizard-pac4j"}

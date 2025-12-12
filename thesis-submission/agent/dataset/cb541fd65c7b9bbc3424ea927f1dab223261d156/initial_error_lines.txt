@@ -1,0 +1,8 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project jcabi-http: Compilation failure: Compilation failure:
+[ERROR] src/main/java/com/jcabi/http/mock/MkQueryMatchers.java:[34,20] cannot find symbol
+[ERROR]   symbol:   class Matchers
+[ERROR]   location: package org.hamcrest
+[ERROR] src/main/java/com/jcabi/http/response/RestResponse.java:[48,20] cannot find symbol
+[ERROR]   symbol:   class Matchers
+[ERROR]   location: package org.hamcrest
+[ERROR] -> [Help 1]

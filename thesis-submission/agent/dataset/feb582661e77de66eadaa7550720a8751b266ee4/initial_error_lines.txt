@@ -1,0 +1,17 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.6.1:compile (default-compile) on project liquibase-mssql: Compilation failure: Compilation failure:
+[ERROR] src/java/liquibase/ext/mssql/sqlgenerator/CreateIndexGeneratorMSSQL.java:[12,22] cannot find symbol
+[ERROR]   symbol:   class StringUtils
+[ERROR]   location: package liquibase.util
+[ERROR] src/java/liquibase/ext/mssql/sqlgenerator/AddPrimaryKeyGeneratorMSSQL.java:[12,22] cannot find symbol
+[ERROR]   symbol:   class StringUtils
+[ERROR]   location: package liquibase.util
+[ERROR] src/java/liquibase/ext/mssql/sqlgenerator/CreateIndexGeneratorMSSQL.java:[77,9] cannot find symbol
+[ERROR]   symbol:   variable StringUtils
+[ERROR]   location: class liquibase.ext.mssql.sqlgenerator.CreateIndexGeneratorMSSQL
+[ERROR] src/java/liquibase/ext/mssql/sqlgenerator/AddPrimaryKeyGeneratorMSSQL.java:[67,9] cannot find symbol
+[ERROR]   symbol:   variable StringUtils
+[ERROR]   location: class liquibase.ext.mssql.sqlgenerator.AddPrimaryKeyGeneratorMSSQL
+[ERROR] src/java/liquibase/ext/mssql/database/MSSQLDatabase.java:[18,24] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class liquibase.executor.ExecutorService
+[ERROR] -> [Help 1]

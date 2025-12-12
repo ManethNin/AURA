@@ -1,0 +1,12 @@
+--- a/arex-instrumentation/dubbo/arex-dubbo-apache-v2/pom.xml
++++ b/arex-instrumentation/dubbo/arex-dubbo-apache-v2/pom.xml
+@@ ... @@
+         <dependency>
+             <groupId>org.apache.dubbo</groupId>
+             <artifactId>dubbo</artifactId>
+-            <version>2.7.3</version>
++            <version>2.7.21</version>
+             <scope>provided</scope>
+         </dependency>
+     </dependencies>
+

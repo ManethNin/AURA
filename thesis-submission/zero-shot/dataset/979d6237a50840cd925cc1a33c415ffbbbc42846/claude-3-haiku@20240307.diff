@@ -1,0 +1,22 @@
+diff --git a/extensions/struts2/test/com/google/inject/struts2/Struts2FactoryTest.java b/extensions/struts2/test/com/google/inject/struts2/Struts2FactoryTest.java
+index c69ce3d7d..fd30ff6ae 100644
+--- a/extensions/struts2/test/com/google/inject/struts2/Struts2FactoryTest.java
++++ b/extensions/struts2/test/com/google/inject/struts2/Struts2FactoryTest.java
+@@ -16,7 +16,7 @@
+ 
+ package com.google.inject.struts2;
+ 
+-import org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter;
++import org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter;
+ import com.google.inject.AbstractModule;
+ import com.google.inject.Guice;
+ import com.google.inject.Injector;
+@@ -52,7 +52,7 @@ public class Struts2FactoryTest extends TestCase {
+             @Override
+             protected void configureServlets() {
+               // Struts 2 setup
+-              bind(StrutsPrepareAndExecuteFilter.class)
++bind(org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter.class)
+                   .in(com.google.inject.Singleton.class);
+               filter("/*").through(StrutsPrepareAndExecuteFilter.class);
+             }

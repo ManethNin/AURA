@@ -1,0 +1,182 @@
+name: Build and Publish Docker Images
+'on':
+  push:
+    paths:
+    - dataset/*/out/reproduction/gpt-4o-mini
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        sparse-checkout: dataset
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build and push ad80bdff62b1b0520d3fb9e8d627532a38a7c60c
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/ad80bdff62b1b0520d3fb9e8d627532a38a7c60c/out/reproduction/gpt-4o-mini
+        file: dataset/ad80bdff62b1b0520d3fb9e8d627532a38a7c60c/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-ad80bdff62b1b0520d3fb9e8d627532a38a7c60c-reproduction
+    - name: Build and push dc9a40fde9a9fee5aaec3f60695385ba539406d4
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/dc9a40fde9a9fee5aaec3f60695385ba539406d4/out/reproduction/gpt-4o-mini
+        file: dataset/dc9a40fde9a9fee5aaec3f60695385ba539406d4/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-dc9a40fde9a9fee5aaec3f60695385ba539406d4-reproduction
+    - name: Build and push 8502e85f9ee2ff90ce96b47b5904f011e81e8bb8
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/8502e85f9ee2ff90ce96b47b5904f011e81e8bb8/out/reproduction/gpt-4o-mini
+        file: dataset/8502e85f9ee2ff90ce96b47b5904f011e81e8bb8/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-8502e85f9ee2ff90ce96b47b5904f011e81e8bb8-reproduction
+    - name: Build and push 0abf7148300f40a1da0538ab060552bca4a2f1d8
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/0abf7148300f40a1da0538ab060552bca4a2f1d8/out/reproduction/gpt-4o-mini
+        file: dataset/0abf7148300f40a1da0538ab060552bca4a2f1d8/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-0abf7148300f40a1da0538ab060552bca4a2f1d8-reproduction
+    - name: Build and push 2d733a58045b4bf3669aa00d875e77f9db48c29b
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/2d733a58045b4bf3669aa00d875e77f9db48c29b/out/reproduction/gpt-4o-mini
+        file: dataset/2d733a58045b4bf3669aa00d875e77f9db48c29b/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-2d733a58045b4bf3669aa00d875e77f9db48c29b-reproduction
+    - name: Build and push a4c360001134c2e3a9f7fbde88a07a9fd767e78e
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/a4c360001134c2e3a9f7fbde88a07a9fd767e78e/out/reproduction/gpt-4o-mini
+        file: dataset/a4c360001134c2e3a9f7fbde88a07a9fd767e78e/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-a4c360001134c2e3a9f7fbde88a07a9fd767e78e-reproduction
+    - name: Build and push af6e5d1cc94f031f29b4838e7a8b56704c8c5de4
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/af6e5d1cc94f031f29b4838e7a8b56704c8c5de4/out/reproduction/gpt-4o-mini
+        file: dataset/af6e5d1cc94f031f29b4838e7a8b56704c8c5de4/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-af6e5d1cc94f031f29b4838e7a8b56704c8c5de4-reproduction
+    - name: Build and push acc50dabec6796c091b84c1ada2ae4cbcab8b562
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/acc50dabec6796c091b84c1ada2ae4cbcab8b562/out/reproduction/gpt-4o-mini
+        file: dataset/acc50dabec6796c091b84c1ada2ae4cbcab8b562/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-acc50dabec6796c091b84c1ada2ae4cbcab8b562-reproduction
+    - name: Build and push 1d43bce1de6a81ac017c233d72f348d3c850299e
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/1d43bce1de6a81ac017c233d72f348d3c850299e/out/reproduction/gpt-4o-mini
+        file: dataset/1d43bce1de6a81ac017c233d72f348d3c850299e/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-1d43bce1de6a81ac017c233d72f348d3c850299e-reproduction
+    - name: Build and push 0a11c04038eae517540051dbf51f7f26b7221f20
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/0a11c04038eae517540051dbf51f7f26b7221f20/out/reproduction/gpt-4o-mini
+        file: dataset/0a11c04038eae517540051dbf51f7f26b7221f20/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-0a11c04038eae517540051dbf51f7f26b7221f20-reproduction
+    - name: Build and push 36859167815292f279e570d39dd2ddbcf1622dc6
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/36859167815292f279e570d39dd2ddbcf1622dc6/out/reproduction/gpt-4o-mini
+        file: dataset/36859167815292f279e570d39dd2ddbcf1622dc6/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-36859167815292f279e570d39dd2ddbcf1622dc6-reproduction
+    - name: Build and push b6a48a6e557fad1ceda680618e0a34c7b8c5c087
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/b6a48a6e557fad1ceda680618e0a34c7b8c5c087/out/reproduction/gpt-4o-mini
+        file: dataset/b6a48a6e557fad1ceda680618e0a34c7b8c5c087/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-b6a48a6e557fad1ceda680618e0a34c7b8c5c087-reproduction
+    - name: Build and push ea33b5101edffc0242967cbf21c1016378b18483
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/ea33b5101edffc0242967cbf21c1016378b18483/out/reproduction/gpt-4o-mini
+        file: dataset/ea33b5101edffc0242967cbf21c1016378b18483/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-ea33b5101edffc0242967cbf21c1016378b18483-reproduction
+    - name: Build and push 4b4c08d502d98d240855013ab76008f5e0243435
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/4b4c08d502d98d240855013ab76008f5e0243435/out/reproduction/gpt-4o-mini
+        file: dataset/4b4c08d502d98d240855013ab76008f5e0243435/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-4b4c08d502d98d240855013ab76008f5e0243435-reproduction
+    - name: Build and push 6c53cd904bd66fc79af8687571e607c259226b81
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/6c53cd904bd66fc79af8687571e607c259226b81/out/reproduction/gpt-4o-mini
+        file: dataset/6c53cd904bd66fc79af8687571e607c259226b81/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-6c53cd904bd66fc79af8687571e607c259226b81-reproduction
+    - name: Build and push 0305beafdecb0b28f7c94264ed20cdc4e41ff067
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/0305beafdecb0b28f7c94264ed20cdc4e41ff067/out/reproduction/gpt-4o-mini
+        file: dataset/0305beafdecb0b28f7c94264ed20cdc4e41ff067/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-0305beafdecb0b28f7c94264ed20cdc4e41ff067-reproduction
+    - name: Build and push 489aad6060454d0b7b34a144e0b345c5a3a199f5
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/489aad6060454d0b7b34a144e0b345c5a3a199f5/out/reproduction/gpt-4o-mini
+        file: dataset/489aad6060454d0b7b34a144e0b345c5a3a199f5/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-489aad6060454d0b7b34a144e0b345c5a3a199f5-reproduction
+    - name: Build and push 250cafc7d6ae47d5d4803b5a5e58186eb81fa3b5
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/250cafc7d6ae47d5d4803b5a5e58186eb81fa3b5/out/reproduction/gpt-4o-mini
+        file: dataset/250cafc7d6ae47d5d4803b5a5e58186eb81fa3b5/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-250cafc7d6ae47d5d4803b5a5e58186eb81fa3b5-reproduction
+    - name: Build and push 14fc5fa696f499cac48401b3a86882b3bf7d9b82
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/14fc5fa696f499cac48401b3a86882b3bf7d9b82/out/reproduction/gpt-4o-mini
+        file: dataset/14fc5fa696f499cac48401b3a86882b3bf7d9b82/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-14fc5fa696f499cac48401b3a86882b3bf7d9b82-reproduction
+    - name: Build and push c32185c43be158d32c7d13c5b816991954eb45fa
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/c32185c43be158d32c7d13c5b816991954eb45fa/out/reproduction/gpt-4o-mini
+        file: dataset/c32185c43be158d32c7d13c5b816991954eb45fa/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-c32185c43be158d32c7d13c5b816991954eb45fa-reproduction
+    - name: Build and push 2dfaa41bfb97674d11f09a5885011f19808548a3
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/2dfaa41bfb97674d11f09a5885011f19808548a3/out/reproduction/gpt-4o-mini
+        file: dataset/2dfaa41bfb97674d11f09a5885011f19808548a3/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-2dfaa41bfb97674d11f09a5885011f19808548a3-reproduction
+    - name: Build and push a2b0fc53611f8705640773f18c8dd6a47eed3b7f
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/a2b0fc53611f8705640773f18c8dd6a47eed3b7f/out/reproduction/gpt-4o-mini
+        file: dataset/a2b0fc53611f8705640773f18c8dd6a47eed3b7f/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-a2b0fc53611f8705640773f18c8dd6a47eed3b7f-reproduction
+    - name: Build and push dc9f7910968cd0aa2090e390045ae053693e839a
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/dc9f7910968cd0aa2090e390045ae053693e839a/out/reproduction/gpt-4o-mini
+        file: dataset/dc9f7910968cd0aa2090e390045ae053693e839a/out/reproduction/gpt-4o-mini/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o-mini-dc9f7910968cd0aa2090e390045ae053693e839a-reproduction

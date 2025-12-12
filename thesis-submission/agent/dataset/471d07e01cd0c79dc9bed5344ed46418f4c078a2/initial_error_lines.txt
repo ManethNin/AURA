@@ -1,0 +1,202 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project google-cloud-resourcemanager: Compilation failure: Compilation failure:
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/OrgPolicyInfo.java:[18,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/OrgPolicyInfo.java:[19,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/OrgPolicyInfo.java:[20,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/OrgPolicyInfo.java:[21,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/OrgPolicyInfo.java:[38,25] cannot find symbol
+[ERROR]   symbol:   class OrgPolicy
+[ERROR]   location: class com.google.cloud.resourcemanager.OrgPolicyInfo
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/OrgPolicyInfo.java:[45,40] cannot find symbol
+[ERROR]   symbol:   class OrgPolicy
+[ERROR]   location: class com.google.cloud.resourcemanager.OrgPolicyInfo
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/OrgPolicyInfo.java:[57,11] cannot find symbol
+[ERROR]   symbol:   class RestoreDefault
+[ERROR]   location: class com.google.cloud.resourcemanager.OrgPolicyInfo
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/OrgPolicyInfo.java:[312,10] cannot find symbol
+[ERROR]   symbol:   class RestoreDefault
+[ERROR]   location: class com.google.cloud.resourcemanager.OrgPolicyInfo
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/OrgPolicyInfo.java:[360,3] cannot find symbol
+[ERROR]   symbol:   class OrgPolicy
+[ERROR]   location: class com.google.cloud.resourcemanager.OrgPolicyInfo
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/OrgPolicyInfo.java:[376,37] cannot find symbol
+[ERROR]   symbol:   class OrgPolicy
+[ERROR]   location: class com.google.cloud.resourcemanager.OrgPolicyInfo
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/OrgPolicyInfo.java:[225,13] cannot find symbol
+[ERROR]   symbol:   class RestoreDefault
+[ERROR]   location: class com.google.cloud.resourcemanager.OrgPolicyInfo.Builder
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/OrgPolicyInfo.java:[261,31] cannot find symbol
+[ERROR]   symbol:   class RestoreDefault
+[ERROR]   location: class com.google.cloud.resourcemanager.OrgPolicyInfo.Builder
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/OrgPolicyInfo.java:[200,5] cannot find symbol
+[ERROR]   symbol:   class ListPolicy
+[ERROR]   location: class com.google.cloud.resourcemanager.OrgPolicyInfo.Policies
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/OrgPolicyInfo.java:[209,34] cannot find symbol
+[ERROR]   symbol:   class ListPolicy
+[ERROR]   location: class com.google.cloud.resourcemanager.OrgPolicyInfo.Policies
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/OrgPolicyInfo.java:[96,5] cannot find symbol
+[ERROR]   symbol:   class BooleanPolicy
+[ERROR]   location: class com.google.cloud.resourcemanager.OrgPolicyInfo.BoolPolicy
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/OrgPolicyInfo.java:[100,36] cannot find symbol
+[ERROR]   symbol:   class BooleanPolicy
+[ERROR]   location: class com.google.cloud.resourcemanager.OrgPolicyInfo.BoolPolicy
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/Project.java:[283,57] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ProjectInfo.java:[146,55] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ProjectInfo.java:[155,59] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[19,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[20,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[21,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[22,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[92,18] cannot find symbol
+[ERROR]   symbol:   class Project
+[ERROR]   location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[92,3] cannot find symbol
+[ERROR]   symbol:   class Project
+[ERROR]   location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[107,3] cannot find symbol
+[ERROR]   symbol:   class Project
+[ERROR]   location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[114,26] cannot find symbol
+[ERROR]   symbol:   class Project
+[ERROR]   location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[131,19] cannot find symbol
+[ERROR]   symbol:   class Project
+[ERROR]   location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[131,3] cannot find symbol
+[ERROR]   symbol:   class Project
+[ERROR]   location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[138,3] cannot find symbol
+[ERROR]   symbol:   class Policy
+[ERROR]   location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[145,42] cannot find symbol
+[ERROR]   symbol:   class Policy
+[ERROR]   location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[145,3] cannot find symbol
+[ERROR]   symbol:   class Policy
+[ERROR]   location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[167,40] cannot find symbol
+[ERROR]   symbol:   class OrgPolicy
+[ERROR]   location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[178,3] cannot find symbol
+[ERROR]   symbol:   class OrgPolicy
+[ERROR]   location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[189,3] cannot find symbol
+[ERROR]   symbol:   class OrgPolicy
+[ERROR]   location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[196,14] cannot find symbol
+[ERROR]   symbol:   class Constraint
+[ERROR]   location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[204,14] cannot find symbol
+[ERROR]   symbol:   class OrgPolicy
+[ERROR]   location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[214,47] cannot find symbol
+[ERROR]   symbol:   class OrgPolicy
+[ERROR]   location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/ResourceManagerRpc.java:[214,3] cannot find symbol
+[ERROR]   symbol:   class OrgPolicy
+[ERROR]   location: interface com.google.cloud.resourcemanager.spi.v1beta1.ResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ConstraintInfo.java:[18,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ConstraintInfo.java:[19,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ConstraintInfo.java:[20,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ConstraintInfo.java:[35,25] cannot find symbol
+[ERROR]   symbol:   class Constraint
+[ERROR]   location: class com.google.cloud.resourcemanager.ConstraintInfo
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ConstraintInfo.java:[42,41] cannot find symbol
+[ERROR]   symbol:   class Constraint
+[ERROR]   location: class com.google.cloud.resourcemanager.ConstraintInfo
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ConstraintInfo.java:[50,11] cannot find symbol
+[ERROR]   symbol:   class BooleanConstraint
+[ERROR]   location: class com.google.cloud.resourcemanager.ConstraintInfo
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ConstraintInfo.java:[198,10] cannot find symbol
+[ERROR]   symbol:   class BooleanConstraint
+[ERROR]   location: class com.google.cloud.resourcemanager.ConstraintInfo
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ConstraintInfo.java:[266,3] cannot find symbol
+[ERROR]   symbol:   class Constraint
+[ERROR]   location: class com.google.cloud.resourcemanager.ConstraintInfo
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ConstraintInfo.java:[280,38] cannot find symbol
+[ERROR]   symbol:   class Constraint
+[ERROR]   location: class com.google.cloud.resourcemanager.ConstraintInfo
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ConstraintInfo.java:[125,13] cannot find symbol
+[ERROR]   symbol:   class BooleanConstraint
+[ERROR]   location: class com.google.cloud.resourcemanager.ConstraintInfo.Builder
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ConstraintInfo.java:[147,34] cannot find symbol
+[ERROR]   symbol:   class BooleanConstraint
+[ERROR]   location: class com.google.cloud.resourcemanager.ConstraintInfo.Builder
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ConstraintInfo.java:[114,5] cannot find symbol
+[ERROR]   symbol:   class ListConstraint
+[ERROR]   location: class com.google.cloud.resourcemanager.ConstraintInfo.Constraints
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ConstraintInfo.java:[118,37] cannot find symbol
+[ERROR]   symbol:   class ListConstraint
+[ERROR]   location: class com.google.cloud.resourcemanager.ConstraintInfo.Constraints
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ProjectInfo.java:[392,53] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ProjectInfo.java:[414,79] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ResourceManagerImpl.java:[23,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/ResourceManagerImpl.java:[24,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/testing/LocalResourceManagerHelper.java:[25,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/testing/LocalResourceManagerHelper.java:[26,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/testing/LocalResourceManagerHelper.java:[27,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/testing/LocalResourceManagerHelper.java:[28,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/testing/LocalResourceManagerHelper.java:[29,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/testing/LocalResourceManagerHelper.java:[30,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/testing/LocalResourceManagerHelper.java:[31,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/testing/LocalResourceManagerHelper.java:[126,47] cannot find symbol
+[ERROR]   symbol:   class Project
+[ERROR]   location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/testing/LocalResourceManagerHelper.java:[127,29] cannot find symbol
+[ERROR]   symbol:   class Policy
+[ERROR]   location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/testing/LocalResourceManagerHelper.java:[388,47] cannot find symbol
+[ERROR]   symbol:   class Project
+[ERROR]   location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/testing/LocalResourceManagerHelper.java:[444,32] cannot find symbol
+[ERROR]   symbol:   class Project
+[ERROR]   location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/testing/LocalResourceManagerHelper.java:[569,41] cannot find symbol
+[ERROR]   symbol:   class Project
+[ERROR]   location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/testing/LocalResourceManagerHelper.java:[604,40] cannot find symbol
+[ERROR]   symbol:   class Project
+[ERROR]   location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/testing/LocalResourceManagerHelper.java:[604,18] cannot find symbol
+[ERROR]   symbol:   class Project
+[ERROR]   location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/testing/LocalResourceManagerHelper.java:[637,51] cannot find symbol
+[ERROR]   symbol:   class Project
+[ERROR]   location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/testing/LocalResourceManagerHelper.java:[696,57] cannot find symbol
+[ERROR]   symbol:   class Policy
+[ERROR]   location: class com.google.cloud.resourcemanager.testing.LocalResourceManagerHelper
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/PolicyMarshaller.java:[19,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/PolicyMarshaller.java:[37,74] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/PolicyMarshaller.java:[55,77] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/PolicyMarshaller.java:[76,63] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[32,52] package com.google.api.services.cloudresourcemanager does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[33,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[34,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[35,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[36,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[37,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[38,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[39,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[40,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[41,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[42,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[43,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[44,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[45,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[46,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[47,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[48,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[49,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[50,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[51,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[52,58] package com.google.api.services.cloudresourcemanager.model does not exist
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[114,45] cannot find symbol
+[ERROR]   symbol:   class Operation
+[ERROR]   location: class com.google.cloud.resourcemanager.spi.v1beta1.HttpResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[132,17] cannot find symbol
+[ERROR]   symbol:   class CloudResourceManager
+[ERROR]   location: class com.google.cloud.resourcemanager.spi.v1beta1.HttpResourceManagerRpc
+[ERROR] java-resourcemanager/google-cloud-resourcemanager/src/main/java/com/google/cloud/resourcemanager/spi/v1beta1/HttpResourceManagerRpc.java:[151,53] cannot find symbol
+[ERROR]   symbol:   class Status
+[ERROR]   location: class com.google.cloud.resourcemanager.spi.v1beta1.HttpResourceManagerRpc
+[ERROR] -> [Help 1]

@@ -1,0 +1,42 @@
+package org.jfrog.hudson.pipeline.common.executors;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import hudson.FilePath;
+import hudson.model.Run;
+import hudson.model.TaskListener;
+import hudson.remoting.VirtualChannel;
+import jenkins.MasterToSlaveFileCallable;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.jfrog.build.extractor.clientConfiguration.DistributionManagerBuilder;
+import org.jfrog.build.extractor.clientConfiguration.client.distribution.DistributionManager;
+import org.jfrog.build.extractor.clientConfiguration.client.distribution.request.DeleteReleaseBundleRequest;
+import org.jfrog.hudson.pipeline.common.Utils;
+import org.jfrog.hudson.pipeline.common.types.DistributionServer;
+import org.jfrog.hudson.util.JenkinsBuildInfoLog;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import static org.jfrog.hudson.util.SerializationUtils.createMapper;
+
+public class ReleaseBundleDeleteExecutor implements Executor {
+    private DeleteReleaseBundleRequest createRequest(String distRules, List<String> countryCodes, String siteName,
+                                                     String cityName, boolean dryRun, boolean deleteFromDist) throws IOException {
+        DeleteReleaseBundleRequest request;
+        if (StringUtils.isNotBlank(distRules)) {
+            if (!CollectionUtils.isEmpty(countryCodes) || !StringUtils.isAllBlank(siteName, cityName)) {
+                throw new IOException("The distRules input can't be used with site, city or country codes");
+            }
+            ObjectMapper mapper = createMapper();
+            request = mapper.readValue(distRules, DeleteReleaseBundleRequest.class);
+        } else {
+            request = new DeleteReleaseBundleRequest();
+            request.setDistributionRules(Utils.createDistributionRules(countryCodes, siteName, cityName));
+        }
+        request.setDryRun(dryRun);
+        request.setOnSuccess(deleteFromDist ?
+                DeleteReleaseBundleRequest.OnSuccess.delete : DeleteReleaseBundleRequest.OnSuccess.keep);
+        return request;
+    }
+
+}

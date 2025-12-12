@@ -1,0 +1,128 @@
+name: Build and Publish Docker Images
+'on':
+  push:
+    paths:
+    - dataset/*/out/reproduction/gpt-4o_augmented_prompt
+    branches:
+    - '**'
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        sparse-checkout: dataset
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build and push 979d6237a50840cd925cc1a33c415ffbbbc42846
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/979d6237a50840cd925cc1a33c415ffbbbc42846/out/reproduction/gpt-4o_augmented_prompt
+        file: dataset/979d6237a50840cd925cc1a33c415ffbbbc42846/out/reproduction/gpt-4o_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o_augmented_prompt-979d6237a50840cd925cc1a33c415ffbbbc42846-reproduction
+    - name: Build and push f9763c18c7e1fa54fb67dcf3935aa5106807aba9
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/f9763c18c7e1fa54fb67dcf3935aa5106807aba9/out/reproduction/gpt-4o_augmented_prompt
+        file: dataset/f9763c18c7e1fa54fb67dcf3935aa5106807aba9/out/reproduction/gpt-4o_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o_augmented_prompt-f9763c18c7e1fa54fb67dcf3935aa5106807aba9-reproduction
+    - name: Build and push c09896887acf0fe59320e01145a7034cd8d4e326
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/c09896887acf0fe59320e01145a7034cd8d4e326/out/reproduction/gpt-4o_augmented_prompt
+        file: dataset/c09896887acf0fe59320e01145a7034cd8d4e326/out/reproduction/gpt-4o_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o_augmented_prompt-c09896887acf0fe59320e01145a7034cd8d4e326-reproduction
+    - name: Build and push 0abf7148300f40a1da0538ab060552bca4a2f1d8
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/0abf7148300f40a1da0538ab060552bca4a2f1d8/out/reproduction/gpt-4o_augmented_prompt
+        file: dataset/0abf7148300f40a1da0538ab060552bca4a2f1d8/out/reproduction/gpt-4o_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o_augmented_prompt-0abf7148300f40a1da0538ab060552bca4a2f1d8-reproduction
+    - name: Build and push 6c53cd904bd66fc79af8687571e607c259226b81
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/6c53cd904bd66fc79af8687571e607c259226b81/out/reproduction/gpt-4o_augmented_prompt
+        file: dataset/6c53cd904bd66fc79af8687571e607c259226b81/out/reproduction/gpt-4o_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o_augmented_prompt-6c53cd904bd66fc79af8687571e607c259226b81-reproduction
+    - name: Build and push 0305beafdecb0b28f7c94264ed20cdc4e41ff067
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/0305beafdecb0b28f7c94264ed20cdc4e41ff067/out/reproduction/gpt-4o_augmented_prompt
+        file: dataset/0305beafdecb0b28f7c94264ed20cdc4e41ff067/out/reproduction/gpt-4o_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o_augmented_prompt-0305beafdecb0b28f7c94264ed20cdc4e41ff067-reproduction
+    - name: Build and push 3ff575ae202cdf76ddfa8a4228a1711a6fa1e921
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/3ff575ae202cdf76ddfa8a4228a1711a6fa1e921/out/reproduction/gpt-4o_augmented_prompt
+        file: dataset/3ff575ae202cdf76ddfa8a4228a1711a6fa1e921/out/reproduction/gpt-4o_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o_augmented_prompt-3ff575ae202cdf76ddfa8a4228a1711a6fa1e921-reproduction
+    - name: Build and push 3a4a2b11483689ca3e99e92785a7b27c56d072b8
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/3a4a2b11483689ca3e99e92785a7b27c56d072b8/out/reproduction/gpt-4o_augmented_prompt
+        file: dataset/3a4a2b11483689ca3e99e92785a7b27c56d072b8/out/reproduction/gpt-4o_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o_augmented_prompt-3a4a2b11483689ca3e99e92785a7b27c56d072b8-reproduction
+    - name: Build and push 54857351e0b0a655970d7e2ccdb67f175cc5d688
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/54857351e0b0a655970d7e2ccdb67f175cc5d688/out/reproduction/gpt-4o_augmented_prompt
+        file: dataset/54857351e0b0a655970d7e2ccdb67f175cc5d688/out/reproduction/gpt-4o_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o_augmented_prompt-54857351e0b0a655970d7e2ccdb67f175cc5d688-reproduction
+    - name: Build and push 36859167815292f279e570d39dd2ddbcf1622dc6
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/36859167815292f279e570d39dd2ddbcf1622dc6/out/reproduction/gpt-4o_augmented_prompt
+        file: dataset/36859167815292f279e570d39dd2ddbcf1622dc6/out/reproduction/gpt-4o_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o_augmented_prompt-36859167815292f279e570d39dd2ddbcf1622dc6-reproduction
+    - name: Build and push 0a11c04038eae517540051dbf51f7f26b7221f20
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/0a11c04038eae517540051dbf51f7f26b7221f20/out/reproduction/gpt-4o_augmented_prompt
+        file: dataset/0a11c04038eae517540051dbf51f7f26b7221f20/out/reproduction/gpt-4o_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o_augmented_prompt-0a11c04038eae517540051dbf51f7f26b7221f20-reproduction
+    - name: Build and push 5769bdad76925da568294cb8a40e7d4469699ac3
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/5769bdad76925da568294cb8a40e7d4469699ac3/out/reproduction/gpt-4o_augmented_prompt
+        file: dataset/5769bdad76925da568294cb8a40e7d4469699ac3/out/reproduction/gpt-4o_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o_augmented_prompt-5769bdad76925da568294cb8a40e7d4469699ac3-reproduction
+    - name: Build and push 28be199c825d419957bc753a9519e8e9ecc6a08e
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/28be199c825d419957bc753a9519e8e9ecc6a08e/out/reproduction/gpt-4o_augmented_prompt
+        file: dataset/28be199c825d419957bc753a9519e8e9ecc6a08e/out/reproduction/gpt-4o_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o_augmented_prompt-28be199c825d419957bc753a9519e8e9ecc6a08e-reproduction
+    - name: Build and push e40f76d1150d41821ccfd72e9dd3fabbc8763c1e
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/e40f76d1150d41821ccfd72e9dd3fabbc8763c1e/out/reproduction/gpt-4o_augmented_prompt
+        file: dataset/e40f76d1150d41821ccfd72e9dd3fabbc8763c1e/out/reproduction/gpt-4o_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o_augmented_prompt-e40f76d1150d41821ccfd72e9dd3fabbc8763c1e-reproduction
+    - name: Build and push 26fd1cd7639b7deb7078df5e4cb05c6d463ad07a
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/26fd1cd7639b7deb7078df5e4cb05c6d463ad07a/out/reproduction/gpt-4o_augmented_prompt
+        file: dataset/26fd1cd7639b7deb7078df5e4cb05c6d463ad07a/out/reproduction/gpt-4o_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/gpt-4o_augmented_prompt-26fd1cd7639b7deb7078df5e4cb05c6d463ad07a-reproduction

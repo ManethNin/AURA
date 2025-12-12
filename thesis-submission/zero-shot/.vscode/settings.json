@@ -1,0 +1,9 @@
+{
+  "workbench.colorCustomizations": {
+      "titleBar.activeBackground": "#800080",  // Purple
+      "titleBar.activeForeground": "#ffffff",  // White text
+      "titleBar.inactiveBackground": "#800080", // Purple
+      "titleBar.inactiveForeground": "#ffffff"  // White text
+  },
+  "window.titleBarStyle": "custom"
+}

@@ -1,0 +1,13 @@
+diff --git a/thrift-logger/pom.xml b/thrift-logger/pom.xml
+index 53e174bf..7f26c8f1 100644
+--- a/thrift-logger/pom.xml
++++ b/thrift-logger/pom.xml
+@@ -41,7 +41,7 @@
+     <dependency>
+       <groupId>org.apache.thrift</groupId>
+       <artifactId>libthrift</artifactId>
+-      <version>0.12.0</version>
++      <version>0.16.0</version>
+     </dependency>
+     <dependency>
+       <groupId>org.slf4j</groupId>

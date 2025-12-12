@@ -1,0 +1,8 @@
+Failed to execute goal maven-compiler-plugin:3.11.0:compile (default-compile) on project scoverage-maven-plugin: Compilation failure: Compilation failure:
+src/main/java/org/scoverage/plugin/SCoverageReportMojo.java package org.apache.maven.doxia.module.xhtml.decoration.render does not exist
+src/main/java/org/scoverage/plugin/SCoverageReportMojo.java cannot find symbol
+symbol:   class RenderingContext
+location: class org.scoverage.plugin.SCoverageReportMojo
+src/main/java/org/scoverage/plugin/SCoverageReportMojo.java cannot find symbol
+symbol:   class RenderingContext
+location: class org.scoverage.plugin.SCoverageReportMojo

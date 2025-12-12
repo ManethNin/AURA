@@ -1,0 +1,4 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:testCompile (default-testCompile) on project pay-adminusers: Compilation failure
+[ERROR] src/test/java/uk/gov/pay/adminusers/queue/event/EventMessageHandlerTest.java:[112,15] cannot access org.slf4j.spi.LoggingEventAware
+[ERROR]   class file for org.slf4j.spi.LoggingEventAware not found
+[ERROR] -> [Help 1]

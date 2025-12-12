@@ -1,0 +1,113 @@
+package javax.mvc does not exist
+package javax.mvc does not exist
+package javax.mvc does not exist
+package javax.mvc does not exist
+package javax.mvc.binding does not exist
+package javax.mvc.binding does not exist
+package javax.mvc.security does not exist
+cannot find symbol
+symbol: class Controller
+cannot find symbol
+symbol: class RedirectScoped
+cannot find symbol
+symbol:   class Models
+location: class com.example.web.TaskController
+cannot find symbol
+symbol:   class BindingResult
+location: class com.example.web.TaskController
+package javax.mvc.binding does not exist
+package javax.mvc does not exist
+cannot find symbol
+symbol: class Controller
+cannot find symbol
+symbol:   class MvcContext
+location: class com.example.web.LocaleController
+cannot find symbol
+symbol:   class Models
+location: class com.example.web.LocaleController
+package javax.mvc does not exist
+package javax.mvc.binding does not exist
+package javax.mvc.binding does not exist
+package javax.mvc.binding does not exist
+package javax.mvc.security does not exist
+cannot find symbol
+symbol: class Controller
+cannot find symbol
+symbol:   class BindingResult
+location: class com.example.web.GreetingController
+cannot find symbol
+symbol:   class Models
+location: class com.example.web.GreetingController
+cannot find symbol
+symbol:   class MvcContext
+location: class Messages
+cannot find symbol
+symbol:   class Models
+location: class com.example.config.PostNotFoundExceptionMapper
+package javax.mvc.event does not exist
+package javax.mvc.event does not exist
+package javax.mvc.event does not exist
+package javax.mvc.event does not exist
+package javax.mvc.event does not exist
+cannot find symbol
+symbol:   class BeforeControllerEvent
+location: class com.example.MvcEventListener
+cannot find symbol
+symbol:   class BeforeProcessViewEvent
+location: class com.example.MvcEventListener
+cannot find symbol
+symbol:   class AfterControllerEvent
+location: class com.example.MvcEventListener
+cannot find symbol
+symbol:   class AfterProcessViewEvent
+location: class com.example.MvcEventListener
+cannot find symbol
+symbol:   class ControllerRedirectEvent
+location: class com.example.MvcEventListener
+package javax.mvc.locale does not exist
+package javax.mvc.locale does not exist
+cannot find symbol
+symbol: class LocaleResolver
+cannot find symbol
+symbol:   class LocaleResolverContext
+location: class com.example.web.QueryParamLocaleResolver
+package javax.mvc does not exist
+package javax.mvc.binding does not exist
+package javax.mvc.binding does not exist
+package javax.mvc.binding does not exist
+package javax.mvc.security does not exist
+cannot find symbol
+symbol: class Controller
+cannot find symbol
+symbol:   class BindingResult
+location: class com.example.web.CsrfController
+cannot find symbol
+symbol:   class Models
+location: class com.example.web.CsrfController
+cannot find symbol
+symbol:   class View
+location: class com.example.web.TaskController
+cannot find symbol
+symbol:   class CsrfProtected
+location: class com.example.web.TaskController
+cannot find symbol
+symbol:   class CsrfProtected
+location: class com.example.web.TaskController
+cannot find symbol
+symbol:   class MvcBinding
+location: class com.example.web.TaskForm
+cannot find symbol
+symbol:   class MvcBinding
+location: class com.example.web.TaskForm
+cannot find symbol
+symbol:   class MvcBinding
+location: class com.example.web.GreetingController
+cannot find symbol
+symbol:   class UriRef
+location: class com.example.web.GreetingController
+cannot find symbol
+symbol:   class MvcBinding
+location: class com.example.web.CsrfController
+cannot find symbol
+symbol:   class CsrfProtected
+location: class com.example.web.CsrfController

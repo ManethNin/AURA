@@ -1,0 +1,16 @@
+diff --git a/src/main/java/com/saucelabs/ci/sauceconnect/SauceConnectFourManager.java b/src/main/java/com/saucelabs/ci/sauceconnect/SauceConnectFourManager.java
+index 5c571d0..8e25194 100755
+--- a/src/main/java/com/saucelabs/ci/sauceconnect/SauceConnectFourManager.java
++++ b/src/main/java/com/saucelabs/ci/sauceconnect/SauceConnectFourManager.java
+@@ -302,9 +302,9 @@ public class SauceConnectFourManager extends AbstractSauceTunnelManager implemen
+      * @param unArchiver  the unarchiver
+      * @param archive     the compressed file to extract
+      * @param destination the destination directory
++* @throws SauceConnectException if an error occurs extracting the archive
+ */
+-    private void extractArchive(AbstractUnArchiver unArchiver, File archive, File destination) {
+-        unArchiver.enableLogging(new ConsoleLogger(Logger.LEVEL_DEBUG, "Sauce"));
++private void extractArchive(AbstractUnArchiver unArchiver, File archive, File destination) throws SauceConnectException {
+         unArchiver.setSourceFile(archive);
+         unArchiver.setDestDirectory(destination);
+         unArchiver.extract();

@@ -1,0 +1,1 @@
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/CustomsDetails.java

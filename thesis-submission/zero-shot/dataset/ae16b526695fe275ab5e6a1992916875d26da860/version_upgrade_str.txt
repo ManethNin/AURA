@@ -1,0 +1,1 @@
+org.eclipse.jetty:jetty-server 8.1.11.v20130520 -> 9.4.41.v20210516

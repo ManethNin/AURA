@@ -1,0 +1,20 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.9.0:compile (default-compile) on project jadler-jetty: Compilation failure: Compilation failure:
+[ERROR] jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java:[14,35] error: package org.eclipse.jetty.server.nio does not exist
+[ERROR] jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JadlerHandler.java:[24] error: JadlerHandler is not abstract and does not override abstract method handle(String,Request,HttpServletRequest,HttpServletResponse) in AbstractHandler
+[ERROR] jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JadlerHandler.java:[38,4] error: method does not override or implement a method from a supertype
+[ERROR] jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java:[33,19] error: cannot find symbol
+[ERROR]   symbol:   method setSendServerVersion(boolean)
+[ERROR]   location: variable server of type Server
+[ERROR] jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java:[34,19] error: cannot find symbol
+[ERROR]   symbol:   method setSendDateHeader(boolean)
+[ERROR]   location: variable server of type Server
+[ERROR] jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java:[36,33] error: cannot find symbol
+[ERROR]   symbol:   class SelectChannelConnector
+[ERROR]   location: class JettyStubHttpServer
+[ERROR] jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java:[37,26] error: cannot find symbol
+[ERROR]   symbol:   method setPort(int)
+[ERROR]   location: variable httpConnector of type Connector
+[ERROR] jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java:[80,28] error: cannot find symbol
+[ERROR]   symbol:   method getLocalPort()
+[ERROR]   location: variable httpConnector of type Connector
+[ERROR] -> [Help 1]

@@ -1,0 +1,5 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project pitest-mutation-testing-elements-plugin: Compilation failure
+[ERROR] src/main/java/org/pitest/elements/MutationReportListener.java:[105,38] cannot find symbol
+[ERROR]   symbol:   method getClassInfo(java.util.Set<org.pitest.classinfo.ClassName>)
+[ERROR]   location: variable coverage of type org.pitest.coverage.CoverageDatabase
+[ERROR] -> [Help 1]

@@ -1,0 +1,4 @@
+Failed to execute goal maven-compiler-plugin:3.8.1:testCompile (default-testCompile) on project junit-quickcheck-core: Compilation failure: Compilation failure:
+core/src/test/java/com/pholser/junit/quickcheck/internal/generator/RegisterGeneratorsByConventionTest.java package org.mockito.runners does not exist
+core/src/test/java/com/pholser/junit/quickcheck/internal/generator/RegisterGeneratorsByConventionTest.java cannot find symbol
+symbol: class MockitoJUnitRunner

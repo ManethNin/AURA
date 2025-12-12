@@ -1,0 +1,12 @@
+--- a/pom.xml
++++ b/pom.xml
+@@ ... @@
+         <dependency>
+             <groupId>org.apache.maven.doxia</groupId>
+             <artifactId>doxia-site-renderer</artifactId>
+-            <version>1.0</version>
++            <version>1.11.1</version>
+         </dependency>
+     </dependencies>
+ 
+

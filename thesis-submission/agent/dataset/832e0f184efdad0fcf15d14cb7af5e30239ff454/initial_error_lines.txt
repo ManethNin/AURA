@@ -1,0 +1,50 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project WorldwideChat: Compilation failure: Compilation failure:
+[ERROR] src/main/java/com/expl0itz/worldwidechat/inventory/configuration/ConfigurationMessagesOverridePossibleListGUI.java:[72,114] cannot find symbol
+[ERROR]   symbol:   method parseEnchantment()
+[ERROR]   location: class com.cryptomorin.xseries.XEnchantment
+[ERROR] src/main/java/com/expl0itz/worldwidechat/inventory/WWCInventoryManager.java:[79,98] cannot find symbol
+[ERROR]   symbol:   method parseEnchantment()
+[ERROR]   location: class com.cryptomorin.xseries.XEnchantment
+[ERROR] src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIMainMenu.java:[86,105] cannot find symbol
+[ERROR]   symbol:   method parseEnchantment()
+[ERROR]   location: class com.cryptomorin.xseries.XEnchantment
+[ERROR] src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIMainMenu.java:[127,114] cannot find symbol
+[ERROR]   symbol:   method parseEnchantment()
+[ERROR]   location: class com.cryptomorin.xseries.XEnchantment
+[ERROR] src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIMainMenu.java:[149,114] cannot find symbol
+[ERROR]   symbol:   method parseEnchantment()
+[ERROR]   location: class com.cryptomorin.xseries.XEnchantment
+[ERROR] src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIMainMenu.java:[173,114] cannot find symbol
+[ERROR]   symbol:   method parseEnchantment()
+[ERROR]   location: class com.cryptomorin.xseries.XEnchantment
+[ERROR] src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIMainMenu.java:[196,114] cannot find symbol
+[ERROR]   symbol:   method parseEnchantment()
+[ERROR]   location: class com.cryptomorin.xseries.XEnchantment
+[ERROR] src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIMainMenu.java:[217,116] cannot find symbol
+[ERROR]   symbol:   method parseEnchantment()
+[ERROR]   location: class com.cryptomorin.xseries.XEnchantment
+[ERROR] src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIMainMenu.java:[241,114] cannot find symbol
+[ERROR]   symbol:   method parseEnchantment()
+[ERROR]   location: class com.cryptomorin.xseries.XEnchantment
+[ERROR] src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUISourceLanguage.java:[73,113] cannot find symbol
+[ERROR]   symbol:   method parseEnchantment()
+[ERROR]   location: class com.cryptomorin.xseries.XEnchantment
+[ERROR] src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUISourceLanguage.java:[76,113] cannot find symbol
+[ERROR]   symbol:   method parseEnchantment()
+[ERROR]   location: class com.cryptomorin.xseries.XEnchantment
+[ERROR] src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUISourceLanguage.java:[122,112] cannot find symbol
+[ERROR]   symbol:   method parseEnchantment()
+[ERROR]   location: class com.cryptomorin.xseries.XEnchantment
+[ERROR] src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUISourceLanguage.java:[125,112] cannot find symbol
+[ERROR]   symbol:   method parseEnchantment()
+[ERROR]   location: class com.cryptomorin.xseries.XEnchantment
+[ERROR] src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIChatMenu.java:[71,114] cannot find symbol
+[ERROR]   symbol:   method parseEnchantment()
+[ERROR]   location: class com.cryptomorin.xseries.XEnchantment
+[ERROR] src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUIChatMenu.java:[93,106] cannot find symbol
+[ERROR]   symbol:   method parseEnchantment()
+[ERROR]   location: class com.cryptomorin.xseries.XEnchantment
+[ERROR] src/main/java/com/expl0itz/worldwidechat/inventory/wwctranslategui/WWCTranslateGUITargetLanguage.java:[81,113] cannot find symbol
+[ERROR]   symbol:   method parseEnchantment()
+[ERROR]   location: class com.cryptomorin.xseries.XEnchantment
+[ERROR] -> [Help 1]

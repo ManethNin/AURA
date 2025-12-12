@@ -1,0 +1,11 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project metadata-qa-marc: Compilation failure: Compilation failure:
+[ERROR] src/main/java/de/gwdg/metadataqa/marc/MarcFactory.java:[3,35] cannot find symbol
+[ERROR]   symbol:   class JsonBranch
+[ERROR]   location: package de.gwdg.metadataqa.api.json
+[ERROR] src/main/java/de/gwdg/metadataqa/marc/MarcFactory.java:[313,64] cannot find symbol
+[ERROR]   symbol:   class JsonBranch
+[ERROR]   location: class de.gwdg.metadataqa.marc.MarcFactory
+[ERROR] src/main/java/de/gwdg/metadataqa/marc/MarcFactory.java:[322,59] cannot find symbol
+[ERROR]   symbol:   class JsonBranch
+[ERROR]   location: class de.gwdg.metadataqa.marc.MarcFactory
+[ERROR] -> [Help 1]

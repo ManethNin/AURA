@@ -1,0 +1,866 @@
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO]
+[INFO] billy                                                              [pom]
+[INFO] billy core                                                         [jar]
+[INFO] billy core JPA                                                     [jar]
+[INFO] billy GIN                                                          [jar]
+[INFO] billy portugal (PT Pack)                                           [jar]
+[INFO] billy spain (ES Pack)                                              [jar]
+[INFO] billy france (FR Pack)                                             [jar]
+[INFO]
+[INFO] -----------------------< com.premiumminds:billy >-----------------------
+[INFO] Building billy 6.0.0-SNAPSHOT                                      [1/7]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO]
+[INFO] --- clean:3.2.0:clean (default-clean) @ billy ---
+[INFO]
+[INFO] --- license:4.1:format (format-headers) @ billy ---
+[INFO] Updating license headers...
+[INFO]
+[INFO] --------------------< com.premiumminds:billy-core >---------------------
+[INFO] Building billy core 6.0.0-SNAPSHOT                                 [2/7]
+[INFO]   from billy-core/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- clean:3.2.0:clean (default-clean) @ billy-core ---
+[INFO]
+[INFO] --- resources:3.3.0:resources (default-resources) @ billy-core ---
+[INFO] Copying 5 resources
+[INFO]
+[INFO] --- compiler:3.10.1:compile (default-compile) @ billy-core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 127 source files to billy-core/target/classes
+[INFO] billy-core/src/main/java/com/premiumminds/billy/core/services/entities/Ticket.java: Some input files use or override a deprecated API.
+[INFO] billy-core/src/main/java/com/premiumminds/billy/core/services/entities/Ticket.java: Recompile with -Xlint:deprecation for details.
+[INFO] billy-core/src/main/java/com/premiumminds/billy/core/services/builders/impl/AbstractBuilder.java: Some input files use unchecked or unsafe operations.
+[INFO] billy-core/src/main/java/com/premiumminds/billy/core/services/builders/impl/AbstractBuilder.java: Recompile with -Xlint:unchecked for details.
+[INFO]
+[INFO] --- license:4.1:format (format-headers) @ billy-core ---
+[INFO] Updating license headers...
+[INFO]
+[INFO] --- resources:3.3.0:testResources (default-testResources) @ billy-core ---
+[INFO] Copying 19 resources
+[INFO]
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ billy-core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 36 source files to billy-core/target/test-classes
+[INFO] billy-core/src/test/java/com/premiumminds/billy/core/test/fixtures/MockTicketEntity.java: Some input files use or override a deprecated API.
+[INFO] billy-core/src/test/java/com/premiumminds/billy/core/test/fixtures/MockTicketEntity.java: Recompile with -Xlint:deprecation for details.
+[INFO] billy-core/src/test/java/com/premiumminds/billy/core/test/fixtures/MockContextEntity.java: Some input files use unchecked or unsafe operations.
+[INFO] billy-core/src/test/java/com/premiumminds/billy/core/test/fixtures/MockContextEntity.java: Recompile with -Xlint:unchecked for details.
+[INFO]
+[INFO] --- surefire:2.22.2:test (default-test) @ billy-core ---
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestBusinessBuilder
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.824 s - in com.premiumminds.billy.core.test.services.builders.TestBusinessBuilder
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestGenericInvoiceEntryOperations
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s - in com.premiumminds.billy.core.test.services.builders.TestGenericInvoiceEntryOperations
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestProductBuilder
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.01 s - in com.premiumminds.billy.core.test.services.builders.TestProductBuilder
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestGenericInvoiceBuilder
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.045 s - in com.premiumminds.billy.core.test.services.builders.TestGenericInvoiceBuilder
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestContactBuilder
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s - in com.premiumminds.billy.core.test.services.builders.TestContactBuilder
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestTicketBuilder
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s - in com.premiumminds.billy.core.test.services.builders.TestTicketBuilder
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestShippingPointBuilder
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s - in com.premiumminds.billy.core.test.services.builders.TestShippingPointBuilder
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestSupplierBuilder
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.021 s - in com.premiumminds.billy.core.test.services.builders.TestSupplierBuilder
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestPaymentBuilder
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s - in com.premiumminds.billy.core.test.services.builders.TestPaymentBuilder
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestGenericInvoiceEntryBuilder
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s - in com.premiumminds.billy.core.test.services.builders.TestGenericInvoiceEntryBuilder
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestAddressBuilder
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s - in com.premiumminds.billy.core.test.services.builders.TestAddressBuilder
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestApplicationBuilder
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s - in com.premiumminds.billy.core.test.services.builders.TestApplicationBuilder
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestBankAccountBuilder
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s - in com.premiumminds.billy.core.test.services.builders.TestBankAccountBuilder
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestCustomerBuilder
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s - in com.premiumminds.billy.core.test.services.builders.TestCustomerBuilder
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestTaxBuilder
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s - in com.premiumminds.billy.core.test.services.builders.TestTaxBuilder
+[INFO] Running com.premiumminds.billy.core.services.UIDTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in com.premiumminds.billy.core.services.UIDTest
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestGenericInvoiceOperations
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.135 s - in com.premiumminds.billy.core.test.services.builders.TestGenericInvoiceOperations
+[INFO] Running com.premiumminds.billy.core.test.services.builders.TestContextBuilder
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s - in com.premiumminds.billy.core.test.services.builders.TestContextBuilder
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 21, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO]
+[INFO] ------------------< com.premiumminds:billy-core-jpa >-------------------
+[INFO] Building billy core JPA 6.0.0-SNAPSHOT                             [3/7]
+[INFO]   from billy-core-jpa/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- clean:3.2.0:clean (default-clean) @ billy-core-jpa ---
+[INFO]
+[INFO] --- apt:1.1.3:process (default) @ billy-core-jpa ---
+[INFO]
+[INFO] --- resources:3.3.0:resources (default-resources) @ billy-core-jpa ---
+[INFO] Copying 1 resource
+[INFO]
+[INFO] --- compiler:3.10.1:compile (default-compile) @ billy-core-jpa ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 55 source files to billy-core-jpa/target/classes
+[INFO] billy-core-jpa/src/main/java/com/premiumminds/billy/persistence/entities/jpa/JPATicketEntity.java: Some input files use or override a deprecated API.
+[INFO] billy-core-jpa/src/main/java/com/premiumminds/billy/persistence/entities/jpa/JPATicketEntity.java: Recompile with -Xlint:deprecation for details.
+[INFO] billy-core-jpa/src/main/java/com/premiumminds/billy/persistence/entities/jpa/JPAGenericInvoiceEntity.java: Some input files use unchecked or unsafe operations.
+[INFO] billy-core-jpa/src/main/java/com/premiumminds/billy/persistence/entities/jpa/JPAGenericInvoiceEntity.java: Recompile with -Xlint:unchecked for details.
+[INFO]
+[INFO] --- license:4.1:format (format-headers) @ billy-core-jpa ---
+[INFO] Updating license headers...
+[INFO]
+[INFO] --- resources:3.3.0:testResources (default-testResources) @ billy-core-jpa ---
+[INFO] Copying 1 resource
+[INFO]
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ billy-core-jpa ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to billy-core-jpa/target/test-classes
+[INFO]
+[INFO] --- surefire:2.22.2:test (default-test) @ billy-core-jpa ---
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.premiumminds.billy.core.jpa.GenericTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.575 s - in com.premiumminds.billy.core.jpa.GenericTest
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO]
+[INFO] ---------------------< com.premiumminds:billy-gin >---------------------
+[INFO] Building billy GIN 6.0.0-SNAPSHOT                                  [4/7]
+[INFO]   from billy-gin/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- clean:3.2.0:clean (default-clean) @ billy-gin ---
+[INFO]
+[INFO] --- resources:3.3.0:resources (default-resources) @ billy-gin ---
+[INFO] Copying 0 resource
+[INFO]
+[INFO] --- compiler:3.10.1:compile (default-compile) @ billy-gin ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 25 source files to billy-gin/target/classes
+[INFO]
+[INFO] --- license:4.1:format (format-headers) @ billy-gin ---
+[INFO] Updating license headers...
+[INFO]
+[INFO] --- resources:3.3.0:testResources (default-testResources) @ billy-gin ---
+[INFO] skip non existing resourceDirectory billy-gin/src/test/resources
+[INFO]
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ billy-gin ---
+[INFO] No sources to compile
+[INFO]
+[INFO] --- surefire:2.22.2:test (default-test) @ billy-gin ---
+[INFO] No tests to run.
+[INFO]
+[INFO] ------------------< com.premiumminds:billy-portugal >-------------------
+[INFO] Building billy portugal (PT Pack) 6.0.0-SNAPSHOT                   [5/7]
+[INFO]   from billy-portugal/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- clean:3.2.0:clean (default-clean) @ billy-portugal ---
+[INFO]
+[INFO] --- build-helper:3.3.0:add-source (add-source) @ billy-portugal ---
+[INFO] Source directory: billy-portugal/src-generated/main/java added.
+[INFO]
+[INFO] --- apt:1.1.3:process (default) @ billy-portugal ---
+[INFO]
+[INFO] --- jaxb2:0.15.1:generate (generate-1.02_01) @ billy-portugal ---
+[WARNING] You are using forceRegenerate=true in your configuration.
+This configuration setting is deprecated and not recommended as it causes problems with incremental builds in IDEs.
+Please refer to the following link for more information:
+https://github.com/highsource/maven-jaxb2-plugin/wiki/Do-Not-Use-forceRegenerate
+Consider removing this setting from your plugin configuration.
+[INFO] The [forceRegenerate] switch is turned on, XJC will be executed.
+[INFO] Episode file [/billy/billy-portugal/src-generated/main/java/META-INF/sun-jaxb.episode] was augmented with if-exists="true" attributes.
+[INFO]
+[INFO] --- jaxb2:0.15.1:generate (generate-1.03_01) @ billy-portugal ---
+[WARNING] You are using forceRegenerate=true in your configuration.
+This configuration setting is deprecated and not recommended as it causes problems with incremental builds in IDEs.
+Please refer to the following link for more information:
+https://github.com/highsource/maven-jaxb2-plugin/wiki/Do-Not-Use-forceRegenerate
+Consider removing this setting from your plugin configuration.
+[INFO] The [forceRegenerate] switch is turned on, XJC will be executed.
+[INFO] Episode file [/billy/billy-portugal/src-generated/main/java/META-INF/sun-jaxb.episode] was augmented with if-exists="true" attributes.
+[INFO]
+[INFO] --- jaxb2:0.15.1:generate (generate-1.04_01) @ billy-portugal ---
+[WARNING] You are using forceRegenerate=true in your configuration.
+This configuration setting is deprecated and not recommended as it causes problems with incremental builds in IDEs.
+Please refer to the following link for more information:
+https://github.com/highsource/maven-jaxb2-plugin/wiki/Do-Not-Use-forceRegenerate
+Consider removing this setting from your plugin configuration.
+[INFO] The [forceRegenerate] switch is turned on, XJC will be executed.
+[INFO] Episode file [/billy/billy-portugal/src-generated/main/java/META-INF/sun-jaxb.episode] was augmented with if-exists="true" attributes.
+[INFO]
+[INFO] --- resources:3.3.0:resources (default-resources) @ billy-portugal ---
+[INFO] Copying 13 resources
+[INFO] Copying 1 resource
+[INFO] Copying 1 resource
+[INFO] Copying 1 resource
+[INFO]
+[INFO] --- compiler:3.10.1:compile (default-compile) @ billy-portugal ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 352 source files to billy-portugal/target/classes
+[INFO] billy-portugal/src/main/java/com/premiumminds/billy/portugal/services/persistence/PTCreditNotePersistenceService.java: Some input files use or override a deprecated API.
+[INFO] billy-portugal/src/main/java/com/premiumminds/billy/portugal/services/persistence/PTCreditNotePersistenceService.java: Recompile with -Xlint:deprecation for details.
+[INFO] billy-portugal/src/main/java/com/premiumminds/billy/portugal/services/builders/impl/PTTaxBuilderImpl.java: Some input files use unchecked or unsafe operations.
+[INFO] billy-portugal/src/main/java/com/premiumminds/billy/portugal/services/builders/impl/PTTaxBuilderImpl.java: Recompile with -Xlint:unchecked for details.
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR :
+[INFO] -------------------------------------------------------------
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/Supplier.java:[385,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SupplierAddressStructure.java:[244,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/Header.java:[658,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/AddressStructurePT.java:[244,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/AuditFile.java:[178,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/AuditFile.java:[405,68] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/Header.java:[658,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/GeneralLedgerEntries.java:[226,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/GeneralLedgerEntries.java:[422,68] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/GeneralLedgerEntries.java:[812,72] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/GeneralLedgerEntries.java:[1113,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[552,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[792,68] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[1504,72] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[1798,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[1984,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[2425,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[2753,68] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[3326,72] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[3590,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[3814,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[3914,80] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[4186,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[4353,80] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[4625,68] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[5321,72] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[5610,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[5862,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[6375,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[6695,68] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[7185,72] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[7439,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[7625,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[8095,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/PaymentMethod.java:[136,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/WithholdingTax.java:[133,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/Currency.java:[133,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/PaymentTax.java:[191,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/OrderReferences.java:[107,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/Tax.java:[191,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/ShippingPointStructure.java:[185,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/MovementTax.java:[163,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/AddressStructure.java:[244,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SpecialRegimes.java:[108,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/Settlement.java:[164,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/References.java:[104,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/GeneralLedger.java:[275,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/Customer.java:[385,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/Supplier.java:[385,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/Product.java:[190,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/TaxTable.java:[85,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/TaxTableEntry.java:[252,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SupplierAddressStructure.java:[244,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/AddressStructurePT.java:[244,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/Product.java:[218,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/CustomsDetails.java:[116,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/References.java:[104,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[418,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[653,68] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[1365,72] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[1658,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[1844,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[2285,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[2605,68] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[3293,72] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[3581,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[3833,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[4346,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[4665,68] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[5154,72] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[5379,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[5560,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[6030,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/Currency.java:[133,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/OrderReferences.java:[107,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/Tax.java:[191,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/ShippingPointStructure.java:[185,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/MovementTax.java:[163,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/AddressStructure.java:[244,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/WithholdingTax.java:[133,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/Settlement.java:[164,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/Payment.java:[136,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/References.java:[104,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/AuditFile.java:[178,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/AuditFile.java:[405,68] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/AuditFile.java:[178,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/AuditFile.java:[400,68] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[570,64] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[814,68] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[1557,72] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[1856,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[2042,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[2567,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[2912,68] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[3514,72] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[3783,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[4007,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[4107,80] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[4407,76] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[4579,80] cannot find symbol
+symbol:   method getInstance()
+location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[INFO] 100 errors
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for billy 6.0.0-SNAPSHOT:
+[INFO]
+[INFO] billy .............................................. SUCCESS [  1.639 s]
+[INFO] billy core ......................................... SUCCESS [  4.649 s]
+[INFO] billy core JPA ..................................... SUCCESS [  5.113 s]
+[INFO] billy GIN .......................................... SUCCESS [  0.722 s]
+[INFO] billy portugal (PT Pack) ........................... FAILURE [  5.073 s]
+[INFO] billy spain (ES Pack) .............................. SKIPPED
+[INFO] billy france (FR Pack) ............................. SKIPPED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  17.310 s
+[INFO] Finished at: 2023-08-18T08:13:49Z
+[INFO] ------------------------------------------------------------------------
+[WARNING]
+[WARNING] Plugin validation issues were detected in 7 plugin(s)
+[WARNING]
+[WARNING]  * org.apache.maven.plugins:maven-compiler-plugin:3.10.1
+[WARNING]  * org.codehaus.mojo:build-helper-maven-plugin:3.3.0
+[WARNING]  * org.apache.maven.plugins:maven-surefire-plugin:2.22.2
+[WARNING]  * org.jvnet.jaxb2.maven2:maven-jaxb2-plugin:0.15.1
+[WARNING]  * org.apache.maven.plugins:maven-resources-plugin:3.3.0
+[WARNING]  * com.mycila:license-maven-plugin:4.1
+[WARNING]  * com.mysema.maven:apt-maven-plugin:1.1.3
+[WARNING]
+[WARNING] For more or less details, use 'maven.plugin.validation' property with one of the values (case insensitive): [BRIEF, DEFAULT, VERBOSE]
+[WARNING]
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project billy-portugal: Compilation failure: Compilation failure:
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/Supplier.java:[385,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SupplierAddressStructure.java:[244,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/Header.java:[658,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/AddressStructurePT.java:[244,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/AuditFile.java:[178,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/AuditFile.java:[405,68] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/Header.java:[658,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/GeneralLedgerEntries.java:[226,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/GeneralLedgerEntries.java:[422,68] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/GeneralLedgerEntries.java:[812,72] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/GeneralLedgerEntries.java:[1113,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[552,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[792,68] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[1504,72] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[1798,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[1984,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[2425,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[2753,68] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[3326,72] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[3590,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[3814,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[3914,80] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[4186,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[4353,80] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[4625,68] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[5321,72] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[5610,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[5862,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[6375,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[6695,68] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[7185,72] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[7439,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[7625,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SourceDocuments.java:[8095,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/PaymentMethod.java:[136,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/WithholdingTax.java:[133,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/Currency.java:[133,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/PaymentTax.java:[191,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/OrderReferences.java:[107,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/Tax.java:[191,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/ShippingPointStructure.java:[185,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/MovementTax.java:[163,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/AddressStructure.java:[244,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SpecialRegimes.java:[108,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/Settlement.java:[164,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/References.java:[104,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/GeneralLedger.java:[275,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/Customer.java:[385,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/Supplier.java:[385,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/Product.java:[190,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/TaxTable.java:[85,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/TaxTableEntry.java:[252,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/SupplierAddressStructure.java:[244,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_03_01/schema/AddressStructurePT.java:[244,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/Product.java:[218,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/CustomsDetails.java:[116,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/References.java:[104,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[418,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[653,68] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[1365,72] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[1658,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[1844,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[2285,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[2605,68] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[3293,72] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[3581,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[3833,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[4346,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[4665,68] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[5154,72] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[5379,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[5560,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/SourceDocuments.java:[6030,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/Currency.java:[133,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/OrderReferences.java:[107,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/Tax.java:[191,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/ShippingPointStructure.java:[185,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/MovementTax.java:[163,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/AddressStructure.java:[244,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/WithholdingTax.java:[133,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/Settlement.java:[164,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/Payment.java:[136,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/References.java:[104,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/AuditFile.java:[178,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_02_01/schema/AuditFile.java:[405,68] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/AuditFile.java:[178,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/AuditFile.java:[400,68] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[570,64] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[814,68] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[1557,72] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[1856,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[2042,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[2567,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[2912,68] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[3514,72] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[3783,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[4007,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[4107,80] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[4407,76] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/services/export/saftpt/v1_04_01/schema/SourceDocuments.java:[4579,80] cannot find symbol
+[ERROR]   symbol:   method getInstance()
+[ERROR]   location: class org.jvnet.jaxb2_commons.lang.JAXBToStringStrategy
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR]
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :billy-portugal

@@ -1,0 +1,1 @@
+{"src/main/java/com/google/pubsublite/kafka/sink/PublisherFactoryImpl.java": [["20", "35"], ["36", "20"], ["53", "17"]], "src/main/java/com/google/pubsublite/kafka/sink/PublisherFactory.java": [["18", "35"], ["24", "13"]], "src/main/java/com/google/pubsublite/kafka/sink/PubSubLiteSinkTask.java": [["22", "35"], ["43", "31"]]}

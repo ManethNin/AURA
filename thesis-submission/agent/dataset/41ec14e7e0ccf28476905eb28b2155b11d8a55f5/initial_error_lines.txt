@@ -1,0 +1,46 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project wicket-crudifier: Compilation failure: Compilation failure:
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[38,24] package javax.validation does not exist
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[39,36] package javax.validation.constraints does not exist
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[40,36] package javax.validation.constraints does not exist
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[41,36] package javax.validation.constraints does not exist
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[42,33] package javax.validation.metadata does not exist
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[43,33] package javax.validation.metadata does not exist
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[44,33] package javax.validation.metadata does not exist
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[46,36] package org.apache.commons.beanutils does not exist
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/view/CrudifierView.java:[27,36] package org.apache.commons.beanutils does not exist
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[103,53] cannot find symbol
+[ERROR]   symbol:   variable PropertyUtils
+[ERROR]   location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[123,17] cannot find symbol
+[ERROR]   symbol:   class Validator
+[ERROR]   location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[123,82] cannot access javax.validation.ValidatorFactory
+[ERROR]   class file for javax.validation.ValidatorFactory not found
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[124,17] cannot find symbol
+[ERROR]   symbol:   class BeanDescriptor
+[ERROR]   location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[128,46] cannot find symbol
+[ERROR]   symbol:   variable PropertyUtils
+[ERROR]   location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[135,25] cannot find symbol
+[ERROR]   symbol:   class ElementDescriptor
+[ERROR]   location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[137,37] cannot find symbol
+[ERROR]   symbol:   class ConstraintDescriptor
+[ERROR]   location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[138,37] cannot find symbol
+[ERROR]   symbol:   class ConstraintDescriptor
+[ERROR]   location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[139,82] cannot find symbol
+[ERROR]   symbol:   class NotNull
+[ERROR]   location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[140,82] cannot find symbol
+[ERROR]   symbol:   class NotEmpty
+[ERROR]   location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/form/elements/ListControlGroups.java:[141,82] cannot find symbol
+[ERROR]   symbol:   class NotBlank
+[ERROR]   location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+[ERROR] src/main/java/com/premiumminds/wicket/crudifier/view/CrudifierView.java:[104,53] cannot find symbol
+[ERROR]   symbol:   variable PropertyUtils
+[ERROR]   location: class com.premiumminds.wicket.crudifier.view.CrudifierView<T>
+[ERROR] -> [Help 1]

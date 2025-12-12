@@ -1,0 +1,17 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.5.1:compile (default-compile) on project geostore-security: Compilation failure: Compilation failure:
+[ERROR] src/core/security/src/main/java/it/geosolutions/geostore/core/security/password/GeoStorePBEPasswordEncoder.java:[33,33] error: package org.jasypt.spring.security does not exist
+[ERROR] src/core/security/src/main/java/it/geosolutions/geostore/core/security/password/GeoStoreDigestPasswordEncoder.java:[24,33] error: package org.jasypt.spring.security does not exist
+[ERROR] src/core/security/src/main/java/it/geosolutions/geostore/core/security/password/GeoStoreDigestPasswordEncoder.java:[44,15] error: cannot find symbol
+[ERROR]   symbol:   class PasswordEncoder
+[ERROR]   location: class GeoStoreDigestPasswordEncoder
+[ERROR] src/core/security/src/main/java/it/geosolutions/geostore/core/security/password/GeoStorePBEPasswordEncoder.java:[102,3] error: cannot find symbol
+[ERROR]   symbol:   class PBEPasswordEncoder
+[ERROR]   location: class GeoStorePBEPasswordEncoder
+[ERROR] src/core/security/src/main/java/it/geosolutions/geostore/core/security/password/GeoStorePBEPasswordEncoder.java:[102,36] error: cannot find symbol
+[ERROR]   symbol:   class PBEPasswordEncoder
+[ERROR]   location: class GeoStorePBEPasswordEncoder
+[ERROR] src/core/security/src/main/java/it/geosolutions/geostore/core/security/password/GeoStoreDigestPasswordEncoder.java:[45,9] error: cannot find symbol
+[ERROR]   symbol:   class PasswordEncoder
+[ERROR]   location: class GeoStoreDigestPasswordEncoder
+[ERROR] src/core/security/src/main/java/it/geosolutions/geostore/core/security/password/GeoStoreDigestPasswordEncoder.java:[45,39] error: cannot find symbol
+[ERROR] -> [Help 1]

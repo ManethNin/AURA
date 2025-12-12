@@ -1,0 +1,4 @@
+error: package org.apache.struts2.dispatcher.ng.filter does not exist
+error: cannot find symbol
+class StrutsPrepareAndExecuteFilter
+error: cannot find symbol

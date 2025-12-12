@@ -1,0 +1,95 @@
+{
+    "class_breaking_changes": [
+        {
+            "class_name": "Objects",
+            "package_name": "common.base",
+            "deprecations": [],
+            "removals": [
+                {
+                    "method_signature": "firstNonNull()",
+                    "replacement": "MoreObjects.firstNonNull()"
+                },
+                {
+                    "method_signature": "toStringHelper()",
+                    "replacement": "MoreObjects.toStringHelper()"
+                }
+            ]
+        },
+        {
+            "class_name": "MapConstraint",
+            "package_name": "common.collect",
+            "deprecations": [],
+            "removals": [
+                {
+                    "method_signature": "*"
+                }
+            ]
+        },
+        {
+            "class_name": "MapConstraints",
+            "package_name": "common.collect",
+            "deprecations": [],
+            "removals": [
+                {
+                    "method_signature": "*"
+                }
+            ]
+        },
+        {
+            "class_name": "ForwardingBlockingDeque",
+            "package_name": "common.collect",
+            "deprecations": [
+                {
+                    "method_signature": "*",
+                    "replacement": "util.concurrent.ForwardingBlockingDeque.*()"
+                }
+            ],
+            "removals": []
+        },
+        {
+            "class_name": "ArrayListMultimap",
+            "package_name": "common.collect",
+            "deprecations": [
+                {
+                    "method_signature": "trimToSize()"
+                }
+            ],
+            "removals": []
+        },
+        {
+            "class_name": "TreeMultimap",
+            "package_name": "common.collect",
+            "deprecations": [
+                {
+                    "method_signature": "keyComparator()"
+                }
+            ],
+            "removals": []
+        },
+        {
+            "class_name": "TreeBasedTable",
+            "package_name": "common.collect",
+            "deprecations": [
+                {
+                    "method_signature": "rowComparator()"
+                },
+                {
+                    "method_signature": "columnComparator()"
+                }
+            ],
+            "removals": []
+        },
+        {
+            "class_name": "MoreExecutors",
+            "package_name": "common.util.concurrent",
+            "deprecations": [],
+            "removals": [
+                {
+                    "method_signature": "sameThreadExecutor()",
+                    "replacement": "directExecutor()"
+                }
+            ]
+        }
+    ],
+    "version": "21.0"
+}

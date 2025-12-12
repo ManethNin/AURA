@@ -1,0 +1,61 @@
+{
+    "class_breaking_changes": [
+        {
+            "class_name": "Graph,Network,ValueGraph,*",
+            "package_name": "common.graph",
+            "deprecations": [
+                {
+                    "method_signature": "*(Object)"
+                }
+            ],
+            "removals": [],
+            "notes": "All methods that accepted Object for nodes/edges no require the specified node/edge type"
+        },
+        {
+            "class_name": "Graph",
+            "package_name": "common.graph",
+            "deprecations": [
+                {
+                    "method_signature": "equivalence()",
+                    "replacement": "equals()"
+                }
+            ],
+            "removals": [],
+            "notes": "ValueGraph no longer extends Graph"
+        },
+        {
+            "class_name": "Hashing",
+            "package_name": "common.hash",
+            "deprecations": [
+                {
+                    "method_signature": "md5()"
+                },
+                {
+                    "method_signature": "sha1()"
+                }
+            ],
+            "removals": []
+        },
+        {
+            "class_name": "CheckedFuture",
+            "package_name": "common.util.concurrent",
+            "deprecations": [
+                {
+                    "method_signature": "*"
+                }
+            ],
+            "removals": []
+        },
+        {
+            "class_name": "TimeLimiter",
+            "package_name": "common.util.concurrent",
+            "deprecations": [
+                {
+                    "method_signature": "callWithTimeout(boolean interruptible)"
+                }
+            ],
+            "removals": []
+        }
+    ],
+    "version": "22.0"
+}

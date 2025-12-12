@@ -1,0 +1,18 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project nem-infrastructure-server: Compilation failure: Compilation failure:
+[ERROR] nis/src/main/java/org/nem/specific/deploy/appconfig/NisAppConfig.java:[108,57] constructor Flyway in class org.flywaydb.core.Flyway cannot be applied to given types;
+[ERROR]   required: org.flywaydb.core.api.configuration.Configuration
+[ERROR]   found: no arguments
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] nis/src/main/java/org/nem/specific/deploy/appconfig/NisAppConfig.java:[109,23] cannot find symbol
+[ERROR]   symbol:   method setDataSource(javax.sql.DataSource)
+[ERROR]   location: variable flyway of type org.flywaydb.core.Flyway
+[ERROR] nis/src/main/java/org/nem/specific/deploy/appconfig/NisAppConfig.java:[110,23] cannot find symbol
+[ERROR]   symbol:   method setClassLoader(java.lang.ClassLoader)
+[ERROR]   location: variable flyway of type org.flywaydb.core.Flyway
+[ERROR] nis/src/main/java/org/nem/specific/deploy/appconfig/NisAppConfig.java:[111,23] cannot find symbol
+[ERROR]   symbol:   method setLocations(java.lang.String)
+[ERROR]   location: variable flyway of type org.flywaydb.core.Flyway
+[ERROR] nis/src/main/java/org/nem/specific/deploy/appconfig/NisAppConfig.java:[112,23] cannot find symbol
+[ERROR]   symbol:   method setValidateOnMigrate(java.lang.Boolean)
+[ERROR]   location: variable flyway of type org.flywaydb.core.Flyway
+[ERROR] -> [Help 1]

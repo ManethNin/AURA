@@ -1,0 +1,49 @@
+{
+    "class_breaking_changes": [
+        {
+            "class_name": "Iterators",
+            "deprecations": [
+                {
+                    "method_signature": "skip()",
+                    "replacement": "advance()"
+                }
+            ],
+            "removals": [],
+            "notes": null
+        },
+        {
+            "class_name": "Equivalences",
+            "deprecations": [
+                {
+                    "method_signature": "*",
+                    "replacement": "*"
+                }
+            ],
+            "removals": [],
+            "notes": "static methods were deprecated in favor of instance methods"
+        },
+        {
+            "class_name": "Files",
+            "deprecations": [],
+            "removals": [
+                {
+                    "method_signature": "getDigest()",
+                    "replacement": "hash"
+                }
+            ],
+            "notes": null
+        },
+        {
+            "class_name": "ByteStreams",
+            "deprecations": [],
+            "removals": [
+                {
+                    "method_signature": "getDigest()",
+                    "replacement": "hash()"
+                }
+            ],
+            "notes": null
+        }
+    ],
+    "version": "13.0"
+}

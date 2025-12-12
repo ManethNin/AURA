@@ -1,0 +1,22 @@
+package com.wire.lithium;
+
+import com.wire.bots.cryptobox.CryptoException;
+import com.wire.xenon.WireAPI;
+import com.wire.xenon.WireClient;
+import com.wire.xenon.backend.models.NewBot;
+import com.wire.xenon.crypto.Crypto;
+import com.wire.xenon.factories.CryptoFactory;
+import com.wire.xenon.factories.StorageFactory;
+import com.wire.xenon.state.State;
+import javax.ws.rs.client.Client;
+import java.io.IOException;
+import java.util.UUID;
+
+public class ClientRepo {
+    protected final Client httpClient;
+
+    public Client getHttpClient() {
+        return httpClient;
+    }
+
+}

@@ -1,0 +1,5 @@
+
+The following files have been resolved:
+   com.github.aserg-ufmg:apidiff:jar:2.0.0:compile[36m -- module apidiff[0;1;33m (auto)[m
+   com.fasterxml.jackson.core:jackson-databind:jar:2.12.3:compile[36m -- module com.fasterxml.jackson.databind[m
+   org.eclipse.jgit:org.eclipse.jgit:jar:5.11.0.202103091610-r:compile[36m -- module org.eclipse.jgit[0;1m [auto][m

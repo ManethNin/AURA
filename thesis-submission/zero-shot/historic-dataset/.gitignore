@@ -1,0 +1,6 @@
+compsuite/**
+CompCheck/
+env/**
+target/**
+repos/**
+.env

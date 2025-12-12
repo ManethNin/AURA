@@ -1,0 +1,5 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project jcabi-github: Compilation failure
+[ERROR] src/main/java/com/jcabi/github/mock/MkGithub.java:[34,25] cannot find symbol
+[ERROR]   symbol:   class Tv
+[ERROR]   location: package com.jcabi.aspects
+[ERROR] -> [Help 1]

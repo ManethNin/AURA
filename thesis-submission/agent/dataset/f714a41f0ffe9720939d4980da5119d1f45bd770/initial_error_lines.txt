@@ -1,0 +1,25 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project xchange-stream-service-pubnub: Compilation failure: Compilation failure:
+[ERROR] xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java:[15,53] cannot find symbol
+[ERROR]   symbol:   class PNMembershipResult
+[ERROR]   location: package com.pubnub.api.models.consumer.pubsub.objects
+[ERROR] xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java:[16,53] cannot find symbol
+[ERROR]   symbol:   class PNSpaceResult
+[ERROR]   location: package com.pubnub.api.models.consumer.pubsub.objects
+[ERROR] xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java:[17,53] cannot find symbol
+[ERROR]   symbol:   class PNUserResult
+[ERROR]   location: package com.pubnub.api.models.consumer.pubsub.objects
+[ERROR] xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java:[40,39] no suitable constructor found for PNConfiguration(no arguments)
+[ERROR]     constructor com.pubnub.api.PNConfiguration.PNConfiguration(com.pubnub.api.UserId) is not applicable
+[ERROR]       (actual and formal argument lists differ in length)
+[ERROR]     constructor com.pubnub.api.PNConfiguration.PNConfiguration(java.lang.String) is not applicable
+[ERROR]       (actual and formal argument lists differ in length)
+[ERROR] xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java:[94,49] cannot find symbol
+[ERROR]   symbol: class PNUserResult
+[ERROR] xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java:[99,50] cannot find symbol
+[ERROR]   symbol: class PNSpaceResult
+[ERROR] xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java:[104,55] cannot find symbol
+[ERROR]   symbol: class PNMembershipResult
+[ERROR] xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java:[50,39] <anonymous info.bitrich.xchangestream.service.pubnub.PubnubStreamingService$1> is not abstract and does not override abstract method file(com.pubnub.api.PubNub,com.pubnub.api.models.consumer.pubsub.files.PNFileEventResult) in com.pubnub.api.callbacks.SubscribeCallback
+[ERROR] xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java:[93,17] method does not override or implement a method from a supertype
+[ERROR] xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java:[98,17] method does not override or implement a method from a supertype
+[ERROR] -> [Help 1]

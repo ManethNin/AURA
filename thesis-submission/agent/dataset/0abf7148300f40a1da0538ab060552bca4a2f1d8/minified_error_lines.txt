@@ -1,0 +1,2 @@
+Failed to execute goal maven-compiler-plugin:3.10.0:compile (default-compile) on project biapi: Compilation failure
+src/main/java/xdev/tableexport/export/ReportBuilder.java incompatible types: int cannot be converted to java.lang.Float

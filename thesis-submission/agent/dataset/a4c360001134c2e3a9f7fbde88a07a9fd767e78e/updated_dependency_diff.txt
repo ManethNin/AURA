@@ -1,0 +1,12 @@
+--- a/pom.xml
++++ b/pom.xml
+@@ ... @@
+         <dependency>
+             <groupId>org.reflections</groupId>
+             <artifactId>reflections</artifactId>
+-            <version>0.9.9</version>
++            <version>0.10.2</version>
+         </dependency>
+         <dependency>
+             <groupId>com.github.javaparser</groupId>
+

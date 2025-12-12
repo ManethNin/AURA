@@ -1,0 +1,1 @@
+{"japicmpResult": {}, "elementLines": {}, "revapiResult": {}, "allPotentialBreakingElements": ["readValue(java.lang.String,java.lang.Class)"], "elementPatterns": {}, "project": "simplelocalize-cli"}

@@ -1,0 +1,28 @@
+--- a/src/main/java/com/wire/lithium/models/NewBotResponseModel.java
++++ b/src/main/java/com/wire/lithium/models/NewBotResponseModel.java
+@@ -29,18 +11,6 @@ public class NewBotResponseModel {
+     @JsonProperty
+     public String name;
+
+-    @JsonProperty("accent_id")
+-    public Integer accentId;
+-
+-    @JsonProperty("last_prekey")
+-    public PreKey lastPreKey;
+-
+-    @JsonProperty("prekeys")
+-    public ArrayList<PreKey> preKeys;
+-
+-    @JsonProperty("assets")
+-    public ArrayList<Asset> assets;
+-
+     public void addAsset(String key, String size) {
+         if (assets == null)
+             assets = new ArrayList<>();
+@@ -62,4 +32,4 @@ public class NewBotResponseModel {
+         @JsonProperty("size")
+         public String size;
+     }
+-}
++}
+\ No newline at end of file

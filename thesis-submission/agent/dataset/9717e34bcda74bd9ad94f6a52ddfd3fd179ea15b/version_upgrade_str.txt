@@ -1,0 +1,1 @@
+com.jcabi:jcabi-aspects 0.24.1 -> 0.26.0

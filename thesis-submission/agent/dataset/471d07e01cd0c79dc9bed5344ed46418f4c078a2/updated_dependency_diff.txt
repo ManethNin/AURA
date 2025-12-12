@@ -1,0 +1,12 @@
+--- a/java-resourcemanager/google-cloud-resourcemanager/pom.xml
++++ b/java-resourcemanager/google-cloud-resourcemanager/pom.xml
+@@ ... @@
+     <dependency>
+       <groupId>com.google.apis</groupId>
+       <artifactId>google-api-services-cloudresourcemanager</artifactId>
+-      <version>v1-rev20220807-2.0.0</version>
++      <version>v3-rev20220807-2.0.0</version>
+     </dependency>
+     <dependency>
+       <groupId>com.google.http-client</groupId>
+

@@ -1,0 +1,1 @@
+com.github.cryptomorin:XSeries 8.5.0.1 -> 8.6.0

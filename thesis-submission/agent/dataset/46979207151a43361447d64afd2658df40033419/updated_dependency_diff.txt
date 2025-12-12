@@ -1,0 +1,12 @@
+--- a/billy-portugal/pom.xml
++++ b/billy-portugal/pom.xml
+@@ ... @@
+ 		<dependency>
+ 			<groupId>org.jvnet.jaxb2_commons</groupId>
+ 			<artifactId>jaxb2-basics-runtime</artifactId>
+-			<version>0.13.1</version>
++			<version>1.11.1-PUBLISHED-BY-MISTAKE</version>
+ 		</dependency>
+ 
+ 		<!-- JUNIT -->
+

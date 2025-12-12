@@ -1,0 +1,44 @@
+package javax.validation does not exist
+package javax.validation.constraints does not exist
+package javax.validation.constraints does not exist
+package javax.validation.constraints does not exist
+package javax.validation.metadata does not exist
+package javax.validation.metadata does not exist
+package javax.validation.metadata does not exist
+package org.apache.commons.beanutils does not exist
+package org.apache.commons.beanutils does not exist
+cannot find symbol
+symbol:   variable PropertyUtils
+location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+cannot find symbol
+symbol:   class Validator
+location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+cannot access javax.validation.ValidatorFactory
+class file for javax.validation.ValidatorFactory not found
+cannot find symbol
+symbol:   class BeanDescriptor
+location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+cannot find symbol
+symbol:   variable PropertyUtils
+location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+cannot find symbol
+symbol:   class ElementDescriptor
+location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+cannot find symbol
+symbol:   class ConstraintDescriptor
+location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+cannot find symbol
+symbol:   class ConstraintDescriptor
+location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+cannot find symbol
+symbol:   class NotNull
+location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+cannot find symbol
+symbol:   class NotEmpty
+location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+cannot find symbol
+symbol:   class NotBlank
+location: class com.premiumminds.wicket.crudifier.form.elements.ListControlGroups<T>
+cannot find symbol
+symbol:   variable PropertyUtils
+location: class com.premiumminds.wicket.crudifier.view.CrudifierView<T>

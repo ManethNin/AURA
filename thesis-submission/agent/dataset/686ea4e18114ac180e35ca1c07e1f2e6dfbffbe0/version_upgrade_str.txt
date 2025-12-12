@@ -1,0 +1,1 @@
+io.dropwizard:dropwizard-core 2.1.5 -> 4.0.0

@@ -1,0 +1,15 @@
+package com.github.knaufk.flink.faker;
+
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import net.datafaker.DateAndTime;
+import net.datafaker.Faker;
+
+public class DateTime extends DateAndTime {
+  @Override
+  public Timestamp between(Date from, Date to) throws IllegalArgumentException {
+    return new Timestamp(super.between(from, to).getTime());
+  }
+
+}

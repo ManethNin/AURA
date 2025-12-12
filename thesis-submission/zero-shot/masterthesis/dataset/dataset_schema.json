@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DatasetOutput",
+  "type": "object",
+  "definitions": {
+    "DatasetEntry": {
+      "type": "object",
+      "properties": {
+        "suspicious_files": {"type": "array", "items": {"type": "string"}},
+        "extracted_compilation_errors": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": [
+                {"type": "string"},
+                {"type": "string"}
+              ]
+            }
+          }
+        },
+        "initial_error_lines": {"type": "string"},
+        "super_minified_error_lines": {"type": "string"},
+        "api_changes": {"type": "string"},
+        "minified_error_lines": {"type": "string"},
+        "reproduction_log": {"type": "string"},
+        "minimized_with_comments": {
+          "type": "object",
+          "additionalProperties": {"type": "string"}
+        },
+        "minimized_no_comments": {
+          "type": "object",
+          "additionalProperties": {"type": "string"}
+        },
+        "updated_dependency_diff": {"type": "string"},
+        "file_in_scope": {"type": "string"},
+        "repo_path": {"type": "string"},
+        "version_upgrade_str": {"type": "string"},
+        "repo_slug": {"type": "string"},
+        "commit_hash": {"type": "string"},
+        "prepared_file": {"type": "string"},
+        "data_path": {"type": "string"}
+      },
+      "required": [
+        "suspicious_files",
+        "extracted_compilation_errors",
+        "initial_error_lines",
+        "super_minified_error_lines",
+        "api_changes",
+        "minified_error_lines",
+        "reproduction_log",
+        "minimized_with_comments",
+        "minimized_no_comments",
+        "updated_dependency_diff",
+        "file_in_scope",
+        "repo_path",
+        "version_upgrade_str",
+        "repo_slug",
+        "commit_hash"
+      ]
+    }
+  },
+  "properties": {
+    "patch": {"type": ["string", "null"]},
+    "error": {"type": ["string", "null"]},
+    "input": {
+      "$ref": "#/definitions/DatasetEntry"
+    },
+    "diff_attempts": {"type": "array", "items": {"type": "string"}},
+    "hop": {"type": "integer"},
+    "max_hops": {"type": "integer"},
+    "raw_output": {"type": "string"},
+    "compiled_protocol": {
+      "type": "array",
+      "items": {"type": "boolean"}
+    },
+    "compiled": {"type": "boolean"}
+  },
+  "required": [
+    "patch",
+    "error",
+    "input",
+    "diff_attempts",
+    "hop"
+  ]
+}

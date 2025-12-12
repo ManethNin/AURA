@@ -1,0 +1,27 @@
+commit 7851c2362eb53c989cbdda706576c729a016bc49
+Author: Scott Frederick <scott.frederick@broadcom.com>
+Date:   Fri Jan 12 16:08:44 2024 -0600
+
+    Remove APIs that were deprecated for removal in 3.3.0
+
+    See gh-39039
+
+diff --git a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/server/WebServerSslBundle.java b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/server/WebServerSslBundle.java
+index f5e6f448b74..115dba9afac 100644
+--- a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/server/WebServerSslBundle.java
++++ b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/server/WebServerSslBundle.java
+@@ -141,14 +141,6 @@ public final class WebServerSslBundle implements SslBundle {
+ 		throw new IllegalStateException("SSL is enabled but no trust material is configured");
+ 	}
+
+-	static SslBundle createCertificateFileSslStoreProviderDelegate(Ssl ssl) {
+-		if (!hasCertificateProperties(ssl)) {
+-			return null;
+-		}
+-		SslStoreBundle stores = createPemStoreBundle(ssl);
+-		return new WebServerSslBundle(stores, ssl.getKeyPassword(), ssl);
+-	}
+-
+ 	private static boolean hasCertificateProperties(Ssl ssl) {
+ 		return Ssl.isEnabled(ssl) && ssl.getCertificate() != null && ssl.getCertificatePrivateKey() != null;
+ 	}

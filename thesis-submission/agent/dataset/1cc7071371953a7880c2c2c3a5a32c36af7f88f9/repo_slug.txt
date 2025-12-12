@@ -1,0 +1,1 @@
+assertj/assertj-vavr

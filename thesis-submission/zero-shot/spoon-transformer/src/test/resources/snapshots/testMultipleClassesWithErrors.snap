@@ -1,0 +1,11 @@
+public class Class1 {
+    public void methodA() {
+        int x = 5 / 0; // ArithmeticException
+    }
+}
+class Class2 {
+    public void methodB() {
+        String s = null;
+        s.length(); // NullPointerException
+    }
+}

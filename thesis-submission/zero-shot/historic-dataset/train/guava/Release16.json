@@ -1,0 +1,29 @@
+{
+    "class_breaking_changes": [
+        {
+            "class_name": "InputSupplier",
+            "package_name": "common.io",
+            "deprecations": [
+                {
+                    "method_signature": "*",
+                    "replacement": "ByteSource/CharSource"
+                }
+            ],
+            "removals": [],
+            "notes": "use ByteSource/CharSource instead of InputSupplier."
+        },
+        {
+            "class_name": "OutputSupplier",
+            "package_name": "common.io",
+            "deprecations": [
+                {
+                    "method_signature": "*",
+                    "replacement": "ByteSink/CharSink"
+                }
+            ],
+            "removals": [],
+            "notes": "Use ByteSink/CharSink instead of OutputSupplier"
+        }
+    ],
+    "version": "16.0"
+}

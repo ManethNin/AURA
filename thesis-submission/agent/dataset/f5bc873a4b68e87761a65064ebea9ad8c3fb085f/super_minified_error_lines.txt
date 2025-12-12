@@ -1,0 +1,10 @@
+cannot find symbol
+symbol:   class DependencyResolutionRequiredException
+location: package org.apache.maven.artifact
+package org.apache.maven.project does not exist
+cannot find symbol
+symbol:   class MavenProject
+location: class org.apache.myfaces.tobago.maven.plugin.AbstractThemeMojo
+cannot find symbol
+symbol:   class MavenProject
+location: class org.apache.myfaces.tobago.maven.plugin.AbstractThemeMojo

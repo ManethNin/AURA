@@ -1,0 +1,11 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project nem-infrastructure-server: Compilation failure: Compilation failure:
+nis/src/main/java/org/nem/nis/controller/AccountController.java package javax.validation does not exist
+nis/src/main/java/org/nem/nis/controller/AccountController.java cannot find symbol
+symbol:   class Valid
+location: class org.nem.nis.controller.AccountController
+nis/src/main/java/org/nem/nis/controller/AccountController.java cannot find symbol
+symbol:   class Valid
+location: class org.nem.nis.controller.AccountController
+nis/src/main/java/org/nem/nis/controller/AccountController.java cannot find symbol
+symbol:   class Valid
+location: class org.nem.nis.controller.AccountController

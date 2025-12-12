@@ -1,0 +1,1405 @@
+# serializer version: 1
+# name: test_14fc5fa696f499cac48401b3a86882b3bf7d9b82
+  '''
+  --- 
+  +++ 
+  @@ -42,407 +42,408 @@
+   
+   @Configuration
+   @ComponentScan(basePackages = {
+  -		"org.nem.nis"
+  +  "org.nem.nis"
+   }, excludeFilters = {
+  -		@ComponentScan.Filter(type = FilterType.ANNOTATION, value = org.springframework.stereotype.Controller.class),
+  -		@ComponentScan.Filter(type = FilterType.REGEX, pattern = {
+  -				"org.nem.nis.websocket.*"
+  -		})
+  +  @ComponentScan.Filter(type = FilterType.ANNOTATION, value = org.springframework.stereotype.Controller.class),
+  +  @ComponentScan.Filter(type = FilterType.REGEX, pattern = {
+  +    "org.nem.nis.websocket.*"
+  +  })
+   })
+   @EnableTransactionManagement
+   public class NisAppConfig {
+   
+  -	@Autowired
+  -	private AccountDao accountDao;
+  -
+  -	@Autowired
+  -	private BlockDao blockDao;
+  -
+  -	@Autowired
+  -	private BlockChainLastBlockLayer blockChainLastBlockLayer;
+  -
+  -	@Autowired
+  -	@SuppressWarnings("unused")
+  -	private TransferDao transferDao;
+  -
+  -	private static final int MAX_AUDIT_HISTORY_SIZE = 50;
+  -
+  -	@Bean
+  -	protected AuditCollection outgoingAudits() {
+  -		return this.createAuditCollection();
+  -	}
+  -
+  -	@Bean
+  -	protected AuditCollection incomingAudits() {
+  -		return this.createAuditCollection();
+  -	}
+  -
+  -	private AuditCollection createAuditCollection() {
+  -		return new AuditCollection(MAX_AUDIT_HISTORY_SIZE, this.timeProvider());
+  -	}
+  -
+  -	@Bean
+  -	public DataSource dataSource() throws IOException {
+  -		final NisConfiguration configuration = this.nisConfiguration();
+  -		final String nemFolder = configuration.getNemFolder();
+  -		final Properties prop = new Properties();
+  -		prop.load(NisAppConfig.class.getClassLoader().getResourceAsStream("db.properties"));
+  -
+  -		// replace url parameters with values from configuration
+  -		final String jdbcUrl = prop.getProperty("jdbc.url").replace("${nem.folder}", nemFolder).replace("${nem.network}",
+  -				configuration.getNetworkName());
+  -
+  -		final DriverManagerDataSource dataSource = new DriverManagerDataSource();
+  -		dataSource.setDriverClassName(prop.getProperty("jdbc.driverClassName"));
+  -		dataSource.setUrl(jdbcUrl);
+  -		dataSource.setUsername(prop.getProperty("jdbc.username"));
+  -		dataSource.setPassword(prop.getProperty("jdbc.password"));
+  -		return dataSource;
+  -	}
+  -
+  -	@Bean(initMethod = "migrate")
+  -	public Flyway flyway() throws IOException {
+  -		final Properties prop = new Properties();
+  -		prop.load(NisAppConfig.class.getClassLoader().getResourceAsStream("db.properties"));
+  -
+  -		final org.flywaydb.core.Flyway flyway = new Flyway();
+  -		flyway.setDataSource(this.dataSource());
+  -		flyway.setClassLoader(NisAppConfig.class.getClassLoader());
+  -		flyway.setLocations(prop.getProperty("flyway.locations"));
+  -		flyway.setValidateOnMigrate(Boolean.valueOf(prop.getProperty("flyway.validate")));
+  -		return flyway;
+  -	}
+  -
+  -	@Bean
+  -	@DependsOn("flyway")
+  -	public SessionFactory sessionFactory() throws IOException {
+  -		return SessionFactoryLoader.load(this.dataSource());
+  -	}
+  -
+  -	@Bean
+  -	public BlockChain blockChain() {
+  -		return new BlockChain(this.blockChainLastBlockLayer, this.blockChainUpdater());
+  -	}
+  -
+  -	@Bean
+  -	public BlockChainServices blockChainServices() {
+  -		return new BlockChainServices(this.blockDao, this.blockTransactionObserverFactory(), this.blockValidatorFactory(),
+  -				this.transactionValidatorFactory(), this.nisMapperFactory(), this.nisConfiguration().getForkConfiguration());
+  -	}
+  -
+  -	@Bean
+  -	public BlockChainUpdater blockChainUpdater() {
+  -		return new BlockChainUpdater(this.nisCache(), this.blockChainLastBlockLayer, this.blockDao, this.blockChainContextFactory(),
+  -				this.unconfirmedTransactions(), this.nisConfiguration());
+  -	}
+  -
+  -	@Bean
+  -	public BlockChainContextFactory blockChainContextFactory() {
+  -		return new BlockChainContextFactory(this.nisCache(), this.blockChainLastBlockLayer, this.blockDao, this.blockChainServices(),
+  -				this.unconfirmedTransactions());
+  -	}
+  -
+  -	// region mappers
+  -
+  -	@Bean
+  -	public MapperFactory mapperFactory() {
+  -		return new DefaultMapperFactory(this.mosaicIdCache());
+  -	}
+  -
+  -	@Bean
+  -	public NisMapperFactory nisMapperFactory() {
+  -		return new NisMapperFactory(this.mapperFactory());
+  -	}
+  -
+  -	@Bean
+  -	public NisModelToDbModelMapper nisModelToDbModelMapper() {
+  -		return new NisModelToDbModelMapper(this.mapperFactory().createModelToDbModelMapper(new AccountDaoLookupAdapter(this.accountDao)));
+  -	}
+  -
+  -	@Bean
+  -	public NisDbModelToModelMapper nisDbModelToModelMapper() {
+  -		return this.nisMapperFactory().createDbModelToModelNisMapper(this.accountCache());
+  -	}
+  -
+  -	// endregion
+  -
+  -	// region observers + validators
+  -
+  -	@Bean
+  -	public BlockTransactionObserverFactory blockTransactionObserverFactory() {
+  -		final int estimatedBlocksPerYear = this.nisConfiguration().getBlockChainConfiguration().getEstimatedBlocksPerYear();
+  -		final ForkConfiguration forkConfiguration = this.nisConfiguration().getForkConfiguration();
+  -		return new BlockTransactionObserverFactory(this.observerOptions(), estimatedBlocksPerYear, forkConfiguration);
+  -	}
+  -
+  -	@Bean
+  -	public BlockValidatorFactory blockValidatorFactory() {
+  -		return new BlockValidatorFactory(this.timeProvider(), this.nisConfiguration().getForkConfiguration());
+  -	}
+  -
+  -	@Bean
+  -	public TransactionValidatorFactory transactionValidatorFactory() {
+  -		return new TransactionValidatorFactory(this.timeProvider(), this.nisConfiguration().getNetworkInfo(),
+  -				this.nisConfiguration().getForkConfiguration(), this.nisConfiguration().ignoreFees());
+  -	}
+  -
+  -	@Bean
+  -	public SingleTransactionValidator transactionValidator() {
+  -		// this is only consumed by the TransactionController and used in transaction/prepare,
+  -		// which should propagate incomplete transactions
+  -		return this.transactionValidatorFactory().createIncompleteSingleBuilder(this.nisCache()).build();
+  -	}
+  -
+  -	// endregion
+  -
+  -	@Bean
+  -	public Harvester harvester() {
+  -		final NewBlockTransactionsProvider transactionsProvider = new DefaultNewBlockTransactionsProvider(this.nisCache(),
+  -				this.transactionValidatorFactory(), this.blockValidatorFactory(), this.blockTransactionObserverFactory(),
+  -				this.unconfirmedTransactionsFilter(), this.nisConfiguration().getForkConfiguration());
+  -
+  -		final BlockGenerator generator = new BlockGenerator(this.nisCache(), transactionsProvider, this.blockDao,
+  -				new BlockScorer(this.accountStateCache()), this.blockValidatorFactory().create(this.nisCache()));
+  -		return new Harvester(this.timeProvider(), this.blockChainLastBlockLayer, this.unlockedAccounts(), this.nisDbModelToModelMapper(),
+  -				generator);
+  -	}
+  -
+  -	@Bean
+  -	public SynchronizedAccountCache accountCache() {
+  -		return new SynchronizedAccountCache(new DefaultAccountCache());
+  -	}
+  -
+  -	@Bean
+  -	public SynchronizedAccountStateCache accountStateCache() {
+  -		return new SynchronizedAccountStateCache(new DefaultAccountStateCache());
+  -	}
+  -
+  -	@Bean
+  -	public SynchronizedHashCache transactionHashCache() {
+  -		return new SynchronizedHashCache(new DefaultHashCache(50000, this.nisConfiguration().getTransactionHashRetentionTime()));
+  -	}
+  -
+  -	@Bean
+  -	public SynchronizedPoxFacade poxFacade() {
+  -		return new SynchronizedPoxFacade(new DefaultPoxFacade(this.importanceCalculator()));
+  -	}
+  -
+  -	@Bean
+  -	public SynchronizedNamespaceCache namespaceCache() {
+  -		final BlockHeight mosaicRedefinitionForkHeight = this.nisConfiguration().getForkConfiguration().getMosaicRedefinitionForkHeight();
+  -
+  -		NemNamespaceEntry.setDefault(mosaicRedefinitionForkHeight);
+  -		return new SynchronizedNamespaceCache(new DefaultNamespaceCache(mosaicRedefinitionForkHeight));
+  -	}
+  -
+  -	@Bean
+  -	public ReadOnlyNisCache nisCache() {
+  -		return new DefaultNisCache(this.accountCache(), this.accountStateCache(), this.poxFacade(), this.transactionHashCache(),
+  -				this.namespaceCache());
+  -	}
+  -
+  -	@Bean
+  -	@SuppressWarnings("serial")
+  -	public ImportanceCalculator importanceCalculator() {
+  -		final Map<BlockChainFeature, Supplier<ImportanceCalculator>> featureSupplierMap = new HashMap<BlockChainFeature, Supplier<ImportanceCalculator>>() {
+  -			{
+  -				this.put(BlockChainFeature.PROOF_OF_IMPORTANCE,
+  -						() -> new PoiImportanceCalculator(new PoiScorer(), NisAppConfig::getBlockDependentPoiOptions));
+  -				this.put(BlockChainFeature.PROOF_OF_STAKE, PosImportanceCalculator::new);
+  -			}
+  -		};
+  -
+  -		return BlockChainFeatureDependentFactory.createObject(this.nisConfiguration().getBlockChainConfiguration(), "consensus algorithm",
+  -				featureSupplierMap);
+  -	}
+  -
+  -	@Bean
+  -	public UnlockedAccounts unlockedAccounts() {
+  -		return new UnlockedAccounts(this.accountCache(), this.accountStateCache(), this.blockChainLastBlockLayer,
+  -				this.canHarvestPredicate(), this.nisConfiguration().getUnlockedLimit());
+  -	}
+  -
+  -	@Bean
+  -	public CanHarvestPredicate canHarvestPredicate() {
+  -		return new CanHarvestPredicate(this::getBlockDependentMinHarvesterBalance);
+  -	}
+  -
+  -	private Amount getBlockDependentMinHarvesterBalance(final BlockHeight height) {
+  -		return getBlockDependentPoiOptions(height).getMinHarvesterBalance();
+  -	}
+  -
+  -	private static org.nem.nis.pox.poi.PoiOptions getBlockDependentPoiOptions(final BlockHeight height) {
+  -		return new PoiOptionsBuilder(height).create();
+  -	}
+  -
+  -	@Bean
+  -	public Supplier<BlockHeight> lastBlockHeight() {
+  -		return this.blockChainLastBlockLayer::getLastBlockHeight;
+  -	}
+  -
+  -	@Bean
+  -	public UnconfirmedTransactions unconfirmedTransactions() {
+  -		final BlockChainConfiguration blockChainConfiguration = this.nisConfiguration().getBlockChainConfiguration();
+  -		final UnconfirmedStateFactory unconfirmedStateFactory = new UnconfirmedStateFactory(this.transactionValidatorFactory(),
+  -				this.blockTransactionObserverFactory()::createExecuteCommitObserver, this.timeProvider(), this.lastBlockHeight(),
+  -				blockChainConfiguration.getMaxTransactionsPerBlock(), this.nisConfiguration().getForkConfiguration());
+  -		final UnconfirmedTransactions unconfirmedTransactions = new DefaultUnconfirmedTransactions(unconfirmedStateFactory,
+  -				this.nisCache());
+  -		return new SynchronizedUnconfirmedTransactions(unconfirmedTransactions);
+  -	}
+  -
+  -	@Bean
+  -	public UnconfirmedTransactionsFilter unconfirmedTransactionsFilter() {
+  -		return this.unconfirmedTransactions().asFilter();
+  -	}
+  -
+  -	@Bean
+  -	public HibernateTransactionManager transactionManager() throws IOException {
+  -		return new HibernateTransactionManager(this.sessionFactory());
+  -	}
+  -
+  -	@Bean
+  -	public NisMain nisMain() {
+  -		final NisConfiguration nisConfiguration = this.nisConfiguration();
+  -
+  -		// initialize network info
+  -		NetworkInfos.setDefault(nisConfiguration.getNetworkInfo());
+  -
+  -		// initialize other globals
+  -		final NamespaceCacheLookupAdapters adapters = new NamespaceCacheLookupAdapters(this.namespaceCache());
+  -		if (nisConfiguration.ignoreFees()) {
+  -			NemGlobals.setTransactionFeeCalculator(new ZeroTransactionFeeCalculator());
+  -		} else {
+  -			NemGlobals.setTransactionFeeCalculator(new DefaultTransactionFeeCalculator(adapters.asMosaicFeeInformationLookup(),
+  -					() -> this.blockChainLastBlockLayer.getLastBlockHeight().next(), new BlockHeight[]{
+  -							nisConfiguration.getForkConfiguration().getFeeFork().getFirstHeight(),
+  -							nisConfiguration.getForkConfiguration().getFeeFork().getSecondHeight()
+  -					}));
+  -		}
+  -
+  -		NemGlobals.setBlockChainConfiguration(nisConfiguration.getBlockChainConfiguration());
+  -		NemStateGlobals.setWeightedBalancesSupplier(this.weighedBalancesSupplier());
+  -
+  -		return new NisMain(this.blockDao, this.nisCache(), this.networkHostBootstrapper(), this.nisModelToDbModelMapper(), nisConfiguration,
+  -				this.blockAnalyzer(), System::exit);
+  -	}
+  -
+  -	@SuppressWarnings("serial")
+  -	private Supplier<WeightedBalances> weighedBalancesSupplier() {
+  -		final Map<BlockChainFeature, Supplier<Supplier<WeightedBalances>>> featureSupplierMap = new HashMap<BlockChainFeature, Supplier<Supplier<WeightedBalances>>>() {
+  -			{
+  -				this.put(BlockChainFeature.WB_TIME_BASED_VESTING, () -> TimeBasedVestingWeightedBalances::new);
+  -				this.put(BlockChainFeature.WB_IMMEDIATE_VESTING, () -> AlwaysVestedBalances::new);
+  -			}
+  -		};
+  -
+  -		return BlockChainFeatureDependentFactory.createObject(this.nisConfiguration().getBlockChainConfiguration(),
+  -				"weighted balance scheme", featureSupplierMap);
+  -	}
+  -
+  -	@Bean
+  -	public BlockAnalyzer blockAnalyzer() {
+  -		final int estimatedBlocksPerYear = this.nisConfiguration().getBlockChainConfiguration().getEstimatedBlocksPerYear();
+  -		final ForkConfiguration forkConfiguration = this.nisConfiguration().getForkConfiguration();
+  -		return new BlockAnalyzer(this.blockDao, this.blockChainUpdater(), this.blockChainLastBlockLayer, this.nisMapperFactory(),
+  -				estimatedBlocksPerYear, forkConfiguration);
+  -	}
+  -
+  -	@Bean
+  -	public HttpConnectorPool httpConnectorPool() {
+  -		final CommunicationMode communicationMode = this.nisConfiguration().useBinaryTransport()
+  -				? CommunicationMode.BINARY
+  -				: CommunicationMode.JSON;
+  -		return new HttpConnectorPool(communicationMode, this.outgoingAudits());
+  -	}
+  -
+  -	@Bean
+  -	public NisPeerNetworkHost nisPeerNetworkHost() {
+  -		final HarvestingTask harvestingTask = new HarvestingTask(this.blockChain(), this.harvester(), this.unconfirmedTransactions());
+  -
+  -		final PeerNetworkScheduler scheduler = new PeerNetworkScheduler(this.timeProvider(), harvestingTask);
+  -
+  -		final CountingBlockSynchronizer synchronizer = new CountingBlockSynchronizer(this.blockChain());
+  -
+  -		return new NisPeerNetworkHost(this.nisCache(), synchronizer, scheduler, this.chainServices(), this.nodeCompatibilityChecker(),
+  -				this.nisConfiguration(), this.httpConnectorPool(), this.trustProvider(), this.incomingAudits(), this.outgoingAudits());
+  -	}
+  -
+  -	@Bean
+  -	public NetworkHostBootstrapper networkHostBootstrapper() {
+  -		return new HarvestAwareNetworkHostBootstrapper(this.nisPeerNetworkHost(), this.unlockedAccounts(), this.nisConfiguration());
+  -	}
+  -
+  -	@Bean
+  -	public NisConfiguration nisConfiguration() {
+  -		return new NisConfiguration();
+  -	}
+  -
+  -	@Bean
+  -	public TimeProvider timeProvider() {
+  -		return CommonStarter.TIME_PROVIDER;
+  -	}
+  -
+  -	@Bean
+  -	public TrustProvider trustProvider() {
+  -		final int LOW_COMMUNICATION_NODE_WEIGHT = 30;
+  -		final int TRUST_CACHE_TIME = 15 * 60;
+  -		return new CachedTrustProvider(new LowComTrustProvider(new EigenTrustPlusPlus(), LOW_COMMUNICATION_NODE_WEIGHT), TRUST_CACHE_TIME,
+  -				this.timeProvider());
+  -	}
+  -
+  -	@Bean
+  -	public NemConfigurationPolicy configurationPolicy() {
+  -		return new NisConfigurationPolicy();
+  -	}
+  -
+  -	@Bean
+  -	public ChainServices chainServices() {
+  -		return new DefaultChainServices(this.blockChainLastBlockLayer, this.httpConnectorPool());
+  -	}
+  -
+  -	@Bean
+  -	public CommonStarter commonStarter() {
+  -		return CommonStarter.INSTANCE;
+  -	}
+  -
+  -	@Bean
+  -	public ValidationState validationState() {
+  -		return NisCacheUtils.createValidationState(this.nisCache());
+  -	}
+  -
+  -	@Bean
+  -	public LocalHostDetector localHostDetector() {
+  -		return new LocalHostDetector(this.nisConfiguration().getAdditionalLocalIps());
+  -	}
+  -
+  -	@Bean
+  -	public NodeCompatibilityChecker nodeCompatibilityChecker() {
+  -		return new DefaultNodeCompatibilityChecker();
+  -	}
+  -
+  -	@Bean
+  -	public EnumSet<ObserverOption> observerOptions() {
+  -		final EnumSet<ObserverOption> observerOptions = EnumSet.noneOf(ObserverOption.class);
+  -		if (this.nisConfiguration().isFeatureSupported(NodeFeature.HISTORICAL_ACCOUNT_DATA)) {
+  -			observerOptions.add(ObserverOption.NoHistoricalDataPruning);
+  -		}
+  -
+  -		final BlockChainConfiguration blockChainConfiguration = this.nisConfiguration().getBlockChainConfiguration();
+  -		if (blockChainConfiguration.isBlockChainFeatureSupported(BlockChainFeature.PROOF_OF_STAKE)) {
+  -			observerOptions.add(ObserverOption.NoOutlinkObserver);
+  -		}
+  -
+  -		return observerOptions;
+  -	}
+  -
+  -	@Bean
+  -	public Function<Address, Collection<Address>> cosignatoryLookup() {
+  -		return a -> this.accountStateCache().findStateByAddress(a).getMultisigLinks().getCosignatories();
+  -	}
+  -
+  -	@Bean
+  -	public MosaicIdCache mosaicIdCache() {
+  -		return new SynchronizedMosaicIdCache(new DefaultMosaicIdCache());
+  -	}
+  -}
+  + @Autowired
+  + private AccountDao accountDao;
+  +
+  + @Autowired
+  + private BlockDao blockDao;
+  +
+  + @Autowired
+  + private BlockChainLastBlockLayer blockChainLastBlockLayer;
+  +
+  + @Autowired
+  + @SuppressWarnings("unused")
+  + private TransferDao transferDao;
+  +
+  + private static final int MAX_AUDIT_HISTORY_SIZE = 50;
+  +
+  + @Bean
+  + protected AuditCollection outgoingAudits() {
+  +  return this.createAuditCollection();
+  + }
+  +
+  + @Bean
+  + protected AuditCollection incomingAudits() {
+  +  return this.createAuditCollection();
+  + }
+  +
+  + private AuditCollection createAuditCollection() {
+  +  return new AuditCollection(MAX_AUDIT_HISTORY_SIZE, this.timeProvider());
+  + }
+  +
+  + @Bean
+  + public DataSource dataSource() throws IOException {
+  +  final NisConfiguration configuration = this.nisConfiguration();
+  +  final String nemFolder = configuration.getNemFolder();
+  +  final Properties prop = new Properties();
+  +  prop.load(NisAppConfig.class.getClassLoader().getResourceAsStream("db.properties"));
+  +
+  +  // replace url parameters with values from configuration
+  +  final String jdbcUrl = prop.getProperty("jdbc.url").replace("${nem.folder}", nemFolder).replace("${nem.network}",
+  +    configuration.getNetworkName());
+  +
+  +  final DriverManagerDataSource dataSource = new DriverManagerDataSource();
+  +  dataSource.setDriverClassName(prop.getProperty("jdbc.driverClassName"));
+  +  dataSource.setUrl(jdbcUrl);
+  +  dataSource.setUsername(prop.getProperty("jdbc.username"));
+  +  dataSource.setPassword(prop.getProperty("jdbc.password"));
+  +  return dataSource;
+  + }
+  +
+  + @Bean(initMethod = "migrate")
+  + public Flyway flyway() throws IOException {
+  +  final Properties prop = new Properties();
+  +  prop.load(NisAppConfig.class.getClassLoader().getResourceAsStream("db.properties"));
+  +
+  +final org.flywaydb.core.Flyway flyway = Flyway.configure()
+  +.dataSource(this.dataSource())
+  +.classLoader(NisAppConfig.class.getClassLoader())
+  +.locations(prop.getProperty("flyway.locations"))
+  +.validateOnMigrate(Boolean.valueOf(prop.getProperty("flyway.validate")))
+  +.load();
+  +  return flyway;
+  +}
+  +
+  +@Bean
+  + @DependsOn("flyway")
+  + public SessionFactory sessionFactory() throws IOException {
+  +  return SessionFactoryLoader.load(this.dataSource());
+  +}
+  +
+  +@Bean
+  + public BlockChain blockChain() {
+  +  return new BlockChain(this.blockChainLastBlockLayer, this.blockChainUpdater());
+  +}
+  +
+  +@Bean
+  + public BlockChainServices blockChainServices() {
+  +  return new BlockChainServices(this.blockDao, this.blockTransactionObserverFactory(), this.blockValidatorFactory(),
+  +    this.transactionValidatorFactory(), this.nisMapperFactory(), this.nisConfiguration().getForkConfiguration());
+  +}
+  +
+  +@Bean
+  + public BlockChainUpdater blockChainUpdater() {
+  +  return new BlockChainUpdater(this.nisCache(), this.blockChainLastBlockLayer, this.blockDao, this.blockChainContextFactory(),
+  +    this.unconfirmedTransactions(), this.nisConfiguration());
+  +}
+  +
+  +@Bean
+  + public BlockChainContextFactory blockChainContextFactory() {
+  +  return new BlockChainContextFactory(this.nisCache(), this.blockChainLastBlockLayer, this.blockDao, this.blockChainServices(),
+  +    this.unconfirmedTransactions());
+  +}
+  +
+  + // region mappers
+  +
+  +@Bean
+  + public MapperFactory mapperFactory() {
+  +  return new DefaultMapperFactory(this.mosaicIdCache());
+  +}
+  +
+  +@Bean
+  + public NisMapperFactory nisMapperFactory() {
+  +  return new NisMapperFactory(this.mapperFactory());
+  +}
+  +
+  +@Bean
+  + public NisModelToDbModelMapper nisModelToDbModelMapper() {
+  +  return new NisModelToDbModelMapper(this.mapperFactory().createModelToDbModelMapper(new AccountDaoLookupAdapter(this.accountDao)));
+  +}
+  +
+  +@Bean
+  + public NisDbModelToModelMapper nisDbModelToModelMapper() {
+  +  return this.nisMapperFactory().createDbModelToModelNisMapper(this.accountCache());
+  +}
+  +
+  + // endregion
+  +
+  + // region observers + validators
+  +
+  +@Bean
+  + public BlockTransactionObserverFactory blockTransactionObserverFactory() {
+  +  final int estimatedBlocksPerYear = this.nisConfiguration().getBlockChainConfiguration().getEstimatedBlocksPerYear();
+  +  final ForkConfiguration forkConfiguration = this.nisConfiguration().getForkConfiguration();
+  +  return new BlockTransactionObserverFactory(this.observerOptions(), estimatedBlocksPerYear, forkConfiguration);
+  +}
+  +
+  +@Bean
+  + public BlockValidatorFactory blockValidatorFactory() {
+  +  return new BlockValidatorFactory(this.timeProvider(), this.nisConfiguration().getForkConfiguration());
+  +}
+  +
+  +@Bean
+  + public TransactionValidatorFactory transactionValidatorFactory() {
+  +  return new TransactionValidatorFactory(this.timeProvider(), this.nisConfiguration().getNetworkInfo(),
+  +    this.nisConfiguration().getForkConfiguration(), this.nisConfiguration().ignoreFees());
+  +}
+  +
+  +@Bean
+  + public SingleTransactionValidator transactionValidator() {
+  +  // this is only consumed by the TransactionController and used in transaction/prepare,
+  +  // which should propagate incomplete transactions
+  +  return this.transactionValidatorFactory().createIncompleteSingleBuilder(this.nisCache()).build();
+  +}
+  +
+  + // endregion
+  +
+  +@Bean
+  + public Harvester harvester() {
+  +  final NewBlockTransactionsProvider transactionsProvider = new DefaultNewBlockTransactionsProvider(this.nisCache(),
+  +    this.transactionValidatorFactory(), this.blockValidatorFactory(), this.blockTransactionObserverFactory(),
+  +    this.unconfirmedTransactionsFilter(), this.nisConfiguration().getForkConfiguration());
+  +
+  +  final BlockGenerator generator = new BlockGenerator(this.nisCache(), transactionsProvider, this.blockDao,
+  +    new BlockScorer(this.accountStateCache()), this.blockValidatorFactory().create(this.nisCache()));
+  +  return new Harvester(this.timeProvider(), this.blockChainLastBlockLayer, this.unlockedAccounts(), this.nisDbModelToModelMapper(),
+  +    generator);
+  +}
+  +
+  +@Bean
+  + public SynchronizedAccountCache accountCache() {
+  +  return new SynchronizedAccountCache(new DefaultAccountCache());
+  +}
+  +
+  +@Bean
+  + public SynchronizedAccountStateCache accountStateCache() {
+  +  return new SynchronizedAccountStateCache(new DefaultAccountStateCache());
+  +}
+  +
+  +@Bean
+  + public SynchronizedHashCache transactionHashCache() {
+  +  return new SynchronizedHashCache(new DefaultHashCache(50000, this.nisConfiguration().getTransactionHashRetentionTime()));
+  +}
+  +
+  +@Bean
+  + public SynchronizedPoxFacade poxFacade() {
+  +  return new SynchronizedPoxFacade(new DefaultPoxFacade(this.importanceCalculator()));
+  +}
+  +
+  +@Bean
+  + public SynchronizedNamespaceCache namespaceCache() {
+  +  final BlockHeight mosaicRedefinitionForkHeight = this.nisConfiguration().getForkConfiguration().getMosaicRedefinitionForkHeight();
+  +
+  +  NemNamespaceEntry.setDefault(mosaicRedefinitionForkHeight);
+  +  return new SynchronizedNamespaceCache(new DefaultNamespaceCache(mosaicRedefinitionForkHeight));
+  +}
+  +
+  +@Bean
+  + public ReadOnlyNisCache nisCache() {
+  +  return new DefaultNisCache(this.accountCache(), this.accountStateCache(), this.poxFacade(), this.transactionHashCache(),
+  +    this.namespaceCache());
+  +}
+  +
+  +@Bean
+  + @SuppressWarnings("serial")
+  + public ImportanceCalculator importanceCalculator() {
+  +  final Map<BlockChainFeature, Supplier<ImportanceCalculator>> featureSupplierMap = new HashMap<BlockChainFeature, Supplier<ImportanceCalculator>>() {
+  +{
+  +    this.put(BlockChainFeature.PROOF_OF_IMPORTANCE,
+  +      () -> new PoiImportanceCalculator(new PoiScorer(), NisAppConfig::getBlockDependentPoiOptions));
+  +    this.put(BlockChainFeature.PROOF_OF_STAKE, PosImportanceCalculator::new);
+  +}
+  +};
+  +
+  +  return BlockChainFeatureDependentFactory.createObject(this.nisConfiguration().getBlockChainConfiguration(), "consensus algorithm",
+  +    featureSupplierMap);
+  +}
+  +
+  +@Bean
+  + public UnlockedAccounts unlockedAccounts() {
+  +  return new UnlockedAccounts(this.accountCache(), this.accountStateCache(), this.blockChainLastBlockLayer,
+  +    this.canHarvestPredicate(), this.nisConfiguration().getUnlockedLimit());
+  +}
+  +
+  +@Bean
+  + public CanHarvestPredicate canHarvestPredicate() {
+  +  return new CanHarvestPredicate(this::getBlockDependentMinHarvesterBalance);
+  +}
+  +
+  + private Amount getBlockDependentMinHarvesterBalance(final BlockHeight height) {
+  +  return getBlockDependentPoiOptions(height).getMinHarvesterBalance();
+  +}
+  +
+  + private static org.nem.nis.pox.poi.PoiOptions getBlockDependentPoiOptions(final BlockHeight height) {
+  +  return new PoiOptionsBuilder(height).create();
+  +}
+  +
+  +@Bean
+  + public Supplier<BlockHeight> lastBlockHeight() {
+  +  return this.blockChainLastBlockLayer::getLastBlockHeight;
+  +}
+  +
+  +@Bean
+  + public UnconfirmedTransactions unconfirmedTransactions() {
+  +  final BlockChainConfiguration blockChainConfiguration = this.nisConfiguration().getBlockChainConfiguration();
+  +  final UnconfirmedStateFactory unconfirmedStateFactory = new UnconfirmedStateFactory(this.transactionValidatorFactory(),
+  +    this.blockTransactionObserverFactory()::createExecuteCommitObserver, this.timeProvider(), this.lastBlockHeight(),
+  +    blockChainConfiguration.getMaxTransactionsPerBlock(), this.nisConfiguration().getForkConfiguration());
+  +  final UnconfirmedTransactions unconfirmedTransactions = new DefaultUnconfirmedTransactions(unconfirmedStateFactory,
+  +    this.nisCache());
+  +  return new SynchronizedUnconfirmedTransactions(unconfirmedTransactions);
+  +}
+  +
+  +@Bean
+  + public UnconfirmedTransactionsFilter unconfirmedTransactionsFilter() {
+  +  return this.unconfirmedTransactions().asFilter();
+  +}
+  +
+  +@Bean
+  + public HibernateTransactionManager transactionManager() throws IOException {
+  +  return new HibernateTransactionManager(this.sessionFactory());
+  +}
+  +
+  +@Bean
+  + public NisMain nisMain() {
+  +  final NisConfiguration nisConfiguration = this.nisConfiguration();
+  +
+  +  // initialize network info
+  +  NetworkInfos.setDefault(nisConfiguration.getNetworkInfo());
+  +
+  +  // initialize other globals
+  +  final NamespaceCacheLookupAdapters adapters = new NamespaceCacheLookupAdapters(this.namespaceCache());
+  +  if (nisConfiguration.ignoreFees()) {
+  +   NemGlobals.setTransactionFeeCalculator(new ZeroTransactionFeeCalculator());
+  +} else {
+  +   NemGlobals.setTransactionFeeCalculator(new DefaultTransactionFeeCalculator(adapters.asMosaicFeeInformationLookup(),
+  +     () -> this.blockChainLastBlockLayer.getLastBlockHeight().next(), new BlockHeight[]{
+  +       nisConfiguration.getForkConfiguration().getFeeFork().getFirstHeight(),
+  +       nisConfiguration.getForkConfiguration().getFeeFork().getSecondHeight()
+  +}));
+  +}
+  +
+  +  NemGlobals.setBlockChainConfiguration(nisConfiguration.getBlockChainConfiguration());
+  +  NemStateGlobals.setWeightedBalancesSupplier(this.weighedBalancesSupplier());
+  +
+  +  return new NisMain(this.blockDao, this.nisCache(), this.networkHostBootstrapper(), this.nisModelToDbModelMapper(), nisConfiguration,
+  +    this.blockAnalyzer(), System::exit);
+  +}
+  +
+  + @SuppressWarnings("serial")
+  + private Supplier<WeightedBalances> weighedBalancesSupplier() {
+  +  final Map<BlockChainFeature, Supplier<Supplier<WeightedBalances>>> featureSupplierMap = new HashMap<BlockChainFeature, Supplier<Supplier<WeightedBalances>>>() {
+  +{
+  +    this.put(BlockChainFeature.WB_TIME_BASED_VESTING, () -> TimeBasedVestingWeightedBalances::new);
+  +    this.put(BlockChainFeature.WB_IMMEDIATE_VESTING, () -> AlwaysVestedBalances::new);
+  +}
+  +};
+  +
+  +  return BlockChainFeatureDependentFactory.createObject(this.nisConfiguration().getBlockChainConfiguration(),
+  +    "weighted balance scheme", featureSupplierMap);
+  +}
+  +
+  +@Bean
+  + public BlockAnalyzer blockAnalyzer() {
+  +  final int estimatedBlocksPerYear = this.nisConfiguration().getBlockChainConfiguration().getEstimatedBlocksPerYear();
+  +  final ForkConfiguration forkConfiguration = this.nisConfiguration().getForkConfiguration();
+  +  return new BlockAnalyzer(this.blockDao, this.blockChainUpdater(), this.blockChainLastBlockLayer, this.nisMapperFactory(),
+  +    estimatedBlocksPerYear, forkConfiguration);
+  +}
+  +
+  +@Bean
+  + public HttpConnectorPool httpConnectorPool() {
+  +  final CommunicationMode communicationMode = this.nisConfiguration().useBinaryTransport()
+  +    ? CommunicationMode.BINARY
+  +    : CommunicationMode.JSON;
+  +  return new HttpConnectorPool(communicationMode, this.outgoingAudits());
+  +}
+  +
+  +@Bean
+  + public NisPeerNetworkHost nisPeerNetworkHost() {
+  +  final HarvestingTask harvestingTask = new HarvestingTask(this.blockChain(), this.harvester(), this.unconfirmedTransactions());
+  +
+  +  final PeerNetworkScheduler scheduler = new PeerNetworkScheduler(this.timeProvider(), harvestingTask);
+  +
+  +  final CountingBlockSynchronizer synchronizer = new CountingBlockSynchronizer(this.blockChain());
+  +
+  +  return new NisPeerNetworkHost(this.nisCache(), synchronizer, scheduler, this.chainServices(), this.nodeCompatibilityChecker(),
+  +    this.nisConfiguration(), this.httpConnectorPool(), this.trustProvider(), this.incomingAudits(), this.outgoingAudits());
+  +}
+  +
+  +@Bean
+  + public NetworkHostBootstrapper networkHostBootstrapper() {
+  +  return new HarvestAwareNetworkHostBootstrapper(this.nisPeerNetworkHost(), this.unlockedAccounts(), this.nisConfiguration());
+  +}
+  +
+  +@Bean
+  + public NisConfiguration nisConfiguration() {
+  +  return new NisConfiguration();
+  +}
+  +
+  +@Bean
+  + public TimeProvider timeProvider() {
+  +  return CommonStarter.TIME_PROVIDER;
+  +}
+  +
+  +@Bean
+  + public TrustProvider trustProvider() {
+  +  final int LOW_COMMUNICATION_NODE_WEIGHT = 30;
+  +  final int TRUST_CACHE_TIME = 15 * 60;
+  +  return new CachedTrustProvider(new LowComTrustProvider(new EigenTrustPlusPlus(), LOW_COMMUNICATION_NODE_WEIGHT), TRUST_CACHE_TIME,
+  +    this.timeProvider());
+  +}
+  +
+  +@Bean
+  + public NemConfigurationPolicy configurationPolicy() {
+  +  return new NisConfigurationPolicy();
+  +}
+  +
+  +@Bean
+  + public ChainServices chainServices() {
+  +  return new DefaultChainServices(this.blockChainLastBlockLayer, this.httpConnectorPool());
+  +}
+  +
+  +@Bean
+  + public CommonStarter commonStarter() {
+  +  return CommonStarter.INSTANCE;
+  +}
+  +
+  +@Bean
+  + public ValidationState validationState() {
+  +  return NisCacheUtils.createValidationState(this.nisCache());
+  +}
+  +
+  +@Bean
+  + public LocalHostDetector localHostDetector() {
+  +  return new LocalHostDetector(this.nisConfiguration().getAdditionalLocalIps());
+  +}
+  +
+  +@Bean
+  + public NodeCompatibilityChecker nodeCompatibilityChecker() {
+  +  return new DefaultNodeCompatibilityChecker();
+  +}
+  +
+  +@Bean
+  + public EnumSet<ObserverOption> observerOptions() {
+  +  final EnumSet<ObserverOption> observerOptions = EnumSet.noneOf(ObserverOption.class);
+  +  if (this.nisConfiguration().isFeatureSupported(NodeFeature.HISTORICAL_ACCOUNT_DATA)) {
+  +   observerOptions.add(ObserverOption.NoHistoricalDataPruning);
+  +}
+  +
+  +  final BlockChainConfiguration blockChainConfiguration = this.nisConfiguration().getBlockChainConfiguration();
+  +  if (blockChainConfiguration.isBlockChainFeatureSupported(BlockChainFeature.PROOF_OF_STAKE)) {
+  +   observerOptions.add(ObserverOption.NoOutlinkObserver);
+  +}
+  +
+  +  return observerOptions;
+  +}
+  +
+  +@Bean
+  + public Function<Address, Collection<Address>> cosignatoryLookup() {
+  +  return a -> this.accountStateCache().findStateByAddress(a).getMultisigLinks().getCosignatories();
+  +}
+  +
+  +@Bean
+  + public MosaicIdCache mosaicIdCache() {
+  +  return new SynchronizedMosaicIdCache(new DefaultMosaicIdCache());
+  +}
+  +}
+  '''
+# ---
+# name: test_1ef97ea6c5b6e34151fe6167001b69e003449f95
+  '''
+  --- 
+  +++ 
+  @@ -41,7 +41,7 @@
+     }
+   
+     @Override
+  -  public Timestamp between(Date from, Date to) throws IllegalArgumentException {
+  +public Timestamp between(Date from, Date to) {
+       return new Timestamp(super.between(from, to).getTime());
+     }
+   
+  '''
+# ---
+# name: test_874ed893a4e46ea5182be2be054715967e58f08f
+  '''
+  --- 
+  +++ 
+  @@ -281,7 +281,7 @@
+                   case NONE: value = subfieldInstance.getValue(); break;
+                   case BOTH: value = subfieldInstance.resolve() + "##" + subfieldInstance.getValue(); break;
+                 }
+  -              values.add(value);
+  +            values.add(value);
+               }
+             }
+           }
+  @@ -352,7 +352,7 @@
+           if (controlField != null)
+             mainKeyValuePairs.putAll(controlField.getKeyValuePairs(type));
+   
+  -      for (DataField field : datafields) {
+  +    for (DataField field : datafields) {
+           Map<String, List<String>> keyValuePairs = field.getKeyValuePairs(type, marcVersion);
+           for (Map.Entry<String, List<String>> entry : keyValuePairs.entrySet()) {
+             String key = entry.getKey();
+  @@ -426,20 +426,21 @@
+       try {
+         json = mapper.writeValueAsString(map);
+       } catch (JsonProcessingException e) {
+  +} catch (JacksonException e) {
+         logger.log(Level.WARNING, "error in asJson()", e);
+  -    }
+  +}
+   
+       return json;
+  -  }
+  -
+  -  @Override
+  +}
+  +
+  +@Override
+     public boolean validate(MarcVersion marcVersion) {
+       return validate(marcVersion, false, null);
+  -  }
+  +}
+   
+     public boolean validate(MarcVersion marcVersion, boolean isSummary) {
+       return validate(marcVersion, isSummary, null);
+  -  }
+  +}
+   
+     public boolean validate(MarcVersion marcVersion,
+                             boolean isSummary,
+  @@ -455,7 +456,7 @@
+       // ValidatorResponse validatorResponse;
+   
+       return isValidRecord;
+  -  }
+  +}
+   
+     private boolean validateLeader(MarcVersion marcVersion, boolean isValidRecord) {
+       boolean isValidComponent;
+  @@ -467,9 +468,9 @@
+             leaderError.setRecordId(getId());
+         validationErrors.addAll(leaderErrors);
+         isValidRecord = isValidComponent;
+  -    }
+  +}
+       return isValidRecord;
+  -  }
+  +}
+   
+     private boolean validateUnhandledTags(boolean isSummary, boolean isValidRecord, IgnorableFields ignorableFields) {
+       if (!unhandledTags.isEmpty()) {
+  @@ -477,8 +478,8 @@
+           for (String tag : unhandledTags) {
+             if (!isIgnorableField(tag, ignorableFields))
+               validationErrors.add(new ValidationError(getId(), tag, ValidationErrorType.FIELD_UNDEFINED, tag, null));
+  -        }
+  -      } else {
+  +}
+  +} else {
+           Map<String, Integer> tags = new LinkedHashMap<>();
+           for (String tag : unhandledTags)
+             Utils.count(tag, tags);
+  @@ -488,54 +489,54 @@
+             String tag = entry.getKey();
+             if (entry.getValue() == 1)
+               unhandledTagsList.add(tag);
+  -          else
+  +else
+               unhandledTagsList.add(String.format("%s (%d*)", tag, entry.getValue()));
+  -        }
+  +}
+           for (String tag : unhandledTagsList) {
+             if (!isIgnorableField(tag, ignorableFields))
+               validationErrors.add(new ValidationError(getId(), tag, ValidationErrorType.FIELD_UNDEFINED, tag, null));
+  -        }
+  -      }
+  +      }
+  +}
+   
+         isValidRecord = false;
+  -    }
+  +}
+       return isValidRecord;
+  -  }
+  +}
+   
+     private boolean validateControlfields(MarcVersion marcVersion, boolean isValidRecord) {
+       boolean isValidComponent;
+       for (MarcControlField controlField : getControlfields()) {
+         if (controlField != null) {
+           isValidComponent = controlField.validate(marcVersion);
+  -        if (!isValidComponent) {
+  +    if (!isValidComponent) {
+             validationErrors.addAll(controlField.getValidationErrors());
+  -          isValidRecord = isValidComponent;
+  -        }
+  -      }
+  -    }
+  +      isValidRecord = isValidComponent;
+  +      }
+  +    }
+  +}
+       return isValidRecord;
+  -  }
+  +}
+   
+     private boolean validateDatafields(MarcVersion marcVersion,
+                                        boolean isValidRecord,
+  -                                     IgnorableFields ignorableFields) {
+  +                          IgnorableFields ignorableFields) {
+       ValidatorResponse validatorResponse;
+       Map<DataFieldDefinition, Integer> repetitionCounter = new HashMap<>();
+       for (DataField field : datafields) {
+         if (field.getDefinition() != null && !isIgnorableField(field.getTag(), ignorableFields)) {
+           count(field.getDefinition(), repetitionCounter);
+           if (!field.validate(marcVersion)) {
+  -          isValidRecord = false;
+  +      isValidRecord = false;
+             validationErrors.addAll(field.getValidationErrors());
+  -        }
+  +}
+   
+           validatorResponse = ClassificationReferenceValidator.validate(field);
+           if (!validatorResponse.isValid()) {
+             validationErrors.addAll(validatorResponse.getValidationErrors());
+  -          isValidRecord = false;
+  -        }
+  -      }
+  -    }
+  +      isValidRecord = false;
+  +      }
+  +    }
+  +}
+   
+       for (Map.Entry<DataFieldDefinition, Integer> entry : repetitionCounter.entrySet()) {
+         DataFieldDefinition fieldDefinition = entry.getKey();
+  @@ -546,23 +547,23 @@
+             ValidationErrorType.FIELD_NONREPEATABLE,
+             String.format("there are %d instances", count),
+             fieldDefinition.getDescriptionUrl()
+  -        ));
+  -        isValidRecord = false;
+  -      }
+  -    }
+  +));
+  +      isValidRecord = false;
+  +    }
+  +}
+       return isValidRecord;
+  -  }
+  +}
+   
+     private boolean isIgnorableField(String tag, IgnorableFields ignorableFields) {
+       if (ignorableFields == null)
+         return false;
+       return ignorableFields.contains(tag);
+  -  }
+  -
+  -  @Override
+  +}
+  +
+  +@Override
+     public List<ValidationError> getValidationErrors() {
+       return validationErrors;
+  -  }
+  +}
+   
+     public List<String> search(String path, String query) {
+       List<String> results = new ArrayList<>();
+  @@ -576,7 +577,7 @@
+           searchPositionalControlField(instance, path, query, results);
+       } else if (path.startsWith("008")) {
+         searchPositionalControlField(control008, path, query, results);
+  -    } else {
+  +} else {
+         Matcher matcher = dataFieldPattern.matcher(path);
+         if (matcher.matches()) {
+           String tag = matcher.group(1);
+  @@ -584,81 +585,81 @@
+           if (datafieldIndex.containsKey(tag)) {
+             for (DataField field : datafieldIndex.get(tag)) {
+               if (searchDatafield(query, results, subfieldCode, field)) break;
+  -          }
+           }
+         }
+  +}
+         matcher = positionalPattern.matcher(path);
+         if (matcher.matches()) {
+           searchByPosition(query, results, matcher);
+  -      }
+  -    }
+  +    }
+  +}
+       return results;
+  -  }
+  +}
+   
+     public List<String> select(MarcSpec selector) {
+       List<String> results = new ArrayList<>();
+       if (selector.getFieldTag().equals("LDR")) {
+         if (selector.hasRangeSelector()) {
+           results.add(selector.selectRange(leader.getContent()));
+  -      } else {
+  +} else {
+           results.add(leader.getContent());
+  -      }
+  +}
+       } else if (controlfieldIndex.containsKey(selector.getFieldTag())) {
+         for (MarcControlField field : controlfieldIndex.get(selector.getFieldTag())) {
+           if (field == null)
+  -          continue;
+  +continue;
+           if (!simpleControlTags.contains(field.definition.getTag())) {
+             // TODO: check control subfields
+  -        }
+  -        if (selector.hasRangeSelector()) {
+  +}
+  +      if (selector.hasRangeSelector()) {
+             results.add(selector.selectRange(field.getContent()));
+  -        } else {
+  +} else {
+             results.add(field.getContent());
+  -        }
+  -      }
+  +      }
+  +}
+   
+       } else if (datafieldIndex.containsKey(selector.getFieldTag())) {
+         for (DataField field : datafieldIndex.get(selector.getFieldTag())) {
+           if (field == null)
+  -          continue;
+  +continue;
+           for (String subfieldCode : selector.getSubfieldsAsList()) {
+             List<MarcSubfield> subfields = field.getSubfield(subfieldCode);
+             if (subfields == null)
+  -            continue;
+  +continue;
+             for (MarcSubfield subfield : subfields) {
+               results.add(subfield.getValue());
+  -          }
+           }
+         }
+       }
+  +}
+       else if (selector.getFieldTag().equals("008") && control008 != null) {
+         if (selector.getCharStart() != null) {
+           ControlfieldPositionDefinition definition = control008.getSubfieldByPosition(selector.getCharStart());
+           results.add(control008.getMap().get(definition));
+  -      } else {
+  +} else {
+           results.add(control008.getContent());
+  -      }
+  -    }
+  +    }
+  +}
+       return results;
+  -  }
+  +}
+   
+     private void searchByPosition(String query, List<String> results, Matcher matcher) {
+  -    String tag = matcher.group(1);
+  +        String tag = matcher.group(1);
+       String position = matcher.group(2);
+  -    int start;
+  -    int end;
+  +int start;
+  +int end;
+       if (position.contains("-")) {
+         String[] parts = position.split("-", 2);
+         start = Integer.parseInt(parts[0]);
+         end = Integer.parseInt(parts[1]);
+  -    } else {
+  +} else {
+         start = Integer.parseInt(position);
+         end = start + 1;
+  -    }
+  +}
+       String content = null;
+       if (tag.equals("Leader")) {
+         content = leader.getLeaderString();
+  -    } else {
+  +} else {
+         MarcControlField controlField = null;
+         // TODO: fix it!
+         switch (tag) {
+  @@ -666,15 +667,15 @@
+           case "007": controlField = control007.get(0); break;
+           case "008": controlField = control008; break;
+           default: break;
+  -      }
+  -      if (controlField != null)
+  +}
+  +        if (controlField != null)
+           content = controlField.getContent();
+  -    }
+  +}
+   
+       if (content != null && content.substring(start, end).equals(query)) {
+         results.add(content.substring(start, end));
+  -    }
+  -  }
+  +  }
+  +}
+   
+     private boolean searchDatafield(String query, List<String> results,
+                                     String subfieldCode, DataField field) {
+  @@ -684,45 +685,45 @@
+       } else if (subfieldCode.equals("ind2") && field.getInd2().equals(query)) {
+         results.add(field.getInd2());
+         return true;
+  -    } else {
+  -      List<MarcSubfield> subfields = field.getSubfield(subfieldCode);
+  +} else {
+  +          List<MarcSubfield> subfields = field.getSubfield(subfieldCode);
+         if (subfields != null) {
+  -        for (MarcSubfield subfield : subfields) {
+  +          for (MarcSubfield subfield : subfields) {
+             if (subfield.getValue().equals(query)) {
+               results.add(subfield.getValue());
+  -            return true;
+  -          }
+  +      return true;
+           }
+         }
+       }
+  -    return false;
+  -  }
+  +}
+  +      return false;
+  +}
+   
+     private void searchControlField(String path, String query, List<String> results) {
+  -    MarcControlField controlField = null;
+  +      MarcControlField controlField = null;
+       switch (path) {
+         case "001": controlField = control001; break;
+         case "003": controlField = control003; break;
+         case "005": controlField = control005; break;
+  -      default: break;
+  -    }
+  +        default: break;
+  +}
+       if (controlField != null && controlField.getContent().equals(query))
+         results.add(controlField.getContent());
+  -  }
+  +}
+   
+     private void searchPositionalControlField(MarcPositionalControlField controlField,
+                                               String path, String query, List<String> results) {
+  -    if (controlField != null) {
+  +      if (controlField != null) {
+         Map<ControlfieldPositionDefinition, String> map = controlField.getMap();
+         for (ControlfieldPositionDefinition subfield : controlField.getMap().keySet()) {
+           if (subfield.getId().equals(path)) {
+             if (map.get(subfield).equals(query))
+               results.add(map.get(subfield));
+  -          break;
+  -        }
+  -      }
+  -    }
+  -  }
+  +break;
+  +      }
+  +    }
+  +  }
+  +}
+   
+     public List<DataField> getAuthorityFields() {
+       List<DataField> subjects = new ArrayList<>();
+  @@ -730,14 +731,14 @@
+         "100", "110", "111", "130",
+         "700", "710", "711", "730",   "720", "740", "751", "752", "753", "754",
+         "800", "810", "811", "830"
+  -    );
+  +);
+       for (String tag : tags) {
+  -      List<DataField> fields = getDatafield(tag);
+  +    List<DataField> fields = getDatafield(tag);
+         if (fields != null && !fields.isEmpty())
+           subjects.addAll(fields);
+  -    }
+  +}
+       return subjects;
+  -  }
+  +}
+   
+     public List<DataField> getSubjects() {
+       List<DataField> subjects = new ArrayList<>();
+  @@ -745,35 +746,35 @@
+         "052", "055", "072", "080", "082", "083", "084", "085", "086",
+         "600", "610", "611", "630", "647", "648", "650", "651",
+         "653", "654", "655", "656", "657", "658", "662"
+  -    );
+  +);
+       for (String tag : tags) {
+  -      List<DataField> fields = getDatafield(tag);
+  +    List<DataField> fields = getDatafield(tag);
+         if (fields != null && !fields.isEmpty())
+           subjects.addAll(fields);
+  -    }
+  +}
+       return subjects;
+  -  }
+  +}
+   
+     public List<DataField> getSubject6xx() {
+       List<DataField> subjects = new ArrayList<>();
+       List<String> tags = Arrays.asList("600", "610", "611", "630", "648", "650", "651");
+       for (String tag : tags) {
+  -      List<DataField> fields = getDatafield(tag);
+  +    List<DataField> fields = getDatafield(tag);
+         if (fields != null && !fields.isEmpty())
+           subjects.addAll(fields);
+  -    }
+  +}
+       return subjects;
+  -  }
+  +}
+   
+     public void setField(String tag, String content) {
+       setField(tag, content, MarcVersion.MARC21);
+  -  }
+  +}
+   
+     public void setField(String tag, String content, MarcVersion marcVersion) {
+       if (marcVersion.equals(MarcVersion.UNIMARC)) {
+         content = UnimarcConverter.contentFromUnimarc(tag, content);
+         tag = UnimarcConverter.tagFromUnimarc(tag);
+  -    }
+  +}
+   
+       if (tag.equals("001")) {
+         setControl001(new Control001(content));
+  @@ -787,16 +788,16 @@
+         setControl007(new Control007(content, this));
+       } else if (tag.equals("008")) {
+         setControl008(new Control008(content, this));
+  -    } else {
+  +} else {
+         DataFieldDefinition definition = MarcFactory.getDataFieldDefinition(tag, marcVersion);
+         if (definition == null) {
+           addUnhandledTags(tag);
+  -      }
+  +}
+   
+         DataField dataField = new DataField(tag, content, marcVersion);
+         addDataField(dataField);
+  -    }
+  -  }
+  +  }
+  +}
+   
+     public void setField(String tag, String ind1, String ind2, String content, MarcVersion marcVersion) {
+   
+  @@ -812,20 +813,20 @@
+         setControl007(new Control007(content, this));
+       } else if (tag.equals("008")) {
+         setControl008(new Control008(content, this));
+  -    } else {
+  +} else {
+         DataFieldDefinition definition = MarcFactory.getDataFieldDefinition(tag, marcVersion);
+         if (definition == null) {
+           addUnhandledTags(tag);
+  -      }
+  +}
+         addDataField(new DataField(tag, ind1, ind2, content, marcVersion));
+  -    }
+  -  }
+  +  }
+  +}
+   
+     public SchemaType getSchemaType() {
+       return schemaType;
+  -  }
+  +}
+   
+     public void setSchemaType(SchemaType schemaType) {
+       this.schemaType = schemaType;
+  -  }
+  -}
+  +}
+  +}
+  '''
+# ---
+# name: test_a1ff30e0bc6a9b48e024a8ab27cefda3ad85b530
+  '''
+  --- 
+  +++ 
+  @@ -20,7 +20,6 @@
+   import org.testcontainers.utility.DockerImageName;
+   
+   
+  -import static org.jooq.tools.StringUtils.isBlank;
+   
+   
+   /**
+  @@ -49,7 +48,6 @@
+       protected DSLContext create0() {
+           return DSL.using(connection(), SQLDialect.POSTGRES);
+       }
+  -
+       /**
+        * Accessor to the connection that has been initialised by this database.
+        */
+  @@ -58,7 +56,7 @@
+               try {
+                   final String customDockerImageName = getProperties().getProperty("dockerImage");
+                   DockerImageName dockerImageName;
+  -                if (isBlank(customDockerImageName)) {
+  +                if (StringUtils.isBlank(customDockerImageName)) {
+                       dockerImageName = DEFAULT_IMAGE_NAME.withTag(DEFAULT_TAG);
+                   } else {
+                       dockerImageName = DockerImageName.parse(customDockerImageName).asCompatibleSubstituteFor("postgres");
+  @@ -76,7 +74,7 @@
+                   connection = new org.postgresql.Driver().connect(postgresContainer.getJdbcUrl(), info);
+   
+                   String locationsProperty = getProperties().getProperty("locations");
+  -                if (isBlank(locationsProperty)) {
+  +                if (StringUtils.isBlank(locationsProperty)) {
+                       locationsProperty = "";
+                       log.warn("No scripts location defined", "It is recommended that you provide an explicit script directory to scan");
+                   }
+  @@ -86,7 +84,7 @@
+   
+                   Map<String, String> placeholders;
+                   String placeholdersProperty = getProperties().getProperty("placeholders");
+  -                if (isBlank(placeholdersProperty)) {
+  +                if (StringUtils.isBlank(placeholdersProperty)) {
+                       placeholders = Collections.emptyMap();
+                   } else {
+                       placeholders = Arrays.stream(placeholdersProperty.split(","))
+  @@ -95,7 +93,7 @@
+                   }
+   
+                   String defaultSchema = getProperties().getProperty("defaultSchema");
+  -                if (isBlank(defaultSchema)) {
+  +                if (StringUtils.isBlank(defaultSchema)) {
+                       defaultSchema = "public";
+                   }
+                   Flyway.configure()
+  @@ -105,6 +103,7 @@
+                       .placeholders(placeholders)
+                       .load()
+                       .migrate();
+  +                setConnection(connection);
+   
+                   setConnection(connection);
+   
+  @@ -126,3 +125,4 @@
+           super.close();
+       }
+   }
+  +import org.jooq.tools.StringUtils;
+  '''
+# ---

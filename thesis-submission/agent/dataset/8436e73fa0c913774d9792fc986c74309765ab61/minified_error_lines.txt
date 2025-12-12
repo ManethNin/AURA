@@ -1,0 +1,209 @@
+Failed to execute goal maven-compiler-plugin:3.11.0:compile (default-compile) on project billy-portugal: Compilation failure: Compilation failure:
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java package javax.jws does not exist
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java package javax.jws does not exist
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java package javax.jws does not exist
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java package javax.jws does not exist
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java package javax.jws.soap does not exist
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol: class WebService
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol: class SOAPBinding
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java package javax.jws does not exist
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java package javax.jws does not exist
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java package javax.jws does not exist
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java package javax.jws does not exist
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol: class WebService
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java package SOAPBinding does not exist
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebMethod
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebResult
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebMethod
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebResult
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebMethod
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebResult
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebMethod
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebResult
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebMethod
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebResult
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebMethod
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebResult
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebMethod
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebResult
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebMethod
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebResult
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebMethod
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/documents/FatcorewsPort.java cannot find symbol
+symbol:   class WebResult
+location: interface com.premiumminds.billy.portugal.webservices.documents.FatcorewsPort
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebMethod
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebResult
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebMethod
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebResult
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebMethod
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebResult
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebParam
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebMethod
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS
+billy-portugal/src-generated/main/java/com/premiumminds/billy/portugal/webservices/series/SeriesWS.java cannot find symbol
+symbol:   class WebResult
+location: interface com.premiumminds.billy.portugal.webservices.series.SeriesWS

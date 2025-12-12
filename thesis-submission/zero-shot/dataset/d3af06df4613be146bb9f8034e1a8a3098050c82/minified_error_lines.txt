@@ -1,0 +1,19 @@
+Failed to execute goal maven-compiler-plugin:3.9.0:compile (default-compile) on project jadler-jetty: Compilation failure: Compilation failure:
+jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java error: package org.eclipse.jetty.server.nio does not exist
+jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JadlerHandler.java:[24] error: JadlerHandler is not abstract and does not override abstract method handle(String,Request,HttpServletRequest,HttpServletResponse) in AbstractHandler
+jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JadlerHandler.java error: method does not override or implement a method from a supertype
+jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java error: cannot find symbol
+symbol:   method setSendServerVersion(boolean)
+location: variable server of type Server
+jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java error: cannot find symbol
+symbol:   method setSendDateHeader(boolean)
+location: variable server of type Server
+jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java error: cannot find symbol
+symbol:   class SelectChannelConnector
+location: class JettyStubHttpServer
+jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java error: cannot find symbol
+symbol:   method setPort(int)
+location: variable httpConnector of type Connector
+jadler-jetty/src/main/java/net/jadler/stubbing/server/jetty/JettyStubHttpServer.java error: cannot find symbol
+symbol:   method getLocalPort()
+location: variable httpConnector of type Connector

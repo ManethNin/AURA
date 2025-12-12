@@ -1,0 +1,28 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project artifactory: Compilation failure: Compilation failure:
+[ERROR] src/main/java/org/jfrog/hudson/pipeline/declarative/steps/CreateJFrogInstanceStep.java:[21,1] cannot find symbol
+[ERROR]   symbol:   static isAllBlank
+[ERROR]   location: class org.apache.commons.lang3.StringUtils
+[ERROR] src/main/java/org/jfrog/hudson/pipeline/common/executors/ReleaseBundleDeleteExecutor.java:[51,71] cannot find symbol
+[ERROR]   symbol:   method isAllBlank(java.lang.String,java.lang.String)
+[ERROR]   location: class org.apache.commons.lang3.StringUtils
+[ERROR] src/main/java/org/jfrog/hudson/pipeline/common/executors/ReleaseBundleDistributeExecutor.java:[51,71] cannot find symbol
+[ERROR]   symbol:   method isAllBlank(java.lang.String,java.lang.String)
+[ERROR]   location: class org.apache.commons.lang3.StringUtils
+[ERROR] src/main/java/org/jfrog/hudson/pipeline/declarative/steps/CreateServerStep.java:[129,17] cannot find symbol
+[ERROR]   symbol:   method isAllBlank(java.lang.String,java.lang.String)
+[ERROR]   location: class org.jfrog.hudson.pipeline.declarative.steps.CreateServerStep.Execution
+[ERROR] src/main/java/org/jfrog/hudson/release/scm/perforce/P4Manager.java:[44,47] no suitable constructor found for ClientHelper(java.lang.String,hudson.model.TaskListener,java.lang.String,java.lang.String)
+[ERROR]     constructor org.jenkinsci.plugins.p4.client.ClientHelper.ClientHelper(hudson.model.ItemGroup,java.lang.String,hudson.model.TaskListener,org.jenkinsci.plugins.p4.workspace.Workspace) is not applicable
+[ERROR]       (argument mismatch; java.lang.String cannot be converted to hudson.model.ItemGroup)
+[ERROR]     constructor org.jenkinsci.plugins.p4.client.ClientHelper.ClientHelper(hudson.model.Item,java.lang.String,hudson.model.TaskListener,org.jenkinsci.plugins.p4.workspace.Workspace) is not applicable
+[ERROR]       (argument mismatch; java.lang.String cannot be converted to hudson.model.Item)
+[ERROR] src/main/java/org/jfrog/hudson/pipeline/common/executors/CreateDockerBuildExecutor.java:[34,24] cannot find symbol
+[ERROR]   symbol:   method isAllBlank(java.lang.String,java.lang.String)
+[ERROR]   location: class org.apache.commons.lang3.StringUtils
+[ERROR] src/main/java/org/jfrog/hudson/pipeline/declarative/steps/CreateJFrogInstanceStep.java:[140,17] cannot find symbol
+[ERROR]   symbol:   method isAllBlank(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+[ERROR]   location: class org.jfrog.hudson.pipeline.declarative.steps.CreateJFrogInstanceStep.Execution
+[ERROR] src/main/java/org/jfrog/hudson/pipeline/scripted/steps/CreateJFrogPlatformInstanceStep.java:[73,17] cannot find symbol
+[ERROR]   symbol:   method isAllBlank(java.lang.String,java.lang.String,java.lang.String)
+[ERROR]   location: class org.jfrog.hudson.pipeline.scripted.steps.CreateJFrogPlatformInstanceStep.Execution
+[ERROR] -> [Help 1]

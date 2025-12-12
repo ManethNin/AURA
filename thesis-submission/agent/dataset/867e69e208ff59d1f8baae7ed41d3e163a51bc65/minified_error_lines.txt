@@ -1,0 +1,13 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project singer: Compilation failure: Compilation failure:
+singer/src/main/java/com/pinterest/singer/reader/ThriftReader.java cannot find symbol
+symbol:   class TFramedTransport
+location: package org.apache.thrift.transport
+singer/src/main/java/com/pinterest/singer/reader/ThriftReader.java cannot find symbol
+symbol:   class TFramedTransport
+location: class com.pinterest.singer.reader.ThriftReader<T>
+singer/src/main/java/com/pinterest/singer/utils/SimpleThriftLogger.java cannot find symbol
+symbol:   class TFramedTransport
+location: package org.apache.thrift.transport
+singer/src/main/java/com/pinterest/singer/utils/SimpleThriftLogger.java cannot find symbol
+symbol:   class TFramedTransport
+location: class com.pinterest.singer.utils.SimpleThriftLogger<T>

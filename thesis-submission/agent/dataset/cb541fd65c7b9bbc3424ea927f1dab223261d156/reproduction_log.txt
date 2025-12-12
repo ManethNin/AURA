@@ -1,0 +1,76 @@
+[INFO]
+[INFO] ------------------------< com.jcabi:jcabi-http >------------------------
+[INFO] Building jcabi-http 2.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Artifact log4j:log4j:jar:1.2.17 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO] Artifact log4j:log4j:jar:1.2.17 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases)]
+[INFO]
+[INFO] --- clean:3.2.0:clean (default-clean) @ jcabi-http ---
+[INFO]
+[INFO] --- enforcer:3.1.0:enforce (enforce-maven) @ jcabi-http ---
+[INFO]
+[INFO] --- buildnumber:3.0.0:create (jcabi-build-number) @ jcabi-http ---
+[INFO] ShortRevision tag detected. The value is '7'.
+[INFO] Executing: /bin/sh -c cd '/jcabi-http' && 'git' 'rev-parse' '--verify' '--short=7' 'HEAD'
+[INFO] Working directory: /jcabi-http
+[INFO] Storing buildNumber: null at timestamp: 2023-07-31T08:49:40
+[WARNING] Cannot get the branch information from the git repository:
+Detecting the current branch failed: fatal: not a git repository (or any of the parent directories): .git
+[INFO] ShortRevision tag detected. The value is '7'.
+[INFO] Executing: /bin/sh -c cd '/jcabi-http' && 'git' 'rev-parse' '--verify' '--short=7' 'HEAD'
+[INFO] Working directory: /jcabi-http
+[INFO] Storing buildScmBranch: UNKNOWN_BRANCH
+[INFO]
+[INFO] --- buildnumber:3.0.0:create-timestamp (jcabi-build-number) @ jcabi-http ---
+[INFO] Skipping because we are not in root module.
+[INFO]
+[INFO] --- resources:3.2.0:resources (default-resources) @ jcabi-http ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] skip non existing resourceDirectory src/main/resources
+[INFO]
+[INFO] --- compiler:3.10.1:compile (default-compile) @ jcabi-http ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 53 source files to target/classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR :
+[INFO] -------------------------------------------------------------
+[ERROR] src/main/java/com/jcabi/http/mock/MkQueryMatchers.java:[34,20] cannot find symbol
+symbol:   class Matchers
+location: package org.hamcrest
+[ERROR] src/main/java/com/jcabi/http/response/RestResponse.java:[48,20] cannot find symbol
+symbol:   class Matchers
+location: package org.hamcrest
+[INFO] 2 errors
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:16 min
+[INFO] Finished at: 2023-07-31T08:49:49Z
+[INFO] ------------------------------------------------------------------------
+[WARNING]
+[WARNING] Plugin validation issues were detected in 4 plugin(s)
+[WARNING]
+[WARNING]  * org.apache.maven.plugins:maven-resources-plugin:3.2.0
+[WARNING]  * org.codehaus.mojo:buildnumber-maven-plugin:3.0.0
+[WARNING]  * org.apache.maven.plugins:maven-compiler-plugin:3.10.1
+[WARNING]  * org.apache.maven.plugins:maven-enforcer-plugin:3.1.0
+[WARNING]
+[WARNING] For more or less details, use 'maven.plugin.validation' property with one of the values (case insensitive): [BRIEF, DEFAULT, VERBOSE]
+[WARNING]
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project jcabi-http: Compilation failure: Compilation failure:
+[ERROR] src/main/java/com/jcabi/http/mock/MkQueryMatchers.java:[34,20] cannot find symbol
+[ERROR]   symbol:   class Matchers
+[ERROR]   location: package org.hamcrest
+[ERROR] src/main/java/com/jcabi/http/response/RestResponse.java:[48,20] cannot find symbol
+[ERROR]   symbol:   class Matchers
+[ERROR]   location: package org.hamcrest
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

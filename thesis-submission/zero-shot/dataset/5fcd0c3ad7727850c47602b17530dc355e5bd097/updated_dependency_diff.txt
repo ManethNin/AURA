@@ -1,0 +1,13 @@
+diff --git a/pom.xml b/pom.xml
+index aac3e42..4f22a85 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -53,7 +53,7 @@
+         <dependency>
+             <groupId>org.pitest</groupId>
+             <artifactId>pitest-entry</artifactId>
+-            <version>1.9.11</version>
++            <version>1.10.0</version>
+         </dependency>
+ 
+         <dependency>

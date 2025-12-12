@@ -1,0 +1,114 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project jakartaee-mvc-sample: Compilation failure: Compilation failure:
+src/main/java/com/example/web/AlertMessage.java package javax.mvc does not exist
+src/main/java/com/example/web/TaskController.java package javax.mvc does not exist
+src/main/java/com/example/web/TaskController.java package javax.mvc does not exist
+src/main/java/com/example/web/TaskController.java package javax.mvc does not exist
+src/main/java/com/example/web/TaskController.java package javax.mvc.binding does not exist
+src/main/java/com/example/web/TaskController.java package javax.mvc.binding does not exist
+src/main/java/com/example/web/TaskController.java package javax.mvc.security does not exist
+src/main/java/com/example/web/TaskController.java cannot find symbol
+symbol: class Controller
+src/main/java/com/example/web/AlertMessage.java cannot find symbol
+symbol: class RedirectScoped
+src/main/java/com/example/web/TaskController.java cannot find symbol
+symbol:   class Models
+location: class com.example.web.TaskController
+src/main/java/com/example/web/TaskController.java cannot find symbol
+symbol:   class BindingResult
+location: class com.example.web.TaskController
+src/main/java/com/example/web/TaskForm.java package javax.mvc.binding does not exist
+src/main/java/com/example/web/LocaleController.java package javax.mvc does not exist
+src/main/java/com/example/web/LocaleController.java cannot find symbol
+symbol: class Controller
+src/main/java/com/example/web/LocaleController.java cannot find symbol
+symbol:   class MvcContext
+location: class com.example.web.LocaleController
+src/main/java/com/example/web/LocaleController.java cannot find symbol
+symbol:   class Models
+location: class com.example.web.LocaleController
+src/main/java/com/example/web/GreetingController.java package javax.mvc does not exist
+src/main/java/com/example/web/GreetingController.java package javax.mvc.binding does not exist
+src/main/java/com/example/web/GreetingController.java package javax.mvc.binding does not exist
+src/main/java/com/example/web/GreetingController.java package javax.mvc.binding does not exist
+src/main/java/com/example/web/GreetingController.java package javax.mvc.security does not exist
+src/main/java/com/example/web/GreetingController.java cannot find symbol
+symbol: class Controller
+src/main/java/com/example/web/GreetingController.java cannot find symbol
+symbol:   class BindingResult
+location: class com.example.web.GreetingController
+src/main/java/com/example/web/GreetingController.java cannot find symbol
+symbol:   class Models
+location: class com.example.web.GreetingController
+src/main/java/com/example/web/Messages.java cannot find symbol
+symbol:   class MvcContext
+location: class Messages
+src/main/java/com/example/config/PostNotFoundExceptionMapper.java cannot find symbol
+symbol:   class Models
+location: class com.example.config.PostNotFoundExceptionMapper
+src/main/java/com/example/MvcEventListener.java package javax.mvc.event does not exist
+src/main/java/com/example/MvcEventListener.java package javax.mvc.event does not exist
+src/main/java/com/example/MvcEventListener.java package javax.mvc.event does not exist
+src/main/java/com/example/MvcEventListener.java package javax.mvc.event does not exist
+src/main/java/com/example/MvcEventListener.java package javax.mvc.event does not exist
+src/main/java/com/example/MvcEventListener.java cannot find symbol
+symbol:   class BeforeControllerEvent
+location: class com.example.MvcEventListener
+src/main/java/com/example/MvcEventListener.java cannot find symbol
+symbol:   class BeforeProcessViewEvent
+location: class com.example.MvcEventListener
+src/main/java/com/example/MvcEventListener.java cannot find symbol
+symbol:   class AfterControllerEvent
+location: class com.example.MvcEventListener
+src/main/java/com/example/MvcEventListener.java cannot find symbol
+symbol:   class AfterProcessViewEvent
+location: class com.example.MvcEventListener
+src/main/java/com/example/MvcEventListener.java cannot find symbol
+symbol:   class ControllerRedirectEvent
+location: class com.example.MvcEventListener
+src/main/java/com/example/web/QueryParamLocaleResolver.java package javax.mvc.locale does not exist
+src/main/java/com/example/web/QueryParamLocaleResolver.java package javax.mvc.locale does not exist
+src/main/java/com/example/web/QueryParamLocaleResolver.java cannot find symbol
+symbol: class LocaleResolver
+src/main/java/com/example/web/QueryParamLocaleResolver.java cannot find symbol
+symbol:   class LocaleResolverContext
+location: class com.example.web.QueryParamLocaleResolver
+src/main/java/com/example/web/CsrfController.java package javax.mvc does not exist
+src/main/java/com/example/web/CsrfController.java package javax.mvc.binding does not exist
+src/main/java/com/example/web/CsrfController.java package javax.mvc.binding does not exist
+src/main/java/com/example/web/CsrfController.java package javax.mvc.binding does not exist
+src/main/java/com/example/web/CsrfController.java package javax.mvc.security does not exist
+src/main/java/com/example/web/CsrfController.java cannot find symbol
+symbol: class Controller
+src/main/java/com/example/web/CsrfController.java cannot find symbol
+symbol:   class BindingResult
+location: class com.example.web.CsrfController
+src/main/java/com/example/web/CsrfController.java cannot find symbol
+symbol:   class Models
+location: class com.example.web.CsrfController
+src/main/java/com/example/web/TaskController.java cannot find symbol
+symbol:   class View
+location: class com.example.web.TaskController
+src/main/java/com/example/web/TaskController.java cannot find symbol
+symbol:   class CsrfProtected
+location: class com.example.web.TaskController
+src/main/java/com/example/web/TaskController.java cannot find symbol
+symbol:   class CsrfProtected
+location: class com.example.web.TaskController
+src/main/java/com/example/web/TaskForm.java cannot find symbol
+symbol:   class MvcBinding
+location: class com.example.web.TaskForm
+src/main/java/com/example/web/TaskForm.java cannot find symbol
+symbol:   class MvcBinding
+location: class com.example.web.TaskForm
+src/main/java/com/example/web/GreetingController.java cannot find symbol
+symbol:   class MvcBinding
+location: class com.example.web.GreetingController
+src/main/java/com/example/web/GreetingController.java cannot find symbol
+symbol:   class UriRef
+location: class com.example.web.GreetingController
+src/main/java/com/example/web/CsrfController.java cannot find symbol
+symbol:   class MvcBinding
+location: class com.example.web.CsrfController
+src/main/java/com/example/web/CsrfController.java cannot find symbol
+symbol:   class CsrfProtected
+location: class com.example.web.CsrfController

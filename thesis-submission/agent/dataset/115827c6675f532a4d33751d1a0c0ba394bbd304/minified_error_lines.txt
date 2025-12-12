@@ -1,0 +1,16 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project dropwizard-pac4j: Compilation failure: Compilation failure:
+src/main/java/org/pac4j/dropwizard/J2EHelper.java package javax.servlet does not exist
+src/main/java/org/pac4j/dropwizard/J2EHelper.java package javax.servlet does not exist
+src/main/java/org/pac4j/dropwizard/J2EHelper.java cannot access javax.servlet.Filter
+class file for javax.servlet.Filter not found
+src/main/java/org/pac4j/dropwizard/J2EHelper.java package FilterRegistration does not exist
+src/main/java/org/pac4j/dropwizard/J2EHelper.java no suitable method found for addFilter(java.lang.String,org.pac4j.jee.filter.AbstractConfigFilter)
+method io.dropwizard.jetty.setup.ServletEnvironment.addFilter(java.lang.String,javax.servlet.Filter) is not applicable
+(argument mismatch; org.pac4j.jee.filter.AbstractConfigFilter cannot be converted to javax.servlet.Filter)
+method io.dropwizard.jetty.setup.ServletEnvironment.addFilter(java.lang.String,java.lang.Class<? extends javax.servlet.Filter>) is not applicable
+(argument mismatch; org.pac4j.jee.filter.AbstractConfigFilter cannot be converted to java.lang.Class<? extends javax.servlet.Filter>)
+method io.dropwizard.jetty.setup.ServletEnvironment.addFilter(java.lang.String,org.eclipse.jetty.servlet.FilterHolder) is not applicable
+(argument mismatch; org.pac4j.jee.filter.AbstractConfigFilter cannot be converted to org.eclipse.jetty.servlet.FilterHolder)
+src/main/java/org/pac4j/dropwizard/J2EHelper.java cannot find symbol
+symbol:   variable DispatcherType
+location: class org.pac4j.dropwizard.J2EHelper

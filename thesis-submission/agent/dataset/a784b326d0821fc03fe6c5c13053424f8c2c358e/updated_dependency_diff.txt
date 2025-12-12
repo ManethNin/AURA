@@ -1,0 +1,12 @@
+--- a/nis/pom.xml
++++ b/nis/pom.xml
+@@ ... @@
+         <dependency>
+             <groupId>org.hibernate</groupId>
+             <artifactId>hibernate-validator</artifactId>
+-            <version>5.4.3.Final</version>
++            <version>8.0.0.Final</version>
+         </dependency>
+         <dependency>
+             <groupId>com.h2database</groupId>
+

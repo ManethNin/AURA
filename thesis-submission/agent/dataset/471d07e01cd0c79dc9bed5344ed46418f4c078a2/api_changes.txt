@@ -1,0 +1,1 @@
+{"japicmpResult": {}, "elementLines": {}, "revapiResult": {}, "allPotentialBreakingElements": ["java.util.HashMap()", "java.util.concurrent.ConcurrentSkipListMap()"], "elementPatterns": {}, "project": "google-cloud-java"}

@@ -1,0 +1,15 @@
+cannot find symbol
+symbol:   method getWildcard()
+location: class org.apache.maven.surefire.api.testset.TestListResolver
+cannot find symbol
+symbol:   method getWildcard()
+location: class org.apache.maven.surefire.api.testset.TestListResolver
+cannot find symbol
+symbol:   method getWildcard()
+location: class org.apache.maven.surefire.api.testset.TestListResolver
+cannot find symbol
+symbol:   method getWildcard()
+location: class org.apache.maven.surefire.api.testset.TestListResolver
+cannot find symbol
+symbol:   method getWildcard()
+location: class org.apache.maven.surefire.api.testset.TestListResolver

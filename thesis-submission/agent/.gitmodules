@@ -1,0 +1,3 @@
+[submodule "bump"]
+	path = bump
+	url = git@github.com:LukvonStrom/bump.git

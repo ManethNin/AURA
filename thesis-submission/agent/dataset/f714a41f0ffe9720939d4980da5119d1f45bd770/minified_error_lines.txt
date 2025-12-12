@@ -1,0 +1,24 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project xchange-stream-service-pubnub: Compilation failure: Compilation failure:
+xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java cannot find symbol
+symbol:   class PNMembershipResult
+location: package com.pubnub.api.models.consumer.pubsub.objects
+xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java cannot find symbol
+symbol:   class PNSpaceResult
+location: package com.pubnub.api.models.consumer.pubsub.objects
+xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java cannot find symbol
+symbol:   class PNUserResult
+location: package com.pubnub.api.models.consumer.pubsub.objects
+xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java no suitable constructor found for PNConfiguration(no arguments)
+constructor com.pubnub.api.PNConfiguration.PNConfiguration(com.pubnub.api.UserId) is not applicable
+(actual and formal argument lists differ in length)
+constructor com.pubnub.api.PNConfiguration.PNConfiguration(java.lang.String) is not applicable
+(actual and formal argument lists differ in length)
+xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java cannot find symbol
+symbol: class PNUserResult
+xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java cannot find symbol
+symbol: class PNSpaceResult
+xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java cannot find symbol
+symbol: class PNMembershipResult
+xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java <anonymous info.bitrich.xchangestream.service.pubnub.PubnubStreamingService$1> is not abstract and does not override abstract method file(com.pubnub.api.PubNub,com.pubnub.api.models.consumer.pubsub.files.PNFileEventResult) in com.pubnub.api.callbacks.SubscribeCallback
+xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java method does not override or implement a method from a supertype
+xchange-stream-service-pubnub/src/main/java/info/bitrich/xchangestream/service/pubnub/PubnubStreamingService.java method does not override or implement a method from a supertype

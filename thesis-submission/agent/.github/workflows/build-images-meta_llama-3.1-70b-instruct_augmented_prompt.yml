@@ -1,0 +1,65 @@
+name: Build and Publish Docker Images
+'on':
+  push:
+    paths:
+    - dataset/*/out/reproduction/meta_llama-3.1-70b-instruct_augmented_prompt
+    branches:
+    - '**'
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        sparse-checkout: dataset
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build and push 16ae40b1e17e14ee3ae20ac211647e47399a01a9
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/16ae40b1e17e14ee3ae20ac211647e47399a01a9/out/reproduction/meta_llama-3.1-70b-instruct_augmented_prompt
+        file: dataset/16ae40b1e17e14ee3ae20ac211647e47399a01a9/out/reproduction/meta_llama-3.1-70b-instruct_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/meta_llama-3.1-70b-instruct_augmented_prompt-16ae40b1e17e14ee3ae20ac211647e47399a01a9-reproduction
+    - name: Build and push 88c1f903cede03ff371059cdaf009dab12007043
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/88c1f903cede03ff371059cdaf009dab12007043/out/reproduction/meta_llama-3.1-70b-instruct_augmented_prompt
+        file: dataset/88c1f903cede03ff371059cdaf009dab12007043/out/reproduction/meta_llama-3.1-70b-instruct_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/meta_llama-3.1-70b-instruct_augmented_prompt-88c1f903cede03ff371059cdaf009dab12007043-reproduction
+    - name: Build and push 0abf7148300f40a1da0538ab060552bca4a2f1d8
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/0abf7148300f40a1da0538ab060552bca4a2f1d8/out/reproduction/meta_llama-3.1-70b-instruct_augmented_prompt
+        file: dataset/0abf7148300f40a1da0538ab060552bca4a2f1d8/out/reproduction/meta_llama-3.1-70b-instruct_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/meta_llama-3.1-70b-instruct_augmented_prompt-0abf7148300f40a1da0538ab060552bca4a2f1d8-reproduction
+    - name: Build and push 54857351e0b0a655970d7e2ccdb67f175cc5d688
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/54857351e0b0a655970d7e2ccdb67f175cc5d688/out/reproduction/meta_llama-3.1-70b-instruct_augmented_prompt
+        file: dataset/54857351e0b0a655970d7e2ccdb67f175cc5d688/out/reproduction/meta_llama-3.1-70b-instruct_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/meta_llama-3.1-70b-instruct_augmented_prompt-54857351e0b0a655970d7e2ccdb67f175cc5d688-reproduction
+    - name: Build and push ff8b5b61548d50cf60b77784a181e917cb35033b
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/ff8b5b61548d50cf60b77784a181e917cb35033b/out/reproduction/meta_llama-3.1-70b-instruct_augmented_prompt
+        file: dataset/ff8b5b61548d50cf60b77784a181e917cb35033b/out/reproduction/meta_llama-3.1-70b-instruct_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/meta_llama-3.1-70b-instruct_augmented_prompt-ff8b5b61548d50cf60b77784a181e917cb35033b-reproduction
+    - name: Build and push c7c9590a206d4fb77dd05b9df391d888e6181667
+      uses: docker/build-push-action@v2
+      with:
+        context: dataset/c7c9590a206d4fb77dd05b9df391d888e6181667/out/reproduction/meta_llama-3.1-70b-instruct_augmented_prompt
+        file: dataset/c7c9590a206d4fb77dd05b9df391d888e6181667/out/reproduction/meta_llama-3.1-70b-instruct_augmented_prompt/Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/meta_llama-3.1-70b-instruct_augmented_prompt-c7c9590a206d4fb77dd05b9df391d888e6181667-reproduction

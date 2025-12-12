@@ -1,0 +1,5 @@
+Failed to execute goal maven-compiler-plugin:2.3.2:testCompile (default-testCompile) on project guice-struts2: Compilation failure: Compilation failure:
+extensions/struts2/test/com/google/inject/struts2/Struts2FactoryTest.java error: package org.apache.struts2.dispatcher.ng.filter does not exist
+extensions/struts2/test/com/google/inject/struts2/Struts2FactoryTest.java error: cannot find symbol
+class StrutsPrepareAndExecuteFilter
+extensions/struts2/test/com/google/inject/struts2/Struts2FactoryTest.java error: cannot find symbol

@@ -1,0 +1,16 @@
+Failed to execute goal maven-compiler-plugin:3.5.1:compile (default-compile) on project geostore-security: Compilation failure: Compilation failure:
+src/core/security/src/main/java/it/geosolutions/geostore/core/security/password/GeoStorePBEPasswordEncoder.java error: package org.jasypt.spring.security does not exist
+src/core/security/src/main/java/it/geosolutions/geostore/core/security/password/GeoStoreDigestPasswordEncoder.java error: package org.jasypt.spring.security does not exist
+src/core/security/src/main/java/it/geosolutions/geostore/core/security/password/GeoStoreDigestPasswordEncoder.java error: cannot find symbol
+symbol:   class PasswordEncoder
+location: class GeoStoreDigestPasswordEncoder
+src/core/security/src/main/java/it/geosolutions/geostore/core/security/password/GeoStorePBEPasswordEncoder.java error: cannot find symbol
+symbol:   class PBEPasswordEncoder
+location: class GeoStorePBEPasswordEncoder
+src/core/security/src/main/java/it/geosolutions/geostore/core/security/password/GeoStorePBEPasswordEncoder.java error: cannot find symbol
+symbol:   class PBEPasswordEncoder
+location: class GeoStorePBEPasswordEncoder
+src/core/security/src/main/java/it/geosolutions/geostore/core/security/password/GeoStoreDigestPasswordEncoder.java error: cannot find symbol
+symbol:   class PasswordEncoder
+location: class GeoStoreDigestPasswordEncoder
+src/core/security/src/main/java/it/geosolutions/geostore/core/security/password/GeoStoreDigestPasswordEncoder.java error: cannot find symbol

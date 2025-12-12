@@ -1,0 +1,14 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project jcabi-ssh: Compilation failure: Compilation failure:
+[ERROR] src/main/java/com/jcabi/ssh/SshByPassword.java:[33,25] cannot find symbol
+[ERROR]   symbol:   class Tv
+[ERROR]   location: package com.jcabi.aspects
+[ERROR] src/main/java/com/jcabi/ssh/Ssh.java:[33,25] cannot find symbol
+[ERROR]   symbol:   class Tv
+[ERROR]   location: package com.jcabi.aspects
+[ERROR] src/main/java/com/jcabi/ssh/SshByPassword.java:[77,20] cannot find symbol
+[ERROR]   symbol:   variable Tv
+[ERROR]   location: class com.jcabi.ssh.SshByPassword
+[ERROR] src/main/java/com/jcabi/ssh/Ssh.java:[235,20] cannot find symbol
+[ERROR]   symbol:   variable Tv
+[ERROR]   location: class com.jcabi.ssh.Ssh
+[ERROR] -> [Help 1]

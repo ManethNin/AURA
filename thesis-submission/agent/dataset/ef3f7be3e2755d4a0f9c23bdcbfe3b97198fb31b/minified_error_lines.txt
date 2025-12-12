@@ -1,0 +1,32 @@
+Failed to execute goal maven-compiler-plugin:3.11.0:compile (default-compile) on project PGS: Compilation failure: Compilation failure:
+src/main/java/micycle/pgs/PGS_CirclePacking.java cannot find symbol
+symbol:   class PointDistanceFunction
+location: package org.tinspin.index
+src/main/java/micycle/pgs/PGS_CirclePacking.java cannot find symbol
+symbol:   class PointEntryDist
+location: package org.tinspin.index
+src/main/java/micycle/pgs/PGS_CirclePacking.java cannot find symbol
+symbol:   class PointDistanceFunction
+location: class micycle.pgs.PGS_CirclePacking
+src/main/java/micycle/pgs/PGS_Meshing.java cannot find symbol
+symbol:   class PointIndex
+location: package org.tinspin.index
+src/main/java/micycle/pgs/PGS_PointSet.java cannot find symbol
+symbol:   method query1NN(double[])
+location: variable tree of type org.tinspin.index.kdtree.KDTree<processing.core.PVector>
+src/main/java/micycle/pgs/PGS_CirclePacking.java cannot find symbol
+symbol:   class PointEntryDist
+location: class micycle.pgs.PGS_CirclePacking
+src/main/java/micycle/pgs/PGS_CirclePacking.java cannot find symbol
+symbol:   method query1NN(double[])
+location: variable tree of type org.tinspin.index.covertree.CoverTree<processing.core.PVector>
+src/main/java/micycle/pgs/PGS_Meshing.java cannot find symbol
+symbol:   class PointIndex
+location: class micycle.pgs.PGS_Meshing
+src/main/java/micycle/pgs/PGS_Meshing.java no suitable method found for create(int,(p1,p2)->{[...]Y); })
+method org.tinspin.index.kdtree.KDTree.<T>create(int) is not applicable
+(cannot infer type-variable(s) T
+(actual and formal argument lists differ in length))
+method org.tinspin.index.kdtree.KDTree.<T>create(org.tinspin.index.IndexConfig) is not applicable
+(cannot infer type-variable(s) T
+(actual and formal argument lists differ in length))

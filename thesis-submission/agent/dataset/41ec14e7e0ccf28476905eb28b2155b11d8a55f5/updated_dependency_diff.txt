@@ -1,0 +1,12 @@
+--- a/pom.xml
++++ b/pom.xml
+@@ ... @@
+ 		<dependency>
+ 			<groupId>com.premiumminds</groupId>
+ 			<artifactId>pm-wicket-utils</artifactId>
+-			<version>4.4</version>
++			<version>5.0</version>
+ 		</dependency>
+ 
+ 		<!-- TEST DEPENDENCIES -->
+

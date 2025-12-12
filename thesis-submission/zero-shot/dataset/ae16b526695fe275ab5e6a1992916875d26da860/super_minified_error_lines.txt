@@ -1,0 +1,17 @@
+To suppress warnings about obsolete options, use -Xlint:-options.
+error: cannot find symbol
+symbol:   class SelectChannelConnector
+location: package org.eclipse.jetty.server.nio
+error: cannot find symbol
+symbol:   method setSendServerVersion(boolean)
+location: variable server of type Server
+error: cannot find symbol
+symbol:   method setSendDateHeader(boolean)
+location: variable server of type Server
+error: cannot find symbol
+symbol:   class SelectChannelConnector
+location: class JettyStubHttpServer
+error: cannot find symbol
+symbol:   method setPort(int)
+location: variable httpConnector of type Connector
+error: cannot find symbol

@@ -1,0 +1,28 @@
+diff --git a/src/main/java/xdev/tableexport/export/ReportBuilder.java b/src/main/java/xdev/tableexport/export/ReportBuilder.java
+index 4e91b33..8acf402 100644
+--- a/src/main/java/xdev/tableexport/export/ReportBuilder.java
++++ b/src/main/java/xdev/tableexport/export/ReportBuilder.java
+@@ -366,7 +366,7 @@ public class ReportBuilder
+    return;
+   }
+   
+-		textField.getLineBox().getPen().setLineWidth(border.getLineWidth());
++textField.getLineBox().getPen().setLineWidth((float) border.getLineWidth());
+   textField.getLineBox().getPen().setLineColor(border.getLineColor());
+   textField.getLineBox().getPen().setLineStyle(border.getLineStyle().getLineStyleEnum());
+  }
+@@ -377,10 +377,10 @@ public class ReportBuilder
+   final JRLineBox lineBox = textField.getLineBox();
+   
+   
+-		lineBox.setTopPadding(colPadding.getTopWidth());
+-		lineBox.setRightPadding(colPadding.getRightWidth());
+-		lineBox.setLeftPadding(colPadding.getLeftWidth());
+-		lineBox.setBottomPadding(colPadding.getBottomWidth());
++lineBox.setTopPadding((int) colPadding.getTopWidth());
++lineBox.setRightPadding((int) colPadding.getRightWidth());
++lineBox.setLeftPadding((int) colPadding.getLeftWidth());
++lineBox.setBottomPadding((int) colPadding.getBottomWidth());
+  }
+  
+  

@@ -1,0 +1,1 @@
+mathieucarbou/license-maven-plugin

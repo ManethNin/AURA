@@ -1,0 +1,11 @@
+Failed to execute goal maven-compiler-plugin:3.10.1:compile (default-compile) on project tobago-theme-plugin: Compilation failure: Compilation failure:
+tobago-tool/tobago-theme-plugin/src/main/java/org/apache/myfaces/tobago/maven/plugin/UnPackThemeMojo.java cannot find symbol
+symbol:   class DependencyResolutionRequiredException
+location: package org.apache.maven.artifact
+tobago-tool/tobago-theme-plugin/src/main/java/org/apache/myfaces/tobago/maven/plugin/AbstractThemeMojo.java package org.apache.maven.project does not exist
+tobago-tool/tobago-theme-plugin/src/main/java/org/apache/myfaces/tobago/maven/plugin/AbstractThemeMojo.java cannot find symbol
+symbol:   class MavenProject
+location: class org.apache.myfaces.tobago.maven.plugin.AbstractThemeMojo
+tobago-tool/tobago-theme-plugin/src/main/java/org/apache/myfaces/tobago/maven/plugin/AbstractThemeMojo.java cannot find symbol
+symbol:   class MavenProject
+location: class org.apache.myfaces.tobago.maven.plugin.AbstractThemeMojo

@@ -1,0 +1,12 @@
+--- a/ui-tests/pom.xml
++++ b/ui-tests/pom.xml
+@@ ... @@
+     <dependency>
+       <groupId>org.jenkins-ci</groupId>
+       <artifactId>acceptance-test-harness</artifactId>
+-      <version>5504.v485694f31cdf</version>
++      <version>5540.v09dd001c54d7</version>
+     </dependency>
+     <dependency>
+       <groupId>org.apache.httpcomponents</groupId>
+

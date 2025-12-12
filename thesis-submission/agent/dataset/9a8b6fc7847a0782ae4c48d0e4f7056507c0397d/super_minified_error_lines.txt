@@ -1,0 +1,15 @@
+error: package org.jasypt.spring.security does not exist
+error: package org.jasypt.spring.security does not exist
+error: cannot find symbol
+symbol:   class PasswordEncoder
+location: class GeoStoreDigestPasswordEncoder
+error: cannot find symbol
+symbol:   class PBEPasswordEncoder
+location: class GeoStorePBEPasswordEncoder
+error: cannot find symbol
+symbol:   class PBEPasswordEncoder
+location: class GeoStorePBEPasswordEncoder
+error: cannot find symbol
+symbol:   class PasswordEncoder
+location: class GeoStoreDigestPasswordEncoder
+error: cannot find symbol

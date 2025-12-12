@@ -1,0 +1,133 @@
+package com.google.cloud.resourcemanager;
+
+import static com.google.common.base.MoreObjects.firstNonNull;
+import static com.google.common.base.Preconditions.checkNotNull;
+import com.google.api.client.util.Data;
+import com.google.api.core.ApiFunction;
+import com.google.cloud.StringEnumType;
+import com.google.cloud.StringEnumValue;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import org.threeten.bp.Instant;
+import org.threeten.bp.ZoneOffset;
+import org.threeten.bp.format.DateTimeFormatter;
+
+@Deprecated
+public class ProjectInfo implements Serializable {
+  public static final DateTimeFormatter DATE_TIME_FORMATTER =
+      DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneOffset.UTC);
+
+  private final String name;
+
+  private final String projectId;
+
+  private final Map<String, String> labels;
+
+  private final Long projectNumber;
+
+  private final State state;
+
+  private final Long createTimeMillis;
+
+  private final ResourceId parent;
+
+  public static class ResourceId implements Serializable {
+
+    private static final long serialVersionUID = -325199985993344726L;
+
+    private final String id;
+    private final String type;
+
+    ResourceId(String id, String type) {
+      this.id = checkNotNull(id);
+      this.type = checkNotNull(type);
+    }
+
+    public static ResourceId of(String id, String type) {
+      return new ResourceId(checkNotNull(id), checkNotNull(type));
+    }
+
+    public String getId() {
+      return id;
+    }
+
+    public String getType() {
+      return type;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      return obj instanceof ResourceId && Objects.equals(toPb(), ((ResourceId) obj).toPb());
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(id, type);
+    }
+
+    com.google.api.services.cloudresourcemanager.model.ResourceId toPb() {
+      com.google.api.services.cloudresourcemanager.model.ResourceId resourceIdPb =
+          new com.google.api.services.cloudresourcemanager.model.ResourceId();
+      resourceIdPb.setId(id);
+      resourceIdPb.setType(type.toLowerCase());
+      return resourceIdPb;
+    }
+
+    static ResourceId fromPb(
+        com.google.api.services.cloudresourcemanager.model.ResourceId resourceIdPb) {
+      return new ResourceId(resourceIdPb.getId(), resourceIdPb.getType());
+    }
+  }
+  public static Builder newBuilder(String id) {
+    return new BuilderImpl(id);
+  }
+
+  com.google.api.services.cloudresourcemanager.model.Project toPb() {
+    com.google.api.services.cloudresourcemanager.model.Project projectPb =
+        new com.google.api.services.cloudresourcemanager.model.Project();
+    projectPb.setName(name);
+    projectPb.setProjectId(projectId);
+    projectPb.setLabels(labels);
+    projectPb.setProjectNumber(projectNumber);
+    if (state != null) {
+      projectPb.setLifecycleState(state.toString());
+    }
+    if (createTimeMillis != null) {
+      projectPb.setCreateTime(
+          DateTimeFormatter.ISO_DATE_TIME
+              .withZone(ZoneOffset.UTC)
+              .format(Instant.ofEpochMilli(createTimeMillis)));
+    }
+    if (parent != null) {
+      projectPb.setParent(parent.toPb());
+    }
+    return projectPb;
+  }
+
+  static ProjectInfo fromPb(com.google.api.services.cloudresourcemanager.model.Project projectPb) {
+    Builder builder =
+        newBuilder(projectPb.getProjectId()).setProjectNumber(projectPb.getProjectNumber());
+    if (projectPb.getName() != null && !projectPb.getName().equals("Unnamed")) {
+      builder.setName(projectPb.getName());
+    }
+    if (projectPb.getLabels() != null) {
+      builder.setLabels(projectPb.getLabels());
+    }
+    if (projectPb.getLifecycleState() != null) {
+      builder.setState(State.valueOf(projectPb.getLifecycleState()));
+    }
+    if (projectPb.getCreateTime() != null) {
+      builder.setCreateTimeMillis(
+          DATE_TIME_FORMATTER.parse(projectPb.getCreateTime(), Instant.FROM).toEpochMilli());
+    }
+    if (projectPb.getParent() != null) {
+      builder.setParent(ResourceId.fromPb(projectPb.getParent()));
+    }
+    return builder.build();
+  }
+
+}

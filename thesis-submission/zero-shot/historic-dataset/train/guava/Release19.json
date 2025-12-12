@@ -1,0 +1,90 @@
+{
+    "class_breaking_changes": [
+        {
+            "class_name": "MapConstraint",
+            "package_name": "common.collect",
+            "deprecations": [
+                {
+                    "method_signature": "*"
+                }
+            ],
+            "removals": []
+        },
+        {
+            "class_name": "MapConstraints",
+            "package_name": "common.collect",
+            "deprecations": [
+                {
+                    "method_signature": "*"
+                }
+            ],
+            "removals": []
+        },
+        {
+            "class_name": "MapMaker",
+            "package_name": "common.collect",
+            "deprecations": [],
+            "removals": [
+                {
+                    "method_signature": "softValues()"
+                }
+            ]
+        },
+        {
+            "class_name": "AsyncEventBus",
+            "package_name": "common.eventbus",
+            "deprecations": [],
+            "removals": [
+                {
+                    "method_signature": "dispatchQueuedEvents()"
+                }
+            ]
+        },
+        {
+            "class_name": "TypeToken",
+            "package_name": "common.reflect",
+            "deprecations": [
+                {
+                    "method_signature": "isAssignableFrom(TypeToken)",
+                    "replacement": "isSupertypeOf(TypeToken)"
+                },
+                {
+                    "method_signature": "isAssignableFrom(Type)",
+                    "replacement": "isSupertypeOf(Type)"
+                }
+            ],
+            "removals": []
+        },
+        {
+            "class_name": "FutureFallback",
+            "package_name": "common.util.concurrent",
+            "deprecations": [
+                {
+                    "method_signature": "*",
+                    "replacement": "Futures.catching()"
+                }
+            ],
+            "removals": []
+        },
+        {
+            "class_name": "Futures",
+            "package_name": "common.util.concurrent",
+            "deprecations": [
+                {
+                    "method_signature": "withFallback()",
+                    "replacement": "catching()"
+                },
+                {
+                    "method_signature": "get(Class<X extends Exception>)",
+                    "replacement": "getChecked(Class<X extends Exception>)"
+                },
+                {
+                    "method_signature": "transform(AsyncFunction)",
+                    "replacement": "transformAsync(AsyncFunction)"
+                }
+            ],
+            "removals": []
+        }
+    ],
+    "version": "19.0"
+}
