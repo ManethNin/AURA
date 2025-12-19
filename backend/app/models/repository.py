@@ -13,20 +13,29 @@ Repository MongoDB model
 # - created_at
 # - updated_at
 
+"""
+Repository MongoDB model
+"""
 from pydantic import BaseModel, Field
-from typing import List, Optional
+from typing import Optional, List
+from datetime import datetime
 
 class Repository(BaseModel):
-    repo_id : str
-    user_id : str
-    repo_name : str
-    commits :  str
-    changes: List[str] = []
+    github_repo_id: str  # GitHub repository ID (unique)
+    name: str  # Repository name (e.g., "AURA")
+    full_name: str  # Full name (e.g., "ManethNin/AURA")
+    owner: str  # Repository owner username
+    owner_id: str  # GitHub owner ID
+    installation_id: Optional[int] = None  # GitHub App installation ID
+    is_active: bool = True
+    last_commit_sha: Optional[str] = None
+    last_pom_change: Optional[datetime] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
 
-class RepRepositoryInDB(Repository):
+class RepositoryInDB(Repository):
     """Repository model as stored in database (with _id)"""
     id: Optional[str] = Field(None, alias="_id")
     
     class Config:
         populate_by_name = True
-

@@ -23,22 +23,42 @@ from typing import Optional, List, Dict
 from datetime import datetime
 from enum import Enum
 
-class ChangeStatus(str, Enum):
+class FixStatus(str, Enum):
     PENDING = "pending"
+    CLONING = "cloning"
+    PREPARING = "preparing"
     ANALYZING = "analyzing"
+    FIXING = "fixing"
+    VALIDATING = "validating"
     FIXED = "fixed"
     FAILED = "failed"
 
 class Change(BaseModel):
-    change_id: str
     repository_id: str
+    commit_sha: str
     commit_message: str
-    files_changed: List[str]
-    breaking_changes: Optional[List[Dict]] = []
-    suggested_fixes: Optional[str] = None
-    status: ChangeStatus = ChangeStatus.PENDING
-    pr_url: Optional[str] = None  # PR created with fix
+    pom_content: Optional[str] = None
     
+    # Agent results
+    breaking_changes: Optional[str] = None
+    suggested_fix: Optional[str] = None
+    diff: Optional[str] = None
+    
+    # Status tracking
+    status: FixStatus = FixStatus.PENDING
+    progress: int = 0
+    status_message: Optional[str] = None
+    error_message: Optional[str] = None
+    
+    # Execution details
+    agent_output_path: Optional[str] = None
+    
+    # Timestamps
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
 class ChangeInDB(Change):
     """Change model as stored in database (with _id)"""
     id: Optional[str] = Field(None, alias="_id")
