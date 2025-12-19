@@ -2,12 +2,16 @@
 Logging configuration
 """
 import logging
+import sys
 
-# TODO: Setup structured logging
-# - Configure log format
-# - Setup log levels
-# - Add file handlers if needed
-# - Add request ID tracking
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
+    handlers=[logging.StreamHandler(sys.stdout)]
+)
+
+logger = logging.getLogger("aura")
 
 def setup_logging():
     """Configure application logging"""
