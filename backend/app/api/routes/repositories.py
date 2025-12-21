@@ -2,14 +2,17 @@
 Repository management endpoints
 View repos, changes, and trigger repairs
 """
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from app.repositories.change_repository import change_repo
 from app.utils.logger import logger
+from app.services.github_service import github_service
+from app.models.user import UserInDB
+from app.auth.jwt import get_current_user
 
 router = APIRouter()
 
 @router.get("/changes/{change_id}")
-async def get_change_details(change_id: str):
+async def get_change_details(change_id: str, current_user : UserInDB = Depends(get_current_user)):
     """Get detailed information about a specific change"""
     try:
         change = await change_repo.find_by_id(change_id)
@@ -39,7 +42,7 @@ async def get_change_details(change_id: str):
         raise HTTPException(500, "Failed to fetch change details")
 
 @router.get("/changes/{change_id}/status")
-async def get_change_status(change_id: str):
+async def get_change_status(change_id: str, current_user : UserInDB = Depends(get_current_user)):
     """Get real-time status of a change (for polling)"""
     try:
         change = await change_repo.find_by_id(change_id)
@@ -61,3 +64,7 @@ async def get_change_status(change_id: str):
         logger.error(f"Error fetching status: {str(e)}")
         raise HTTPException(500, "Failed to fetch status")
 
+# @router.post("/changes/{change_id}")
+# async def create_pull_request(change_id: str):
+#     try:
+#         fixed_code = await github_service.create_pull_request(change_id)
