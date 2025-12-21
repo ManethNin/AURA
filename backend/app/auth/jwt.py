@@ -79,7 +79,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
     
     return user
 
-async def get_current_user_payload(credentials: HTTPAuthorizationCredentials = Depends(security)) -> Dict:
+async def get_current_user_payload(credentials: HTTPAuthorizationCredentials = Depends(security)):
     """Get decoded JWT payload without database lookup"""
     return verify_token(credentials.credentials)
 
