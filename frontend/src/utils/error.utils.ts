@@ -1,6 +1,6 @@
 // Error handling utilities
 import { AxiosError } from 'axios';
-import { ApiError } from '../types/api.types';
+import type { ApiError } from '../types/api.types';
 
 export const getErrorMessage = (error: unknown): string => {
   if (error instanceof AxiosError) {
