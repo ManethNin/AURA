@@ -107,10 +107,19 @@ async def create_pull_request(change_id: str, current_user: UserInDB = Depends(g
         
         # Parse repository owner and name
         owner, repo_name = repo.full_name.split("/")
+
+        # Get the default branch (main or master)
+        logger.info(f"Detecting default branch for {repo.full_name}")
+        base_branch = await github_service.get_default_branch(
+            owner=owner,
+            repo=repo_name,
+            access_token=current_user.access_token
+        )
+        logger.info(f"Using base branch: {base_branch}")
         
         # Generate branch name
         branch_name = f"aura-fix-{change.commit_sha[:7]}"
-        base_branch = "main"  # TODO: Make configurable or detect default branch
+        # base_branch = "main"  # TODO: Make configurable or detect default branch
 
         logger.info(f"Getting current HEAD of {base_branch}")
         base_sha = await github_service.get_branch_head_sha(
