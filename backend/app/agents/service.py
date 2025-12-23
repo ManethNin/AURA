@@ -59,13 +59,29 @@ class JavaMigrationAgentService:
                 commit_hash=commit_hash
             )
             
+            # PRE-READ ERROR FILES AND INCLUDE IN PROMPT
+            import re
+            error_file_matches = re.findall(r'(src/main/java/[\w/]+\.java)', initial_errors)
+            unique_files = list(set(error_file_matches))
+            
+            file_contents = {}
+            for file_path in unique_files:
+                try:
+                    full_path = Path(repo_path) / file_path
+                    if full_path.exists():
+                        with open(full_path, 'r', encoding='utf-8') as f:
+                            file_contents[file_path] = f.read()
+                        print(f"[DEBUG] Pre-read file: {file_path} ({len(file_contents[file_path])} chars)")
+                except Exception as e:
+                    print(f"[WARN] Could not pre-read {file_path}: {e}")
+            
             # Build workflow
             app = build_workflow(self.llm, tools, output_path)
             
-            # Create prompt for the agent
-            prompt = self._create_prompt(pom_diff, initial_errors)
+            # Create prompt for the agent WITH FILE CONTENT
+            prompt = self._create_prompt(pom_diff, initial_errors, file_contents)
             
-            # Run agent
+            # Run agent with reduced recursion limit to save tokens
             initial_messages = [
                 SYSTEM_PROMPT,
                 HumanMessage(content=prompt)
@@ -75,7 +91,7 @@ class JavaMigrationAgentService:
                 {"messages": initial_messages, "proposed_diff": None},
                 config={
                     "run_name": commit_hash,
-                    "recursion_limit": 30,
+                    "recursion_limit": 30,  # Reduced from 30 to save API tokens
                     "configurable": {"thread_id": commit_hash}
                 }
             )
@@ -103,8 +119,8 @@ class JavaMigrationAgentService:
                 "error": str(e)
             }
     
-    def _create_prompt(self, pom_diff: str, initial_errors: str) -> str:
-        """Create the prompt for the agent"""
+    def _create_prompt(self, pom_diff: str, initial_errors: str, file_contents: dict = None) -> str:
+        """Create the prompt for the agent with actual file content"""
         prompt = f"""You are a Java dependency migration expert. A pom.xml file has been updated with new dependencies, causing compilation errors.
 
 POM.XML CHANGES:
@@ -121,23 +137,37 @@ COMPILATION ERRORS:
 ```
 """
         
+        # Include actual file content so agent doesn't have to guess
+        if file_contents:
+            prompt += "\n\n" + "="*80 + "\n"
+            prompt += "📄 CURRENT FILE CONTENTS (ACTUAL SOURCE CODE):\n"
+            prompt += "="*80 + "\n"
+            for file_path, content in file_contents.items():
+                prompt += f"\n=== {file_path} ===\n```java\n{content}\n```\n"
+            prompt += "\n" + "="*80 + "\n"
+            prompt += "⚠️  Your diff MUST match the EXACT lines shown above (including whitespace, blank lines, etc.)\n"
+            prompt += "="*80 + "\n\n"
+        
         prompt += """
 YOUR TASK:
 1. Analyze the dependency changes in pom.xml
-2. Identify what API changes occurred between the old and new versions
-3. Fix the Java source code to work with the new dependencies
-4. Validate your changes compile successfully
+2. Look at the ACTUAL file content provided above
+3. Identify what API changes occurred between the old and new versions
+4. Generate a diff that matches the EXACT lines from the actual file content
+5. Fix the Java source code to work with the new dependencies
+6. Validate your changes compile successfully
 
 ⚠️ CRITICAL RULES:
 - DO NOT modify pom.xml or any Maven/Gradle build files
 - The version upgrade is intentional and MUST be kept
 - You MUST update the Java code to be compatible with the NEW versions
 - Reverting dependency versions is FORBIDDEN
+- Your diff MUST match the exact lines shown in the file content above
+- Include proper context lines for the diff to apply correctly
 
 Use the provided tools to:
-- Read files to understand the codebase
-- Validate diffs before applying them
-- Compile with Maven to check your fixes
+- Validate diffs before applying them (validate_diffs tool)
+- Compile with Maven to check your fixes (compile_maven_stateful tool)
 - Reset the repository if needed to try different approaches
 
 Provide unified diff format changes to fix the JAVA SOURCE CODE ONLY.
