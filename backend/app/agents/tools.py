@@ -208,8 +208,25 @@ def get_tools_for_repo(repo_path: Path, repo_slug: str, commit_hash: str = "HEAD
         with tracer.start_as_current_span("compile_maven") as span:
             print("[TOOL] Compiling Maven")
             
-            # SAFETY CHECK: Block modifications to build files
-            forbidden_files = ["pom.xml", "build.gradle", "build.gradle.kts", "settings.gradle"]
+            # SAFETY CHECK: Allow adding dependencies to pom.xml, but reject version changes
+            if diff and "pom.xml" in diff.lower():
+                # Check if diff contains version changes (lines with <version> being removed or modified)
+                if "<version>" in diff and "-" in diff:
+                    lines = diff.split('\n')
+                    for line in lines:
+                        if line.strip().startswith('-') and '<version>' in line:
+                            error_msg = "BLOCKED: Attempt to CHANGE existing dependency versions in pom.xml. Version upgrades must be kept. You MAY ADD new dependencies (with <dependency> tags) but cannot modify existing <version> tags."
+                            print(f"[TOOL] {error_msg}")
+                            return {
+                                "compilation_has_succeeded": False,
+                                "test_has_succeeded": False,
+                                "error_text": error_msg,
+                                "compile_error_details": {}
+                            }
+                print("[TOOL] Allowing pom.xml modification (appears to be adding new dependencies)")
+            
+            # Block other build files (Gradle)
+            forbidden_files = ["build.gradle", "build.gradle.kts", "settings.gradle"]
             
             # Check in diff content
             if diff and "```diff" in diff:
@@ -228,9 +245,9 @@ def get_tools_for_repo(repo_path: Path, repo_slug: str, commit_hash: str = "HEAD
             # Check in file_path for direct file edits
             if file_path:
                 file_path_lower = file_path.lower()
-                for forbidden_file in forbidden_files:
+                for forbidden_file in forbidden_files + ["pom.xml"]:  # pom.xml can't be edited via file_path
                     if forbidden_file in file_path_lower:
-                        error_msg = f"BLOCKED: Attempt to modify {forbidden_file}. Build files cannot be changed. Only Java source code modifications are allowed."
+                        error_msg = f"BLOCKED: Attempt to modify {forbidden_file} via file edit. Build files cannot be changed. Only Java source code modifications are allowed."
                         print(f"[TOOL] {error_msg}")
                         return {
                             "compilation_has_succeeded": False,
