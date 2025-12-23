@@ -158,10 +158,11 @@ YOUR TASK:
 6. Validate your changes compile successfully
 
 ⚠️ CRITICAL RULES:
-- DO NOT modify pom.xml or any Maven/Gradle build files
-- The version upgrade is intentional and MUST be kept
+- DO NOT CHANGE versions of existing dependencies in pom.xml
+- The version upgrades are intentional and MUST be kept
 - You MUST update the Java code to be compatible with the NEW versions
 - Reverting dependency versions is FORBIDDEN
+- However, you MAY ADD new dependencies to pom.xml if needed (just don't change existing versions)
 - Your diff MUST match the exact lines shown in the file content above
 - Include proper context lines for the diff to apply correctly
 

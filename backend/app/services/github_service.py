@@ -92,16 +92,34 @@ class GitHubService:
                 return response.json()
             return None
     
-    async def get_repo_info(self, owner: str, repo: str) -> Optional[Dict[str, Any]]:
+    async def get_repo_info(self, owner: str, repo: str, access_token: str = None) -> Optional[Dict[str, Any]]:
         """Get GitHub repository information"""
         url = f"https://api.github.com/repos/{owner}/{repo}"
         
+        headers = {
+            "Accept": "application/vnd.github.v3+json"
+        }
+        
+        if access_token:
+            headers["Authorization"] = f"Bearer {access_token}"
+        
         async with httpx.AsyncClient() as client:
-            response = await client.get(url)
+            response = await client.get(url, headers=headers)
             
             if response.status_code == 200:
                 return response.json()
             return None
+    
+    async def get_default_branch(self, owner: str, repo: str, access_token: str = None) -> str:
+        """Get the default branch of a repository (e.g., 'main' or 'master')"""
+        repo_info = await self.get_repo_info(owner, repo, access_token)
+        
+        if repo_info and "default_branch" in repo_info:
+            return repo_info["default_branch"]
+        
+        # Fallback: Try 'main' first, then 'master'
+        logger.warning(f"Could not determine default branch for {owner}/{repo}, trying 'main'")
+        return "main"
     
     async def create_pull_request(
         self,

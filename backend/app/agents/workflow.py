@@ -29,10 +29,13 @@ Do not explain your actions or ask questions, just provide diffs that always adh
 When you think you are done, reply with the diff that fixes the issues, after that a final verification step will happen and the conversation will be ended if it was successful. If not you get the error back.
 
 # CRITICAL CONSTRAINT:
-**DO NOT MODIFY pom.xml OR ANY MAVEN CONFIGURATION FILES.**
-The dependency version upgrade in pom.xml is intentional and must be kept.
+**DO NOT CHANGE VERSIONS OF EXISTING DEPENDENCIES IN pom.xml.**
+The dependency version upgrades in pom.xml are intentional and must be kept.
 You MUST adapt the Java source code to work with the NEW dependency versions.
 Reverting dependency versions is NOT an acceptable solution.
+
+However, you MAY add NEW dependencies to pom.xml if needed to fix compilation issues.
+When adding dependencies, only add the <dependency> tag - do not modify existing dependency versions.
 
 # File editing rules:
 Return edits similar to unified diffs that `diff -U0` would produce.
@@ -187,19 +190,24 @@ When you have a diff ready to test, provide it ONLY as a markdown code block sta
             print("[DEBUG] No diff found in message, going back to agent")
             return {"messages": messages}
         
-        # SAFETY CHECK: Reject diffs that modify pom.xml or build files
-        forbidden_files = ["pom.xml", "build.gradle", "build.gradle.kts", "settings.gradle"]
-        content_lower = content.lower()
-        for forbidden_file in forbidden_files:
-            if f"--- a/{forbidden_file}" in content_lower or f"+++ b/{forbidden_file}" in content_lower:
-                print(f"[AGENT] REJECTED: Diff attempts to modify {forbidden_file}")
-                error_message = AIMessage(
-                    content=f"ERROR: You attempted to modify {forbidden_file}. This is FORBIDDEN. "
-                            f"The dependency version upgrade is intentional and MUST be kept. "
-                            f"You MUST fix the Java source code to work with the NEW dependency versions instead. "
-                            f"Provide a diff that ONLY modifies .java files."
-                )
-                return {"messages": [error_message]}
+        # SAFETY CHECK: Allow adding dependencies to pom.xml, but reject version changes
+        if "pom.xml" in content.lower():
+            # Check if diff contains version changes (lines with <version> being removed or modified)
+            if "<version>" in content and "-" in content:
+                # Look for lines that remove or change version tags
+                lines = content.split('\n')
+                for i, line in enumerate(lines):
+                    if line.strip().startswith('-') and '<version>' in line:
+                        print(f"[AGENT] REJECTED: Diff attempts to change existing dependency version in pom.xml")
+                        error_message = AIMessage(
+                            content=f"ERROR: You attempted to CHANGE an existing dependency version in pom.xml. This is FORBIDDEN.\n"
+                                    f"The dependency version upgrades are intentional and MUST be kept.\n"
+                                    f"You MUST fix the Java source code to work with the NEW dependency versions.\n\n"
+                                    f"However, you MAY ADD new dependencies (with <dependency> tags) if needed.\n"
+                                    f"Just don't modify existing <version> tags."
+                        )
+                        return {"messages": [error_message]}
+            print("[AGENT] Allowing pom.xml modification (appears to be adding new dependencies)")
 
         tool_name = "compile_maven_stateful"
             
