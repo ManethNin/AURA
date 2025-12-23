@@ -31,21 +31,24 @@ class ChangeRepository:
         if change_data:
             # Convert ObjectId to string
             change_data["_id"] = str(change_data["_id"])
+            change_data["id"] = str(change_data["_id"])
             return ChangeInDB(**change_data)
         return None
     
-    async def find_by_repository(self, repository_id: str) -> List[ChangeInDB]:
+    async def find_by_repository(self, id: str) -> List[ChangeInDB]:
         """Find all changes for a repository"""
         db = get_database()
         
         cursor = db[self.collection_name].find(
-            {"repository_id": repository_id}
+            {"repository_id": id}
         ).sort("created_at", -1)
         
         changes = await cursor.to_list(length=100)
         # Convert ObjectId to string for each change
         for change in changes:
-            change["_id"] = str(change["_id"])
+            change_id = str(change["_id"])
+            change["_id"] = change_id
+            change["id"] = change_id
         return [ChangeInDB(**change) for change in changes]
     
     async def update_status(
@@ -110,6 +113,23 @@ class ChangeRepository:
                 "$set": {
                     "status": "failed",
                     "error_message": error_message,
+                    "updated_at": datetime.utcnow()
+                }
+            }
+        )
+    async def delete_by_repo_id(self, repo_id: str):
+        db = get_database()
+        await db[self.collection_name].delete_many({"repository_id": repo_id})
+    
+    async def update_pr_url(self, change_id: str, pr_url: str):
+        """Update change with pull request URL"""
+        db = get_database()
+        
+        await db[self.collection_name].update_one(
+            {"_id": ObjectId(change_id)},
+            {
+                "$set": {
+                    "pull_request_url": pr_url,
                     "updated_at": datetime.utcnow()
                 }
             }

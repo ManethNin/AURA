@@ -19,29 +19,26 @@ class UserRepository:
         return None
 
     async def create_or_update(self, user):
-
         db = get_database()
-
         users_collection = db[self.collection_name]
 
-
         result = await users_collection.update_one(
-        {"github_id": user.github_id},
-        {
-            "$set": {
-                "username": user.username,
-                "avatar_url": user.avatar_url,
-                "updated_at": datetime.utcnow()
+            {"github_id": user.github_id},
+            {
+                "$set": {
+                    "username": user.username,
+                    "email": user.email,                    # ✅ Update every login
+                    "avatar_url": user.avatar_url,
+                    "access_token": user.access_token,      # ✅ Update every login
+                    "updated_at": datetime.utcnow()
+                },
+                "$setOnInsert": {
+                    "github_id": user.github_id,
+                    "repositories": [],
+                    "created_at": datetime.utcnow()
+                }
             },
-            "$setOnInsert": {
-                "github_id": user.github_id,
-                "email": None,
-                "access_token": None,
-                "repositories": [],
-                "created_at": datetime.utcnow()
-            }
-        },
-        upsert=True
+            upsert=True
         )
 
         # Return user ID

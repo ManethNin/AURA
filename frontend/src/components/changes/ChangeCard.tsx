@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Change } from '../../types';
+import type { Change } from '../../types';
 import { Card, Button } from '../common';
 import { Link } from 'react-router-dom';
 
 interface ChangeCardProps {
   change: Change;
-  onCreatePR?: (changeId: string) => Promise<void>;
+  onCreatePR?: (changeId: string) => Promise<{ pr_url: string; pr_number: number; branch: string; files_updated: string[]; message: string }>;
 }
 
 export const ChangeCard: React.FC<ChangeCardProps> = ({ change, onCreatePR }) => {
@@ -15,7 +15,9 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({ change, onCreatePR }) =>
     if (!onCreatePR) return;
     try {
       setLoading(true);
-      await onCreatePR(change.id);
+      const result = await onCreatePR(change._id);
+      // Open the created PR in a new tab
+      window.open(result.pr_url, '_blank');
     } catch (error) {
       console.error('Failed to create PR:', error);
     } finally {
@@ -24,11 +26,14 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({ change, onCreatePR }) =>
   };
 
   const getStatusBadge = (status: Change['status']) => {
-    const statusMap = {
+    const statusMap: Record<Change['status'], string> = {
       pending: 'badge-warning',
-      analyzed: 'badge-info',
+      cloning: 'badge-info',
+      preparing: 'badge-info',
+      analyzing: 'badge-info',
+      fixing: 'badge-info',
+      validating: 'badge-info',
       fixed: 'badge-success',
-      pr_created: 'badge-success',
       failed: 'badge-danger',
     };
     return statusMap[status] || 'badge-default';
@@ -38,26 +43,19 @@ export const ChangeCard: React.FC<ChangeCardProps> = ({ change, onCreatePR }) =>
     <Card>
       <div className="change-card">
         <div className="change-header">
-          <Link to={`/changes/${change.id}`}>
+          <Link to={`/changes/${change._id}`}>
             <h3>{change.commit_message}</h3>
           </Link>
           <span className={`badge ${getStatusBadge(change.status)}`}>{change.status}</span>
         </div>
         <div className="change-meta">
-          <span>Author: {change.author}</span>
           <span>Commit: {change.commit_sha.substring(0, 7)}</span>
           <span>Date: {new Date(change.created_at).toLocaleDateString()}</span>
         </div>
-        {change.breaking_changes && change.breaking_changes.length > 0 && (
+        {change.breaking_changes && (
           <div className="breaking-changes">
             <strong>Breaking Changes:</strong>
-            <ul>
-              {change.breaking_changes.map((bc, idx) => (
-                <li key={idx}>
-                  {bc.dependency}: {bc.old_version} → {bc.new_version}
-                </li>
-              ))}
-            </ul>
+            <pre>{change.breaking_changes}</pre>
           </div>
         )}
         <div className="change-actions">

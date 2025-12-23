@@ -50,12 +50,13 @@ class Change(BaseModel):
     status_message: Optional[str] = None
     error_message: Optional[str] = None
     
+    # Pull Request
+    pull_request_url: Optional[str] = None
+    
     # Execution details
     agent_output_path: Optional[str] = None
     
     # Timestamps
-    created_at: datetime = Field(default_factory=datetime.utcnow)
-    updated_at: datetime = Field(default_factory=datetime.utcnow)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 

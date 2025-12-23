@@ -1,7 +1,7 @@
-import axios, { AxiosInstance, AxiosError } from 'axios';
+import axios, { type AxiosInstance, AxiosError } from 'axios';
 import { API_CONFIG } from '../config/api.config';
 import { STORAGE_KEYS } from '../constants';
-import { ApiError } from '../types/api.types';
+import type { ApiError } from '../types/api.types';
 
 // Create axios instance
 const apiClient: AxiosInstance = axios.create({

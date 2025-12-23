@@ -32,7 +32,7 @@ async def login():
     github_auth_url = (
         "https://github.com/login/oauth/authorize"
         f"?client_id={(settings.GITHUB_CLIENT_ID)}"
-        "&scope=read:user user:email"
+        "&scope=repo read:user user:email"  # Added 'repo' scope for write access
     )
     return RedirectResponse(github_auth_url)
 

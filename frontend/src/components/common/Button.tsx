@@ -10,15 +10,22 @@ export const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   loading = false,
   disabled,
+  className = '',
   ...props
 }) => {
   return (
     <button
-      className={`btn btn-${variant}`}
+      data-variant={variant}
+      className={className}
       disabled={disabled || loading}
       {...props}
     >
-      {loading ? 'Loading...' : children}
+      {loading ? (
+        <>
+          <span className="loading-spinner" style={{ width: '16px', height: '16px', borderWidth: '2px' }}></span>
+          Loading...
+        </>
+      ) : children}
     </button>
   );
 };

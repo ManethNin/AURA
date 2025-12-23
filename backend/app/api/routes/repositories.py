@@ -3,7 +3,7 @@ Repository management endpoints
 View repos, changes, and trigger repairs
 """
 from fastapi import APIRouter, HTTPException, Depends
-from app.repositories.change_repository import change_repo
+from app.repositories.repo_repository import repository_repo, change_repo
 from app.utils.logger import logger
 from app.services.github_service import github_service
 from app.models.user import UserInDB
@@ -11,60 +11,93 @@ from app.auth.jwt import get_current_user
 
 router = APIRouter()
 
-@router.get("/changes/{change_id}")
-async def get_change_details(change_id: str, current_user : UserInDB = Depends(get_current_user)):
-    """Get detailed information about a specific change"""
+@router.get("")
+async def get_all_repos(current_user: UserInDB = Depends(get_current_user)):
     try:
-        change = await change_repo.find_by_id(change_id)
+        repos = await repository_repo.find_all_by_owner_id(current_user.github_id)
         
-        if not change:
-            raise HTTPException(404, "Change not found")
+        return repos if repos else []
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error fetching repos: {str(e)}")
+        raise HTTPException(500, "Failed to fetch repos")
+
+
+@router.get("/{id}")
+async def get_repo_details(id: str, current_user : UserInDB = Depends(get_current_user)):
+    """Get detailed information about a specific repo"""
+    try:
+        repo = await repository_repo.find_by_id(id)
+        
+        if not repo:
+            raise HTTPException(404, "Repo not found")
+        
+        if repo.owner_id != current_user.github_id:
+            raise HTTPException(403, "Access denied, Github Ids don't match")
         
         return {
-            "id": str(change.id),
-            "repository_id": change.repository_id,
-            "commit_sha": change.commit_sha,
-            "commit_message": change.commit_message,
-            "status": change.status,
-            "progress": change.progress,
-            "status_message": change.status_message,
-            "breaking_changes": change.breaking_changes,
-            "suggested_fix": change.suggested_fix,
-            "diff": change.diff,
-            "error_message": change.error_message,
-            "created_at": change.created_at.isoformat(),
-            "updated_at": change.updated_at.isoformat()
+            "id": str(repo.id),
+            "repository_id": repo.github_repo_id,
+            "name": repo.name,
+            "owner_id": repo.owner_id,
+            "installation_id": repo.installation_id,
+            "is_active": repo.is_active,
+            "last_commit_sha": repo.last_commit_sha,
+            "last_pom_change": repo.last_pom_change,
+            "created_at": repo.created_at,
+            "updated_at": repo.updated_at
         }
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Error fetching change details: {str(e)}")
-        raise HTTPException(500, "Failed to fetch change details")
+        logger.error(f"Error fetching repo details: {str(e)}")
+        raise HTTPException(500, "Failed to fetch repo details")
+    
 
-@router.get("/changes/{change_id}/status")
-async def get_change_status(change_id: str, current_user : UserInDB = Depends(get_current_user)):
-    """Get real-time status of a change (for polling)"""
+@router.delete("/{id}")
+async def delete_repository(id: str, current_user : UserInDB = Depends(get_current_user)):
+    """Delete a specific repository"""
     try:
-        change = await change_repo.find_by_id(change_id)
+        # First verify ownership before deleting
+        repo = await repository_repo.find_by_id(id)
         
-        if not change:
-            raise HTTPException(404, "Change not found")
+        if not repo:
+            raise HTTPException(404, "Repo not found")
         
-        return {
-            "id": str(change.id),
-            "status": change.status,
-            "progress": change.progress,
-            "message": change.status_message,
-            "error": change.error_message,
-            "is_complete": change.status in ["fixed", "failed"]
-        }
+        if repo.owner_id != current_user.github_id:
+            raise HTTPException(403, "Access denied, Github Ids don't match")
+        
+        # Now delete the repo
+        repo_id = await repository_repo.delete_by_githubid(id)
+        
+        return {"id": repo_id, "message": "Repository deleted successfully"}
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Error fetching status: {str(e)}")
-        raise HTTPException(500, "Failed to fetch status")
+        logger.error(f"Error deleting repo: {str(e)}")
+        raise HTTPException(500, "Failed to delete repo")
+    
+@router.get("/{id}/changes")
+async def get_repository_changes(id: str, current_user : UserInDB = Depends(get_current_user)):
+    """Get all changes for a specific repository"""
+    try:
+        # First verify ownership
+        repo = await repository_repo.find_by_id(id)
+        if not repo:
+            raise HTTPException(404, "Repository not found")
+        
+        if repo.owner_id != current_user.github_id:
+            raise HTTPException(403, "Access denied, Github Ids don't match")
+        
+        # Get changes for this repo
+        changes = await change_repo.find_by_repository(id)
 
-# @router.post("/changes/{change_id}")
-# async def create_pull_request(change_id: str):
-#     try:
-#         fixed_code = await github_service.create_pull_request(change_id)
+        return changes if changes else []
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error fetching changes details: {str(e)}")
+        raise HTTPException(500, "Failed to fetch changes details")

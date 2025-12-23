@@ -1,21 +1,61 @@
 from datetime import datetime
 from app.database.mongodb import get_database
 from app.models.repository import RepositoryInDB
+from app.repositories.change_repository import change_repo
+from bson import ObjectId
 
 class RepositoryRepository:
     def __init__(self):
         self.collection_name = "repositories"
 
-    async def find_by_githubid(self, github_repo_id):
+    async def find_all_by_owner_id(self, owner_id):
         db = get_database()
         repo_collection = db[self.collection_name]
 
-        repo_data = await repo_collection.find_one({"github_repo_id": github_repo_id})
+        repos = await repo_collection.find({"owner_id":owner_id}).to_list(None)
+
+        for repo in repos:
+            repo["_id"] = str(repo["_id"])
+
+        return repos
+
+
+
+    async def find_by_id(self, id):
+        db = get_database()
+        repo_collection = db[self.collection_name]
+
+        repo_data = await repo_collection.find_one({"_id": ObjectId(id)})
 
         if repo_data:
             # Convert ObjectId to string
             repo_data["_id"] = str(repo_data["_id"])
             return RepositoryInDB(**repo_data)
+        return None
+    
+    async def find_by_github_id(self, github_id):
+        db = get_database()
+        repo_collection = db[self.collection_name]
+
+        repo_data = await repo_collection.find_one({"github_repo_id": github_id})
+
+        if repo_data:
+            # Convert ObjectId to string
+            repo_data["_id"] = str(repo_data["_id"])
+            return RepositoryInDB(**repo_data)
+        return None
+    
+    async def delete_by_id(self, id):
+        db = get_database()
+        repo_collection = db[self.collection_name]
+
+        repo_data = await repo_collection.delete_one({"_id": ObjectId(id)})
+        await change_repo.delete_by_repo_id(id)
+        
+        if repo_data:
+            # Convert ObjectId to string
+            repo_data["_id"] = str(repo_data["_id"])
+            return repo_data["github_repo_id"]
         return None
 
     async def create_or_update(self, repository):
@@ -47,7 +87,7 @@ class RepositoryRepository:
         
         if result.upserted_id:
             return str(result.upserted_id)
-        repo_doc = await self.find_by_githubid(repository.github_repo_id)
+        repo_doc = await self.find_by_github_id(repository.github_repo_id)
 
         return str(repo_doc.id)
 

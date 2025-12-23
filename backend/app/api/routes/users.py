@@ -29,9 +29,9 @@ async def get_current_user_info(current_user: UserInDB = Depends(get_current_use
         "updated_at": current_user.updated_at.isoformat()
     }
 
-@router.get("/me/repositories")
-async def get_my_repositories(current_user : UserInDB = Depends(get_current_user)):
-    return {
-            "repositories": current_user.repositories,
-            "count": len(current_user.repositories)
-        }
+# @router.get("/me/repositories")
+# async def get_my_repositories(current_user : UserInDB = Depends(get_current_user)):
+#     return {
+#             "repositories": current_user.repositories,
+#             "count": len(current_user.repositories)
+        # }

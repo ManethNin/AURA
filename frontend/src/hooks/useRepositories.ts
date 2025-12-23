@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import type { Repository } from '../types';
+import { API_CONFIG } from '../config/api.config';
+import apiClient from '../services/api.client';
 import { repositoryService } from '../services';
-import { Repository } from '../types';
-import { STORAGE_KEYS } from '../constants';
+
 
 export const useRepositories = () => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
@@ -11,7 +13,8 @@ export const useRepositories = () => {
   const fetchRepositories = async () => {
     try {
       setLoading(true);
-      const response = await repositoryService.getRepositoryById(localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN));
+      const response = await apiClient.get(API_CONFIG.ENDPOINTS.REPOSITORIES.LIST);
+
       setRepositories(response.data);
       setError(null);
     } catch (err: any) {
@@ -21,16 +24,15 @@ export const useRepositories = () => {
     }
   };
 
-  const syncRepositories = async () => {
+  const deleteRepository = async (id: string) => {
     try {
-      setLoading(true);
-      const response = await repositoryService.syncRepositories();
-      setRepositories(response.data);
-      setError(null);
+      await repositoryService.deleteRepository(id);
+      // Remove from local state
+      setRepositories(prev => prev.filter(repo => repo._id !== id));
+      return { success: true };
     } catch (err: any) {
-      setError(err.message || 'Failed to sync repositories');
-    } finally {
-      setLoading(false);
+      setError(err.message || 'Failed to delete repository');
+      return { success: false, error: err.message };
     }
   };
 
@@ -38,5 +40,5 @@ export const useRepositories = () => {
     fetchRepositories();
   }, []);
 
-  return { repositories, loading, error, refetch: fetchRepositories, sync: syncRepositories };
+  return { repositories, loading, error, refetch: fetchRepositories, deleteRepository };
 };

@@ -28,6 +28,8 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
+    FRONTEND_URL:str
+
     # LLM Configuration
     GROQ_API_KEY: str
     LLM_MODEL: str = "llama-3.3-70b-versatile"

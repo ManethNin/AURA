@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { authService } from '../services';
 import { STORAGE_KEYS } from '../constants';
-import { Loading } from '../components/common';
+import { Loading, NavBar } from '../components/common';
 import { ROUTES } from '../config/routes.config';
 
 export const AuthCallback: React.FC = () => {
@@ -11,18 +11,21 @@ export const AuthCallback: React.FC = () => {
 
   useEffect(() => {
     const handleCallback = async () => {
-      const code = searchParams.get('code');
+      const token = searchParams.get('token');
       
-      if (!code) {
+      if (!token) {
         navigate(ROUTES.LOGIN);
         return;
       }
 
       try {
-        const response = await authService.handleCallback(code);
-        localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, response.data.access_token);
-        localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(response.data.user));
+        localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, token);
+
+        const response = await authService.getCurrentUser()
+
+        localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(response));
         navigate(ROUTES.DASHBOARD);
+
       } catch (error) {
         console.error('Auth callback error:', error);
         navigate(ROUTES.LOGIN);
@@ -32,5 +35,10 @@ export const AuthCallback: React.FC = () => {
     handleCallback();
   }, [searchParams, navigate]);
 
-  return <Loading message="Completing authentication..." />;
+  return (
+    <>
+      <NavBar />
+      <Loading message="Completing authentication..." />
+    </>
+  );
 };

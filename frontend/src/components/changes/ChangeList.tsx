@@ -1,12 +1,12 @@
 import React from 'react';
-import { Change } from '../../types';
+import type { Change } from '../../types';
 import { ChangeCard } from './ChangeCard';
 import { Loading } from '../common';
 
 interface ChangeListProps {
   changes: Change[];
   loading?: boolean;
-  onCreatePR?: (changeId: string) => Promise<void>;
+  onCreatePR?: (changeId: string) => Promise<{ pr_url: string; pr_number: number; branch: string; files_updated: string[]; message: string }>;
 }
 
 export const ChangeList: React.FC<ChangeListProps> = ({ changes, loading, onCreatePR }) => {
@@ -25,7 +25,7 @@ export const ChangeList: React.FC<ChangeListProps> = ({ changes, loading, onCrea
   return (
     <div className="change-list">
       {changes.map((change) => (
-        <ChangeCard key={change.id} change={change} onCreatePR={onCreatePR} />
+        <ChangeCard key={change._id} change={change} onCreatePR={onCreatePR} />
       ))}
     </div>
   );

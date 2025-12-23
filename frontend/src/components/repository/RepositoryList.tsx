@@ -1,14 +1,15 @@
 import React from 'react';
-import { Repository } from '../../types';
+import type { Repository } from '../../types';
 import { RepositoryCard } from './RepositoryCard';
 import { Loading } from '../common';
 
 interface RepositoryListProps {
   repositories: Repository[];
   loading?: boolean;
+  onDelete?: (id: string) => Promise<{ success: boolean; error?: string }>;
 }
 
-export const RepositoryList: React.FC<RepositoryListProps> = ({ repositories, loading }) => {
+export const RepositoryList: React.FC<RepositoryListProps> = ({ repositories, loading, onDelete }) => {
   if (loading) {
     return <Loading message="Loading repositories..." />;
   }
@@ -16,7 +17,9 @@ export const RepositoryList: React.FC<RepositoryListProps> = ({ repositories, lo
   if (repositories.length === 0) {
     return (
       <div className="empty-state">
-        <p>No repositories found. Install the AURA GitHub App to get started.</p>
+        <div className="empty-icon">📦</div>
+        <p className="empty-title">No repositories found</p>
+        <p className="empty-description">Install the AURA GitHub App to get started.</p>
       </div>
     );
   }
@@ -24,7 +27,7 @@ export const RepositoryList: React.FC<RepositoryListProps> = ({ repositories, lo
   return (
     <div className="repository-list">
       {repositories.map((repo) => (
-        <RepositoryCard key={repo.id} repository={repo} />
+        <RepositoryCard key={repo.github_repo_id} repository={repo} onDelete={onDelete} />
       ))}
     </div>
   );

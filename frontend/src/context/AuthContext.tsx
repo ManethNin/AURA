@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { User } from '../types';
+import type { User } from '../types';
 import { authService } from '../services';
 import { STORAGE_KEYS } from '../constants';
 
@@ -23,8 +23,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const token = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
       if (token) {
         try {
+          
           const response = await authService.getCurrentUser();
-          setUser(response.data);
+          setUser(response);
+          // console.log(response)
         } catch (error) {
           localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
           localStorage.removeItem(STORAGE_KEYS.USER);
@@ -41,14 +43,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout = async () => {
-    try {
-      await authService.logout();
-    } finally {
-      localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
-      localStorage.removeItem(STORAGE_KEYS.USER);
-      setUser(null);
-      window.location.href = '/';
-    }
+    await authService.logout();
+    setUser(null);
+    window.location.href = '/';
+    
   };
 
   return (
