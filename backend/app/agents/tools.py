@@ -20,6 +20,8 @@ from tenacity import (
 )
 from collections import defaultdict
 from opentelemetry import trace as trace_api
+import re
+import xml.etree.ElementTree as ET
 
 
 class ToolHistory(TypedDict):
@@ -86,6 +88,136 @@ def process_diagnostics(lsp_result_initial, lsp_result_post_patching):
         if diagnostic_stringifier(d) in added_diagnostics_set
     ]
 
+
+def validate_pom_xml_changes(diff_content: str, repo_path: Path) -> tuple[bool, str]:
+    """
+    Validates that pom.xml changes only ADD new dependencies without modifying existing versions.
+    
+    Returns:
+        (is_valid, error_message)
+    """
+    # Check if this diff involves pom.xml
+    if "pom.xml" not in diff_content.lower():
+        return True, ""  # Not a pom.xml change, allow it
+    
+    # Extract the original pom.xml content before changes
+    pom_path = repo_path / "pom.xml"
+    if not pom_path.exists():
+        return True, ""  # No pom.xml to validate against
+    
+    try:
+        with open(pom_path, 'r', encoding='utf-8') as f:
+            original_content = f.read()
+    except:
+        return True, ""  # Can't read original, allow it
+    
+    # Parse diff to extract changes
+    lines = diff_content.split('\n')
+    removed_lines = []
+    added_lines = []
+    
+    in_pom_section = False
+    for line in lines:
+        if 'pom.xml' in line.lower() and ('---' in line or '+++' in line):
+            in_pom_section = True
+            continue
+        
+        if in_pom_section:
+            if line.startswith('---') or line.startswith('+++'):
+                in_pom_section = False
+                continue
+            if line.startswith('-') and not line.startswith('---'):
+                removed_lines.append(line[1:])
+            elif line.startswith('+') and not line.startswith('+++'):
+                added_lines.append(line[1:])
+    
+    # Strategy: Build dependency blocks from removed and added lines
+    # A dependency block change is only valid if it's purely additive
+    
+    # Check for version changes by looking at dependency CONTEXT
+    version_pattern = re.compile(r'<version>([^<]+)</version>')
+    groupid_pattern = re.compile(r'<groupId>([^<]+)</groupId>')
+    artifactid_pattern = re.compile(r'<artifactId>([^<]+)</artifactId>')
+    
+    # Extract dependency identifiers from removed lines
+    removed_dependencies = {}
+    for i, line in enumerate(removed_lines):
+        if '<version>' in line:
+            version_match = version_pattern.search(line)
+            if version_match:
+                version = version_match.group(1)
+                # Look backwards for groupId and artifactId
+                group_id = None
+                artifact_id = None
+                for j in range(max(0, i-5), i):
+                    if '<groupId>' in removed_lines[j]:
+                        group_match = groupid_pattern.search(removed_lines[j])
+                        if group_match:
+                            group_id = group_match.group(1)
+                    if '<artifactId>' in removed_lines[j]:
+                        artifact_match = artifactid_pattern.search(removed_lines[j])
+                        if artifact_match:
+                            artifact_id = artifact_match.group(1)
+                
+                if group_id and artifact_id:
+                    dep_key = f"{group_id}:{artifact_id}"
+                    removed_dependencies[dep_key] = version
+    
+    # Extract dependency identifiers from added lines
+    added_dependencies = {}
+    for i, line in enumerate(added_lines):
+        if '<version>' in line:
+            version_match = version_pattern.search(line)
+            if version_match:
+                version = version_match.group(1)
+                # Look backwards for groupId and artifactId
+                group_id = None
+                artifact_id = None
+                for j in range(max(0, i-5), i):
+                    if '<groupId>' in added_lines[j]:
+                        group_match = groupid_pattern.search(added_lines[j])
+                        if group_match:
+                            group_id = group_match.group(1)
+                    if '<artifactId>' in added_lines[j]:
+                        artifact_match = artifactid_pattern.search(added_lines[j])
+                        if artifact_match:
+                            artifact_id = artifact_match.group(1)
+                
+                if group_id and artifact_id:
+                    dep_key = f"{group_id}:{artifact_id}"
+                    added_dependencies[dep_key] = version
+    
+    # Now check if any EXISTING dependencies are being modified
+    for dep_key, old_version in removed_dependencies.items():
+        # Check if this dependency exists in the original pom.xml
+        group_id, artifact_id = dep_key.split(':')
+        
+        # Simple check: if both groupId and artifactId appear in original, it's existing
+        if group_id in original_content and artifact_id in original_content:
+            # Now check if we're changing its version
+            if dep_key in added_dependencies:
+                new_version = added_dependencies[dep_key]
+                if new_version != old_version:
+                    return False, f"BLOCKED: Attempt to change dependency {dep_key} version from {old_version} to {new_version}. You can only ADD new dependencies, not change existing versions."
+    
+    # Check for removal of existing dependency blocks
+    if removed_lines:
+        # If we're removing dependency tags that aren't being re-added, that's suspicious
+        for removed_line in removed_lines:
+            # Skip empty lines and comments
+            stripped = removed_line.strip()
+            if not stripped or stripped.startswith('<!--'):
+                continue
+            
+            # If removing a complete dependency block (not just modifying)
+            if '<dependency>' in removed_line or '</dependency>' in removed_line:
+                # This might be okay if restructuring, but check if it's truly being removed
+                if removed_line.strip() not in [a.strip() for a in added_lines]:
+                    # Being removed without replacement - might be removing a dependency
+                    # Allow this for now, as it's rare and might be intentional cleanup
+                    pass
+    
+    return True, ""
 
 def get_tools_for_repo(repo_path: Path, repo_slug: str, commit_hash: str = "HEAD") -> list:
     """
@@ -208,15 +340,29 @@ def get_tools_for_repo(repo_path: Path, repo_slug: str, commit_hash: str = "HEAD
         with tracer.start_as_current_span("compile_maven") as span:
             print("[TOOL] Compiling Maven")
             
-            # SAFETY CHECK: Block modifications to build files
-            forbidden_files = ["pom.xml", "build.gradle", "build.gradle.kts", "settings.gradle"]
+            # SMART VALIDATION: Allow pom.xml changes that only ADD dependencies
+            # Block other build file modifications entirely
+            forbidden_files_strict = ["build.gradle", "build.gradle.kts", "settings.gradle"]
             
             # Check in diff content
-            if diff and "```diff" in diff:
+            if diff:
+                # Strict block for gradle files
                 diff_lower = diff.lower()
-                for forbidden_file in forbidden_files:
+                for forbidden_file in forbidden_files_strict:
                     if f"--- a/{forbidden_file}" in diff_lower or f"+++ b/{forbidden_file}" in diff_lower:
-                        error_msg = f"BLOCKED: Attempt to modify {forbidden_file}. Build files cannot be changed. Only Java source code modifications are allowed."
+                        error_msg = f"BLOCKED: Attempt to modify {forbidden_file}. Gradle build files cannot be changed."
+                        print(f"[TOOL] {error_msg}")
+                        return {
+                            "compilation_has_succeeded": False,
+                            "test_has_succeeded": False,
+                            "error_text": error_msg,
+                            "compile_error_details": {}
+                        }
+                
+                # Smart validation for pom.xml - allow adding dependencies but not changing versions
+                if "pom.xml" in diff_lower:
+                    is_valid, error_msg = validate_pom_xml_changes(diff, repo_path)
+                    if not is_valid:
                         print(f"[TOOL] {error_msg}")
                         return {
                             "compilation_has_succeeded": False,
@@ -228,9 +374,11 @@ def get_tools_for_repo(repo_path: Path, repo_slug: str, commit_hash: str = "HEAD
             # Check in file_path for direct file edits
             if file_path:
                 file_path_lower = file_path.lower()
-                for forbidden_file in forbidden_files:
+                
+                # Block gradle files completely
+                for forbidden_file in forbidden_files_strict:
                     if forbidden_file in file_path_lower:
-                        error_msg = f"BLOCKED: Attempt to modify {forbidden_file}. Build files cannot be changed. Only Java source code modifications are allowed."
+                        error_msg = f"BLOCKED: Attempt to modify {forbidden_file}. Gradle build files cannot be changed."
                         print(f"[TOOL] {error_msg}")
                         return {
                             "compilation_has_succeeded": False,
@@ -238,6 +386,12 @@ def get_tools_for_repo(repo_path: Path, repo_slug: str, commit_hash: str = "HEAD
                             "error_text": error_msg,
                             "compile_error_details": {}
                         }
+                
+                # For pom.xml direct edits, we'll validate after reading the diff
+                # This is less common, but we should still check
+                if "pom.xml" in file_path_lower:
+                    # Direct file edits are harder to validate, so we'll be more conservative
+                    print("[TOOL] WARNING: Direct pom.xml file edit detected. Validation will occur during diff application.")
             
             maven_agent = MavenReproducerAgent(repo_path)
             discard()

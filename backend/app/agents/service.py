@@ -162,7 +162,8 @@ YOUR TASK:
 - The version upgrades are intentional and MUST be kept
 - You MUST update the Java code to be compatible with the NEW versions
 - Reverting dependency versions is FORBIDDEN
-- However, you MAY ADD new dependencies to pom.xml if needed (just don't change existing versions)
+- You MAY ADD new dependencies to pom.xml if needed to fix issues (e.g., adding missing transitive dependencies)
+- When adding dependencies, only add new <dependency> blocks - do NOT modify existing dependency versions
 - Your diff MUST match the exact lines shown in the file content above
 - Include proper context lines for the diff to apply correctly
 
@@ -171,7 +172,7 @@ Use the provided tools to:
 - Compile with Maven to check your fixes (compile_maven_stateful tool)
 - Reset the repository if needed to try different approaches
 
-Provide unified diff format changes to fix the JAVA SOURCE CODE ONLY.
+Provide unified diff format changes to fix the Java source code AND/OR add new dependencies to pom.xml if needed.
 """
         
         return prompt
