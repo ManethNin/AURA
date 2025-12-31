@@ -41,6 +41,16 @@ async def github_webhook(
     if x_github_event != "push":
         return {"message": f"Ignored: {x_github_event} event"}
     
+    #Ignore branches pushes by AURA
+    ref = payload.get("ref", "")
+    branch_name = ref.replace("refs/heads/", "")
+    
+    if branch_name.startswith("aura-fix-"):
+        return {
+            "message": f"Ignored: Push to AURA-created branch '{branch_name}'",
+            "reason": "AURA branches are auto-generated and should not trigger new agent runs"
+        }
+    
     # Extract repository info
     repo_data = payload.get("repository", {})
     owner_data = repo_data.get("owner", {})
