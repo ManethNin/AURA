@@ -1,4 +1,4 @@
-# AURA - Automated Dependency Repair
+# AURA - Automated Update & Repair Agent
 
 <div align="center">
 
