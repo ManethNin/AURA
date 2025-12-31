@@ -339,12 +339,6 @@ Contributions are welcome! Please follow these steps:
 
 ---
 
-## 📝 License
-
-This project is part of a master's thesis research. Please contact the author for licensing information.
-
----
-
 ## 👤 Author
 
 **Maneth Ninduwara**
