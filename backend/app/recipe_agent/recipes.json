@@ -1,0 +1,109 @@
+[
+  {
+    "name": "org.openrewrite.maven.AddDependency",
+    "description": "Adds a dependency to the pom.xml unconditionally. Use this when a transitive dependency is removed or a new library is needed. Do NOT use onlyIfUsing parameter. IMPORTANT: Use exact version strings from Maven Central.",
+    "arguments": ["groupId", "artifactId", "version", "scope", "type", "classifier"],
+    "required_arguments": ["groupId", "artifactId", "version"],
+    "example": {
+      "groupId": "commons-codec",
+      "artifactId": "commons-codec",
+      "version": "1.16.1"
+    }
+  },
+  {
+    "name": "org.openrewrite.maven.UpgradeDependency",
+    "description": "Upgrades the version of a dependency in the pom.xml. Use this when you need to change a dependency to a newer version.",
+    "arguments": ["groupId", "artifactId", "newVersion", "versionPattern", "overrideManagedVersion"],
+    "required_arguments": ["groupId", "artifactId", "newVersion"],
+    "example": {
+      "groupId": "com.google.guava",
+      "artifactId": "guava",
+      "newVersion": "32.1.3-jre"
+    }
+  },
+  {
+    "name": "org.openrewrite.maven.RemoveDependency",
+    "description": "Removes a dependency from the pom.xml. Use this when a dependency is no longer needed or causes conflicts.",
+    "arguments": ["groupId", "artifactId"],
+    "required_arguments": ["groupId", "artifactId"],
+    "example": {
+      "groupId": "org.old.library",
+      "artifactId": "old-lib"
+    }
+  },
+  {
+    "name": "org.openrewrite.maven.ChangeDependencyGroupIdAndArtifactId",
+    "description": "Changes the groupId and/or artifactId of a dependency. Use when a library has been renamed or relocated (e.g., mysql:mysql-connector-java to com.mysql:mysql-connector-j).",
+    "arguments": ["oldGroupId", "oldArtifactId", "newGroupId", "newArtifactId", "newVersion"],
+    "required_arguments": ["oldGroupId", "oldArtifactId", "newGroupId", "newArtifactId"],
+    "example": {
+      "oldGroupId": "mysql",
+      "oldArtifactId": "mysql-connector-java",
+      "newGroupId": "com.mysql",
+      "newArtifactId": "mysql-connector-j",
+      "newVersion": "8.0.33"
+    }
+  },
+  {
+    "name": "org.openrewrite.maven.AddPlugin",
+    "description": "Adds a Maven plugin to the pom.xml. Use when a plugin is required for the build process.",
+    "arguments": ["groupId", "artifactId", "version", "configuration"],
+    "required_arguments": ["groupId", "artifactId", "version"],
+    "example": {
+      "groupId": "org.apache.maven.plugins",
+      "artifactId": "maven-compiler-plugin",
+      "version": "3.11.0"
+    }
+  },
+  {
+    "name": "org.openrewrite.maven.ChangePropertyValue",
+    "description": "Changes the value of a Maven property in pom.xml. Use when you need to update version properties or other configuration values.",
+    "arguments": ["key", "newValue", "addIfMissing"],
+    "required_arguments": ["key", "newValue"],
+    "example": {
+      "key": "java.version",
+      "newValue": "17"
+    }
+  },
+  {
+    "name": "org.openrewrite.maven.AddProperty",
+    "description": "Adds a new property to the pom.xml properties section.",
+    "arguments": ["key", "value"],
+    "required_arguments": ["key", "value"],
+    "example": {
+      "key": "maven.compiler.source",
+      "value": "17"
+    }
+  },
+  {
+    "name": "org.openrewrite.java.ChangeType",
+    "description": "Changes the fully qualified name of a class (package or class name). Use this when a class moves packages (e.g., javax to jakarta). NOTE: Requires compilable code.",
+    "arguments": ["oldFullyQualifiedTypeName", "newFullyQualifiedTypeName"],
+    "required_arguments": ["oldFullyQualifiedTypeName", "newFullyQualifiedTypeName"],
+    "example": {
+      "oldFullyQualifiedTypeName": "javax.servlet.http.HttpServlet",
+      "newFullyQualifiedTypeName": "jakarta.servlet.http.HttpServlet"
+    }
+  },
+  {
+    "name": "org.openrewrite.java.ChangePackage",
+    "description": "Changes the package of Java classes. Use when an entire package has been renamed (e.g., javax.annotation to jakarta.annotation). NOTE: Requires compilable code.",
+    "arguments": ["oldPackageName", "newPackageName", "recursive"],
+    "required_arguments": ["oldPackageName", "newPackageName"],
+    "example": {
+      "oldPackageName": "javax.annotation",
+      "newPackageName": "jakarta.annotation",
+      "recursive": true
+    }
+  },
+  {
+    "name": "org.openrewrite.java.ChangeMethodName",
+    "description": "Renames a method. Use this when a library deprecates a method name in favor of a new one. NOTE: Requires compilable code.",
+    "arguments": ["methodPattern", "newMethodName"],
+    "required_arguments": ["methodPattern", "newMethodName"],
+    "example": {
+      "methodPattern": "com.example.MyClass oldMethod(..)",
+      "newMethodName": "newMethod"
+    }
+  }
+]
