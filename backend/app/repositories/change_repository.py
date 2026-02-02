@@ -1,7 +1,7 @@
 """
 Change Repository - Database operations for changes
 """
-from typing import Optional, List
+from typing import Optional, List, Dict
 from datetime import datetime
 from bson import ObjectId
 from app.database.mongodb import get_database
@@ -83,24 +83,30 @@ class ChangeRepository:
         suggested_fix: str,
         diff: str,
         breaking_changes: Optional[str] = None,
-        output_path: Optional[str] = None
+        output_path: Optional[str] = None,
+        modified_files: Optional[Dict[str, str]] = None
     ):
         """Save agent results"""
         db = get_database()
         
+        update_data = {
+            "suggested_fix": suggested_fix,
+            "diff": diff,
+            "breaking_changes": breaking_changes,
+            "agent_output_path": output_path,
+            "status": "fixed",
+            "progress": 100,
+            "updated_at": datetime.utcnow()
+        }
+        
+        # Save modified file contents if available (from recipe agent)
+        # These are used directly when creating PRs instead of re-applying diff
+        if modified_files:
+            update_data["modified_files"] = modified_files
+        
         await db[self.collection_name].update_one(
             {"_id": ObjectId(change_id)},
-            {
-                "$set": {
-                    "suggested_fix": suggested_fix,
-                    "diff": diff,
-                    "breaking_changes": breaking_changes,
-                    "agent_output_path": output_path,
-                    "status": "fixed",
-                    "progress": 100,
-                    "updated_at": datetime.utcnow()
-                }
-            }
+            {"$set": update_data}
         )
     
     async def save_error(self, change_id: str, error_message: str):

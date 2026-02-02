@@ -43,6 +43,9 @@ class Change(BaseModel):
     breaking_changes: Optional[str] = None
     suggested_fix: Optional[str] = None
     diff: Optional[str] = None
+    # Modified files from recipe agent (path -> content)
+    # When available, these are used directly for PR creation instead of applying diff
+    modified_files: Optional[Dict[str, str]] = None
     
     # Status tracking
     status: FixStatus = FixStatus.PENDING

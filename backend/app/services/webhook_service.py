@@ -10,6 +10,9 @@ from app.services.github_service import github_service
 from app.utils.logger import logger
 import asyncio
 
+# Flag to enable/disable recipe-based agent (set to True to use recipes first)
+USE_RECIPE_AGENT = False
+
 class WebhookService:
 
     async def process_webhook(self,repo_data, owner_data, commit_with_pom, installation_id):
@@ -100,7 +103,7 @@ class WebhookService:
         repository,
         commit_with_pom
     ):
-        """Run agent in background"""
+        """Run agent in background - tries recipe-based fix first, then falls back to existing agent"""
         try:
             from app.agents.callback import AgentCallback
             from app.agents.service import JavaMigrationAgentService
@@ -163,12 +166,42 @@ class WebhookService:
             
             initial_errors = error_text if not compile_ok else ""
             
-            # Update status: analyzing
-            await callback.update_status("analyzing", 20, "Agent starting analysis...")
-            
             # Get pom.xml diff to understand what changed
             git_repo = git.Repo(repo_path)
             pom_diff = git_repo.git.diff(f"{commit_sha}~1", commit_sha, "--", "pom.xml")
+            
+            # ========================================
+            # RECIPE-BASED AGENT (runs BEFORE existing agent)
+            # ========================================
+            recipe_result = None
+            if USE_RECIPE_AGENT and initial_errors:
+                await callback.update_status("analyzing", 15, "Analyzing with recipe agent...")
+                recipe_result = await self._try_recipe_based_fix(
+                    repo_path=repo_path,
+                    pom_diff=pom_diff,
+                    initial_errors=initial_errors,
+                    commit_sha=commit_sha,
+                    repo_slug=repo_slug,
+                    callback=callback
+                )
+                
+                if recipe_result and recipe_result.get("success"):
+                    # Recipe-based fix succeeded!
+                    logger.info(f"[RecipeAgent] Successfully fixed using recipes for change {change_id}")
+                    await callback.save_result(
+                        diff=recipe_result.get("diff", ""),
+                        solution=f"Fixed using OpenRewrite recipes: {recipe_result.get('recipes_applied', [])}",
+                        modified_files=recipe_result.get("modified_files")  # Pass actual file contents
+                    )
+                    return
+                else:
+                    logger.info(f"[RecipeAgent] Recipe-based fix not applicable or failed, falling back to existing agent")
+            
+            # ========================================
+            # EXISTING AGENT (fallback)
+            # ========================================
+            # Update status: analyzing
+            await callback.update_status("analyzing", 20, "Agent starting analysis...")
             
             # Run agent
             agent_service = JavaMigrationAgentService(settings.GROQ_API_KEY)
@@ -211,7 +244,55 @@ class WebhookService:
             }
         }
 
+    async def _try_recipe_based_fix(
+        self,
+        repo_path: str,
+        pom_diff: str,
+        initial_errors: str,
+        commit_sha: str,
+        repo_slug: str,
+        callback
+    ) -> dict:
+        """
+        Attempt to fix the breaking change using OpenRewrite recipes.
+        This runs BEFORE the existing agent.
+        
+        Returns:
+            dict with 'success', 'diff', 'recipes_applied' or None if not applicable
+        """
+        try:
+            from app.recipe_agent import RecipeOrchestrator
+            from app.core.config import settings
+            
+            logger.info("[RecipeAgent] Starting recipe-based analysis...")
+            await callback.update_status("analyzing", 16, "Analyzing with OpenRewrite recipes...")
+            
+            orchestrator = RecipeOrchestrator(settings.GROQ_API_KEY)
+            
+            result = orchestrator.process_breaking_change(
+                repo_path=repo_path,
+                pom_diff=pom_diff,
+                compilation_errors=initial_errors,
+                commit_sha=commit_sha,
+                repo_slug=repo_slug
+            )
+            
+            if result.get("success"):
+                await callback.update_status("fixing", 80, "Recipe-based fix applied successfully!")
+                return result
+            else:
+                logger.info(f"[RecipeAgent] Recipe result: {result.get('message', 'No message')}")
+                return result
+                
+        except Exception as e:
+            logger.error(f"[RecipeAgent] Error in recipe-based fix: {e}", exc_info=True)
+            return {
+                "success": False,
+                "used_recipes": False,
+                "should_use_existing_agent": True,
+                "message": f"Recipe agent error: {e}",
+                "diff": ""
+            }
 
-    
 
 webhook_service = WebhookService()

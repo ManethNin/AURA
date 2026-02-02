@@ -2,6 +2,7 @@
 Agent Callback - Updates database with agent progress
 """
 import asyncio
+from typing import Optional, Dict
 from app.repositories.change_repository import change_repo
 from app.utils.logger import logger
 
@@ -22,14 +23,17 @@ class AgentCallback:
             message
         )
     
-    async def save_result(self, diff: str, solution: str):
+    async def save_result(self, diff: str, solution: str, modified_files: Optional[Dict[str, str]] = None):
         """Save final results to database"""
         logger.info(f"[Agent {self.change_id}] Completed! Diff size: {len(diff)} chars")
+        if modified_files:
+            logger.info(f"[Agent {self.change_id}] Modified files: {list(modified_files.keys())}")
         
         await change_repo.save_result(
             self.change_id,
             suggested_fix=solution,
-            diff=diff
+            diff=diff,
+            modified_files=modified_files
         )
     
     async def save_error(self, error: str):

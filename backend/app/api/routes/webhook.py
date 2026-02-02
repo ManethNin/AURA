@@ -63,6 +63,20 @@ async def github_webhook(
     commit_with_pom = None
     
     for commit in commits:
+        # Skip commits that are merges of AURA PRs
+        commit_message = commit.get("message", "")
+        if "aura-fix-" in commit_message.lower() or "Merge pull request" in commit_message and "AURA" in commit_message:
+            continue
+        
+        # Skip commits authored by AURA bot
+        author = commit.get("author", {})
+        if author.get("username", "").lower() in ["aura-bot", "aura[bot]", "github-actions[bot]"]:
+            continue
+        
+        # Skip if commit message indicates it's an AURA fix
+        if commit_message.startswith("🤖 AURA:") or "AURA: Fix" in commit_message:
+            continue
+        
         all_files = (
             commit.get("added", []) + 
             commit.get("modified", []) + 
@@ -75,7 +89,7 @@ async def github_webhook(
             break
     
     if not pom_changed:
-        return {"message": "No pom.xml changes detected"}
+        return {"message": "No pom.xml changes detected (or changes are from AURA merge)"}
     
     result = await webhook_service.process_webhook(repo_data=repo_data, owner_data= owner_data, commit_with_pom= commit_with_pom, installation_id= installation_id)
     

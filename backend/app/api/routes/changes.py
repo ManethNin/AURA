@@ -117,9 +117,10 @@ async def create_pull_request(change_id: str, current_user: UserInDB = Depends(g
         )
         logger.info(f"Using base branch: {base_branch}")
         
-        # Generate branch name
-        branch_name = f"aura-fix-{change.commit_sha[:7]}"
-        # base_branch = "main"  # TODO: Make configurable or detect default branch
+        # Generate unique branch name with timestamp to avoid conflicts
+        import time
+        timestamp = int(time.time())
+        branch_name = f"aura-fix-{change.commit_sha[:7]}-{timestamp}"
 
         logger.info(f"Getting current HEAD of {base_branch}")
         base_sha = await github_service.get_branch_head_sha(
@@ -146,65 +147,109 @@ async def create_pull_request(change_id: str, current_user: UserInDB = Depends(g
         if not branch_created:
             raise HTTPException(500, "Failed to create branch on GitHub")
         
-        # Step 2: Parse the unified diff to get all file changes
-        logger.info(f"Parsing unified diff")
-        file_changes = github_service.parse_unified_diff(change.diff or change.suggested_fix)
+        # Step 2: Determine how to apply changes
+        # If we have modified_files (from recipe agent), use them directly
+        # Otherwise, parse the diff and apply it
         
-        if not file_changes:
-            raise HTTPException(400, "No file changes found in diff")
-        
-        logger.info(f"Found {len(file_changes)} files to update")
-        
-        # Step 3: Apply changes to each file
         updated_files = []
-        for file_change in file_changes:
-            file_path = file_change["file_path"]
+        
+        if change.modified_files:
+            # Recipe agent provided actual file contents - use them directly!
+            logger.info(f"Using {len(change.modified_files)} modified files from recipe agent (no diff parsing needed)")
             
-            # Skip if it's /dev/null (new file creation - not supported yet)
-            if file_path == "/dev/null":
-                logger.warning(f"Skipping new file creation: not implemented")
-                continue
+            for file_path, new_content in change.modified_files.items():
+                logger.info(f"Updating file directly: {file_path}")
+                
+                # Get current file SHA (needed for update)
+                file_data = await github_service.get_file_content_with_sha(
+                    owner=owner,
+                    repo=repo_name,
+                    file_path=file_path,
+                    branch=branch_name,
+                    access_token=current_user.access_token
+                )
+                
+                if not file_data:
+                    logger.error(f"Failed to get SHA for {file_path}")
+                    continue
+                
+                _, file_sha = file_data
+                
+                # Update file on GitHub with the correct content
+                commit_result = await github_service.update_file(
+                    owner=owner,
+                    repo=repo_name,
+                    file_path=file_path,
+                    content=new_content,
+                    message=f"🤖 AURA: Fix {file_path}",
+                    branch=branch_name,
+                    access_token=current_user.access_token,
+                    sha=file_sha
+                )
+                
+                if commit_result:
+                    updated_files.append(file_path)
+                    logger.info(f"✓ Updated {file_path}")
+                else:
+                    logger.error(f"✗ Failed to update {file_path}")
+        else:
+            # Fall back to parsing diff (for legacy agent or if no modified_files)
+            logger.info(f"Parsing unified diff (no modified_files available)")
+            file_changes = github_service.parse_unified_diff(change.diff or change.suggested_fix)
             
-            logger.info(f"Updating file: {file_path}")
+            if not file_changes:
+                raise HTTPException(400, "No file changes found in diff")
             
-            # Get current file content and SHA
-            file_data = await github_service.get_file_content_with_sha(
-                owner=owner,
-                repo=repo_name,
-                file_path=file_path,
-                branch=branch_name,
-                access_token=current_user.access_token
-            )
+            logger.info(f"Found {len(file_changes)} files to update from diff")
             
-            if not file_data:
-                logger.error(f"Failed to get content for {file_path}")
-                continue
-            
-            original_content, file_sha = file_data
-            
-            # Apply diff to content
-            new_content = github_service.apply_diff_to_content(
-                original_content,
-                file_change["full_content"]
-            )
-            
-            # Update file on GitHub
-            commit_result = await github_service.update_file(
-                owner=owner,
-                repo=repo_name,
-                file_path=file_path,
-                content=new_content,
-                message=f"🤖 AURA: Fix {file_path}",
-                branch=branch_name,
-                access_token=current_user.access_token,
-                sha=file_sha
-            )
-            
-            if commit_result:
-                updated_files.append(file_path)
-                logger.info(f"✓ Updated {file_path}")
-            else:
-                logger.error(f"✗ Failed to update {file_path}")
+            for file_change in file_changes:
+                file_path = file_change["file_path"]
+                
+                # Skip if it's /dev/null (new file creation - not supported yet)
+                if file_path == "/dev/null":
+                    logger.warning(f"Skipping new file creation: not implemented")
+                    continue
+                
+                logger.info(f"Updating file: {file_path}")
+                
+                # Get current file content and SHA
+                file_data = await github_service.get_file_content_with_sha(
+                    owner=owner,
+                    repo=repo_name,
+                    file_path=file_path,
+                    branch=branch_name,
+                    access_token=current_user.access_token
+                )
+                
+                if not file_data:
+                    logger.error(f"Failed to get content for {file_path}")
+                    continue
+                
+                original_content, file_sha = file_data
+                
+                # Apply diff to content
+                new_content = github_service.apply_diff_to_content(
+                    original_content,
+                    file_change["full_content"]
+                )
+                
+                # Update file on GitHub
+                commit_result = await github_service.update_file(
+                    owner=owner,
+                    repo=repo_name,
+                    file_path=file_path,
+                    content=new_content,
+                    message=f"🤖 AURA: Fix {file_path}",
+                    branch=branch_name,
+                    access_token=current_user.access_token,
+                    sha=file_sha
+                )
+                
+                if commit_result:
+                    updated_files.append(file_path)
+                    logger.info(f"✓ Updated {file_path}")
+                else:
+                    logger.error(f"✗ Failed to update {file_path}")
         
         if not updated_files:
             raise HTTPException(500, "Failed to update any files")
