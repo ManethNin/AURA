@@ -1,4 +1,4 @@
-# AURA - Automated Dependency Repair
+# AURA - Automated Update & Repair Agent
 
 <div align="center">
 
@@ -336,12 +336,6 @@ Contributions are welcome! Please follow these steps:
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
----
-
-## 📝 License
-
-This project is part of a master's thesis research. Please contact the author for licensing information.
 
 ---
 
