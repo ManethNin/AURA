@@ -14,8 +14,8 @@ from langchain_core.messages.tool import ToolCall
 from langgraph.graph import END, StateGraph
 from langgraph.graph.message import add_messages
 from typing_extensions import Annotated, TypedDict
-from langgraph.prebuilt import ToolExecutor, ToolInvocation
-from langgraph.checkpoint.sqlite import SqliteSaver
+from langchain_core.tools import BaseTool
+from langgraph.checkpoint.memory import MemorySaver
 from langchain_groq import ChatGroq
 
 
@@ -89,11 +89,15 @@ class MessagesState(TypedDict):
 
 from langchain_groq import ChatGroq
 
-def build_workflow(llm, tools, output_path: str):
+def build_workflow(llm, tools, output_path: str, pipeline_logger=None):
     """Build the LangGraph workflow"""
     
-    # Create tool executor
-    tool_executor = ToolExecutor(tools)
+    # Counters for logging
+    llm_call_count = [0]  # Use list to make it mutable in nested functions
+    tool_call_count = [0]
+    
+    # Create a tool name to function mapping
+    tools_by_name = {tool.name: tool for tool in tools}
     
     def call_model(state: MessagesState):
         messages = state["messages"]
@@ -114,7 +118,19 @@ When you have a diff ready to test, provide it ONLY as a markdown code block sta
 """
         
         messages_with_tools = [{"role": "system", "content": system_msg}] + messages
+        
+        # Log LLM call
+        llm_call_count[0] += 1
+        if pipeline_logger:
+            pipeline_logger.log_stage(f"llm_call_{llm_call_count[0]}_start", {
+                "messages_count": len(messages_with_tools)
+            })
+        
         response = llm.invoke(messages_with_tools)
+        
+        # Log LLM response
+        if pipeline_logger:
+            pipeline_logger.log_llm_call(llm_call_count[0], messages, response)
         
         # Parse JSON tool calls from content if present
         content = response.content.strip() if hasattr(response, 'content') else str(response)
@@ -154,13 +170,27 @@ When you have a diff ready to test, provide it ONLY as a markdown code block sta
         # Execute each tool call
         outputs = []
         for tool_call in last_message.tool_calls:
+            tool_call_count[0] += 1
             print(f"[AGENT] Executing tool: {tool_call['name']}")
-            tool_invocation = ToolInvocation(
-                tool=tool_call["name"],
-                tool_input=tool_call["args"]
-            )
+            
             try:
-                result = tool_executor.invoke(tool_invocation)
+                # Get the tool function and invoke it directly
+                tool_func = tools_by_name.get(tool_call["name"])
+                if not tool_func:
+                    raise ValueError(f"Tool {tool_call['name']} not found")
+                
+                # Invoke the tool with its arguments
+                result = tool_func.invoke(tool_call["args"])
+                
+                # Log tool execution
+                if pipeline_logger:
+                    pipeline_logger.log_tool_call(
+                        tool_call_count[0],
+                        tool_call['name'],
+                        tool_call['args'],
+                        result
+                    )
+                
                 outputs.append(
                     ToolMessage(
                         content=json.dumps(result) if not isinstance(result, str) else result,
@@ -170,6 +200,15 @@ When you have a diff ready to test, provide it ONLY as a markdown code block sta
                 )
             except Exception as e:
                 print(f"[ERROR] Tool execution failed: {e}")
+                
+                # Log tool error
+                if pipeline_logger:
+                    pipeline_logger.log_error(
+                        error_type="tool_execution_error",
+                        error_message=str(e),
+                        traceback=f"Tool: {tool_call['name']}, Args: {tool_call['args']}"
+                    )
+                
                 outputs.append(
                     ToolMessage(
                         content=f"Error executing tool: {str(e)}",
@@ -222,15 +261,14 @@ When you have a diff ready to test, provide it ONLY as a markdown code block sta
             id="".join(random.choices(string.ascii_uppercase + string.digits, k=9))
         )
         
-        # Create tool invocation
-        tool_invocation = ToolInvocation(
-            tool=tool_name,
-            tool_input=tool_call["args"]
-        )
-        
         try:
             print("[AGENT] Running Maven compilation with proposed diff...")
-            tool_result = tool_executor.invoke(tool_invocation)
+            # Get the tool and invoke it directly
+            tool_func = tools_by_name.get(tool_name)
+            if not tool_func:
+                raise ValueError(f"Tool {tool_name} not found")
+            
+            tool_result = tool_func.invoke(tool_call["args"])
             
             # Format the result more clearly for the LLM
             if isinstance(tool_result, dict):
@@ -350,5 +388,5 @@ When you have a diff ready to test, provide it ONLY as a markdown code block sta
     workflow.add_conditional_edges("compile_agent", should_improve_non_test_diff)
     workflow.add_conditional_edges("tools", should_improve_non_test_diff)
     
-    checkpointer = SqliteSaver.from_conn_string(":memory:")
+    checkpointer = MemorySaver()
     return workflow.compile(checkpointer=checkpointer)

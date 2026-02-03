@@ -7,25 +7,53 @@ import os
 import json
 import tempfile
 import shutil
+import traceback
 from pathlib import Path
 from langchain_groq import ChatGroq
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage
 from app.masterthesis.agent.GitAgent import GitAgent
 from .tools import get_tools_for_repo
 from .workflow import build_workflow, SYSTEM_PROMPT
+from app.utils.pipeline_logger import PipelineLogger
+from app.core.config import settings
 
 
 class JavaMigrationAgentService:
     """Service to run the agent in your web application"""
     
-    def __init__(self, groq_api_key: str):
-        self.llm = ChatGroq(
-            groq_api_key=groq_api_key,
-            model_name="llama-3.3-70b-versatile",
-            temperature=0,
-            max_retries=3,
-            timeout=240
-        )
+    def __init__(self, provider: str = None, api_key: str = None, model: str = None):
+        """Initialize with configurable LLM provider
+        
+        Args:
+            provider: "groq" or "gemini" (defaults to settings.LLM_PROVIDER)
+            api_key: API key (defaults to appropriate key from settings)
+            model: Model name (defaults to appropriate model from settings)
+        """
+        provider = provider or settings.LLM_PROVIDER
+        
+        if provider == "gemini":
+            api_key = api_key or settings.GOOGLE_API_KEY
+            model = model or settings.GEMINI_MODEL
+            self.llm = ChatGoogleGenerativeAI(
+                model=model,
+                temperature=settings.LLM_TEMPERATURE,
+                google_api_key=api_key,
+                max_retries=3,
+                timeout=240
+            )
+            self.provider = "gemini"
+        else:  # Default to Groq
+            api_key = api_key or settings.GROQ_API_KEY
+            model = model or settings.GROQ_MODEL
+            self.llm = ChatGroq(
+                groq_api_key=api_key,
+                model_name=model,
+                temperature=settings.LLM_TEMPERATURE,
+                max_retries=3,
+                timeout=240
+            )
+            self.provider = "groq"
     
     def process_repository(
         self,
@@ -48,6 +76,10 @@ class JavaMigrationAgentService:
         Returns:
             dict with 'success', 'diff', 'solution' or 'error'
         """
+        
+        # Initialize pipeline logger
+        pipeline_logger = PipelineLogger(repo_slug)
+        pipeline_logger.log_input(pom_diff, initial_errors, repo_path, commit_hash)
         
         output_path = tempfile.mkdtemp(prefix="agent_out_")
         
@@ -76,16 +108,23 @@ class JavaMigrationAgentService:
                     print(f"[WARN] Could not pre-read {file_path}: {e}")
             
             # Build workflow
-            app = build_workflow(self.llm, tools, output_path)
+            pipeline_logger.log_stage("build_workflow", {"output_path": output_path, "tools_count": len(tools)})
+            app = build_workflow(self.llm, tools, output_path, pipeline_logger)
             
             # Create prompt for the agent WITH FILE CONTENT
             prompt = self._create_prompt(pom_diff, initial_errors, file_contents)
+            pipeline_logger.log_prompt(prompt, file_contents)
             
             # Run agent with reduced recursion limit to save tokens
             initial_messages = [
                 SYSTEM_PROMPT,
                 HumanMessage(content=prompt)
             ]
+            
+            pipeline_logger.log_stage("agent_start", {
+                "commit_hash": commit_hash,
+                "recursion_limit": 30
+            })
             
             result = app.invoke(
                 {"messages": initial_messages, "proposed_diff": None},
@@ -95,6 +134,8 @@ class JavaMigrationAgentService:
                     "configurable": {"thread_id": commit_hash}
                 }
             )
+            
+            pipeline_logger.log_stage("agent_complete", {"result_keys": list(result.keys())})
             
             # Get the proposed diff that was validated (stored in state)
             proposed_diff = result.get("proposed_diff", "")
@@ -107,17 +148,36 @@ class JavaMigrationAgentService:
             # Use proposed_diff if available, otherwise fall back to git diff
             diff_to_store = proposed_diff if proposed_diff else final_diff
             
-            return {
+            final_result = {
                 "success": True,
                 "diff": diff_to_store,
-                "solution": proposed_diff if proposed_diff else "No diff was generated"
+                "solution": proposed_diff if proposed_diff else "No diff was generated",
+                "log_directory": str(pipeline_logger.log_dir)
             }
             
+            pipeline_logger.log_final_result(True, final_result)
+            pipeline_logger.finalize()
+            
+            return final_result
+            
         except Exception as e:
-            return {
+            error_trace = traceback.format_exc()
+            pipeline_logger.log_error(
+                error_type=type(e).__name__,
+                error_message=str(e),
+                traceback=error_trace
+            )
+            
+            final_result = {
                 "success": False,
-                "error": str(e)
+                "error": str(e),
+                "log_directory": str(pipeline_logger.log_dir)
             }
+            
+            pipeline_logger.log_final_result(False, final_result)
+            pipeline_logger.finalize()
+            
+            return final_result
     
     def _create_prompt(self, pom_diff: str, initial_errors: str, file_contents: dict = None) -> str:
         """Create the prompt for the agent with actual file content"""

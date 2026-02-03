@@ -1,0 +1,302 @@
+"""
+Pipeline Logger
+Logs all agent processing stages to separate folders for debugging
+"""
+
+import json
+import os
+from pathlib import Path
+from datetime import datetime
+from typing import Any, Dict, Optional
+from app.utils.logger import logger
+from app.core.config import settings
+
+
+class PipelineLogger:
+    """Logs all pipeline stages for a specific repository processing session"""
+    
+    def __init__(self, repo_name: str, base_log_path: str = None):
+        """
+        Initialize pipeline logger for a repository
+        
+        Args:
+            repo_name: Name of the repository being processed
+            base_log_path: Base path for logs (default: from settings or ./logs/pipeline)
+        """
+        self.repo_name = repo_name
+        self.session_id = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        # Create log directory structure
+        if base_log_path is None:
+            base_log_path = settings.PIPELINE_LOG_PATH or "logs/pipeline"
+        
+        base_log_path = Path(base_log_path)
+        
+        self.log_dir = base_log_path / repo_name / self.session_id
+        self.log_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Create subdirectories for different stages
+        self.stages_dir = self.log_dir / "stages"
+        self.llm_dir = self.log_dir / "llm_calls"
+        self.tools_dir = self.log_dir / "tool_calls"
+        self.errors_dir = self.log_dir / "errors"
+        
+        for dir in [self.stages_dir, self.llm_dir, self.tools_dir, self.errors_dir]:
+            dir.mkdir(exist_ok=True)
+        
+        # Initialize session info
+        self.session_info = {
+            "repo_name": repo_name,
+            "session_id": self.session_id,
+            "start_time": datetime.now().isoformat(),
+            "log_directory": str(self.log_dir),
+            "stages": []
+        }
+        
+        logger.info(f"[PIPELINE] Initialized logging for {repo_name} at {self.log_dir}")
+        
+    def log_input(self, pom_diff: str, initial_errors: str, repo_path: str, commit_hash: str):
+        """Log initial input data"""
+        input_data = {
+            "timestamp": datetime.now().isoformat(),
+            "repo_path": repo_path,
+            "commit_hash": commit_hash,
+            "pom_diff": pom_diff,
+            "initial_errors": initial_errors
+        }
+        
+        self._save_json(self.log_dir / "00_input.json", input_data)
+        self._save_text(self.log_dir / "00_pom_diff.txt", pom_diff)
+        self._save_text(self.log_dir / "00_initial_errors.txt", initial_errors)
+        
+        self.session_info["stages"].append({
+            "stage": "input",
+            "timestamp": input_data["timestamp"]
+        })
+        
+        logger.info(f"[PIPELINE] Logged input data")
+    
+    def log_prompt(self, prompt: str, file_contents: Dict[str, str] = None):
+        """Log the prompt sent to the agent"""
+        prompt_data = {
+            "timestamp": datetime.now().isoformat(),
+            "prompt": prompt,
+            "file_contents_count": len(file_contents) if file_contents else 0,
+            "file_paths": list(file_contents.keys()) if file_contents else []
+        }
+        
+        self._save_json(self.log_dir / "01_prompt.json", prompt_data)
+        self._save_text(self.log_dir / "01_prompt.txt", prompt)
+        
+        if file_contents:
+            files_dir = self.log_dir / "01_preread_files"
+            files_dir.mkdir(exist_ok=True)
+            for file_path, content in file_contents.items():
+                safe_name = file_path.replace("/", "_").replace("\\", "_")
+                self._save_text(files_dir / f"{safe_name}", content)
+        
+        self.session_info["stages"].append({
+            "stage": "prompt_created",
+            "timestamp": prompt_data["timestamp"]
+        })
+        
+        logger.info(f"[PIPELINE] Logged prompt ({len(prompt)} chars)")
+    
+    def log_llm_call(self, call_number: int, messages: list, response: Any):
+        """Log an LLM API call and response"""
+        # Extract response content
+        response_content = ""
+        if hasattr(response, 'content'):
+            response_content = str(response.content)
+        else:
+            response_content = str(response)
+        
+        call_data = {
+            "timestamp": datetime.now().isoformat(),
+            "call_number": call_number,
+            "messages_count": len(messages),
+            "messages": [self._serialize_message(msg) for msg in messages],
+            "response": response_content,
+            "response_type": response.__class__.__name__ if hasattr(response, '__class__') else "unknown"
+        }
+        
+        filename = f"llm_call_{call_number:03d}.json"
+        self._save_json(self.llm_dir / filename, call_data)
+        
+        # Also save response as text for easy viewing
+        response_filename = f"llm_call_{call_number:03d}_response.txt"
+        self._save_text(self.llm_dir / response_filename, response_content)
+        
+        logger.info(f"[PIPELINE] Logged LLM call #{call_number}")
+    
+    def log_tool_call(self, tool_number: int, tool_name: str, tool_input: Any, tool_output: Any):
+        """Log a tool execution"""
+        tool_data = {
+            "timestamp": datetime.now().isoformat(),
+            "tool_number": tool_number,
+            "tool_name": tool_name,
+            "input": self._serialize_value(tool_input),
+            "output": self._serialize_value(tool_output)
+        }
+        
+        filename = f"tool_{tool_number:03d}_{tool_name}.json"
+        self._save_json(self.tools_dir / filename, tool_data)
+        
+        # Also save output as text for easy viewing
+        if isinstance(tool_output, str):
+            self._save_text(self.tools_dir / f"tool_{tool_number:03d}_{tool_name}_output.txt", tool_output)
+        
+        logger.info(f"[PIPELINE] Logged tool call: {tool_name}")
+    
+    def log_stage(self, stage_name: str, data: Dict[str, Any]):
+        """Log a pipeline stage"""
+        stage_data = {
+            "timestamp": datetime.now().isoformat(),
+            "stage": stage_name,
+            "data": self._serialize_value(data)
+        }
+        
+        # Find stage number
+        stage_count = len([s for s in self.session_info["stages"] if s.get("stage") == stage_name])
+        filename = f"{stage_name}_{stage_count:02d}.json"
+        
+        self._save_json(self.stages_dir / filename, stage_data)
+        
+        self.session_info["stages"].append({
+            "stage": stage_name,
+            "timestamp": stage_data["timestamp"]
+        })
+        
+        logger.info(f"[PIPELINE] Logged stage: {stage_name}")
+    
+    def log_error(self, error_type: str, error_message: str, traceback: str = None):
+        """Log an error"""
+        error_data = {
+            "timestamp": datetime.now().isoformat(),
+            "error_type": error_type,
+            "error_message": error_message,
+            "traceback": traceback
+        }
+        
+        error_count = len(list(self.errors_dir.glob("*.json")))
+        filename = f"error_{error_count:03d}_{error_type}.json"
+        
+        self._save_json(self.errors_dir / filename, error_data)
+        self._save_text(self.errors_dir / filename.replace(".json", ".txt"), 
+                       f"{error_type}: {error_message}\n\n{traceback or 'No traceback'}")
+        
+        logger.error(f"[PIPELINE] Logged error: {error_type}")
+    
+    def log_final_result(self, success: bool, result: Dict[str, Any]):
+        """Log the final result"""
+        final_data = {
+            "timestamp": datetime.now().isoformat(),
+            "success": success,
+            "result": self._serialize_value(result)
+        }
+        
+        self._save_json(self.log_dir / "99_final_result.json", final_data)
+        
+        # Save diff if present
+        if "diff" in result:
+            self._save_text(self.log_dir / "99_final_diff.txt", result["diff"])
+        
+        # Save solution if present
+        if "solution" in result:
+            self._save_text(self.log_dir / "99_solution.txt", result["solution"])
+        
+        self.session_info["end_time"] = datetime.now().isoformat()
+        self.session_info["success"] = success
+        
+        logger.info(f"[PIPELINE] Logged final result (success={success})")
+    
+    def finalize(self):
+        """Finalize logging and save session summary"""
+        self.session_info["end_time"] = self.session_info.get("end_time", datetime.now().isoformat())
+        self._save_json(self.log_dir / "session_info.json", self.session_info)
+        
+        # Create a README for easy navigation
+        readme = self._generate_readme()
+        self._save_text(self.log_dir / "README.md", readme)
+        
+        logger.info(f"[PIPELINE] Finalized logging session at {self.log_dir}")
+    
+    def _generate_readme(self) -> str:
+        """Generate a README for the log directory"""
+        readme = f"""# Pipeline Log: {self.repo_name}
+
+**Session ID:** {self.session_id}
+**Start Time:** {self.session_info.get('start_time')}
+**End Time:** {self.session_info.get('end_time', 'In progress')}
+**Success:** {self.session_info.get('success', 'Unknown')}
+
+## Directory Structure
+
+```
+{self.log_dir.name}/
+├── README.md                    # This file
+├── session_info.json           # Session metadata
+├── 00_input.json               # Initial input data
+├── 00_pom_diff.txt            # POM.xml changes
+├── 00_initial_errors.txt      # Initial compilation errors
+├── 01_prompt.json             # Agent prompt metadata
+├── 01_prompt.txt              # Full agent prompt
+├── 01_preread_files/          # Pre-read source files
+├── stages/                    # Pipeline stage logs
+├── llm_calls/                 # LLM API call logs
+├── tool_calls/                # Tool execution logs
+├── errors/                    # Error logs
+├── 99_final_result.json       # Final result
+├── 99_final_diff.txt          # Final diff (if successful)
+└── 99_solution.txt            # Solution text (if available)
+```
+
+## Processing Stages
+
+"""
+        for i, stage in enumerate(self.session_info.get("stages", []), 1):
+            readme += f"{i}. **{stage['stage']}** - {stage['timestamp']}\n"
+        
+        readme += f"\n## Files\n\n"
+        readme += f"- **Input Files:** See `00_*.txt` files\n"
+        readme += f"- **LLM Calls:** {len(list(self.llm_dir.glob('*.json')))} calls in `llm_calls/`\n"
+        readme += f"- **Tool Calls:** {len(list(self.tools_dir.glob('*.json')))} calls in `tool_calls/`\n"
+        readme += f"- **Errors:** {len(list(self.errors_dir.glob('*.json')))} errors in `errors/`\n"
+        readme += f"- **Final Result:** See `99_final_*.txt` files\n"
+        
+        return readme
+    
+    def _save_json(self, filepath: Path, data: Any):
+        """Save data as JSON"""
+        with open(filepath, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+    
+    def _save_text(self, filepath: Path, text: str):
+        """Save text to file"""
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(text)
+    
+    def _serialize_message(self, msg) -> Dict:
+        """Serialize a LangChain message"""
+        try:
+            return {
+                "type": msg.__class__.__name__,
+                "content": str(msg.content) if hasattr(msg, 'content') else str(msg)
+            }
+        except:
+            return {"type": "unknown", "content": str(msg)}
+    
+    def _serialize_value(self, value: Any) -> Any:
+        """Serialize a value for JSON storage"""
+        if isinstance(value, (str, int, float, bool, type(None))):
+            return value
+        elif isinstance(value, dict):
+            return {k: self._serialize_value(v) for k, v in value.items()}
+        elif isinstance(value, (list, tuple)):
+            return [self._serialize_value(v) for v in value]
+        elif isinstance(value, Path):
+            return str(value)
+        elif isinstance(value, datetime):
+            return value.isoformat()
+        else:
+            return str(value)

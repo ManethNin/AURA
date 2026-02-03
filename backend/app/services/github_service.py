@@ -29,15 +29,24 @@ class GitHubService:
     """Service for GitHub API operations"""
     
     def __init__(self):
-        self.webhook_secret = settings.GITHUB_WEBHOOK_SECRET
-        self.app_id = settings.GITHUB_APP_ID
+        # Only initialize if not in local mode
+        if not settings.LOCAL_MODE:
+            self.webhook_secret = settings.GITHUB_WEBHOOK_SECRET
+            self.app_id = settings.GITHUB_APP_ID
+        else:
+            self.webhook_secret = None
+            self.app_id = None
     
     def verify_webhook_signature(self, payload_body: bytes, signature_header: str) -> bool:
         """
         Verify GitHub webhook signature for security
         CRITICAL: Always verify webhooks in production!
         """
-        if not signature_header:
+        if settings.LOCAL_MODE:
+            logger.warning("Webhook signature verification skipped in LOCAL_MODE")
+            return True
+            
+        if not signature_header or not self.webhook_secret:
             return False
         
         # GitHub sends signature as 'sha256=...'
