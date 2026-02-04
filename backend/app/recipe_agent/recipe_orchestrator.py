@@ -65,9 +65,10 @@ class RecipeOrchestrator:
         },
     }
     
-    def __init__(self, groq_api_key: str = None):
+    def __init__(self, groq_api_key: str = None, pipeline_logger=None):
         self.recipe_service = RecipeAgentService(groq_api_key)
         self.groq_api_key = groq_api_key or settings.GROQ_API_KEY
+        self.pipeline_logger = pipeline_logger
     
     def _normalize_version(self, version: str, group_id: str = None, artifact_id: str = None) -> str:
         """
@@ -158,6 +159,10 @@ class RecipeOrchestrator:
             compilation_errors=compilation_errors,
             pom_content=pom_content
         )
+        
+        # Log the analysis result
+        if self.pipeline_logger:
+            self.pipeline_logger.log_recipe_analysis(analysis)
         
         # Step 2: Check if recipes can handle this
         if not analysis.get("can_use_recipes", False):
@@ -262,6 +267,15 @@ class RecipeOrchestrator:
                 yaml_content = f.read()
             logger.info(f"[RecipeOrchestrator] rewrite.yaml content:\n{yaml_content}")
             
+            # Log rewrite.yaml generation
+            if self.pipeline_logger:
+                self.pipeline_logger.log_recipe_execution(
+                    "rewrite_yaml_generation",
+                    True,
+                    yaml_content,
+                    ""
+                )
+            
             # Add plugin to pom.xml (skip Java parsing for Maven-only recipes)
             if not generator.add_rewrite_plugin_to_pom(recipe_name, maven_only_recipes=maven_only):
                 logger.error("[RecipeOrchestrator] Failed to add plugin to pom.xml")
@@ -295,6 +309,15 @@ class RecipeOrchestrator:
                 # Run rewrite with maven_only flag to skip compilation if appropriate
                 rewrite_success, rewrite_output, rewrite_error = executor.run_rewrite(maven_only=maven_only)
                 
+                # Log rewrite execution
+                if self.pipeline_logger:
+                    self.pipeline_logger.log_recipe_execution(
+                        "mvn_rewrite_run",
+                        rewrite_success,
+                        rewrite_output,
+                        rewrite_error
+                    )
+                
                 if not rewrite_success:
                     logger.error(f"[RecipeOrchestrator] rewrite:run failed: {rewrite_error or rewrite_output[:500]}")
                     generator.cleanup()
@@ -309,6 +332,15 @@ class RecipeOrchestrator:
                 # Step 5: Verify compilation
                 logger.info("[RecipeOrchestrator] Verifying compilation after rewrite...")
                 compile_success, compile_output = executor.compile_after_rewrite()
+                
+                # Log compilation result
+                if self.pipeline_logger:
+                    self.pipeline_logger.log_recipe_execution(
+                        "post_rewrite_compilation",
+                        compile_success,
+                        compile_output,
+                        ""
+                    )
                 
                 if compile_success:
                     logger.info("[RecipeOrchestrator] ✅ Recipe-based fix successful!")
@@ -327,7 +359,13 @@ class RecipeOrchestrator:
                     # Also get the diff for display/logging purposes
                     diff = executor.get_git_diff()
                     
-                    return {
+                    # IMPORTANT: Revert changes after capturing diff
+                    # This ensures the repository stays clean for repeated testing
+                    # Similar to LLM agent pipeline pattern
+                    self._revert_changes(project_path, commit_sha)
+                    logger.info("[RecipeOrchestrator] Repository reverted to original state (can test again)")
+                    
+                    result = {
                         "success": True,
                         "used_recipes": True,
                         "should_use_existing_agent": False,
@@ -337,6 +375,12 @@ class RecipeOrchestrator:
                         "recipe_name": recipe_name,
                         "recipes_applied": [r.get("name") for r in selected_recipes]
                     }
+                    
+                    # Log final result
+                    if self.pipeline_logger:
+                        self.pipeline_logger.log_recipe_result(result)
+                    
+                    return result
                 else:
                     logger.warning(f"[RecipeOrchestrator] Compilation still fails after rewrite: {compile_output[:500]}")
                     
