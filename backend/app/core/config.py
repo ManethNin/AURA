@@ -49,6 +49,15 @@ class Settings(BaseSettings):
     # General LLM Settings
     LLM_MAX_RECURSION: int = 30
     LLM_TEMPERATURE: float = 0.0
+
+    # API Change Analysis (REVAPI / JApiCmp)
+    API_CHANGE_TOOL: str = "revapi"  # Options: "revapi", "japicmp", "none"
+    REVAPI_HOME: Optional[str] = None  # Path to REVAPI installation
+    REVAPI_EXECUTABLE: Optional[str] = "revapi"  # Path or command to revapi
+    REVAPI_ARGS_TEMPLATE: Optional[str] = "--configuration {config} analyze"
+    JAPICMP_JAR_PATH: Optional[str] = None
+    JAPICMP_ARGS_TEMPLATE: Optional[str] = "--old {old_jar} --new {new_jar} --output-format json"
+    MAVEN_EXECUTABLE: str = "mvn"
     
     # App Config
     MAX_REPAIR_ATTEMPTS: int = 3

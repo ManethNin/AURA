@@ -40,8 +40,9 @@ class PipelineLogger:
         self.llm_dir = self.log_dir / "llm_calls"
         self.tools_dir = self.log_dir / "tool_calls"
         self.errors_dir = self.log_dir / "errors"
+        self.api_changes_dir = self.log_dir / "api_changes"
         
-        for dir in [self.stages_dir, self.llm_dir, self.tools_dir, self.errors_dir]:
+        for dir in [self.stages_dir, self.llm_dir, self.tools_dir, self.errors_dir, self.api_changes_dir]:
             dir.mkdir(exist_ok=True)
         
         # Initialize session info
@@ -55,19 +56,22 @@ class PipelineLogger:
         
         logger.info(f"[PIPELINE] Initialized logging for {repo_name} at {self.log_dir}")
         
-    def log_input(self, pom_diff: str, initial_errors: str, repo_path: str, commit_hash: str):
+    def log_input(self, pom_diff: str, initial_errors: str, repo_path: str, commit_hash: str, api_changes: str = ""):
         """Log initial input data"""
         input_data = {
             "timestamp": datetime.now().isoformat(),
             "repo_path": repo_path,
             "commit_hash": commit_hash,
             "pom_diff": pom_diff,
-            "initial_errors": initial_errors
+            "initial_errors": initial_errors,
+            "api_changes": api_changes
         }
         
         self._save_json(self.log_dir / "00_input.json", input_data)
         self._save_text(self.log_dir / "00_pom_diff.txt", pom_diff)
         self._save_text(self.log_dir / "00_initial_errors.txt", initial_errors)
+        if api_changes:
+            self._save_text(self.log_dir / "00_api_changes.txt", api_changes)
         
         self.session_info["stages"].append({
             "stage": "input",
@@ -185,7 +189,54 @@ class PipelineLogger:
         self._save_text(self.errors_dir / filename.replace(".json", ".txt"), 
                        f"{error_type}: {error_message}\n\n{traceback or 'No traceback'}")
         
-        logger.error(f"[PIPELINE] Logged error: {error_type}")
+        logger.info(f"[PIPELINE] Logged error: {error_type}")
+    
+    def log_api_tool_raw(self, tool_name: str, artifact: str, version_change: str, output: str):
+        """Log raw API analysis tool output (REVAPI/JApiCmp)"""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        # Safe filename from artifact name
+        safe_artifact = artifact.replace(":", "_").replace("/", "_")
+        safe_version = version_change.replace(" -> ", "_to_").replace(".", "_")
+        
+        filename = f"{tool_name}_raw_{safe_artifact}_{safe_version}.txt"
+        filepath = self.api_changes_dir / filename
+        
+        content = f"""Tool: {tool_name.upper()}
+Artifact: {artifact}
+Version Change: {version_change}
+Timestamp: {timestamp}
+{'=' * 80}
+
+{output}
+"""
+        
+        self._save_text(filepath, content)
+        logger.info(f"[PIPELINE] Logged {tool_name} raw output for {artifact}")
+    
+    def log_api_changes_filtered(self, tool_used: str, artifact: str, version_change: str, filtered_output: str):
+        """Log filtered API changes that will be used in the next stage (LLM processing)"""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        # Safe filename from artifact name
+        safe_artifact = artifact.replace(":", "_").replace("/", "_")
+        safe_version = version_change.replace(" -> ", "_to_").replace(".", "_")
+        
+        filename = f"api_changes_{safe_artifact}_{safe_version}.txt"
+        filepath = self.api_changes_dir / filename
+        
+        content = f"""Tool(s) Used: {tool_used}
+Artifact: {artifact}
+Version Change: {version_change}
+Timestamp: {timestamp}
+Purpose: Filtered output for LLM processing
+{'=' * 80}
+
+{filtered_output}
+"""
+        
+        self._save_text(filepath, content)
+        logger.info(f"[PIPELINE] Logged filtered API changes for {artifact} (will be used in next stage)")
     
     def log_final_result(self, success: bool, result: Dict[str, Any]):
         """Log the final result"""
@@ -245,6 +296,7 @@ class PipelineLogger:
 ├── stages/                    # Pipeline stage logs
 ├── llm_calls/                 # LLM API call logs
 ├── tool_calls/                # Tool execution logs
+├── api_changes/               # API analysis tool outputs (REVAPI/JApiCmp)
 ├── errors/                    # Error logs
 ├── 99_final_result.json       # Final result
 ├── 99_final_diff.txt          # Final diff (if successful)
@@ -261,6 +313,7 @@ class PipelineLogger:
         readme += f"- **Input Files:** See `00_*.txt` files\n"
         readme += f"- **LLM Calls:** {len(list(self.llm_dir.glob('*.json')))} calls in `llm_calls/`\n"
         readme += f"- **Tool Calls:** {len(list(self.tools_dir.glob('*.json')))} calls in `tool_calls/`\n"
+        readme += f"- **API Changes:** {len(list(self.api_changes_dir.glob('*.txt')))} files in `api_changes/`\n"
         readme += f"- **Errors:** {len(list(self.errors_dir.glob('*.json')))} errors in `errors/`\n"
         readme += f"- **Final Result:** See `99_final_*.txt` files\n"
         

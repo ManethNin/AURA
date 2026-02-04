@@ -61,7 +61,9 @@ class JavaMigrationAgentService:
         commit_hash: str,
         repo_slug: str,
         pom_diff: str,
-        initial_errors: str = ""
+        initial_errors: str = "",
+        api_changes_text: str = "",
+        pipeline_logger = None
     ):
         """
         Run the agent on a repository to fix Java dependency issues
@@ -72,14 +74,19 @@ class JavaMigrationAgentService:
             repo_slug: Repository identifier (owner/repo)
             pom_diff: The pom.xml changes that caused issues
             initial_errors: Compilation errors from Maven (if available)
+            api_changes_text: API changes from REVAPI/JApiCmp
+            pipeline_logger: Optional existing PipelineLogger instance
         
         Returns:
             dict with 'success', 'diff', 'solution' or 'error'
         """
         
-        # Initialize pipeline logger
-        pipeline_logger = PipelineLogger(repo_slug)
-        pipeline_logger.log_input(pom_diff, initial_errors, repo_path, commit_hash)
+        # Initialize pipeline logger if not provided
+        if pipeline_logger is None:
+            from app.utils.pipeline_logger import PipelineLogger
+            pipeline_logger = PipelineLogger(repo_slug)
+        
+        pipeline_logger.log_input(pom_diff, initial_errors, repo_path, commit_hash, api_changes_text)
         
         output_path = tempfile.mkdtemp(prefix="agent_out_")
         
@@ -112,7 +119,7 @@ class JavaMigrationAgentService:
             app = build_workflow(self.llm, tools, output_path, pipeline_logger)
             
             # Create prompt for the agent WITH FILE CONTENT
-            prompt = self._create_prompt(pom_diff, initial_errors, file_contents)
+            prompt = self._create_prompt(pom_diff, initial_errors, file_contents, api_changes_text)
             pipeline_logger.log_prompt(prompt, file_contents)
             
             # Run agent with reduced recursion limit to save tokens
@@ -179,13 +186,21 @@ class JavaMigrationAgentService:
             
             return final_result
     
-    def _create_prompt(self, pom_diff: str, initial_errors: str, file_contents: dict = None) -> str:
+    def _create_prompt(self, pom_diff: str, initial_errors: str, file_contents: dict = None, api_changes_text: str = "") -> str:
         """Create the prompt for the agent with actual file content"""
         prompt = f"""You are a Java dependency migration expert. A pom.xml file has been updated with new dependencies, causing compilation errors.
 
 POM.XML CHANGES:
 ```diff
 {pom_diff}
+```
+"""
+
+        if api_changes_text:
+            prompt += f"""
+API CHANGES (FROM DEPENDENCY DIFF TOOL):
+```
+{api_changes_text}
 ```
 """
         

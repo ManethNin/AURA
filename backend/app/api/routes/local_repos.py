@@ -12,6 +12,7 @@ from pathlib import Path
 from app.services.local_repository_service import local_repo_service
 from app.core.config import settings
 from app.utils.logger import logger
+from app.utils.pipeline_logger import PipelineLogger
 
 # Import the agent service
 from app.agents.service import JavaMigrationAgentService
@@ -184,6 +185,28 @@ async def process_repository(
         except Exception as e:
             logger.error(f"Error during initial compilation: {e}")
             raise HTTPException(status_code=500, detail=f"Failed to compile project: {str(e)}")
+
+    # Initialize pipeline logger early so it can be used by API change analysis
+    pipeline_logger = PipelineLogger(repo_name)
+
+    # Step 1.5: Generate API changes from dependency diff (REVAPI/JApiCmp)
+    api_changes_text = ""
+    if pom_diff:
+        try:
+            from app.masterthesis.agent.JapiCmpAgent import JapiCmpAgent
+
+            api_change_agent = JapiCmpAgent(pipeline_logger=pipeline_logger)
+            api_changes_text = api_change_agent.generate_api_changes(
+                repo_path=str(repo_path),
+                pom_diff=pom_diff,
+                compilation_errors=initial_errors  # Filter API changes to only relevant ones
+            )
+            if api_changes_text:
+                logger.info(f"Generated API changes ({len(api_changes_text)} chars)")
+            else:
+                logger.info("No API changes generated (tool not configured or no changes found)")
+        except Exception as e:
+            logger.warning(f"API change analysis failed: {e}")
     
     try:
         # ========================================
@@ -232,7 +255,9 @@ async def process_repository(
             commit_hash=commit_hash,
             repo_slug=repo_name,  # Use repo_name as slug for local repos
             pom_diff=pom_diff,
-            initial_errors=initial_errors  # Use the local variable
+            initial_errors=initial_errors,  # Use the local variable
+            api_changes_text=api_changes_text,
+            pipeline_logger=pipeline_logger  # Pass the same logger instance
         )
         
         return {
