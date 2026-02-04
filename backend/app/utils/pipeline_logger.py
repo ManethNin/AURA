@@ -238,6 +238,105 @@ Purpose: Filtered output for LLM processing
         self._save_text(filepath, content)
         logger.info(f"[PIPELINE] Logged filtered API changes for {artifact} (will be used in next stage)")
     
+    def log_recipe_analysis(self, analysis_result: Dict[str, Any]):
+        """Log recipe agent LLM analysis result"""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        analysis_data = {
+            "timestamp": timestamp,
+            "can_use_recipes": analysis_result.get("can_use_recipes", False),
+            "selected_recipes": analysis_result.get("selected_recipes", []),
+            "recipe_name": analysis_result.get("recipe_name", ""),
+            "reasoning": analysis_result.get("reasoning", ""),
+            "analysis": self._serialize_value(analysis_result)
+        }
+        
+        filepath = self.stages_dir / "recipe_analysis.json"
+        self._save_json(filepath, analysis_data)
+        
+        # Also save as text for easy reading
+        text_content = f"""Recipe Analysis Result
+Timestamp: {timestamp}
+Can Use Recipes: {analysis_result.get('can_use_recipes', False)}
+Reasoning: {analysis_result.get('reasoning', '')}
+
+Selected Recipes ({len(analysis_result.get('selected_recipes', []))}):
+"""
+        for i, recipe in enumerate(analysis_result.get("selected_recipes", []), 1):
+            text_content += f"\n{i}. {recipe.get('name', 'Unknown')}"
+            if recipe.get('arguments'):
+                text_content += f"\n   Arguments: {recipe.get('arguments')}"
+        
+        self._save_text(self.stages_dir / "recipe_analysis.txt", text_content)
+        logger.info(f"[PIPELINE] Logged recipe analysis (can_use_recipes={analysis_result.get('can_use_recipes')})")
+    
+    def log_recipe_execution(self, execution_type: str, success: bool, output: str, error: str = ""):
+        """Log recipe execution steps (rewrite.yaml generation, mvn rewrite:run, compilation)"""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        execution_data = {
+            "timestamp": timestamp,
+            "execution_type": execution_type,
+            "success": success,
+            "output": output,
+            "error": error
+        }
+        
+        # Save to recipe_execution subdirectory
+        recipe_exec_dir = self.stages_dir / "recipe_execution"
+        recipe_exec_dir.mkdir(exist_ok=True)
+        
+        filename = f"{execution_type}_{timestamp}.json"
+        self._save_json(recipe_exec_dir / filename, execution_data)
+        
+        # Also save output as text
+        text_filename = f"{execution_type}_{timestamp}.txt"
+        text_content = f"""Recipe Execution: {execution_type}
+Timestamp: {timestamp}
+Success: {success}
+{'=' * 80}
+
+OUTPUT:
+{output}
+"""
+        if error:
+            text_content += f"\n{'=' * 80}\nERROR:\n{error}"
+        
+        self._save_text(recipe_exec_dir / text_filename, text_content)
+        logger.info(f"[PIPELINE] Logged recipe execution: {execution_type} (success={success})")
+    
+    def log_recipe_result(self, result: Dict[str, Any]):
+        """Log final recipe agent result"""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        result_data = {
+            "timestamp": timestamp,
+            "success": result.get("success", False),
+            "used_recipes": result.get("used_recipes", False),
+            "recipes_applied": result.get("recipes_applied", []),
+            "message": result.get("message", ""),
+            "result": self._serialize_value(result)
+        }
+        
+        filepath = self.stages_dir / "recipe_result.json"
+        self._save_json(filepath, result_data)
+        
+        # Save diff if present
+        if result.get("diff"):
+            self._save_text(self.stages_dir / "recipe_diff.txt", result["diff"])
+        
+        text_content = f"""Recipe Agent Result
+Timestamp: {timestamp}
+Success: {result.get('success', False)}
+Used Recipes: {result.get('used_recipes', False)}
+Message: {result.get('message', '')}
+
+Recipes Applied: {result.get('recipes_applied', [])}
+"""
+        
+        self._save_text(self.stages_dir / "recipe_result.txt", text_content)
+        logger.info(f"[PIPELINE] Logged recipe result (success={result.get('success')})")
+    
     def log_final_result(self, success: bool, result: Dict[str, Any]):
         """Log the final result"""
         final_data = {
@@ -294,6 +393,9 @@ Purpose: Filtered output for LLM processing
 ├── 01_prompt.txt              # Full agent prompt
 ├── 01_preread_files/          # Pre-read source files
 ├── stages/                    # Pipeline stage logs
+│   ├── recipe_analysis.json   # Recipe agent LLM analysis (if used)
+│   ├── recipe_result.json     # Recipe agent final result (if used)
+│   └── recipe_execution/      # Recipe execution logs (if used)
 ├── llm_calls/                 # LLM API call logs
 ├── tool_calls/                # Tool execution logs
 ├── api_changes/               # API analysis tool outputs (REVAPI/JApiCmp)
@@ -311,6 +413,20 @@ Purpose: Filtered output for LLM processing
         
         readme += f"\n## Files\n\n"
         readme += f"- **Input Files:** See `00_*.txt` files\n"
+        
+        # Check for recipe logs
+        recipe_analysis = (self.stages_dir / "recipe_analysis.json").exists()
+        recipe_execution_dir = self.stages_dir / "recipe_execution"
+        recipe_executions = len(list(recipe_execution_dir.glob('*.json'))) if recipe_execution_dir.exists() else 0
+        
+        if recipe_analysis or recipe_executions > 0:
+            readme += f"- **Recipe Agent:** "
+            if recipe_analysis:
+                readme += f"Analysis logged"
+            if recipe_executions > 0:
+                readme += f", {recipe_executions} execution steps in `stages/recipe_execution/`"
+            readme += "\n"
+        
         readme += f"- **LLM Calls:** {len(list(self.llm_dir.glob('*.json')))} calls in `llm_calls/`\n"
         readme += f"- **Tool Calls:** {len(list(self.tools_dir.glob('*.json')))} calls in `tool_calls/`\n"
         readme += f"- **API Changes:** {len(list(self.api_changes_dir.glob('*.txt')))} files in `api_changes/`\n"

@@ -218,7 +218,7 @@ async def process_repository(
             try:
                 from app.recipe_agent.recipe_orchestrator import RecipeOrchestrator
                 
-                orchestrator = RecipeOrchestrator(settings.GROQ_API_KEY)
+                orchestrator = RecipeOrchestrator(settings.GROQ_API_KEY, pipeline_logger=pipeline_logger)
                 recipe_result = orchestrator.process_breaking_change(
                     repo_path=str(repo_path),
                     pom_diff=pom_diff,

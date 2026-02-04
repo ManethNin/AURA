@@ -23,7 +23,7 @@ class RecipeAgentService:
         self.groq_api_key = groq_api_key or settings.GROQ_API_KEY
         self.llm = ChatGroq(
             groq_api_key=self.groq_api_key,
-            model_name=settings.LLM_MODEL,
+            model_name=settings.GROQ_MODEL,
             temperature=0,
             max_retries=3,
             timeout=120
