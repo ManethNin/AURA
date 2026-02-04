@@ -44,7 +44,8 @@ class RecipeAgentService:
         self,
         pom_diff: str,
         compilation_errors: str,
-        pom_content: str = ""
+        pom_content: str = "",
+        api_changes: str = ""
     ) -> Dict[str, Any]:
         """
         Analyze the breaking change and determine if OpenRewrite recipes can fix it.
@@ -53,6 +54,7 @@ class RecipeAgentService:
             pom_diff: The git diff of pom.xml showing dependency changes
             compilation_errors: Maven compilation errors
             pom_content: Full pom.xml content for context
+            api_changes: Filtered API changes from REVAPI/JApiCmp
             
         Returns:
             Dict with:
@@ -141,6 +143,11 @@ If recipes CANNOT fix the issue (e.g., requires complex logic changes), return:
 ## COMPILATION ERRORS:
 ```
 {compilation_errors}
+```
+
+## API CHANGES (REVAPI/JApiCmp Analysis):
+```
+{api_changes if api_changes else "Not provided"}
 ```
 
 ## CURRENT POM.XML CONTENT:

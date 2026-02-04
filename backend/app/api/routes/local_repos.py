@@ -144,7 +144,7 @@ async def process_repository(
         try:
             import subprocess
             result = subprocess.run(
-                ["git", "diff", "HEAD~1", "HEAD", "pom.xml"],
+                ["git", "diff", "HEAD~1", "HEAD", "--", "**/pom.xml"],
                 cwd=repo_path,
                 capture_output=True,
                 text=True
@@ -224,7 +224,8 @@ async def process_repository(
                     pom_diff=pom_diff,
                     compilation_errors=initial_errors,  # Use the local variable
                     commit_sha=commit_hash,
-                    repo_slug=repo_name
+                    repo_slug=repo_name,
+                    api_changes=api_changes_text  # Pass filtered API changes
                 )
                 
                 if recipe_result and recipe_result.get("success"):
@@ -247,7 +248,7 @@ async def process_repository(
         # ========================================
         # Initialize the agent service with configured provider
         agent_service = JavaMigrationAgentService()
-        
+       
         # Process the repository
         logger.info(f"Starting agent processing for {repo_name}")
         result = agent_service.process_repository(

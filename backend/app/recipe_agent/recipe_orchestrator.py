@@ -121,7 +121,8 @@ class RecipeOrchestrator:
         pom_diff: str,
         compilation_errors: str,
         commit_sha: str,
-        repo_slug: str
+        repo_slug: str,
+        api_changes: str = ""
     ) -> Dict[str, Any]:
         """
         Attempt to fix breaking changes using OpenRewrite recipes.
@@ -132,6 +133,7 @@ class RecipeOrchestrator:
             compilation_errors: Maven compilation errors
             commit_sha: Current commit hash
             repo_slug: Repository slug (owner/repo)
+            api_changes: Filtered API changes from REVAPI/JApiCmp
             
         Returns:
             Dict with:
@@ -157,7 +159,8 @@ class RecipeOrchestrator:
         analysis = self.recipe_service.analyze_breaking_change(
             pom_diff=pom_diff,
             compilation_errors=compilation_errors,
-            pom_content=pom_content
+            pom_content=pom_content,
+            api_changes=api_changes
         )
         
         # Log the analysis result
