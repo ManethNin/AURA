@@ -1,0 +1,6 @@
+Recipe Analysis Result
+Timestamp: 20260204_190606
+Can Use Recipes: False
+Reasoning: The root cause of the error is that the dependency com.google.inject:guice:jar:tests:5.1.1-SNAPSHOT is missing. This is likely due to the fact that the 'tests' classifier is not available in the Maven Central repository for the specified version. The available OpenRewrite recipes cannot fix this issue as it requires manually downloading and installing the missing dependency or changing the dependency version to one that is available in the repository.
+
+Selected Recipes (0):

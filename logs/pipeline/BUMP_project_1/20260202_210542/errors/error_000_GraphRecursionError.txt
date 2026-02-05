@@ -1,0 +1,16 @@
+GraphRecursionError: Recursion limit of 30 reachedwithout hitting a stop condition. You can increase the limitby setting the `recursion_limit` config key.
+
+Traceback (most recent call last):
+  File "D:\FYP\master\AURA\backend\app\agents\service.py", line 103, in process_repository
+    result = app.invoke(
+             ^^^^^^^^^^^
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\langgraph\pregel\__init__.py", line 579, in invoke
+    for chunk in self.stream(
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\langgraph\pregel\__init__.py", line 615, in transform
+    for chunk in self._transform_stream_with_config(
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\langchain_core\runnables\base.py", line 1881, in _transform_stream_with_config
+    chunk: Output = context.run(next, iterator)  # type: ignore
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\langgraph\pregel\__init__.py", line 310, in _transform
+    raise GraphRecursionError(
+langgraph.pregel.GraphRecursionError: Recursion limit of 30 reachedwithout hitting a stop condition. You can increase the limitby setting the `recursion_limit` config key.

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-02-04T19:12:12.375074",
+  "repo_path": "D:\\FYP\\workspace\\guice",
+  "commit_hash": "6c53cd904bd66fc79af8687571e607c259226b81",
+  "pom_diff": "",
+  "initial_errors": "[ERROR] Failed to execute goal org.apache.maven.plugins:maven-remote-resources-plugin:1.1:process (default) on project extensions-parent: Failed to resolve dependencies for one or more projects in the reactor. Reason: Missing:\n[ERROR] ----------\n[ERROR] 1) com.google.inject:guice:jar:tests:5.1.1-SNAPSHOT\n[ERROR]   Try downloading the file manually from the project website.\n[ERROR]   Then, install it using the command:\n[ERROR]       mvn install:install-file -DgroupId=com.google.inject -DartifactId=guice -Dversion=5.1.1-SNAPSHOT -Dclassifier=tests -Dpackaging=jar -Dfile=/path/to/file\n[ERROR]   Alternatively, if you host your own repository you can deploy the file there:\n[ERROR]       mvn deploy:deploy-file -DgroupId=com.google.inject -DartifactId=guice -Dversion=5.1.1-SNAPSHOT -Dclassifier=tests -Dpackaging=jar -Dfile=/path/to/file -Durl=[url] -DrepositoryId=[id]\n[ERROR]   Path to dependency:\n[ERROR]   \t1) com.google.inject.extensions:extensions-parent:pom:5.1.1-SNAPSHOT\n[ERROR]   \t2) com.google.inject:guice:jar:tests:5.1.1-SNAPSHOT\n[ERROR] ----------\n[ERROR] 1 required artifact is missing.\n[ERROR] for artifact:\n[ERROR]   com.google.inject.extensions:extensions-parent:pom:5.1.1-SNAPSHOT\n[ERROR] from the specified remote repositories:\n[ERROR]   central (https://repo.maven.apache.org/maven2, releases=true, snapshots=false)\n[ERROR] -> [Help 1]",
+  "api_changes": ""
+}

@@ -1,0 +1,34 @@
+{
+  "repo_name": "pdb",
+  "session_id": "20260204_183928",
+  "start_time": "2026-02-04T18:39:28.751975",
+  "log_directory": "D:\\FYP\\logs\\pipeline\\pdb\\20260204_183928",
+  "stages": [
+    {
+      "stage": "input",
+      "timestamp": "2026-02-04T18:42:34.812261"
+    },
+    {
+      "stage": "build_workflow",
+      "timestamp": "2026-02-04T18:42:35.823599"
+    },
+    {
+      "stage": "prompt_created",
+      "timestamp": "2026-02-04T18:42:35.828017"
+    },
+    {
+      "stage": "agent_start",
+      "timestamp": "2026-02-04T18:42:35.838527"
+    },
+    {
+      "stage": "llm_call_1_start",
+      "timestamp": "2026-02-04T18:42:35.844526"
+    },
+    {
+      "stage": "agent_complete",
+      "timestamp": "2026-02-04T18:45:56.577577"
+    }
+  ],
+  "end_time": "2026-02-04T18:45:56.852128",
+  "success": true
+}

@@ -1,0 +1,7 @@
+{
+  "timestamp": "2026-02-04T20:12:20.813125",
+  "stage": "llm_call_1_start",
+  "data": {
+    "messages_count": 3
+  }
+}

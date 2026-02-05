@@ -1,0 +1,30 @@
+{
+  "repo_name": "guice",
+  "session_id": "20260204_193104",
+  "start_time": "2026-02-04T19:31:04.973108",
+  "log_directory": "D:\\FYP\\logs\\pipeline\\guice\\20260204_193104",
+  "stages": [
+    {
+      "stage": "input",
+      "timestamp": "2026-02-04T19:31:07.403558"
+    },
+    {
+      "stage": "build_workflow",
+      "timestamp": "2026-02-04T19:31:07.873238"
+    },
+    {
+      "stage": "prompt_created",
+      "timestamp": "2026-02-04T19:31:07.878006"
+    },
+    {
+      "stage": "agent_start",
+      "timestamp": "2026-02-04T19:31:07.883805"
+    },
+    {
+      "stage": "llm_call_1_start",
+      "timestamp": "2026-02-04T19:31:07.889580"
+    }
+  ],
+  "end_time": "2026-02-04T19:31:07.993276",
+  "success": false
+}

@@ -1,0 +1,38 @@
+{
+  "repo_name": "BUMP_project_1",
+  "session_id": "20260203_220232",
+  "start_time": "2026-02-03T22:02:32.395483",
+  "log_directory": "D:\\FYP\\logs\\pipeline\\BUMP_project_1\\20260203_220232",
+  "stages": [
+    {
+      "stage": "input",
+      "timestamp": "2026-02-03T22:02:32.395483"
+    },
+    {
+      "stage": "build_workflow",
+      "timestamp": "2026-02-03T22:02:32.767495"
+    },
+    {
+      "stage": "prompt_created",
+      "timestamp": "2026-02-03T22:02:32.770495"
+    },
+    {
+      "stage": "agent_start",
+      "timestamp": "2026-02-03T22:02:32.793260"
+    },
+    {
+      "stage": "llm_call_1_start",
+      "timestamp": "2026-02-03T22:02:32.875758"
+    },
+    {
+      "stage": "llm_call_2_start",
+      "timestamp": "2026-02-03T22:02:36.660195"
+    },
+    {
+      "stage": "agent_complete",
+      "timestamp": "2026-02-03T22:03:54.254971"
+    }
+  ],
+  "end_time": "2026-02-03T22:03:54.545248",
+  "success": true
+}

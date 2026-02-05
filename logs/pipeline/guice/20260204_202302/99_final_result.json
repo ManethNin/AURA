@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-02-04T20:31:16.541009",
+  "success": false,
+  "result": {
+    "success": false,
+    "error": "Error code: 413 - {'error': {'message': 'Request too large for model `llama-3.3-70b-versatile` in organization `org_01k4n1bhjtems9enk4we5d9966` service tier `on_demand` on tokens per minute (TPM): Limit 12000, Requested 14308, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+    "log_directory": "D:\\FYP\\logs\\pipeline\\guice\\20260204_202302"
+  }
+}

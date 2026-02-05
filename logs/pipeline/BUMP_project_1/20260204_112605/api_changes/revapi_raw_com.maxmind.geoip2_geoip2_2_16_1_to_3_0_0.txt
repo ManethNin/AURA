@@ -1,0 +1,387 @@
+Tool: REVAPI
+Artifact: com.maxmind.geoip2:geoip2
+Version Change: 2.16.1 -> 3.0.0
+Timestamp: 20260204_112638
+================================================================================
+
+11:26:06.064 INFO  Downloading checked archives
+11:26:14.179 INFO  Downloading extensions
+11:26:22.556 WARN  Detected version conflict in dependencies of extension org.revapi:revapi-java:jar:0.28.1. The extension depends on org.revapi:revapi:jar:0.15.0 while the CLI has org.revapi:revapi:jar:0.15.1 on global classpath. This will likely cause problems.
+11:26:22.609 WARN  Detected version conflict in dependencies of extension org.revapi:revapi-java-spi:jar:0.25.0. The extension depends on org.revapi:revapi:jar:0.15.0 while the CLI has org.revapi:revapi:jar:0.15.1 on global classpath. This will likely cause problems.
+11:26:33.870 WARN  Detected version conflict in dependencies of extension org.revapi:revapi-reporter-text:jar:0.15.0. The extension depends on org.revapi:revapi:jar:0.15.0 while the CLI has org.revapi:revapi:jar:0.15.1 on global classpath. This will likely cause problems.
+11:26:33.911 WARN  Detected version conflict in dependencies of extension org.revapi:revapi-reporter-file-base:jar:0.5.0. The extension depends on org.revapi:revapi:jar:0.15.0 while the CLI has org.revapi:revapi:jar:0.15.1 on global classpath. This will likely cause problems.
+11:26:33.963 INFO  Starting analysis
+11:26:33.998 WARN  At least one of `minSeverity` and `minCriticality` should to be defined. Defaulting to the obsolete behavior of reporting all potentially breaking elements.
+Analysis results
+----------------
+
+Old API: geoip2-2.16.1.jar
+New API: geoip2-3.0.0.jar
+old: parameter void com.maxmind.geoip2.exception.HttpException::<init>(java.lang.String, int, ===java.net.URL===)
+new: parameter void com.maxmind.geoip2.exception.HttpException::<init>(java.lang.String, int, ===java.net.URI===)
+java.method.parameterTypeChanged: The type of the parameter changed from 'java.net.URL' to 'java.net.URI'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: parameter void com.maxmind.geoip2.exception.HttpException::<init>(java.lang.String, int, ===java.net.URL===, java.lang.Throwable)
+new: parameter void com.maxmind.geoip2.exception.HttpException::<init>(java.lang.String, int, ===java.net.URI===, java.lang.Throwable)
+java.method.parameterTypeChanged: The type of the parameter changed from 'java.net.URL' to 'java.net.URI'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: parameter void com.maxmind.geoip2.exception.InvalidRequestException::<init>(java.lang.String, java.lang.String, int, ===java.net.URL===, java.lang.Throwable)
+new: parameter void com.maxmind.geoip2.exception.InvalidRequestException::<init>(java.lang.String, java.lang.String, int, ===java.net.URI===, java.lang.Throwable)
+java.method.parameterTypeChanged: The type of the parameter changed from 'java.net.URL' to 'java.net.URI'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: parameter void com.maxmind.geoip2.exception.InvalidRequestException::<init>(java.lang.String, java.lang.String, ===java.net.URL===)
+new: parameter void com.maxmind.geoip2.exception.InvalidRequestException::<init>(java.lang.String, java.lang.String, ===java.net.URI===)
+java.method.parameterTypeChanged: The type of the parameter changed from 'java.net.URL' to 'java.net.URI'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: method void com.maxmind.geoip2.model.AnonymousIpResponse::<init>(java.lang.String, boolean, boolean, boolean, boolean, boolean)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.maxmind.geoip2.model.AnonymousIpResponse::<init>(java.lang.String, boolean, boolean, boolean, boolean, boolean, com.maxmind.db.Network)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.maxmind.geoip2.model.AsnResponse::<init>(java.lang.Integer, java.lang.String, java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.maxmind.geoip2.model.AsnResponse::<init>(java.lang.Integer, java.lang.String, java.lang.String, com.maxmind.db.Network)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: parameter void com.maxmind.geoip2.model.AsnResponse::<init>(===java.lang.Long===, java.lang.String, java.lang.String, com.maxmind.db.Network)
+new: parameter void com.maxmind.geoip2.model.AsnResponse::<init>(===java.lang.Long===, java.lang.String, java.lang.String, com.maxmind.db.Network)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.model.AsnResponse::<init>(java.lang.Long, ===java.lang.String===, java.lang.String, com.maxmind.db.Network)
+new: parameter void com.maxmind.geoip2.model.AsnResponse::<init>(java.lang.Long, ===java.lang.String===, java.lang.String, com.maxmind.db.Network)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.model.AsnResponse::<init>(java.lang.Long, java.lang.String, ===java.lang.String===, com.maxmind.db.Network)
+new: parameter void com.maxmind.geoip2.model.AsnResponse::<init>(java.lang.Long, java.lang.String, ===java.lang.String===, com.maxmind.db.Network)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JacksonInject'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.model.AsnResponse::<init>(java.lang.Long, java.lang.String, java.lang.String, ===com.maxmind.db.Network===)
+new: parameter void com.maxmind.geoip2.model.AsnResponse::<init>(java.lang.Long, java.lang.String, java.lang.String, ===com.maxmind.db.Network===)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JacksonInject'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.databind.annotation.JsonDeserialize'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: method java.lang.Integer com.maxmind.geoip2.model.AsnResponse::getAutonomousSystemNumber()
+new: method java.lang.Long com.maxmind.geoip2.model.AsnResponse::getAutonomousSystemNumber()
+java.method.returnTypeChanged: The return type changed from 'java.lang.Integer' to  'java.lang.Long'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: method void com.maxmind.geoip2.model.ConnectionTypeResponse::<init>(com.maxmind.geoip2.model.ConnectionTypeResponse.ConnectionType, java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.maxmind.geoip2.model.DomainResponse::<init>(java.lang.String, java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Long, java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: parameter void com.maxmind.geoip2.model.IspResponse::<init>(===java.lang.Long===, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network)
+new: parameter void com.maxmind.geoip2.model.IspResponse::<init>(===java.lang.Long===, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Long, ===java.lang.String===, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network)
+new: parameter void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Long, ===java.lang.String===, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Long, java.lang.String, ===java.lang.String===, java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network)
+new: parameter void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Long, java.lang.String, ===java.lang.String===, java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JacksonInject'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Long, java.lang.String, java.lang.String, ===java.lang.String===, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network)
+new: parameter void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Long, java.lang.String, java.lang.String, ===java.lang.String===, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Long, java.lang.String, java.lang.String, java.lang.String, ===java.lang.String===, java.lang.String, java.lang.String, com.maxmind.db.Network)
+new: parameter void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Long, java.lang.String, java.lang.String, java.lang.String, ===java.lang.String===, java.lang.String, java.lang.String, com.maxmind.db.Network)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Long, java.lang.String, java.lang.String, java.lang.String, java.lang.String, ===java.lang.String===, java.lang.String, com.maxmind.db.Network)
+new: parameter void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Long, java.lang.String, java.lang.String, java.lang.String, java.lang.String, ===java.lang.String===, java.lang.String, com.maxmind.db.Network)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Long, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, ===java.lang.String===, com.maxmind.db.Network)
+new: parameter void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Long, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, ===java.lang.String===, com.maxmind.db.Network)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Long, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, ===com.maxmind.db.Network===)
+new: parameter void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Long, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, ===com.maxmind.db.Network===)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JacksonInject'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.databind.annotation.JsonDeserialize'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: method java.lang.Integer com.maxmind.geoip2.record.AbstractNamedRecord::getGeoNameId()
+new: method java.lang.Long com.maxmind.geoip2.record.AbstractNamedRecord::getGeoNameId()
+java.method.returnTypeChanged: The return type changed from 'java.lang.Integer' to  'java.lang.Long'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: method void com.maxmind.geoip2.record.City::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Integer, java.util.Map<java.lang.String, java.lang.String>)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: parameter void com.maxmind.geoip2.record.City::<init>(===java.util.List<java.lang.String>===, java.lang.Integer, java.lang.Long, java.util.Map<java.lang.String, java.lang.String>)
+new: parameter void com.maxmind.geoip2.record.City::<init>(===java.util.List<java.lang.String>===, java.lang.Integer, java.lang.Long, java.util.Map<java.lang.String, java.lang.String>)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JacksonInject'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.City::<init>(java.util.List<java.lang.String>, ===java.lang.Integer===, java.lang.Long, java.util.Map<java.lang.String, java.lang.String>)
+new: parameter void com.maxmind.geoip2.record.City::<init>(java.util.List<java.lang.String>, ===java.lang.Integer===, java.lang.Long, java.util.Map<java.lang.String, java.lang.String>)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.City::<init>(java.util.List<java.lang.String>, java.lang.Integer, ===java.lang.Long===, java.util.Map<java.lang.String, java.lang.String>)
+new: parameter void com.maxmind.geoip2.record.City::<init>(java.util.List<java.lang.String>, java.lang.Integer, ===java.lang.Long===, java.util.Map<java.lang.String, java.lang.String>)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.City::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, ===java.util.Map<java.lang.String, java.lang.String>===)
+new: parameter void com.maxmind.geoip2.record.City::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, ===java.util.Map<java.lang.String, java.lang.String>===)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: method void com.maxmind.geoip2.record.Continent::<init>(java.util.List<java.lang.String>, java.lang.String, java.lang.Integer, java.util.Map<java.lang.String, java.lang.String>)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: parameter void com.maxmind.geoip2.record.Continent::<init>(===java.util.List<java.lang.String>===, java.lang.String, java.lang.Long, java.util.Map<java.lang.String, java.lang.String>)
+new: parameter void com.maxmind.geoip2.record.Continent::<init>(===java.util.List<java.lang.String>===, java.lang.String, java.lang.Long, java.util.Map<java.lang.String, java.lang.String>)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JacksonInject'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.Continent::<init>(java.util.List<java.lang.String>, ===java.lang.String===, java.lang.Long, java.util.Map<java.lang.String, java.lang.String>)
+new: parameter void com.maxmind.geoip2.record.Continent::<init>(java.util.List<java.lang.String>, ===java.lang.String===, java.lang.Long, java.util.Map<java.lang.String, java.lang.String>)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.Continent::<init>(java.util.List<java.lang.String>, java.lang.String, ===java.lang.Long===, java.util.Map<java.lang.String, java.lang.String>)
+new: parameter void com.maxmind.geoip2.record.Continent::<init>(java.util.List<java.lang.String>, java.lang.String, ===java.lang.Long===, java.util.Map<java.lang.String, java.lang.String>)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.Continent::<init>(java.util.List<java.lang.String>, java.lang.String, java.lang.Long, ===java.util.Map<java.lang.String, java.lang.String>===)
+new: parameter void com.maxmind.geoip2.record.Continent::<init>(java.util.List<java.lang.String>, java.lang.String, java.lang.Long, ===java.util.Map<java.lang.String, java.lang.String>===)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: method void com.maxmind.geoip2.record.Country::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Integer, boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.maxmind.geoip2.record.Country::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Integer, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: parameter void com.maxmind.geoip2.record.Country::<init>(===java.util.List<java.lang.String>===, java.lang.Integer, java.lang.Long, java.lang.Boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+new: parameter void com.maxmind.geoip2.record.Country::<init>(===java.util.List<java.lang.String>===, java.lang.Integer, java.lang.Long, java.lang.Boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JacksonInject'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.Country::<init>(java.util.List<java.lang.String>, ===java.lang.Integer===, java.lang.Long, java.lang.Boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+new: parameter void com.maxmind.geoip2.record.Country::<init>(java.util.List<java.lang.String>, ===java.lang.Integer===, java.lang.Long, java.lang.Boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.Country::<init>(java.util.List<java.lang.String>, java.lang.Integer, ===java.lang.Long===, java.lang.Boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+new: parameter void com.maxmind.geoip2.record.Country::<init>(java.util.List<java.lang.String>, java.lang.Integer, ===java.lang.Long===, java.lang.Boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.Country::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, ===java.lang.Boolean===, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+new: parameter void com.maxmind.geoip2.record.Country::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, ===java.lang.Boolean===, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.Country::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, java.lang.Boolean, ===java.lang.String===, java.util.Map<java.lang.String, java.lang.String>)
+new: parameter void com.maxmind.geoip2.record.Country::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, java.lang.Boolean, ===java.lang.String===, java.util.Map<java.lang.String, java.lang.String>)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.Country::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, java.lang.Boolean, java.lang.String, ===java.util.Map<java.lang.String, java.lang.String>===)
+new: parameter void com.maxmind.geoip2.record.Country::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, java.lang.Boolean, java.lang.String, ===java.util.Map<java.lang.String, java.lang.String>===)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: method void com.maxmind.geoip2.record.RepresentedCountry::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Integer, boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>, java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.maxmind.geoip2.record.RepresentedCountry::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Integer, java.lang.String, java.util.Map<java.lang.String, java.lang.String>, java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: parameter void com.maxmind.geoip2.record.RepresentedCountry::<init>(===java.util.List<java.lang.String>===, java.lang.Integer, java.lang.Long, java.lang.Boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>, java.lang.String)
+new: parameter void com.maxmind.geoip2.record.RepresentedCountry::<init>(===java.util.List<java.lang.String>===, java.lang.Integer, java.lang.Long, java.lang.Boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>, java.lang.String)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JacksonInject'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.RepresentedCountry::<init>(java.util.List<java.lang.String>, ===java.lang.Integer===, java.lang.Long, java.lang.Boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>, java.lang.String)
+new: parameter void com.maxmind.geoip2.record.RepresentedCountry::<init>(java.util.List<java.lang.String>, ===java.lang.Integer===, java.lang.Long, java.lang.Boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>, java.lang.String)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.RepresentedCountry::<init>(java.util.List<java.lang.String>, java.lang.Integer, ===java.lang.Long===, java.lang.Boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>, java.lang.String)
+new: parameter void com.maxmind.geoip2.record.RepresentedCountry::<init>(java.util.List<java.lang.String>, java.lang.Integer, ===java.lang.Long===, java.lang.Boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>, java.lang.String)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.RepresentedCountry::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, ===java.lang.Boolean===, java.lang.String, java.util.Map<java.lang.String, java.lang.String>, java.lang.String)
+new: parameter void com.maxmind.geoip2.record.RepresentedCountry::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, ===java.lang.Boolean===, java.lang.String, java.util.Map<java.lang.String, java.lang.String>, java.lang.String)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.RepresentedCountry::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, java.lang.Boolean, ===java.lang.String===, java.util.Map<java.lang.String, java.lang.String>, java.lang.String)
+new: parameter void com.maxmind.geoip2.record.RepresentedCountry::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, java.lang.Boolean, ===java.lang.String===, java.util.Map<java.lang.String, java.lang.String>, java.lang.String)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.RepresentedCountry::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, java.lang.Boolean, java.lang.String, ===java.util.Map<java.lang.String, java.lang.String>===, java.lang.String)
+new: parameter void com.maxmind.geoip2.record.RepresentedCountry::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, java.lang.Boolean, java.lang.String, ===java.util.Map<java.lang.String, java.lang.String>===, java.lang.String)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.RepresentedCountry::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, java.lang.Boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>, ===java.lang.String===)
+new: parameter void com.maxmind.geoip2.record.RepresentedCountry::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, java.lang.Boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>, ===java.lang.String===)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: method void com.maxmind.geoip2.record.Subdivision::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Integer, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: parameter void com.maxmind.geoip2.record.Subdivision::<init>(===java.util.List<java.lang.String>===, java.lang.Integer, java.lang.Long, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+new: parameter void com.maxmind.geoip2.record.Subdivision::<init>(===java.util.List<java.lang.String>===, java.lang.Integer, java.lang.Long, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JacksonInject'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.Subdivision::<init>(java.util.List<java.lang.String>, ===java.lang.Integer===, java.lang.Long, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+new: parameter void com.maxmind.geoip2.record.Subdivision::<init>(java.util.List<java.lang.String>, ===java.lang.Integer===, java.lang.Long, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.Subdivision::<init>(java.util.List<java.lang.String>, java.lang.Integer, ===java.lang.Long===, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+new: parameter void com.maxmind.geoip2.record.Subdivision::<init>(java.util.List<java.lang.String>, java.lang.Integer, ===java.lang.Long===, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.Subdivision::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, ===java.lang.String===, java.util.Map<java.lang.String, java.lang.String>)
+new: parameter void com.maxmind.geoip2.record.Subdivision::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, ===java.lang.String===, java.util.Map<java.lang.String, java.lang.String>)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: parameter void com.maxmind.geoip2.record.Subdivision::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, java.lang.String, ===java.util.Map<java.lang.String, java.lang.String>===)
+new: parameter void com.maxmind.geoip2.record.Subdivision::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Long, java.lang.String, ===java.util.Map<java.lang.String, java.lang.String>===)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: method void com.maxmind.geoip2.record.Traits::<init>(java.lang.Integer, java.lang.String, com.maxmind.geoip2.model.ConnectionTypeResponse.ConnectionType, java.lang.String, java.lang.String, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, java.lang.String, com.maxmind.db.Network, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Double)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.maxmind.geoip2.record.Traits::<init>(java.lang.Integer, java.lang.String, com.maxmind.geoip2.model.ConnectionTypeResponse.ConnectionType, java.lang.String, java.lang.String, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Double)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.maxmind.geoip2.record.Traits::<init>(java.lang.Integer, java.lang.String, com.maxmind.geoip2.model.ConnectionTypeResponse.ConnectionType, java.lang.String, java.lang.String, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, java.lang.String, com.maxmind.db.Network, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Double)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.maxmind.geoip2.record.Traits::<init>(java.lang.Integer, java.lang.String, com.maxmind.geoip2.model.ConnectionTypeResponse.ConnectionType, java.lang.String, java.lang.String, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, java.lang.String, java.lang.String, java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.maxmind.geoip2.record.Traits::<init>(java.lang.Integer, java.lang.String, com.maxmind.geoip2.model.ConnectionTypeResponse.ConnectionType, java.lang.String, java.lang.String, boolean, boolean, boolean, java.lang.String, java.lang.String, java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.maxmind.geoip2.record.Traits::<init>(java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, boolean, boolean, java.lang.String, java.lang.String, java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.maxmind.geoip2.record.Traits::<init>(java.lang.String)
+new: method void com.maxmind.geoip2.record.Traits::<init>(java.lang.Long, java.lang.String, com.maxmind.geoip2.model.ConnectionTypeResponse.ConnectionType, java.lang.String, java.lang.String, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Double)
+java.method.numberOfParametersChanged: The number of parameters of the method have changed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: parameter void com.maxmind.geoip2.record.Traits::<init>(===java.lang.String===)
+new: parameter void com.maxmind.geoip2.record.Traits::<init>(===java.lang.Long===, java.lang.String, com.maxmind.geoip2.model.ConnectionTypeResponse.ConnectionType, java.lang.String, java.lang.String, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Double)
+java.annotation.added: Element newly annotated with 'com.fasterxml.jackson.annotation.JsonProperty'.
+SEMANTIC: POTENTIALLY_BREAKING, BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: method void com.maxmind.geoip2.record.Traits::<init>(java.lang.Long, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.String, com.maxmind.db.Network, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Double)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method java.lang.Integer com.maxmind.geoip2.record.Traits::getAutonomousSystemNumber()
+new: method java.lang.Long com.maxmind.geoip2.record.Traits::getAutonomousSystemNumber()
+java.method.returnTypeChanged: The return type changed from 'java.lang.Integer' to  'java.lang.Long'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+11:26:38.128 INFO  Analysis took 4165ms.

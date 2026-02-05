@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-02-04T11:26:40.591819",
+  "stage": "agent_start",
+  "data": {
+    "commit_hash": "e5097c1aee00c548b937528d4a8154ff988924ce",
+    "recursion_limit": 30
+  }
+}

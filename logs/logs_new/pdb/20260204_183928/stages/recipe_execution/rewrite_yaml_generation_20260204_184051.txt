@@ -1,0 +1,22 @@
+Recipe Execution: rewrite_yaml_generation
+Timestamp: 20260204_184051
+Success: True
+================================================================================
+
+OUTPUT:
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.aura.fix.MysqlConnectorUpdate
+displayName: Fix MySQL Connector/J Update Breaking Changes
+description: Updates the package names in the Java code to match the new MySQL Connector/J version
+
+recipeList:
+  - org.openrewrite.java.ChangeType:
+      oldFullyQualifiedTypeName: com.mysql.jdbc.exceptions.MySQLTimeoutException
+      newFullyQualifiedTypeName: com.mysql.cj.exceptions.TimeoutException
+  - org.openrewrite.java.ChangeType:
+      oldFullyQualifiedTypeName: com.mysql.jdbc.exceptions.CommunicationsException
+      newFullyQualifiedTypeName: com.mysql.cj.exceptions.CJCommunicationsException
+  - org.openrewrite.java.ChangeType:
+      oldFullyQualifiedTypeName: com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException
+      newFullyQualifiedTypeName: com.mysql.cj.exceptions.MySQLIntegrityConstraintViolationException

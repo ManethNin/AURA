@@ -1,0 +1,83 @@
+```diff
+--- a/pom.xml
++++ b/pom.xml
+@@ -63,7 +63,7 @@
+         <dependency>
+             <groupId>com.maxmind.geoip2</groupId>
+             <artifactId>geoip2</artifactId>
+-            <version>2.16.1</version>
++            <version>3.0.0</version>
+         </dependency>
+         <dependency>
+             <groupId>commons-validator</groupId>
+             <artifactId>commons-validator</artifactId>
+             <version>1.7</version>
+         </dependency>
++        <dependency>
++            <groupId>commons-codec</groupId>
++            <artifactId>commons-codec</artifactId>
++            <version>1.15</version>
++        </dependency>
+ 
+```
+
+```diff
+--- a/src/main/java/com/maxmind/minfraud/request/Account.java
++++ b/src/main/java/com/maxmind/minfraud/request/Account.java
+@@ -5,7 +5,7 @@
+ package com.maxmind.minfraud.request;
+
+-import org.apache.commons.codec.digest.DigestUtils;
++import org.apache.commons.codec.digest.DigestUtils;
+ 
+ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.maxmind.minfraud.AbstractModel;
+ 
+@@ -49,7 +49,7 @@
+         /**
+          * @param username The username associated with the account. This is
+          *                 <em>not</em> the MD5 of username. This method
+-         *                 automatically runs {@code DigestUtils.md5Hex}
++         *                 automatically runs {@code DigestUtils.md5Hex}
+          *                 on the string passed to it.
+          * @return The builder object.
+          */
+         public Account.Builder username(String username) {
+             this.usernameMd5 = DigestUtils.md5Hex(username);
+             return this;
+         }
+ 
+```
+
+```diff
+--- a/src/main/java/com/maxmind/minfraud/request/Email.java
++++ b/src/main/java/com/maxmind/minfraud/request/Email.java
+@@ -5,7 +5,7 @@
+ package com.maxmind.minfraud.request;
+
+-import org.apache.commons.codec.digest.DigestUtils;
++import org.apache.commons.codec.digest.DigestUtils;
+ 
+ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.maxmind.minfraud.AbstractModel;
+ 
+@@ -153,7 +153,7 @@
+     /**
+      * @return The email address field to use in the transaction. This will be
+      * a valid email address if you used {@link Builder#address(String)}, an MD5
+-     * hash if you used {@link Builder#hashAddress()} as well, or null if you
++     * hash if you used {@link Builder#hashAddress()} as well, or null if you
+      * did not set an email address.
+      */
+     @JsonProperty("address")
+     public String getAddress() {
+         if (address == null) {
+             return null;
+         }
+         if (hashAddress) {
+-            return DigestUtils.md5Hex(cleanAddress(address));
++            return DigestUtils.md5Hex(cleanAddress(address));
+         }
+         return address;
+     }
+```

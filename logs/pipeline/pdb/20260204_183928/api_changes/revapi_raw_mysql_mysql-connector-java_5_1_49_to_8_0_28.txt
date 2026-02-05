@@ -1,0 +1,1309 @@
+Tool: REVAPI
+Artifact: mysql:mysql-connector-java
+Version Change: 5.1.49 -> 8.0.28
+Timestamp: 20260204_184048
+================================================================================
+
+18:39:29.428 INFO  Downloading checked archives
+18:40:08.522 INFO  Downloading extensions
+18:40:20.478 WARN  Detected version conflict in dependencies of extension org.revapi:revapi-java:jar:0.28.1. The extension depends on org.revapi:revapi:jar:0.15.0 while the CLI has org.revapi:revapi:jar:0.15.1 on global classpath. This will likely cause problems.
+18:40:36.719 WARN  Detected version conflict in dependencies of extension org.revapi:revapi-java-spi:jar:0.25.0. The extension depends on org.revapi:revapi:jar:0.15.0 while the CLI has org.revapi:revapi:jar:0.15.1 on global classpath. This will likely cause problems.
+18:40:38.135 WARN  Detected version conflict in dependencies of extension org.revapi:revapi-reporter-text:jar:0.15.0. The extension depends on org.revapi:revapi:jar:0.15.0 while the CLI has org.revapi:revapi:jar:0.15.1 on global classpath. This will likely cause problems.
+18:40:38.185 WARN  Detected version conflict in dependencies of extension org.revapi:revapi-reporter-file-base:jar:0.5.0. The extension depends on org.revapi:revapi:jar:0.15.0 while the CLI has org.revapi:revapi:jar:0.15.1 on global classpath. This will likely cause problems.
+18:40:38.260 INFO  Starting analysis
+18:40:38.297 WARN  At least one of `minSeverity` and `minCriticality` should to be defined. Defaulting to the obsolete behavior of reporting all potentially breaking elements.
+Analysis results
+----------------
+
+Old API: mysql-connector-java-5.1.49.jar
+New API: mysql-connector-java-8.0.28.jar
+old: <none>
+new: class com.mysql.cj.MysqlCharset
+java.class.nonPublicPartOfAPI: Class 'com.mysql.cj.MysqlCharset' is indirectly included in the API (by the means of method return type for example) but the class is not accessible (neither public nor protected).
+BINARY: NON_BREAKING, SEMANTIC: BREAKING, SOURCE: NON_BREAKING
+
+old: <none>
+new: class com.mysql.cj.jdbc.DatabaseMetaData.LocalAndReferencedColumns
+java.class.nonPublicPartOfAPI: Class 'com.mysql.cj.jdbc.DatabaseMetaData.LocalAndReferencedColumns' is indirectly included in the API (by the means of method return type for example) but the class is not accessible (neither public nor protected).
+BINARY: NON_BREAKING, SEMANTIC: BREAKING, SOURCE: NON_BREAKING
+
+old: <none>
+new: class com.mysql.cj.protocol.ExportControlled.KeyStoreConf
+java.class.nonPublicPartOfAPI: Class 'com.mysql.cj.protocol.ExportControlled.KeyStoreConf' is indirectly included in the API (by the means of method return type for example) but the class is not accessible (neither public nor protected).
+BINARY: NON_BREAKING, SEMANTIC: BREAKING, SOURCE: NON_BREAKING
+
+old: class com.mysql.fabric.FabricCommunicationException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.FabricConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.FabricStateResponse<T>
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.HashShardMapping
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.RangeShardMapping
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.Response
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.Server
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.ServerGroup
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: enum com.mysql.fabric.ServerMode
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: enum com.mysql.fabric.ServerRole
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.ShardIndex
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.ShardMapping
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.ShardMappingFactory
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.ShardTable
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: enum com.mysql.fabric.ShardingType
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.hibernate.FabricMultiTenantConnectionProvider
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.jdbc.ErrorReportingExceptionInterceptor
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.fabric.jdbc.FabricMySQLConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.fabric.jdbc.FabricMySQLConnectionProperties
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.jdbc.FabricMySQLConnectionProxy
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.jdbc.FabricMySQLDataSource
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.jdbc.FabricMySQLDriver
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.fabric.jdbc.JDBC4FabricMySQLConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.jdbc.JDBC4FabricMySQLConnectionProxy
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.proto.xmlrpc.AuthenticatedXmlRpcMethodCaller
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.proto.xmlrpc.DigestAuthentication
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.proto.xmlrpc.InternalXmlRpcMethodCaller
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.proto.xmlrpc.ResultSetParser
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.proto.xmlrpc.XmlRpcClient
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.fabric.proto.xmlrpc.XmlRpcMethodCaller
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.xmlrpc.Client
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.xmlrpc.base.Array
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.xmlrpc.base.Data
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.xmlrpc.base.Fault
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.xmlrpc.base.Member
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.xmlrpc.base.MethodCall
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.xmlrpc.base.MethodResponse
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.xmlrpc.base.Param
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.xmlrpc.base.Params
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.xmlrpc.base.ResponseParser
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.xmlrpc.base.Struct
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.xmlrpc.base.Value
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.fabric.xmlrpc.exceptions.MySQLFabricException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.AbandonedConnectionCleanupThread
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.AssertionFailedException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.AuthenticationPlugin
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.BalanceStrategy
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.BestResponseTimeBalanceStrategy
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.Blob
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.BlobFromLocator
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.Buffer
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.BufferRow
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ByteArrayRow
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.CacheAdapter<K, V>
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.CacheAdapterFactory<K, V>
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.CachedResultSetMetaData
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.CallableStatement
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.CharsetMapping
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.Clob
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.CommunicationsException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.Connection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ConnectionFeatureNotAvailableException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ConnectionGroup
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ConnectionGroupManager
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ConnectionImpl
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.ConnectionLifecycleInterceptor
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.ConnectionProperties
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ConnectionPropertiesImpl
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.ConnectionPropertiesTransform
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.Constants
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.DatabaseMetaData
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.DatabaseMetaDataUsingInfoSchema
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.DocsConnectionPropsHelper
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.Driver
+new: class com.mysql.jdbc.Driver
+java.class.noLongerInheritsFromClass: Class no longer inherits from 'com.mysql.jdbc.NonRegisteringDriver'.
+BINARY: BREAKING, SOURCE: BREAKING
+java.class.nonFinalClassInheritsFromNewClass: Non-final class now inherits from 'com.mysql.cj.jdbc.Driver'.
+BINARY: POTENTIALLY_BREAKING, SOURCE: POTENTIALLY_BREAKING
+java.class.nonFinalClassInheritsFromNewClass: Non-final class now inherits from 'com.mysql.cj.jdbc.NonRegisteringDriver'.
+BINARY: POTENTIALLY_BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: class com.mysql.jdbc.EscapeTokenizer
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.ExceptionInterceptor
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ExportControlled
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.Extension
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.FailoverConnectionProxy
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.Field
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.IterateBlock<T>
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC42CallableStatement
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC42Helper
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC42PreparedStatement
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC42ResultSet
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC42ServerPreparedStatement
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC42UpdatableResultSet
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC4CallableStatement
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.JDBC4ClientInfoProvider
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC4ClientInfoProviderSP
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC4CommentClientInfoProvider
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC4Connection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC4DatabaseMetaData
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC4DatabaseMetaDataUsingInfoSchema
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC4LoadBalancedMySQLConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC4MultiHostMySQLConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.JDBC4MySQLConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC4MysqlSQLXML
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC4NClob
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC4PreparedStatement
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC4PreparedStatementHelper
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC4ReplicationMySQLConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC4ResultSet
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC4ServerPreparedStatement
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.JDBC4UpdatableResultSet
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.LoadBalanceExceptionChecker
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.LoadBalancedAutoCommitInterceptor
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.LoadBalancedConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.LoadBalancedConnectionProxy
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.LoadBalancedMySQLConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.Messages
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.MiniAdmin
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.MultiHostConnectionProxy
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.MultiHostMySQLConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.MySQLConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.MysqlDataTruncation
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.MysqlDefs
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.MysqlErrorNumbers
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.MysqlIO
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.MysqlParameterMetadata
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.MysqlSavepoint
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.NamedPipeSocketFactory
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.NdbLoadBalanceExceptionChecker
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.NoSubInterceptorWrapper
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.NonRegisteringDriver
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.NonRegisteringReplicationDriver
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.NotImplemented
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.NotUpdatable
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.PacketTooBigException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.ParameterBindings
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.PerConnectionLRUFactory
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.PerVmServerConfigCacheFactory
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.PingTarget
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.PreparedStatement
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ProfilerEventHandlerFactory
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.RandomBalanceStrategy
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ReflectiveStatementInterceptorAdapter
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.ReplicationConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ReplicationConnectionGroup
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ReplicationConnectionGroupManager
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ReplicationConnectionProxy
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ReplicationDriver
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ReplicationMySQLConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ResultSetImpl
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.ResultSetInternalMethods
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ResultSetMetaData
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ResultSetRow
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.RowData
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.RowDataCursor
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.RowDataDynamic
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.RowDataStatic
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.SQLError
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.Security
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.SequentialBalanceStrategy
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ServerAffinityStrategy
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.ServerPreparedStatement
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.SingleByteCharsetConverter
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.SocketMetadata
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.SocksProxySocketFactory
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.StandardLoadBalanceExceptionChecker
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.StandardSocketFactory
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.Statement
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.StatementImpl
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.StatementInterceptor
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.StatementInterceptorV2
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.StreamingNotifiable
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.StringUtils
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.TimeUtil
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.UpdatableResultSet
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.Util
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.V1toV2StatementInterceptorAdapter
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.Wrapper
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.authentication.CachingSha2PasswordPlugin
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.authentication.MysqlClearPasswordPlugin
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.authentication.MysqlNativePasswordPlugin
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.authentication.MysqlOldPasswordPlugin
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.authentication.Sha256PasswordPlugin
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.exceptions.DeadlockTimeoutRollbackMarker
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.MySQLDataException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.MySQLInvalidAuthorizationSpecException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.MySQLNonTransientConnectionException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.MySQLNonTransientException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.MySQLQueryInterruptedException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.MySQLStatementCancelledException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.MySQLSyntaxErrorException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.MySQLTimeoutException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.MySQLTransactionRollbackException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.MySQLTransientConnectionException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.MySQLTransientException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.jdbc4.CommunicationsException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.jdbc4.MySQLDataException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.jdbc4.MySQLInvalidAuthorizationSpecException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.jdbc4.MySQLQueryInterruptedException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.jdbc4.MySQLTimeoutException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.jdbc4.MySQLTransactionRollbackException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.jdbc4.MySQLTransientConnectionException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.exceptions.jdbc4.MySQLTransientException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.integration.c3p0.MysqlConnectionTester
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.integration.jboss.ExtendedMysqlExceptionSorter
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.integration.jboss.MysqlValidConnectionChecker
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.interceptors.ResultSetScannerInterceptor
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.interceptors.ServerStatusDiffInterceptor
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.interceptors.SessionAssociationInterceptor
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.CallableStatementWrapper
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.ConnectionWrapper
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.JDBC42CallableStatementWrapper
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.JDBC42PreparedStatementWrapper
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.JDBC4CallableStatementWrapper
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.JDBC4ConnectionWrapper
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.JDBC4MysqlPooledConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.JDBC4MysqlXAConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.JDBC4PreparedStatementWrapper
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.JDBC4StatementWrapper
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.JDBC4SuspendableXAConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.MysqlDataSource
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.MysqlDataSourceFactory
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.MysqlPooledConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.MysqlXAConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.MysqlXADataSource
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.MysqlXid
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.PreparedStatementWrapper
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.StatementWrapper
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jdbc2.optional.SuspendableXAConnection
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jmx.LoadBalanceConnectionGroupManager
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.jmx.LoadBalanceConnectionGroupManagerMBean
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.jmx.ReplicationGroupManager
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.jmx.ReplicationGroupManagerMBean
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.log.Jdk14Logger
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.log.Log
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.log.LogFactory
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.log.LogUtils
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.log.NullLogger
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.log.Slf4JLogger
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.log.StandardLogger
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.profiler.LoggingProfilerEventHandler
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.profiler.ProfilerEvent
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface com.mysql.jdbc.profiler.ProfilerEventHandler
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.util.Base64Decoder
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.util.BaseBugReport
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.util.ErrorMappingsDocGenerator
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.util.LRUCache<K, V>
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.util.PropertiesDocGenerator
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.util.ReadAheadInputStream
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.util.ResultSetUtil
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.util.ServerController
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.util.TimezoneDump
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class com.mysql.jdbc.util.VersionFSHierarchyMaker
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.gjt.mm.mysql.Driver
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+18:40:48.373 INFO  Analysis took 10113ms.

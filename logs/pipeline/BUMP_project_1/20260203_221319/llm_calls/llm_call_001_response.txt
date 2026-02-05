@@ -1,0 +1,58 @@
+```diff
+--- a/pom.xml
++++ b/pom.xml
+@@ -63,7 +63,7 @@
+         <dependency>
+             <groupId>com.maxmind.geoip2</groupId>
+             <artifactId>geoip2</artifactId>
+-            <version>2.16.1</version>
++            <version>3.0.0</version>
+         </dependency>
+         <dependency>
+             <groupId>commons-validator</groupId>
+             <artifactId>commons-validator</artifactId>
+             <version>1.7</version>
+         </dependency>
++        <dependency>
++            <groupId>commons-codec</groupId>
++            <artifactId>commons-codec</artifactId>
++            <version>1.15</version>
++        </dependency>
+ 
+```
+
+```diff
+--- a/src/main/java/com/maxmind/minfraud/request/Account.java
++++ b/src/main/java/com/maxmind/minfraud/request/Account.java
+@@ -5,7 +5,7 @@
+ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.maxmind.minfraud.AbstractModel;
+-import org.apache.commons.codec.digest.DigestUtils;
++import org.apache.commons.codec.digest.DigestUtils;
+
+ /**
+  * Account related data for the minFraud request
+@@ -49,7 +49,7 @@
+         /**
+          * @param username The username associated with the account. This is
+          *                 <em>not</em> the MD5 of username. This method
+-         *                 automatically runs {@code DigestUtils.md5Hex}
++         *                 automatically runs {@code DigestUtils.md5Hex}
+          *                 on the string passed to it.
+          * @return The builder object.
+          */
+```
+
+
+```diff
+--- a/src/main/java/com/maxmind/minfraud/request/Email.java
++++ b/src/main/java/com/maxmind/minfraud/request/Email.java
+@@ -5,7 +5,7 @@
+ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.maxmind.minfraud.AbstractModel;
+-import org.apache.commons.codec.digest.DigestUtils;
++import org.apache.commons.codec.digest.DigestUtils;
+ import org.apache.commons.validator.routines.DomainValidator;
+ import org.apache.commons.validator.routines.EmailValidator;
+
+```

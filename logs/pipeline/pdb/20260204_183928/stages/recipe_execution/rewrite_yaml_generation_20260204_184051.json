@@ -1,0 +1,7 @@
+{
+  "timestamp": "20260204_184051",
+  "execution_type": "rewrite_yaml_generation",
+  "success": true,
+  "output": "---\ntype: specs.openrewrite.org/v1beta/recipe\nname: com.aura.fix.MysqlConnectorUpdate\ndisplayName: Fix MySQL Connector/J Update Breaking Changes\ndescription: Updates the package names in the Java code to match the new MySQL Connector/J version\n\nrecipeList:\n  - org.openrewrite.java.ChangeType:\n      oldFullyQualifiedTypeName: com.mysql.jdbc.exceptions.MySQLTimeoutException\n      newFullyQualifiedTypeName: com.mysql.cj.exceptions.TimeoutException\n  - org.openrewrite.java.ChangeType:\n      oldFullyQualifiedTypeName: com.mysql.jdbc.exceptions.CommunicationsException\n      newFullyQualifiedTypeName: com.mysql.cj.exceptions.CJCommunicationsException\n  - org.openrewrite.java.ChangeType:\n      oldFullyQualifiedTypeName: com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException\n      newFullyQualifiedTypeName: com.mysql.cj.exceptions.MySQLIntegrityConstraintViolationException",
+  "error": ""
+}

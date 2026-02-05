@@ -1,0 +1,13 @@
+Recipe Analysis Result
+Timestamp: 20260204_184051
+Can Use Recipes: True
+Reasoning: The root cause of the errors is the change in the MySQL Connector/J version from 5.1.49 to 8.0.28. The new version has a different package structure, which is causing the compilation errors. The OpenRewrite recipe 'org.openrewrite.java.ChangeType' can be used to update the package names in the Java code.
+
+Selected Recipes (3):
+
+1. org.openrewrite.java.ChangeType
+   Arguments: {'oldFullyQualifiedTypeName': 'com.mysql.jdbc.exceptions.MySQLTimeoutException', 'newFullyQualifiedTypeName': 'com.mysql.cj.exceptions.TimeoutException'}
+2. org.openrewrite.java.ChangeType
+   Arguments: {'oldFullyQualifiedTypeName': 'com.mysql.jdbc.exceptions.CommunicationsException', 'newFullyQualifiedTypeName': 'com.mysql.cj.exceptions.CJCommunicationsException'}
+3. org.openrewrite.java.ChangeType
+   Arguments: {'oldFullyQualifiedTypeName': 'com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException', 'newFullyQualifiedTypeName': 'com.mysql.cj.exceptions.MySQLIntegrityConstraintViolationException'}

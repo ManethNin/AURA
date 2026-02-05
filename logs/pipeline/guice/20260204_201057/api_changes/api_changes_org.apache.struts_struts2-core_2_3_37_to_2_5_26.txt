@@ -1,0 +1,9 @@
+Tool(s) Used: revapi
+Artifact: org.apache.struts:struts2-core
+Version Change: 2.3.37 -> 2.5.26
+Timestamp: 20260204_201217
+Purpose: Filtered output for LLM processing
+================================================================================
+
+=== REVAPI Analysis (Filtered) ===
+No breaking API changes detected for classes/methods used in your code

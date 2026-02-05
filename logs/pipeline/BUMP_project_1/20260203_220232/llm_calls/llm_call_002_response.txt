@@ -1,0 +1,24 @@
+ 
+
+Here is the corrected diff:
+
+```diff
+--- a/pom.xml
++++ b/pom.xml
+@@ -100,6 +100,14 @@
+         <dependency>
+             <groupId>commons-validator</groupId>
+             <artifactId>commons-validator</artifactId>
+             <version>1.7</version>
+         </dependency>
++        <dependency>
++            <groupId>commons-codec</groupId>
++            <artifactId>commons-codec</artifactId>
++            <version>1.15</version>
++        </dependency>
++
+```
+
+No changes are needed in the Java source code files (Account.java and Email.java) because the DigestUtils class is still available in the new version of the commons-codec dependency. 
+
+Please validate the diff and compile with Maven to check your fixes.

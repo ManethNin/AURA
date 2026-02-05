@@ -1,0 +1,68 @@
+ 
+
+Here is the corrected diff:
+```diff
+--- a/pom.xml
++++ b/pom.xml
+@@ -63,7 +63,7 @@
+         <dependency>
+             <groupId>com.maxmind.geoip2</groupId>
+             <artifactId>geoip2</artifactId>
+             <version>3.0.0</version>
+         </dependency>
+         <dependency>
+             <groupId>commons-validator</groupId>
+             <artifactId>commons-validator</artifactId>
+             <version>1.7</version>
+         </dependency>
++        <dependency>
++            <groupId>commons-codec</groupId>
++            <artifactId>commons-codec</artifactId>
++            <version>1.15</version>
++        </dependency>
+```
+
+```diff
+--- a/src/main/java/com/maxmind/minfraud/request/Email.java
++++ b/src/main/java/com/maxmind/minfraud/request/Email.java
+@@ -1,7 +1,7 @@
+ package com.maxmind.minfraud.request;
+
+-import org.apache.commons.codec.digest.DigestUtils;
++import org.apache.commons.codec.digest.DigestUtils;
+ import org.apache.commons.validator.routines.DomainValidator;
+ import org.apache.commons.validator.routines.EmailValidator;
+
+@@ -153,7 +153,7 @@
+     public String getAddress() {
+         if (address == null) {
+             return null;
+-        }
+-        if (hashAddress) {
+-            return DigestUtils.md5Hex(cleanAddress(address));
++        } else if (hashAddress) {
++            return org.apache.commons.codec.digest.DigestUtils.md5Hex(cleanAddress(address));
+         }
+         return address;
+     }
+```
+
+```diff
+--- a/src/main/java/com/maxmind/minfraud/request/Account.java
++++ b/src/main/java/com/maxmind/minfraud/request/Account.java
+@@ -1,7 +1,7 @@
+ package com.maxmind.minfraud.request;
+
+-import org.apache.commons.codec.digest.DigestUtils;
++import org.apache.commons.codec.digest.DigestUtils;
+ 
+ /**
+  * Account related data for the minFraud request
+  */
+@@ -49,7 +49,7 @@
+     public Account.Builder username(String username) {
+         this.usernameMd5 = DigestUtils.md5Hex(username);
+-        return this;
++        return this;
+     }
+```

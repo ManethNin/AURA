@@ -1,0 +1,73 @@
+You are a Java dependency migration expert. A pom.xml file has been updated with new dependencies, causing compilation errors.
+
+POM.XML CHANGES:
+```diff
+diff --git a/extensions/struts2/pom.xml b/extensions/struts2/pom.xml
+index b1d713bc6..3013501b9 100644
+--- a/extensions/struts2/pom.xml
++++ b/extensions/struts2/pom.xml
+@@ -28,7 +28,7 @@
+     <dependency>
+       <groupId>org.apache.struts</groupId>
+       <artifactId>struts2-core</artifactId>
+-      <version>2.3.37</version>
++      <version>2.5.26</version>
+       <scope>provided</scope>
+     </dependency>
+   </dependencies>
+
+```
+
+API CHANGES (FROM DEPENDENCY DIFF TOOL):
+```
+[revapi] org.apache.struts:struts2-core 2.3.37 -> 2.5.26
+=== REVAPI Analysis (Filtered) ===
+No breaking API changes detected for classes/methods used in your code
+```
+
+COMPILATION ERRORS:
+```
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-remote-resources-plugin:1.1:process (default) on project extensions-parent: Failed to resolve dependencies for one or more projects in the reactor. Reason: Missing:
+[ERROR] ----------
+[ERROR] 1) com.google.inject:guice:jar:tests:5.1.1-SNAPSHOT
+[ERROR]   Try downloading the file manually from the project website.
+[ERROR]   Then, install it using the command:
+[ERROR]       mvn install:install-file -DgroupId=com.google.inject -DartifactId=guice -Dversion=5.1.1-SNAPSHOT -Dclassifier=tests -Dpackaging=jar -Dfile=/path/to/file
+[ERROR]   Alternatively, if you host your own repository you can deploy the file there:
+[ERROR]       mvn deploy:deploy-file -DgroupId=com.google.inject -DartifactId=guice -Dversion=5.1.1-SNAPSHOT -Dclassifier=tests -Dpackaging=jar -Dfile=/path/to/file -Durl=[url] -DrepositoryId=[id]
+[ERROR]   Path to dependency:
+[ERROR]   	1) com.google.inject.extensions:extensions-parent:pom:5.1.1-SNAPSHOT
+[ERROR]   	2) com.google.inject:guice:jar:tests:5.1.1-SNAPSHOT
+[ERROR] ----------
+[ERROR] 1 required artifact is missing.
+[ERROR] for artifact:
+[ERROR]   com.google.inject.extensions:extensions-parent:pom:5.1.1-SNAPSHOT
+[ERROR] from the specified remote repositories:
+[ERROR]   central (https://repo.maven.apache.org/maven2, releases=true, snapshots=false)
+[ERROR] -> [Help 1]
+```
+
+YOUR TASK:
+1. Analyze the dependency changes in pom.xml
+2. Look at the ACTUAL file content provided above
+3. Identify what API changes occurred between the old and new versions
+4. Generate a diff that matches the EXACT lines from the actual file content
+5. Fix the Java source code to work with the new dependencies
+6. Validate your changes compile successfully
+
+⚠️ CRITICAL RULES:
+- DO NOT CHANGE versions of existing dependencies in pom.xml
+- The version upgrades are intentional and MUST be kept
+- You MUST update the Java code to be compatible with the NEW versions
+- Reverting dependency versions is FORBIDDEN
+- You MAY ADD new dependencies to pom.xml if needed to fix issues (e.g., adding missing transitive dependencies)
+- When adding dependencies, only add new <dependency> blocks - do NOT modify existing dependency versions
+- Your diff MUST match the exact lines shown in the file content above
+- Include proper context lines for the diff to apply correctly
+
+Use the provided tools to:
+- Validate diffs before applying them (validate_diffs tool)
+- Compile with Maven to check your fixes (compile_maven_stateful tool)
+- Reset the repository if needed to try different approaches
+
+Provide unified diff format changes to fix the Java source code AND/OR add new dependencies to pom.xml if needed.

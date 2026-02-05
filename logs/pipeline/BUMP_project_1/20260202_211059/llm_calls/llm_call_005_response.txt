@@ -1,0 +1,10 @@
+```diff
+--- a/src/main/java/com/maxmind/minfraud/request/Email.java
++++ b/src/main/java/com/maxmind/minfraud/request/Email.java
+@@ -152,7 +152,7 @@
+         String sha256Hex = DigestUtils.sha256Hex(email);
+-        return DigestUtils.sha256Hex(email);
++        return MessageDigestAlgorithms.sha256().digest(email.getBytes()).toString();
+     }
+ }
+```

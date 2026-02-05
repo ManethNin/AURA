@@ -1,0 +1,135 @@
+You are a Java dependency migration expert. A pom.xml file has been updated with new dependencies, causing compilation errors.
+
+POM.XML CHANGES:
+```diff
+diff --git a/pom.xml b/pom.xml
+index b38a523..ec15bcd 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -60,7 +60,7 @@
+             <dependency>
+                 <groupId>mysql</groupId>
+                 <artifactId>mysql-connector-java</artifactId>
+-                <version>5.1.49</version>
++                <version>8.0.28</version>
+             </dependency>
+             <dependency>
+                 <groupId>org.postgresql</groupId>
+
+```
+
+API CHANGES (FROM DEPENDENCY DIFF TOOL):
+```
+[revapi] mysql:mysql-connector-java 5.1.49 -> 8.0.28
+=== REVAPI Analysis (Filtered) ===
+Breaking API changes affecting your code (2 changes):
+
+old: class com.mysql.jdbc.exceptions.MySQLSyntaxErrorException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+
+old: class com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+```
+
+COMPILATION ERRORS:
+```
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project pdb: Compilation failure: Compilation failure:
+[ERROR] src/main/java/com/feedzai/commons/sql/abstraction/engine/impl/mysql/MySqlQueryExceptionHandler.java:[21,33] package com.mysql.jdbc.exceptions does not exist
+[ERROR] src/main/java/com/feedzai/commons/sql/abstraction/engine/impl/mysql/MySqlQueryExceptionHandler.java:[40,37] cannot find symbol
+[ERROR]   symbol:   class MySQLTimeoutException
+[ERROR]   location: class com.feedzai.commons.sql.abstraction.engine.impl.mysql.MySqlQueryExceptionHandler
+[ERROR] -> [Help 1]
+```
+
+
+================================================================================
+📄 CURRENT FILE CONTENTS (ACTUAL SOURCE CODE):
+================================================================================
+
+=== src/main/java/com/feedzai/commons/sql/abstraction/engine/impl/mysql/MySqlQueryExceptionHandler.java ===
+```java
+/*
+ * Copyright 2019 Feedzai
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.feedzai.commons.sql.abstraction.engine.impl.mysql;
+
+import com.feedzai.commons.sql.abstraction.engine.handler.QueryExceptionHandler;
+
+import com.mysql.jdbc.exceptions.MySQLTimeoutException;
+
+import java.sql.SQLException;
+
+/**
+ * A specific implementation of {@link QueryExceptionHandler} for MySQL engine.
+ *
+ * @author José Fidalgo (jose.fidalgo@feedzai.com)
+ * @since 2.5.1
+ */
+public class MySqlQueryExceptionHandler extends QueryExceptionHandler {
+
+    /**
+     * The MySQL error code that indicates a unique constraint violation.
+     */
+    private static final int UNIQUE_CONSTRAINT_VIOLATION_ERROR_CODE = 1062;
+
+    @Override
+    public boolean isTimeoutException(final SQLException exception) {
+        return exception instanceof MySQLTimeoutException || super.isTimeoutException(exception);
+    }
+
+    @Override
+    public boolean isUniqueConstraintViolationException(final SQLException exception) {
+        return UNIQUE_CONSTRAINT_VIOLATION_ERROR_CODE == exception.getErrorCode()
+                || super.isUniqueConstraintViolationException(exception);
+    }
+}
+
+```
+
+================================================================================
+⚠️  Your diff MUST match the EXACT lines shown above (including whitespace, blank lines, etc.)
+================================================================================
+
+
+YOUR TASK:
+1. Analyze the dependency changes in pom.xml
+2. Look at the ACTUAL file content provided above
+3. Identify what API changes occurred between the old and new versions
+4. Generate a diff that matches the EXACT lines from the actual file content
+5. Fix the Java source code to work with the new dependencies
+6. Validate your changes compile successfully
+
+⚠️ CRITICAL RULES:
+- DO NOT CHANGE versions of existing dependencies in pom.xml
+- The version upgrades are intentional and MUST be kept
+- You MUST update the Java code to be compatible with the NEW versions
+- Reverting dependency versions is FORBIDDEN
+- You MAY ADD new dependencies to pom.xml if needed to fix issues (e.g., adding missing transitive dependencies)
+- When adding dependencies, only add new <dependency> blocks - do NOT modify existing dependency versions
+- Your diff MUST match the exact lines shown in the file content above
+- Include proper context lines for the diff to apply correctly
+
+Use the provided tools to:
+- Validate diffs before applying them (validate_diffs tool)
+- Compile with Maven to check your fixes (compile_maven_stateful tool)
+- Reset the repository if needed to try different approaches
+
+Provide unified diff format changes to fix the Java source code AND/OR add new dependencies to pom.xml if needed.

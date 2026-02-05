@@ -1,0 +1,38 @@
+{
+  "repo_name": "allure-framework/allure-maven",
+  "session_id": "20260204_000001",
+  "start_time": "2026-02-04T00:00:01.234567",
+  "log_directory": "d:\\FYP\\logs\\logs_new\\AllureFramework_Project1\\20260204_000001",
+  "stages": [
+    {
+      "stage": "input",
+      "timestamp": "2026-02-04T00:00:01.234567"
+    },
+    {
+      "stage": "build_workflow",
+      "timestamp": "2026-02-04T00:00:02.456789"
+    },
+    {
+      "stage": "prompt_created",
+      "timestamp": "2026-02-04T00:00:02.567890"
+    },
+    {
+      "stage": "agent_start",
+      "timestamp": "2026-02-04T00:00:02.678901"
+    },
+    {
+      "stage": "llm_call_1_start",
+      "timestamp": "2026-02-04T00:00:03.123456"
+    },
+    {
+      "stage": "llm_call_2_start",
+      "timestamp": "2026-02-04T00:00:05.234567"
+    },
+    {
+      "stage": "agent_complete",
+      "timestamp": "2026-02-04T00:01:15.456789"
+    }
+  ],
+  "end_time": "2026-02-04T00:01:16.123456",
+  "success": true
+}

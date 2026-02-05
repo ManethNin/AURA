@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-02-03T22:38:39.965291",
+  "success": false,
+  "result": {
+    "success": false,
+    "error": "Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01jk5m9gdye45a18c9tq4z9e50` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98740, Requested 3660. Please try again in 34m33.6s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+    "log_directory": "D:\\FYP\\logs\\pipeline\\BUMP_project_1\\20260203_223838"
+  }
+}

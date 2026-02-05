@@ -1,0 +1,12 @@
+```diff
+--- a/pom.xml
++++ b/pom.xml
+@@ -123,6 +123,9 @@
+         </dependency>
+     </dependencies>
++    <dependency>
++        <groupId>commons-codec</groupId>
++        <artifactId>commons-codec</artifactId>
++        <version>1.15</version>
++    </dependency>
+ ```

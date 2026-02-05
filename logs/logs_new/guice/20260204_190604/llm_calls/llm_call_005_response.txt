@@ -1,0 +1,24 @@
+```diff
+--- pom.xml
++++ pom.xml
+@@ -100,6 +100,13 @@
+         </dependencies>
++        <profiles>
++            <profile>
++                <id>add-repo</id>
++                <activation>
++                    <activeByDefault>true</activeByDefault>
++                </activation>
++                <repositories>
++                    <repository>
++                        <id>sonatype-snapshots</id>
++                        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
++                        <snapshots>
++                            <enabled>true</enabled>
++                        </snapshots>
++                    </repository>
++                </repositories>
++            </profile>
++        </profiles>
+     </project>
+```
