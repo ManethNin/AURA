@@ -11,7 +11,7 @@ from app.utils.logger import logger
 import asyncio
 
 # Flag to enable/disable recipe-based agent (set to True to use recipes first)
-USE_RECIPE_AGENT = False
+USE_RECIPE_AGENT = True
 
 class WebhookService:
 
@@ -204,7 +204,7 @@ class WebhookService:
             await callback.update_status("analyzing", 20, "Agent starting analysis...")
             
             # Run agent
-            agent_service = JavaMigrationAgentService(settings.GROQ_API_KEY)
+            agent_service = JavaMigrationAgentService()
             
             result = agent_service.process_repository(
                 repo_path=repo_path,

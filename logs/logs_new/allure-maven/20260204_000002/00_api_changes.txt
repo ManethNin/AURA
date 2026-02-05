@@ -1,0 +1,4 @@
+﻿[revapi] allure-framework/allure-maven version update successful
+=== REVAPI Analysis (Filtered) ===
+No breaking API changes detected for classes/methods used in your code
+Build completed successfully with all dependencies resolved

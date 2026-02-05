@@ -1,0 +1,6 @@
+Recipe Analysis Result
+Timestamp: 20260204_193106
+Can Use Recipes: False
+Reasoning: Error during analysis: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01jk5m9gdye45a18c9tq4z9e50` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98576, Requested 2877. Please try again in 20m55.392s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+
+Selected Recipes (0):

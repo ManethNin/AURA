@@ -1,0 +1,7 @@
+{
+  "timestamp": "2026-02-04T00:00:03.123456",
+  "stage": "llm_call_1_start",
+  "data": {
+    "call_number": 1
+  }
+}

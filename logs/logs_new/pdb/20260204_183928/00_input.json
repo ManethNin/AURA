@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-02-04T18:42:34.812261",
+  "repo_path": "D:\\FYP\\workspace\\pdb",
+  "commit_hash": "0305beafdecb0b28f7c94264ed20cdc4e41ff067",
+  "pom_diff": "diff --git a/pom.xml b/pom.xml\nindex b38a523..ec15bcd 100644\n--- a/pom.xml\n+++ b/pom.xml\n@@ -60,7 +60,7 @@\n             <dependency>\n                 <groupId>mysql</groupId>\n                 <artifactId>mysql-connector-java</artifactId>\n-                <version>5.1.49</version>\n+                <version>8.0.28</version>\n             </dependency>\n             <dependency>\n                 <groupId>org.postgresql</groupId>\n",
+  "initial_errors": "[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:compile (default-compile) on project pdb: Compilation failure: Compilation failure:\n[ERROR] src/main/java/com/feedzai/commons/sql/abstraction/engine/impl/mysql/MySqlQueryExceptionHandler.java:[21,33] package com.mysql.jdbc.exceptions does not exist\n[ERROR] src/main/java/com/feedzai/commons/sql/abstraction/engine/impl/mysql/MySqlQueryExceptionHandler.java:[40,37] cannot find symbol\n[ERROR]   symbol:   class MySQLTimeoutException\n[ERROR]   location: class com.feedzai.commons.sql.abstraction.engine.impl.mysql.MySqlQueryExceptionHandler\n[ERROR] -> [Help 1]",
+  "api_changes": "[revapi] mysql:mysql-connector-java 5.1.49 -> 8.0.28\n=== REVAPI Analysis (Filtered) ===\nBreaking API changes affecting your code (2 changes):\n\nold: class com.mysql.jdbc.exceptions.MySQLSyntaxErrorException\nnew: <none>\njava.class.removed: Class was removed.\nBINARY: BREAKING, SOURCE: BREAKING\n\n\nold: class com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException\nnew: <none>\njava.class.removed: Class was removed.\nBINARY: BREAKING, SOURCE: BREAKING"
+}

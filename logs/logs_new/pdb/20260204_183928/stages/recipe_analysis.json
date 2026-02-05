@@ -1,0 +1,59 @@
+{
+  "timestamp": "20260204_184051",
+  "can_use_recipes": true,
+  "selected_recipes": [
+    {
+      "name": "org.openrewrite.java.ChangeType",
+      "arguments": {
+        "oldFullyQualifiedTypeName": "com.mysql.jdbc.exceptions.MySQLTimeoutException",
+        "newFullyQualifiedTypeName": "com.mysql.cj.exceptions.TimeoutException"
+      }
+    },
+    {
+      "name": "org.openrewrite.java.ChangeType",
+      "arguments": {
+        "oldFullyQualifiedTypeName": "com.mysql.jdbc.exceptions.CommunicationsException",
+        "newFullyQualifiedTypeName": "com.mysql.cj.exceptions.CJCommunicationsException"
+      }
+    },
+    {
+      "name": "org.openrewrite.java.ChangeType",
+      "arguments": {
+        "oldFullyQualifiedTypeName": "com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException",
+        "newFullyQualifiedTypeName": "com.mysql.cj.exceptions.MySQLIntegrityConstraintViolationException"
+      }
+    }
+  ],
+  "recipe_name": "com.aura.fix.MysqlConnectorUpdate",
+  "reasoning": "The root cause of the errors is the change in the MySQL Connector/J version from 5.1.49 to 8.0.28. The new version has a different package structure, which is causing the compilation errors. The OpenRewrite recipe 'org.openrewrite.java.ChangeType' can be used to update the package names in the Java code.",
+  "analysis": {
+    "can_use_recipes": true,
+    "reasoning": "The root cause of the errors is the change in the MySQL Connector/J version from 5.1.49 to 8.0.28. The new version has a different package structure, which is causing the compilation errors. The OpenRewrite recipe 'org.openrewrite.java.ChangeType' can be used to update the package names in the Java code.",
+    "recipe_name": "com.aura.fix.MysqlConnectorUpdate",
+    "recipe_display_name": "Fix MySQL Connector/J Update Breaking Changes",
+    "recipe_description": "Updates the package names in the Java code to match the new MySQL Connector/J version",
+    "selected_recipes": [
+      {
+        "name": "org.openrewrite.java.ChangeType",
+        "arguments": {
+          "oldFullyQualifiedTypeName": "com.mysql.jdbc.exceptions.MySQLTimeoutException",
+          "newFullyQualifiedTypeName": "com.mysql.cj.exceptions.TimeoutException"
+        }
+      },
+      {
+        "name": "org.openrewrite.java.ChangeType",
+        "arguments": {
+          "oldFullyQualifiedTypeName": "com.mysql.jdbc.exceptions.CommunicationsException",
+          "newFullyQualifiedTypeName": "com.mysql.cj.exceptions.CJCommunicationsException"
+        }
+      },
+      {
+        "name": "org.openrewrite.java.ChangeType",
+        "arguments": {
+          "oldFullyQualifiedTypeName": "com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException",
+          "newFullyQualifiedTypeName": "com.mysql.cj.exceptions.MySQLIntegrityConstraintViolationException"
+        }
+      }
+    ]
+  }
+}

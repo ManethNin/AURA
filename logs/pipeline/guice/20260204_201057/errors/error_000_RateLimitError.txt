@@ -1,0 +1,47 @@
+RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01jk5m9gdye45a18c9tq4z9e50` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99608, Requested 7845. Please try again in 1h47m19.392s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+
+Traceback (most recent call last):
+  File "D:\FYP\master\AURA\backend\app\agents\service.py", line 136, in process_repository
+    result = app.invoke(
+             ^^^^^^^^^^^
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\langgraph\pregel\__init__.py", line 1936, in invoke
+    for chunk in self.stream(
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\langgraph\pregel\__init__.py", line 1656, in stream
+    for _ in runner.tick(
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\langgraph\pregel\runner.py", line 167, in tick
+    run_with_retry(
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\langgraph\pregel\retry.py", line 40, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\langgraph\utils\runnable.py", line 408, in invoke
+    input = step.invoke(input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\langgraph\utils\runnable.py", line 184, in invoke
+    ret = context.run(self.func, input, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FYP\master\AURA\backend\app\agents\workflow.py", line 129, in call_model
+    response = llm.invoke(messages_with_tools)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 284, in invoke
+    self.generate_prompt(
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 860, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 690, in generate
+    self._generate_with_cache(
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 925, in _generate_with_cache
+    result = self._generate(
+             ^^^^^^^^^^^^^^^
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\langchain_groq\chat_models.py", line 474, in _generate
+    response = self.client.create(messages=message_dicts, **params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\groq\resources\chat\completions.py", line 461, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\groq\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\FYP\master\AURA\backend\.venv\Lib\site-packages\groq\_base_client.py", line 1044, in request
+    raise self._make_status_error_from_response(err.response) from None
+groq.RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01jk5m9gdye45a18c9tq4z9e50` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99608, Requested 7845. Please try again in 1h47m19.392s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+During task with name 'agent' and id '0726085f-28be-fd52-481f-30a296edca41'

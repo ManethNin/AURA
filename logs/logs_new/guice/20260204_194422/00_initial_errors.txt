@@ -1,0 +1,18 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-remote-resources-plugin:1.1:process (default) on project extensions-parent: Failed to resolve dependencies for one or more projects in the reactor. Reason: Missing:
+[ERROR] ----------
+[ERROR] 1) com.google.inject:guice:jar:tests:5.1.1-SNAPSHOT
+[ERROR]   Try downloading the file manually from the project website.
+[ERROR]   Then, install it using the command:
+[ERROR]       mvn install:install-file -DgroupId=com.google.inject -DartifactId=guice -Dversion=5.1.1-SNAPSHOT -Dclassifier=tests -Dpackaging=jar -Dfile=/path/to/file
+[ERROR]   Alternatively, if you host your own repository you can deploy the file there:
+[ERROR]       mvn deploy:deploy-file -DgroupId=com.google.inject -DartifactId=guice -Dversion=5.1.1-SNAPSHOT -Dclassifier=tests -Dpackaging=jar -Dfile=/path/to/file -Durl=[url] -DrepositoryId=[id]
+[ERROR]   Path to dependency:
+[ERROR]   	1) com.google.inject.extensions:extensions-parent:pom:5.1.1-SNAPSHOT
+[ERROR]   	2) com.google.inject:guice:jar:tests:5.1.1-SNAPSHOT
+[ERROR] ----------
+[ERROR] 1 required artifact is missing.
+[ERROR] for artifact:
+[ERROR]   com.google.inject.extensions:extensions-parent:pom:5.1.1-SNAPSHOT
+[ERROR] from the specified remote repositories:
+[ERROR]   central (https://repo.maven.apache.org/maven2, releases=true, snapshots=false)
+[ERROR] -> [Help 1]

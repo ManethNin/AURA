@@ -1,0 +1,35 @@
+```diff
+--- a/src/main/java/com/maxmind/minfraud/request/Email.java
++++ b/src/main/java/com/maxmind/minfraud/request/Email.java
+@@ -1,7 +1,7 @@
+ package com.maxmind.minfraud.request;
+ 
+-import org.apache.commons.codec.digest.DigestUtils;
++import org.apache.commons.codec.digest.MessageDigestAlgorithms;
+ 
+ public class Email {
+ 
+@@ -152,7 +152,7 @@
+         String sha256Hex = DigestUtils.sha256Hex(email);
+-        return DigestUtils.sha256Hex(email);
++        return org.apache.commons.codec.digest.MessageDigestAlgorithms.sha256().digest(email.getBytes()).toString();
+     }
+ }
+ 
+--- a/src/main/java/com/maxmind/minfraud/request/Account.java
++++ b/src/main/java/com/maxmind/minfraud/request/Account.java
+@@ -1,7 +1,7 @@
+ package com.maxmind.minfraud.request;
+ 
+-import org.apache.commons.codec.digest.DigestUtils;
++import org.apache.commons.codec.digest.MessageDigestAlgorithms;
+ 
+ public class Account {
+ 
+@@ -48,7 +48,7 @@
+         String sha256Hex = DigestUtils.sha256Hex(user);
+-        return DigestUtils.sha256Hex(user);
++        return org.apache.commons.codec.digest.MessageDigestAlgorithms.sha256().digest(user.getBytes()).toString();
+     }
+ }
+```

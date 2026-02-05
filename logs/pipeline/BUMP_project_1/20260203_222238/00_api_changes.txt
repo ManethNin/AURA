@@ -1,0 +1,124 @@
+[revapi] com.maxmind.geoip2:geoip2 2.16.1 -> 3.0.0
+Breaking API changes found (32 changes):
+
+old: parameter void com.maxmind.geoip2.exception.HttpException::<init>(java.lang.String, int, ===java.net.URL===)
+new: parameter void com.maxmind.geoip2.exception.HttpException::<init>(java.lang.String, int, ===java.net.URI===)
+java.method.parameterTypeChanged: The type of the parameter changed from 'java.net.URL' to 'java.net.URI'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+
+old: parameter void com.maxmind.geoip2.exception.HttpException::<init>(java.lang.String, int, ===java.net.URL===, java.lang.Throwable)
+new: parameter void com.maxmind.geoip2.exception.HttpException::<init>(java.lang.String, int, ===java.net.URI===, java.lang.Throwable)
+java.method.parameterTypeChanged: The type of the parameter changed from 'java.net.URL' to 'java.net.URI'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+
+old: parameter void com.maxmind.geoip2.exception.InvalidRequestException::<init>(java.lang.String, java.lang.String, int, ===java.net.URL===, java.lang.Throwable)
+new: parameter void com.maxmind.geoip2.exception.InvalidRequestException::<init>(java.lang.String, java.lang.String, int, ===java.net.URI===, java.lang.Throwable)
+java.method.parameterTypeChanged: The type of the parameter changed from 'java.net.URL' to 'java.net.URI'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+
+old: parameter void com.maxmind.geoip2.exception.InvalidRequestException::<init>(java.lang.String, java.lang.String, ===java.net.URL===)
+new: parameter void com.maxmind.geoip2.exception.InvalidRequestException::<init>(java.lang.String, java.lang.String, ===java.net.URI===)
+java.method.parameterTypeChanged: The type of the parameter changed from 'java.net.URL' to 'java.net.URI'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+
+old: method void com.maxmind.geoip2.model.AnonymousIpResponse::<init>(java.lang.String, boolean, boolean, boolean, boolean, boolean)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+
+old: method void com.maxmind.geoip2.model.AnonymousIpResponse::<init>(java.lang.String, boolean, boolean, boolean, boolean, boolean, com.maxmind.db.Network)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+
+old: method void com.maxmind.geoip2.model.AsnResponse::<init>(java.lang.Integer, java.lang.String, java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+
+old: method void com.maxmind.geoip2.model.AsnResponse::<init>(java.lang.Integer, java.lang.String, java.lang.String, com.maxmind.db.Network)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+
+old: method java.lang.Integer com.maxmind.geoip2.model.AsnResponse::getAutonomousSystemNumber()
+new: method java.lang.Long com.maxmind.geoip2.model.AsnResponse::getAutonomousSystemNumber()
+java.method.returnTypeChanged: The return type changed from 'java.lang.Integer' to  'java.lang.Long'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+
+old: method void com.maxmind.geoip2.model.ConnectionTypeResponse::<init>(com.maxmind.geoip2.model.ConnectionTypeResponse.ConnectionType, java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+
+old: method void com.maxmind.geoip2.model.DomainResponse::<init>(java.lang.String, java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+
+old: method void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+
+old: method void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+
+old: method void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+
+old: method void com.maxmind.geoip2.model.IspResponse::<init>(java.lang.Long, java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.maxmind.db.Network)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+
+old: method java.lang.Integer com.maxmind.geoip2.record.AbstractNamedRecord::getGeoNameId()
+new: method java.lang.Long com.maxmind.geoip2.record.AbstractNamedRecord::getGeoNameId()
+java.method.returnTypeChanged: The return type changed from 'java.lang.Integer' to  'java.lang.Long'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+
+old: method void com.maxmind.geoip2.record.City::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Integer, java.util.Map<java.lang.String, java.lang.String>)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+
+old: method void com.maxmind.geoip2.record.Continent::<init>(java.util.List<java.lang.String>, java.lang.String, java.lang.Integer, java.util.Map<java.lang.String, java.lang.String>)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+
+old: method void com.maxmind.geoip2.record.Country::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Integer, boolean, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+
+old: method void com.maxmind.geoip2.record.Country::<init>(java.util.List<java.lang.String>, java.lang.Integer, java.lang.Integer, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+
+... and 12 more breaking changes

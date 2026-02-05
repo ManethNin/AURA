@@ -1,0 +1,3 @@
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project allure-maven: Compilation failure
+[ERROR] src/main/java/io/qameta/allure/maven/AllureCommandline.java:[18,30] package net.lingala.zip4j.core does not exist
+[ERROR] -> [Help 1]

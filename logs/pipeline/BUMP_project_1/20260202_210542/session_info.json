@@ -1,0 +1,54 @@
+{
+  "repo_name": "BUMP_project_1",
+  "session_id": "20260202_210542",
+  "start_time": "2026-02-02T21:05:42.292530",
+  "log_directory": "D:\\FYP\\logs\\pipeline\\BUMP_project_1\\20260202_210542",
+  "stages": [
+    {
+      "stage": "input",
+      "timestamp": "2026-02-02T21:05:42.292530"
+    },
+    {
+      "stage": "build_workflow",
+      "timestamp": "2026-02-02T21:05:42.965844"
+    },
+    {
+      "stage": "prompt_created",
+      "timestamp": "2026-02-02T21:05:42.972796"
+    },
+    {
+      "stage": "agent_start",
+      "timestamp": "2026-02-02T21:05:42.980195"
+    },
+    {
+      "stage": "llm_call_1_start",
+      "timestamp": "2026-02-02T21:05:43.028623"
+    },
+    {
+      "stage": "llm_call_2_start",
+      "timestamp": "2026-02-02T21:06:20.356545"
+    },
+    {
+      "stage": "llm_call_3_start",
+      "timestamp": "2026-02-02T21:06:27.626720"
+    },
+    {
+      "stage": "llm_call_4_start",
+      "timestamp": "2026-02-02T21:07:10.520967"
+    },
+    {
+      "stage": "llm_call_5_start",
+      "timestamp": "2026-02-02T21:07:21.056217"
+    },
+    {
+      "stage": "llm_call_6_start",
+      "timestamp": "2026-02-02T21:07:30.458581"
+    },
+    {
+      "stage": "llm_call_7_start",
+      "timestamp": "2026-02-02T21:07:44.011501"
+    }
+  ],
+  "end_time": "2026-02-02T21:07:57.676803",
+  "success": false
+}

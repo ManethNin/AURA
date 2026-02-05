@@ -1,0 +1,12 @@
+{
+  "timestamp": "20260204_201218",
+  "can_use_recipes": false,
+  "selected_recipes": [],
+  "recipe_name": "",
+  "reasoning": "Error during analysis: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01jk5m9gdye45a18c9tq4z9e50` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 97747, Requested 3062. Please try again in 11m38.976s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+  "analysis": {
+    "can_use_recipes": false,
+    "reasoning": "Error during analysis: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01jk5m9gdye45a18c9tq4z9e50` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 97747, Requested 3062. Please try again in 11m38.976s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+    "selected_recipes": []
+  }
+}

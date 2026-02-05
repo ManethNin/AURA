@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-02-02T21:07:57.673345",
+  "success": false,
+  "result": {
+    "success": false,
+    "error": "Recursion limit of 30 reachedwithout hitting a stop condition. You can increase the limitby setting the `recursion_limit` config key.",
+    "log_directory": "D:\\FYP\\logs\\pipeline\\BUMP_project_1\\20260202_210542"
+  }
+}

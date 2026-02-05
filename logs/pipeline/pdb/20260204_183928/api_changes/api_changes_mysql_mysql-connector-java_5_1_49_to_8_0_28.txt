@@ -1,0 +1,20 @@
+Tool(s) Used: revapi
+Artifact: mysql:mysql-connector-java
+Version Change: 5.1.49 -> 8.0.28
+Timestamp: 20260204_184048
+Purpose: Filtered output for LLM processing
+================================================================================
+
+=== REVAPI Analysis (Filtered) ===
+Breaking API changes affecting your code (2 changes):
+
+old: class com.mysql.jdbc.exceptions.MySQLSyntaxErrorException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+
+old: class com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING

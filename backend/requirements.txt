@@ -1,52 +1,69 @@
+# -------------------------
 # Web Framework
-fastapi==0.109.0
-pydantic==2.5.3
-pydantic-settings==2.1.0
-uvicorn[standard]==0.27.0
+# -------------------------
+fastapi>=0.109.0
+pydantic>=2.7.0
+pydantic-settings>=2.2.0
+uvicorn[standard]==0.29.0
 
+# -------------------------
 # Database
+# -------------------------
 motor==3.3.2
 pymongo==4.6.1
 
+# -------------------------
 # Authentication
+# -------------------------
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
-python-multipart==0.0.6
+python-multipart==0.0.9
 
+# -------------------------
 # GitHub Integration
-PyGithub==2.1.1
-httpx==0.26.0
+# -------------------------
+PyGithub==2.3.0
+httpx==0.28.1
 
 # LangChain & LLM
-langchain==0.1.4
-langchain-groq==0.1.0
-langchain-core==0.1.10
-langchain-openai==0.0.5
-langgraph==0.0.25
-openai==1.10.0
+langchain==0.3.13
+langchain-core==0.3.37
+langchain-community==0.3.13
+langchain-groq==0.2.1
+langchain-google-genai==2.0.11
+langchain-openai==0.2.14
+langgraph==0.2.60
+openai>=1.58.1,<2.0.0
 
+# -------------------------
 # Agent Tools
+# -------------------------
 GitPython==3.1.40
 docker==7.1.0
 tenacity==8.2.3
 
+# -------------------------
 # Observability
-opentelemetry-api==1.22.0
-opentelemetry-sdk==1.22.0
-opentelemetry-instrumentation-langchain==0.1.0
+# -------------------------
+opentelemetry-api==1.24.0
+opentelemetry-sdk==1.24.0
 
-# Masterthesis Dependencies
+# -------------------------
+# Master Thesis Dependencies
+# -------------------------
 diff-match-patch==20230430
 mistletoe==1.3.0
 pathvalidate==3.2.0
 tree-sitter==0.20.4
-tiktoken==0.5.2
+tiktoken>=0.6.0
 tqdm==4.66.1
-pandas==2.1.4
-dspy-ai==2.4.0
-requests==2.31.0
+pandas==2.2.0
+dspy-ai>=2.5.0
+requests>=2.31.0,<3.0.0
 unidiff==0.7.5
 
+# -------------------------
 # Utilities
-python-dotenv==1.0.0
-cryptography==42.0.0
+# -------------------------
+python-dotenv==1.0.1
+cryptography==42.0.2

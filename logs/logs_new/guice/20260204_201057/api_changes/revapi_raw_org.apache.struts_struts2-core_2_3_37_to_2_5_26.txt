@@ -1,0 +1,1044 @@
+Tool: REVAPI
+Artifact: org.apache.struts:struts2-core
+Version Change: 2.3.37 -> 2.5.26
+Timestamp: 20260204_201217
+================================================================================
+
+20:10:58.316 INFO  Downloading checked archives
+20:11:36.032 INFO  Downloading extensions
+20:11:47.799 WARN  Detected version conflict in dependencies of extension org.revapi:revapi-java:jar:0.28.1. The extension depends on org.revapi:revapi:jar:0.15.0 while the CLI has org.revapi:revapi:jar:0.15.1 on global classpath. This will likely cause problems.
+20:12:04.071 WARN  Detected version conflict in dependencies of extension org.revapi:revapi-java-spi:jar:0.25.0. The extension depends on org.revapi:revapi:jar:0.15.0 while the CLI has org.revapi:revapi:jar:0.15.1 on global classpath. This will likely cause problems.
+20:12:05.217 WARN  Detected version conflict in dependencies of extension org.revapi:revapi-reporter-text:jar:0.15.0. The extension depends on org.revapi:revapi:jar:0.15.0 while the CLI has org.revapi:revapi:jar:0.15.1 on global classpath. This will likely cause problems.
+20:12:05.271 WARN  Detected version conflict in dependencies of extension org.revapi:revapi-reporter-file-base:jar:0.5.0. The extension depends on org.revapi:revapi:jar:0.15.0 while the CLI has org.revapi:revapi:jar:0.15.1 on global classpath. This will likely cause problems.
+20:12:05.348 INFO  Starting analysis
+20:12:05.377 WARN  At least one of `minSeverity` and `minCriticality` should to be defined. Defaulting to the obsolete behavior of reporting all potentially breaking elements.
+Analysis results
+----------------
+
+Old API: struts2-core-2.3.37.jar
+New API: struts2-core-2.5.26.jar
+old: <none>
+new: enum com.opensymphony.xwork2.inject.util.ReferenceMap.PutStrategy
+java.class.nonPublicPartOfAPI: Class 'com.opensymphony.xwork2.inject.util.ReferenceMap.PutStrategy' is indirectly included in the API (by the means of method return type for example) but the class is not accessible (neither public nor protected).
+SOURCE: NON_BREAKING, BINARY: NON_BREAKING, SEMANTIC: BREAKING
+
+old: <none>
+new: class com.opensymphony.xwork2.util.AbstractLocalizedTextProvider.GetDefaultMessageReturnArg
+java.class.nonPublicPartOfAPI: Class 'com.opensymphony.xwork2.util.AbstractLocalizedTextProvider.GetDefaultMessageReturnArg' is indirectly included in the API (by the means of method return type for example) but the class is not accessible (neither public nor protected).
+SOURCE: NON_BREAKING, BINARY: NON_BREAKING, SEMANTIC: BREAKING
+
+old: method java.util.Map<java.lang.String, java.lang.Object> com.opensymphony.xwork2.ActionContext::getParameters() @ org.apache.struts2.ServletActionContext
+new: method org.apache.struts2.dispatcher.HttpParameters com.opensymphony.xwork2.ActionContext::getParameters() @ org.apache.struts2.ServletActionContext
+java.method.returnTypeChanged: The return type changed from 'java.util.Map<java.lang.String, java.lang.Object>' to  'org.apache.struts2.dispatcher.HttpParameters'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: parameter void com.opensymphony.xwork2.ActionContext::setParameters(===java.util.Map<java.lang.String, java.lang.Object>===) @ org.apache.struts2.ServletActionContext
+new: parameter void com.opensymphony.xwork2.ActionContext::setParameters(===org.apache.struts2.dispatcher.HttpParameters===) @ org.apache.struts2.ServletActionContext
+java.method.parameterTypeChanged: The type of the parameter changed from 'java.util.Map<java.lang.String, java.lang.Object>' to 'org.apache.struts2.dispatcher.HttpParameters'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: field org.apache.struts2.StrutsConstants.STRUTS_FREEMARKER_TEMPLATES_CACHE
+new: <none>
+java.field.removedWithConstant: Field with constant value has been removed.
+SOURCE: BREAKING, BINARY: NON_BREAKING, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method java.lang.Throwable com.opensymphony.xwork2.XWorkException::getThrowable() @ org.apache.struts2.StrutsException
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method java.util.Map<java.lang.String, java.lang.String[]> org.apache.struts2.components.ActionComponent::createParametersForContext()
+new: method org.apache.struts2.dispatcher.HttpParameters org.apache.struts2.components.ActionComponent::createParametersForContext()
+java.method.returnTypeChanged: The return type changed from 'java.util.Map<java.lang.String, java.lang.String[]>' to  'org.apache.struts2.dispatcher.HttpParameters'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ActionMessage::setEscape(boolean)
+new: method void org.apache.struts2.components.ActionMessage::setEscape(boolean)
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Whether to escape HTML"' to '"Whether to escape HTML"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: class org.apache.struts2.components.Anchor
+new: class org.apache.struts2.components.Anchor
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTag' changed value from '"Render a HTML href element that when clicked can optionally call a URL via remote XMLHttpRequest and updates its targets"' to '"Render a HTML href element"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: field org.apache.struts2.components.Bean.LOG
+new: field org.apache.struts2.components.Bean.LOG
+java.field.typeChanged: The type of the field changed from 'com.opensymphony.xwork2.util.logging.Logger' to 'org.apache.logging.log4j.Logger'.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field org.apache.struts2.components.Checkbox.readonly
+new: <none>
+java.field.removed: Field removed from class.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.components.Checkbox::setReadonly(java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field org.apache.struts2.components.CheckboxList.readonly
+new: <none>
+java.field.removed: Field removed from class.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String) @ org.apache.struts2.components.CheckboxList
+new: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String) @ org.apache.struts2.components.CheckboxList
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value from"' to '"Property of list objects to get field value from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String) @ org.apache.struts2.components.CheckboxList
+new: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String) @ org.apache.struts2.components.CheckboxList
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value label from"' to '"Property of list objects to get field value label from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.CheckboxList::setReadonly(java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.components.ComboBox::setList(java.lang.String)
+new: method void org.apache.struts2.components.ComboBox::setList(java.lang.String)
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '"Iteratable source to populate from. If this is missing, the select widget is simply not displayed."' to '"Iterable source to populate from. If this is missing, the select widget is simply not displayed."'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ComboBox::setListKey(java.lang.String)
+new: method void org.apache.struts2.components.ComboBox::setListKey(java.lang.String)
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '"Set the key used to retrive the option key."' to '"Set the key used to retrieve the option key."'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ComboBox::setListValue(java.lang.String)
+new: method void org.apache.struts2.components.ComboBox::setListValue(java.lang.String)
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '"Set the value used to retrive the option value."' to '"Set the value used to retrieve the option value."'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ContextBean::setId(java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.components.Debug
+new: class org.apache.struts2.components.Debug
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTag' changed value from '"Prints debugging information"' to '"Prints debugging information (Only if 'struts.devMode' is enabled)"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: class org.apache.struts2.components.Div
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String) @ org.apache.struts2.components.DoubleListUIBean
+new: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String) @ org.apache.struts2.components.DoubleListUIBean
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value from"' to '"Property of list objects to get field value from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String) @ org.apache.struts2.components.DoubleListUIBean
+new: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String) @ org.apache.struts2.components.DoubleListUIBean
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value label from"' to '"Property of list objects to get field value label from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String) @ org.apache.struts2.components.DoubleSelect
+new: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String) @ org.apache.struts2.components.DoubleSelect
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value from"' to '"Property of list objects to get field value from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String) @ org.apache.struts2.components.DoubleSelect
+new: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String) @ org.apache.struts2.components.DoubleSelect
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value label from"' to '"Property of list objects to get field value label from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: field org.apache.struts2.components.FormButton.align
+new: <none>
+java.field.removed: Field removed from class.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.components.FormButton::setAlign(java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field org.apache.struts2.components.I18n.container
+new: <none>
+java.field.removed: Field removed from class.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.components.I18n::setContainer(com.opensymphony.xwork2.inject.Container)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.components.I18n::setLocaleProvider(com.opensymphony.xwork2.LocaleProvider)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.components.I18n::setTextProvider(com.opensymphony.xwork2.TextProvider)
+new: method void org.apache.struts2.components.I18n::setTextProvider(com.opensymphony.xwork2.TextProvider)
+java.annotation.attributeAdded: Attribute 'com.opensymphony.xwork2.inject.Inject' of annotation '@com.opensymphony.xwork2.inject.Inject("system")' is now explicitly set.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.Include::include(java.lang.String, java.io.Writer, javax.servlet.ServletRequest, javax.servlet.http.HttpServletResponse) throws javax.servlet.ServletException, java.io.IOException
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String) @ org.apache.struts2.components.InputTransferSelect
+new: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String) @ org.apache.struts2.components.InputTransferSelect
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value from"' to '"Property of list objects to get field value from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String) @ org.apache.struts2.components.InputTransferSelect
+new: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String) @ org.apache.struts2.components.InputTransferSelect
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value label from"' to '"Property of list objects to get field value label from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String)
+new: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String)
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value from"' to '"Property of list objects to get field value from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String)
+new: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String)
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value label from"' to '"Property of list objects to get field value label from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.Number::setCurrency(java.lang.String)
+new: method void org.apache.struts2.components.Number::setCurrency(java.lang.String)
+java.annotation.attributeRemoved: Attribute 'org.apache.struts2.views.annotations.StrutsTagAttribute' of annotation '@org.apache.struts2.views.annotations.StrutsTagAttribute(description = "The currency to use for a currency format")' is no longer explicitly set.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+java.annotation.attributeRemoved: Attribute 'org.apache.struts2.views.annotations.StrutsTagAttribute' of annotation '@org.apache.struts2.views.annotations.StrutsTagAttribute(description = "The currency to use for a currency format")' is no longer explicitly set.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.Number::setRoundingMode(java.lang.String)
+new: method void org.apache.struts2.components.Number::setRoundingMode(java.lang.String)
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '"The rounding mode to use - not implemented yet as this required Java 1.6"' to '"The rounding mode to use, possible values: ceiling, down, floor, half-down, half-even, half-up, unnecessary, up"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+java.annotation.attributeRemoved: Attribute 'org.apache.struts2.views.annotations.StrutsTagAttribute' of annotation '@org.apache.struts2.views.annotations.StrutsTagAttribute(description = "The rounding mode to use, possible values: ceiling, down, floor, half-down, half-even, half-up, unnecessary, up")' is no longer explicitly set.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.Number::setType(java.lang.String)
+new: method void org.apache.struts2.components.Number::setType(java.lang.String)
+java.annotation.attributeRemoved: Attribute 'org.apache.struts2.views.annotations.StrutsTagAttribute' of annotation '@org.apache.struts2.views.annotations.StrutsTagAttribute(description = "Type of number formatter (currency, integer, number or percent, default is number)")' is no longer explicitly set.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String) @ org.apache.struts2.components.OptionTransferSelect
+new: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String) @ org.apache.struts2.components.OptionTransferSelect
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value from"' to '"Property of list objects to get field value from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String) @ org.apache.struts2.components.OptionTransferSelect
+new: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String) @ org.apache.struts2.components.OptionTransferSelect
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value label from"' to '"Property of list objects to get field value label from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.Property::setEscape(boolean)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field org.apache.struts2.components.Radio.readonly
+new: <none>
+java.field.removed: Field removed from class.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String) @ org.apache.struts2.components.Radio
+new: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String) @ org.apache.struts2.components.Radio
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value from"' to '"Property of list objects to get field value from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String) @ org.apache.struts2.components.Radio
+new: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String) @ org.apache.struts2.components.Radio
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value label from"' to '"Property of list objects to get field value label from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.Radio::setReadonly(java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String) @ org.apache.struts2.components.Select
+new: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String) @ org.apache.struts2.components.Select
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value from"' to '"Property of list objects to get field value from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String) @ org.apache.struts2.components.Select
+new: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String) @ org.apache.struts2.components.Select
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value label from"' to '"Property of list objects to get field value label from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.Set::setName(java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.components.Set::setVar(java.lang.String)
+new: method void org.apache.struts2.components.Set::setVar(java.lang.String)
+java.annotation.attributeAdded: Attribute 'org.apache.struts2.views.annotations.StrutsTagAttribute' of annotation '@org.apache.struts2.views.annotations.StrutsTagAttribute(required = true, description = "Name used to reference the value pushed into the Value Stack")' is now explicitly set.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.Text::setName(java.lang.String)
+new: method void org.apache.struts2.components.Text::setName(java.lang.String)
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Name of resource property to fetch"' to '"Name of resource property to fetch"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.Text::setSearchValueStack(java.lang.String)
+new: method void org.apache.struts2.components.Text::setSearchValueStack(java.lang.String)
+java.element.nowDeprecated: The element is now deprecated.
+BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+java.annotation.attributeValueChanged: Attribute 'defaultValue' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '"true"' to '"false"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method java.lang.String org.apache.struts2.components.Token::getTokenNameField()
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: parameter void org.apache.struts2.components.UIBean::setDynamicAttributes(===java.util.Map<java.lang.String, java.lang.Object>===)
+new: parameter void org.apache.struts2.components.UIBean::setDynamicAttributes(===java.util.Map<java.lang.String, java.lang.String>===)
+java.method.parameterTypeParameterChanged: The type parameter of method parameter changed. The original type was 'java.util.Map<java.lang.String, java.lang.Object>'while the new type is 'java.util.Map<java.lang.String, java.lang.String>'.
+BINARY: NON_BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String) @ org.apache.struts2.components.UpDownSelect
+new: method void org.apache.struts2.components.ListUIBean::setListKey(java.lang.String) @ org.apache.struts2.components.UpDownSelect
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value from"' to '"Property of list objects to get field value from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String) @ org.apache.struts2.components.UpDownSelect
+new: method void org.apache.struts2.components.ListUIBean::setListValueKey(java.lang.String) @ org.apache.struts2.components.UpDownSelect
+java.annotation.attributeValueChanged: Attribute 'description' of annotation 'org.apache.struts2.views.annotations.StrutsTagAttribute' changed value from '" Property of list objects to get field value label from"' to '"Property of list objects to get field value label from"'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: class org.apache.struts2.config.ServletContextSingleton
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface org.apache.struts2.config.Settings
+new: interface org.apache.struts2.config.Settings
+java.class.nonPublicPartOfAPI: Class 'org.apache.struts2.config.Settings' is indirectly included in the API (by the means of method return type for example) but the class is not accessible (neither public nor protected).
+SOURCE: NON_BREAKING, BINARY: NON_BREAKING, SEMANTIC: BREAKING
+
+old: method void com.opensymphony.xwork2.config.providers.XmlConfigurationProvider::loadGobalExceptionMappings(com.opensymphony.xwork2.config.entities.PackageConfig.Builder, org.w3c.dom.Element) @ org.apache.struts2.config.StrutsXmlConfigurationProvider
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.ActionContextCleanUp
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.DefaultActionSupport
+new: class org.apache.struts2.dispatcher.DefaultActionSupport
+java.class.noLongerImplementsInterface: Class no longer implements interface 'com.opensymphony.xwork2.ValidationAware'.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field com.opensymphony.xwork2.ActionSupport.LOG @ org.apache.struts2.dispatcher.DefaultActionSupport
+new: <none>
+java.field.removed: Field removed from class.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method java.util.Collection<java.lang.String> com.opensymphony.xwork2.ActionSupport::getErrorMessages() @ org.apache.struts2.dispatcher.DefaultActionSupport
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method java.util.Map<java.lang.String, java.util.List<java.lang.String>> com.opensymphony.xwork2.ActionSupport::getErrors() @ org.apache.struts2.dispatcher.DefaultActionSupport
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: parameter void org.apache.struts2.dispatcher.DefaultStaticContentLoader::setHostConfig(===org.apache.struts2.dispatcher.ng.HostConfig===)
+new: parameter void org.apache.struts2.dispatcher.DefaultStaticContentLoader::setHostConfig(===org.apache.struts2.dispatcher.HostConfig===)
+java.method.parameterTypeChanged: The type of the parameter changed from 'org.apache.struts2.dispatcher.ng.HostConfig' to 'org.apache.struts2.dispatcher.HostConfig'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: method java.util.HashMap<java.lang.String, java.lang.Object> org.apache.struts2.dispatcher.Dispatcher::createContextMap(java.util.Map, java.util.Map, java.util.Map, java.util.Map, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method java.util.HashMap<java.lang.String, java.lang.Object> org.apache.struts2.dispatcher.Dispatcher::createContextMap(java.util.Map, java.util.Map, java.util.Map, java.util.Map, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.servlet.ServletContext)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method java.util.Map<java.lang.String, java.lang.Object> org.apache.struts2.dispatcher.Dispatcher::createContextMap(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.apache.struts2.dispatcher.mapper.ActionMapping, javax.servlet.ServletContext)
+new: method java.util.HashMap<java.lang.String, java.lang.Object> org.apache.struts2.dispatcher.Dispatcher::createContextMap(java.util.Map, org.apache.struts2.dispatcher.HttpParameters, java.util.Map, java.util.Map, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+java.method.numberOfParametersChanged: The number of parameters of the method have changed.
+BINARY: BREAKING, SOURCE: BREAKING
+java.method.returnTypeChangedCovariantly: The return type changed covariantly from 'java.util.Map<java.lang.String, java.lang.Object>' to 'java.util.HashMap<java.lang.String, java.lang.Object>'.
+BINARY: BREAKING, SOURCE: NON_BREAKING
+java.element.noLongerDeprecated: The element is no longer deprecated.
+BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: method com.opensymphony.xwork2.config.providers.XmlConfigurationProvider org.apache.struts2.dispatcher.Dispatcher::createXmlConfigurationProvider(java.lang.String, boolean)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method java.lang.String org.apache.struts2.dispatcher.Dispatcher::getSaveDir()
+new: method java.lang.String org.apache.struts2.dispatcher.Dispatcher::getSaveDir()
+java.method.visibilityIncreased: visibility increased
+BINARY: EQUIVALENT, SOURCE: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.dispatcher.Dispatcher::sendError(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.servlet.ServletContext, int, java.lang.Exception)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.dispatcher.Dispatcher::serviceAction(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.servlet.ServletContext, org.apache.struts2.dispatcher.mapper.ActionMapping) throws javax.servlet.ServletException
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.dispatcher.Dispatcher::setConfigurationManager(com.opensymphony.xwork2.config.ConfigurationManager)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method javax.servlet.http.HttpServletRequest org.apache.struts2.dispatcher.Dispatcher::wrapRequest(javax.servlet.http.HttpServletRequest, javax.servlet.ServletContext) throws java.io.IOException
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.FilterDispatcher
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.FilterDispatcherCompatWeblogic61
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.HttpHeaderResult
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.PlainTextResult
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.PostbackResult
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.ServletActionRedirectResult
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.ServletDispatcherResult
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.ServletRedirectResult
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: parameter void org.apache.struts2.dispatcher.StaticContentLoader::setHostConfig(===org.apache.struts2.dispatcher.ng.HostConfig===)
+new: parameter void org.apache.struts2.dispatcher.StaticContentLoader::setHostConfig(===org.apache.struts2.dispatcher.HostConfig===)
+java.method.parameterTypeChanged: The type of the parameter changed from 'org.apache.struts2.dispatcher.ng.HostConfig' to 'org.apache.struts2.dispatcher.HostConfig'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: class org.apache.struts2.dispatcher.StreamResult
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.StrutsResultSupport
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.VelocityResult
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method java.lang.String org.apache.struts2.dispatcher.mapper.DefaultActionMapper::dropExtension(java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field org.apache.struts2.dispatcher.mapper.Restful2ActionMapper.LOG
+new: field org.apache.struts2.dispatcher.mapper.Restful2ActionMapper.LOG
+java.field.typeChanged: The type of the field changed from 'com.opensymphony.xwork2.util.logging.Logger' to 'org.apache.logging.log4j.Logger'.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field org.apache.struts2.dispatcher.mapper.RestfulActionMapper.LOG
+new: field org.apache.struts2.dispatcher.mapper.RestfulActionMapper.LOG
+java.field.typeChanged: The type of the field changed from 'com.opensymphony.xwork2.util.logging.Logger' to 'org.apache.logging.log4j.Logger'.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest
+new: class org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest
+java.class.nonFinalClassInheritsFromNewClass: Non-final class now inherits from 'org.apache.struts2.dispatcher.multipart.AbstractMultiPartRequest'.
+BINARY: POTENTIALLY_BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: method java.lang.String org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest::buildErrorMessage(java.lang.Throwable, java.lang.Object[])
+new: method org.apache.struts2.dispatcher.LocalizedMessage org.apache.struts2.dispatcher.multipart.AbstractMultiPartRequest::buildErrorMessage(java.lang.Throwable, java.lang.Object[]) @ org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest
+java.method.returnTypeChanged: The return type changed from 'java.lang.String' to  'org.apache.struts2.dispatcher.LocalizedMessage'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+java.method.movedToSuperClass: The method used to be declared in class 'org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest' but is now declared in superclass 'org.apache.struts2.dispatcher.multipart.AbstractMultiPartRequest'.
+BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: method java.lang.String org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest::getCanonicalName(java.lang.String)
+new: method java.lang.String org.apache.struts2.dispatcher.multipart.AbstractMultiPartRequest::getCanonicalName(java.lang.String) @ org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest
+java.method.visibilityIncreased: visibility increased
+BINARY: EQUIVALENT, SOURCE: POTENTIALLY_BREAKING
+
+old: method java.util.List<java.lang.String> org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest::getErrors()
+new: method java.util.List<org.apache.struts2.dispatcher.LocalizedMessage> org.apache.struts2.dispatcher.multipart.AbstractMultiPartRequest::getErrors() @ org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest
+java.method.returnTypeTypeParametersChanged: The return type changed from 'java.util.List<java.lang.String>' to 'java.util.List<org.apache.struts2.dispatcher.LocalizedMessage>'.
+BINARY: NON_BREAKING, SOURCE: BREAKING
+java.method.movedToSuperClass: The method used to be declared in class 'org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest' but is now declared in superclass 'org.apache.struts2.dispatcher.multipart.AbstractMultiPartRequest'.
+BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: method java.io.File[] org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest::getFile(java.lang.String)
+new: method org.apache.struts2.dispatcher.multipart.UploadedFile[] org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest::getFile(java.lang.String)
+java.method.returnTypeChanged: The return type changed from 'java.io.File[]' to  'org.apache.struts2.dispatcher.multipart.UploadedFile[]'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest::setLocaleProvider(com.opensymphony.xwork2.LocaleProvider)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest
+new: class org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest
+java.class.nonFinalClassInheritsFromNewClass: Non-final class now inherits from 'org.apache.struts2.dispatcher.multipart.AbstractMultiPartRequest'.
+BINARY: POTENTIALLY_BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::addFileSkippedError(java.lang.String, javax.servlet.http.HttpServletRequest)
+new: method void org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::addFileSkippedError(java.lang.String, javax.servlet.http.HttpServletRequest)
+java.method.visibilityIncreased: visibility increased
+BINARY: EQUIVALENT, SOURCE: POTENTIALLY_BREAKING
+
+old: method java.lang.String org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::buildErrorMessage(java.lang.Throwable, java.lang.Object[])
+new: method org.apache.struts2.dispatcher.LocalizedMessage org.apache.struts2.dispatcher.multipart.AbstractMultiPartRequest::buildErrorMessage(java.lang.Throwable, java.lang.Object[]) @ org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest
+java.method.visibilityIncreased: visibility increased
+BINARY: EQUIVALENT, SOURCE: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::createFileInfoFromItemStream(org.apache.commons.fileupload.FileItemStream, java.io.File)
+new: method void org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::createFileInfoFromItemStream(org.apache.commons.fileupload.FileItemStream, java.io.File)
+java.method.visibilityIncreased: visibility increased
+BINARY: EQUIVALENT, SOURCE: POTENTIALLY_BREAKING
+
+old: method java.io.File org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::createTemporaryFile(java.lang.String, java.lang.String) throws java.io.IOException
+new: method java.io.File org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::createTemporaryFile(java.lang.String, java.lang.String) throws java.io.IOException
+java.method.visibilityIncreased: visibility increased
+BINARY: EQUIVALENT, SOURCE: POTENTIALLY_BREAKING
+
+old: method java.lang.String org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::getCanonicalName(java.lang.String)
+new: method java.lang.String org.apache.struts2.dispatcher.multipart.AbstractMultiPartRequest::getCanonicalName(java.lang.String) @ org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest
+java.method.visibilityIncreased: visibility increased
+BINARY: EQUIVALENT, SOURCE: POTENTIALLY_BREAKING
+
+old: method java.util.List<java.lang.String> org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::getErrors()
+new: method java.util.List<org.apache.struts2.dispatcher.LocalizedMessage> org.apache.struts2.dispatcher.multipart.AbstractMultiPartRequest::getErrors() @ org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest
+java.method.returnTypeTypeParametersChanged: The return type changed from 'java.util.List<java.lang.String>' to 'java.util.List<org.apache.struts2.dispatcher.LocalizedMessage>'.
+BINARY: NON_BREAKING, SOURCE: BREAKING
+java.method.movedToSuperClass: The method used to be declared in class 'org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest' but is now declared in superclass 'org.apache.struts2.dispatcher.multipart.AbstractMultiPartRequest'.
+BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+
+old: method java.io.File[] org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::getFile(java.lang.String)
+new: method org.apache.struts2.dispatcher.multipart.UploadedFile[] org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::getFile(java.lang.String)
+java.method.returnTypeChanged: The return type changed from 'java.io.File[]' to  'org.apache.struts2.dispatcher.multipart.UploadedFile[]'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: method java.util.List<java.lang.String> org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::getMesssages()
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method long org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::getRequestSize(javax.servlet.http.HttpServletRequest)
+new: method long org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::getRequestSize(javax.servlet.http.HttpServletRequest)
+java.method.visibilityIncreased: visibility increased
+BINARY: EQUIVALENT, SOURCE: POTENTIALLY_BREAKING
+
+old: method boolean org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::isRequestSizePermitted(javax.servlet.http.HttpServletRequest)
+new: method boolean org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::isRequestSizePermitted(javax.servlet.http.HttpServletRequest)
+java.method.visibilityIncreased: visibility increased
+BINARY: EQUIVALENT, SOURCE: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::processFileItemStreamAsFileField(org.apache.commons.fileupload.FileItemStream, java.lang.String)
+new: method void org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::processFileItemStreamAsFileField(org.apache.commons.fileupload.FileItemStream, java.lang.String)
+java.method.visibilityIncreased: visibility increased
+BINARY: EQUIVALENT, SOURCE: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::processFileItemStreamAsFormField(org.apache.commons.fileupload.FileItemStream)
+new: method void org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::processFileItemStreamAsFormField(org.apache.commons.fileupload.FileItemStream)
+java.method.visibilityIncreased: visibility increased
+BINARY: EQUIVALENT, SOURCE: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::processUpload(javax.servlet.http.HttpServletRequest, java.lang.String) throws java.lang.Exception
+new: method void org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::processUpload(javax.servlet.http.HttpServletRequest, java.lang.String) throws java.lang.Exception
+java.method.visibilityIncreased: visibility increased
+BINARY: EQUIVALENT, SOURCE: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::setLocaleProvider(com.opensymphony.xwork2.LocaleProvider)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method boolean org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::streamFileToDisk(org.apache.commons.fileupload.FileItemStream, java.io.File) throws java.io.IOException
+new: method boolean org.apache.struts2.dispatcher.multipart.JakartaStreamMultiPartRequest::streamFileToDisk(org.apache.commons.fileupload.FileItemStream, java.io.File) throws java.io.IOException
+java.method.visibilityIncreased: visibility increased
+BINARY: EQUIVALENT, SOURCE: POTENTIALLY_BREAKING
+
+old: method java.util.List<java.lang.String> org.apache.struts2.dispatcher.multipart.MultiPartRequest::getErrors()
+new: method java.util.List<org.apache.struts2.dispatcher.LocalizedMessage> org.apache.struts2.dispatcher.multipart.MultiPartRequest::getErrors()
+java.method.returnTypeTypeParametersChanged: The return type changed from 'java.util.List<java.lang.String>' to 'java.util.List<org.apache.struts2.dispatcher.LocalizedMessage>'.
+BINARY: NON_BREAKING, SOURCE: BREAKING
+
+old: method java.io.File[] org.apache.struts2.dispatcher.multipart.MultiPartRequest::getFile(java.lang.String)
+new: method org.apache.struts2.dispatcher.multipart.UploadedFile[] org.apache.struts2.dispatcher.multipart.MultiPartRequest::getFile(java.lang.String)
+java.method.returnTypeChanged: The return type changed from 'java.io.File[]' to  'org.apache.struts2.dispatcher.multipart.UploadedFile[]'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: field org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper.LOG
+new: field org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper.LOG
+java.field.typeChanged: The type of the field changed from 'com.opensymphony.xwork2.util.logging.Logger' to 'org.apache.logging.log4j.Logger'.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: parameter void org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper::addError(===java.lang.String===)
+new: parameter void org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper::addError(===org.apache.struts2.dispatcher.LocalizedMessage===)
+java.method.parameterTypeChanged: The type of the parameter changed from 'java.lang.String' to 'org.apache.struts2.dispatcher.LocalizedMessage'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: method java.lang.String org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper::buildErrorMessage(java.lang.Throwable, java.lang.Object[])
+new: method org.apache.struts2.dispatcher.LocalizedMessage org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper::buildErrorMessage(java.lang.Throwable, java.lang.Object[])
+java.method.returnTypeChanged: The return type changed from 'java.lang.String' to  'org.apache.struts2.dispatcher.LocalizedMessage'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: method java.util.Collection<java.lang.String> org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper::getErrors()
+new: method java.util.Collection<org.apache.struts2.dispatcher.LocalizedMessage> org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper::getErrors()
+java.method.returnTypeTypeParametersChanged: The return type changed from 'java.util.Collection<java.lang.String>' to 'java.util.Collection<org.apache.struts2.dispatcher.LocalizedMessage>'.
+BINARY: NON_BREAKING, SOURCE: BREAKING
+
+old: method java.io.File[] org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper::getFiles(java.lang.String)
+new: method org.apache.struts2.dispatcher.multipart.UploadedFile[] org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper::getFiles(java.lang.String)
+java.method.returnTypeChanged: The return type changed from 'java.io.File[]' to  'org.apache.struts2.dispatcher.multipart.UploadedFile[]'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: class org.apache.struts2.dispatcher.ng.ExecuteOperations
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface org.apache.struts2.dispatcher.ng.HostConfig
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.ng.InitOperations
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.ng.PrepareOperations
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.ng.filter.FilterHostConfig
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.ng.filter.StrutsExecuteFilter
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.ng.filter.StrutsPrepareFilter
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.ng.listener.ListenerHostConfig
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.ng.listener.StrutsListener
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.ng.servlet.ServletHostConfig
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.dispatcher.ng.servlet.StrutsServlet
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.impl.PrefixBasedActionProxyFactory
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.impl.StrutsActionProxy
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.impl.StrutsActionProxyFactory
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.impl.StrutsObjectFactory
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.interceptor.ActionMappingParametersInteceptor
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field org.apache.struts2.interceptor.BackgroundProcess.action
+new: <none>
+java.field.removed: Field removed from class.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field org.apache.struts2.interceptor.BackgroundProcess.serialVersionUID
+new: field org.apache.struts2.interceptor.BackgroundProcess.serialVersionUID
+java.field.serialVersionUIDUnchanged: The class changed in an incompatible way with regards to serialization but the serialVersionUID field stayed unchanged. This might be ok and/or desired but is suspicious.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: class org.apache.struts2.interceptor.DateTextFieldInterceptor
+new: class org.apache.struts2.interceptor.DateTextFieldInterceptor
+java.class.nonFinalClassInheritsFromNewClass: Non-final class now inherits from 'com.opensymphony.xwork2.interceptor.AbstractInterceptor'.
+BINARY: POTENTIALLY_BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: class org.apache.struts2.interceptor.DeprecationInterceptor
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.log @ org.apache.struts2.interceptor.ExecuteAndWaitInterceptor
+new: <none>
+java.field.removed: Field removed from class.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field org.apache.struts2.interceptor.FileUploadInterceptor.LOG
+new: field org.apache.struts2.interceptor.FileUploadInterceptor.LOG
+java.field.typeChanged: The type of the field changed from 'com.opensymphony.xwork2.util.logging.Logger' to 'org.apache.logging.log4j.Logger'.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: parameter boolean org.apache.struts2.interceptor.FileUploadInterceptor::acceptFile(java.lang.Object, ===java.io.File===, java.lang.String, java.lang.String, java.lang.String, com.opensymphony.xwork2.ValidationAware)
+new: parameter boolean org.apache.struts2.interceptor.FileUploadInterceptor::acceptFile(java.lang.Object, ===org.apache.struts2.dispatcher.multipart.UploadedFile===, java.lang.String, java.lang.String, java.lang.String, com.opensymphony.xwork2.interceptor.ValidationAware)
+java.method.parameterTypeChanged: The type of the parameter changed from 'java.io.File' to 'org.apache.struts2.dispatcher.multipart.UploadedFile'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: parameter boolean org.apache.struts2.interceptor.FileUploadInterceptor::acceptFile(java.lang.Object, java.io.File, java.lang.String, java.lang.String, java.lang.String, ===com.opensymphony.xwork2.ValidationAware===)
+new: parameter boolean org.apache.struts2.interceptor.FileUploadInterceptor::acceptFile(java.lang.Object, org.apache.struts2.dispatcher.multipart.UploadedFile, java.lang.String, java.lang.String, java.lang.String, ===com.opensymphony.xwork2.interceptor.ValidationAware===)
+java.method.parameterTypeChanged: The type of the parameter changed from 'com.opensymphony.xwork2.ValidationAware' to 'com.opensymphony.xwork2.interceptor.ValidationAware'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: class org.apache.struts2.interceptor.I18nInterceptor
+new: class org.apache.struts2.interceptor.I18nInterceptor
+java.class.noLongerInheritsFromClass: Class no longer inherits from 'com.opensymphony.xwork2.interceptor.I18nInterceptor'.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.interceptor.I18nInterceptor.CookieLocaleFinder
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field org.apache.struts2.interceptor.I18nInterceptor.COOKIE_STORAGE
+new: <none>
+java.field.removedWithConstant: Field with constant value has been removed.
+SOURCE: BREAKING, BINARY: NON_BREAKING, SEMANTIC: POTENTIALLY_BREAKING
+
+old: field com.opensymphony.xwork2.interceptor.I18nInterceptor.DEFAULT_REQUESTONLY_PARAMETER @ org.apache.struts2.interceptor.I18nInterceptor
+new: <none>
+java.field.removedWithConstant: Field with constant value has been removed.
+SOURCE: BREAKING, BINARY: NON_BREAKING, SEMANTIC: POTENTIALLY_BREAKING
+
+old: field com.opensymphony.xwork2.interceptor.I18nInterceptor.LOG @ org.apache.struts2.interceptor.I18nInterceptor
+new: field org.apache.struts2.interceptor.I18nInterceptor.LOG
+java.field.visibilityReduced: Visibility was reduced from 'protected' to 'private'.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method java.lang.Object com.opensymphony.xwork2.interceptor.I18nInterceptor::findLocaleParameter(java.util.Map<java.lang.String, java.lang.Object>, java.lang.String) @ org.apache.struts2.interceptor.I18nInterceptor
+new: method org.apache.struts2.dispatcher.Parameter org.apache.struts2.interceptor.I18nInterceptor::findLocaleParameter(com.opensymphony.xwork2.ActionInvocation, java.lang.String)
+java.method.returnTypeChangedCovariantly: The return type changed covariantly from 'java.lang.Object' to 'org.apache.struts2.dispatcher.Parameter'.
+BINARY: BREAKING, SOURCE: NON_BREAKING
+
+old: parameter java.lang.Object com.opensymphony.xwork2.interceptor.I18nInterceptor::findLocaleParameter(===java.util.Map<java.lang.String, java.lang.Object>===, java.lang.String) @ org.apache.struts2.interceptor.I18nInterceptor
+new: parameter org.apache.struts2.dispatcher.Parameter org.apache.struts2.interceptor.I18nInterceptor::findLocaleParameter(===com.opensymphony.xwork2.ActionInvocation===, java.lang.String)
+java.method.parameterTypeChanged: The type of the parameter changed from 'java.util.Map<java.lang.String, java.lang.Object>' to 'com.opensymphony.xwork2.ActionInvocation'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: method java.util.Locale com.opensymphony.xwork2.interceptor.I18nInterceptor::readStoredLocalFromCurrentInvocation(com.opensymphony.xwork2.ActionInvocation) @ org.apache.struts2.interceptor.I18nInterceptor
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method java.util.Locale com.opensymphony.xwork2.interceptor.I18nInterceptor::readStoredLocalFromSession(com.opensymphony.xwork2.ActionInvocation, java.util.Map<java.lang.String, java.lang.Object>) @ org.apache.struts2.interceptor.I18nInterceptor
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method java.util.Locale org.apache.struts2.interceptor.I18nInterceptor::readStoredLocale(com.opensymphony.xwork2.ActionInvocation, java.util.Map<java.lang.String, java.lang.Object>)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void com.opensymphony.xwork2.interceptor.I18nInterceptor::saveLocale(com.opensymphony.xwork2.ActionInvocation, java.util.Locale) @ org.apache.struts2.interceptor.I18nInterceptor
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method java.util.Locale org.apache.struts2.interceptor.I18nInterceptor::storeLocale(com.opensymphony.xwork2.ActionInvocation, java.util.Locale, java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method javax.servlet.http.HttpServletRequest org.apache.struts2.interceptor.PrincipalProxy::getRequest()
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.interceptor.StrutsConversionErrorInterceptor
+new: class org.apache.struts2.interceptor.StrutsConversionErrorInterceptor
+java.class.nonFinalClassInheritsFromNewClass: Non-final class now inherits from 'com.opensymphony.xwork2.interceptor.MethodFilterInterceptor'.
+BINARY: POTENTIALLY_BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: field com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.log @ org.apache.struts2.interceptor.TokenInterceptor
+new: <none>
+java.field.removed: Field removed from class.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.interceptor.TokenInterceptor::setTextProvider(com.opensymphony.xwork2.TextProvider)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.log @ org.apache.struts2.interceptor.TokenSessionStoreInterceptor
+new: <none>
+java.field.removed: Field removed from class.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.log @ org.apache.struts2.interceptor.validation.AnnotationValidationInterceptor
+new: <none>
+java.field.removed: Field removed from class.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method java.lang.reflect.Method org.apache.struts2.interceptor.validation.AnnotationValidationInterceptor::getActionMethod(java.lang.Class, java.lang.String) throws java.lang.NoSuchMethodException
+new: method java.lang.reflect.Method org.apache.struts2.interceptor.validation.AnnotationValidationInterceptor::getActionMethod(java.lang.Class<?>, java.lang.String)
+java.method.exception.checkedRemoved: Method no longer throws checked exceptions: java.lang.NoSuchMethodException.
+BINARY: NON_BREAKING, SOURCE: BREAKING
+
+old: parameter java.lang.reflect.Method org.apache.struts2.interceptor.validation.AnnotationValidationInterceptor::getActionMethod(===java.lang.Class===, java.lang.String) throws java.lang.NoSuchMethodException
+new: parameter java.lang.reflect.Method org.apache.struts2.interceptor.validation.AnnotationValidationInterceptor::getActionMethod(===java.lang.Class<?>===, java.lang.String)
+java.method.parameterTypeParameterChanged: The type parameter of method parameter changed. The original type was 'java.lang.Class'while the new type is 'java.lang.Class<?>'.
+BINARY: NON_BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.interceptor.validation.AnnotationValidationInterceptor::setDevMode(java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.servlet.interceptor.ServletPrincipalProxy
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.util.StrutsTestCaseHelper::setUp() throws java.lang.Exception
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field org.apache.struts2.util.StrutsUtil.LOG
+new: field org.apache.struts2.util.StrutsUtil.LOG
+java.field.typeChanged: The type of the field changed from 'com.opensymphony.xwork2.util.logging.Logger' to 'org.apache.logging.log4j.Logger'.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method java.lang.String org.apache.struts2.util.StrutsUtil::include(java.lang.Object, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse) throws java.lang.Exception
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field com.opensymphony.xwork2.util.fs.DefaultFileManager.files @ org.apache.struts2.util.fs.JBossFileManager
+new: field com.opensymphony.xwork2.util.fs.DefaultFileManager.files @ org.apache.struts2.util.fs.JBossFileManager
+java.field.nowFinal: Field is now final.
+BINARY: POTENTIALLY_BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: class org.apache.struts2.util.tomcat.buf.StringCache.ByteEntry
+new: class org.apache.struts2.util.tomcat.buf.StringCache.ByteEntry
+java.class.nonPublicPartOfAPI: Class 'org.apache.struts2.util.tomcat.buf.StringCache.ByteEntry' is indirectly included in the API (by the means of method return type for example) but the class is not accessible (neither public nor protected).
+SOURCE: NON_BREAKING, BINARY: NON_BREAKING, SEMANTIC: BREAKING
+
+old: class org.apache.struts2.util.tomcat.buf.StringCache.CharEntry
+new: class org.apache.struts2.util.tomcat.buf.StringCache.CharEntry
+java.class.nonPublicPartOfAPI: Class 'org.apache.struts2.util.tomcat.buf.StringCache.CharEntry' is indirectly included in the API (by the means of method return type for example) but the class is not accessible (neither public nor protected).
+SOURCE: NON_BREAKING, BINARY: NON_BREAKING, SEMANTIC: BREAKING
+
+old: class org.apache.struts2.views.DefaultTagLibrary
+new: class org.apache.struts2.views.DefaultTagLibrary
+java.class.noLongerImplementsInterface: Class no longer implements interface 'org.apache.struts2.views.TagLibrary'.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: interface org.apache.struts2.views.TagLibrary
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field org.apache.struts2.views.freemarker.FreemarkerManager.oldTagLibraries
+new: <none>
+java.field.removed: Field removed from class.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.views.freemarker.FreemarkerResult
+new: class org.apache.struts2.views.freemarker.FreemarkerResult
+java.class.noLongerInheritsFromClass: Class no longer inherits from 'org.apache.struts2.dispatcher.StrutsResultSupport'.
+BINARY: BREAKING, SOURCE: BREAKING
+java.class.nonFinalClassInheritsFromNewClass: Non-final class now inherits from 'org.apache.struts2.result.StrutsResultSupport'.
+BINARY: POTENTIALLY_BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: parameter void org.apache.struts2.views.freemarker.FreemarkerResult::setWriteIfCompleted(===boolean===)
+new: parameter void org.apache.struts2.views.freemarker.FreemarkerResult::setWriteIfCompleted(===java.lang.Boolean===)
+java.method.parameterTypeChanged: The type of the parameter changed from 'boolean' to 'java.lang.Boolean'.
+BINARY: BREAKING, SOURCE: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.views.freemarker.StrutsBeanWrapper::<init>(boolean)
+new: method void org.apache.struts2.views.freemarker.StrutsBeanWrapper::<init>(boolean, freemarker.template.Version)
+java.method.numberOfParametersChanged: The number of parameters of the method have changed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.views.freemarker.tags.DivModel
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field org.apache.struts2.views.freemarker.tags.StrutsModels.div
+new: <none>
+java.field.removed: Field removed from class.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method org.apache.struts2.views.freemarker.tags.DivModel org.apache.struts2.views.freemarker.tags.StrutsModels::getDiv()
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field org.apache.struts2.views.jsp.BeanTag.LOG
+new: field org.apache.struts2.views.jsp.BeanTag.LOG
+java.field.typeChanged: The type of the field changed from 'com.opensymphony.xwork2.util.logging.Logger' to 'org.apache.logging.log4j.Logger'.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.views.jsp.PropertyTag::setEscape(boolean)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.views.jsp.iterator.IteratorGeneratorTag::setId(java.lang.String)
+new: method void javax.servlet.jsp.tagext.TagSupport::setId(java.lang.String) @ org.apache.struts2.views.jsp.iterator.IteratorGeneratorTag
+java.method.movedToSuperClass: The method used to be declared in class 'org.apache.struts2.views.jsp.iterator.IteratorGeneratorTag' but is now declared in superclass 'javax.servlet.jsp.tagext.TagSupport'.
+BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+java.annotation.removed: Element no longer annotated with 'org.apache.struts2.views.annotations.StrutsTagAttribute'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.views.jsp.iterator.SortIteratorTag::setId(java.lang.String)
+new: method void javax.servlet.jsp.tagext.TagSupport::setId(java.lang.String) @ org.apache.struts2.views.jsp.iterator.SortIteratorTag
+java.method.movedToSuperClass: The method used to be declared in class 'org.apache.struts2.views.jsp.iterator.SortIteratorTag' but is now declared in superclass 'javax.servlet.jsp.tagext.TagSupport'.
+BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+java.annotation.removed: Element no longer annotated with 'org.apache.struts2.views.annotations.StrutsTagAttribute'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: method void org.apache.struts2.views.jsp.iterator.SubsetIteratorTag::setId(java.lang.String)
+new: method void javax.servlet.jsp.tagext.TagSupport::setId(java.lang.String) @ org.apache.struts2.views.jsp.iterator.SubsetIteratorTag
+java.method.movedToSuperClass: The method used to be declared in class 'org.apache.struts2.views.jsp.iterator.SubsetIteratorTag' but is now declared in superclass 'javax.servlet.jsp.tagext.TagSupport'.
+BINARY: EQUIVALENT, SOURCE: EQUIVALENT
+java.annotation.removed: Element no longer annotated with 'org.apache.struts2.views.annotations.StrutsTagAttribute'.
+SOURCE: EQUIVALENT, BINARY: EQUIVALENT, SEMANTIC: POTENTIALLY_BREAKING
+
+old: class org.apache.struts2.views.jsp.ui.DivTag
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field org.apache.struts2.views.jsp.ui.ResetTag.align
+new: <none>
+java.field.removed: Field removed from class.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.views.jsp.ui.ResetTag::setAlign(java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: field org.apache.struts2.views.jsp.ui.SubmitTag.align
+new: <none>
+java.field.removed: Field removed from class.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.views.jsp.ui.SubmitTag::setAlign(java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.views.jsp.ui.TextFieldTag::setMaxLength(java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method boolean org.apache.velocity.context.InternalContextBase::getAllowRendering() @ org.apache.struts2.views.velocity.StrutsVelocityContext
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.velocity.context.InternalContextBase::setAllowRendering(boolean) @ org.apache.struts2.views.velocity.StrutsVelocityContext
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: class org.apache.struts2.views.velocity.components.DivDirective
+new: <none>
+java.class.removed: Class was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method java.lang.String org.apache.struts2.views.xslt.XSLTResult::getExcludingPattern()
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method java.lang.String org.apache.struts2.views.xslt.XSLTResult::getMatchingPattern()
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.views.xslt.XSLTResult::setExcludingPattern(java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.views.xslt.XSLTResult::setLocation(java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+old: method void org.apache.struts2.views.xslt.XSLTResult::setMatchingPattern(java.lang.String)
+new: <none>
+java.method.removed: Method was removed.
+BINARY: BREAKING, SOURCE: BREAKING
+
+20:12:17.089 INFO  Analysis took 11741ms.

@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-02-03T22:24:13.620630",
+  "stage": "agent_complete",
+  "data": {
+    "result_keys": [
+      "messages",
+      "proposed_diff"
+    ]
+  }
+}

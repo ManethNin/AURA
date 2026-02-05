@@ -1,0 +1,372 @@
+You are a Java dependency migration expert. A pom.xml file has been updated with new dependencies, causing compilation errors.
+
+POM.XML CHANGES:
+```diff
+diff --git a/pom.xml b/pom.xml
+index 88f8e86..b93dfcf 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -63,7 +63,7 @@
+         <dependency>
+             <groupId>com.maxmind.geoip2</groupId>
+             <artifactId>geoip2</artifactId>
+-            <version>2.16.1</version>
++            <version>3.0.0</version>
+         </dependency>
+         <dependency>
+             <groupId>commons-validator</groupId>
+
+```
+
+API CHANGES (FROM DEPENDENCY DIFF TOOL):
+```
+[japicmp] com.maxmind.geoip2:geoip2 2.16.1 -> 3.0.0
+Error: Unable to access jarfile C:/FYP/tools/japicmp/japicmp-0.21.6-jar-with-dependencies.jar
+```
+
+COMPILATION ERRORS:
+```
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.9.0:compile (default-compile) on project minfraud: Compilation failure: Compilation failure:
+[ERROR] src/main/java/com/maxmind/minfraud/request/Email.java:[5,39] package org.apache.commons.codec.digest does not exist
+[ERROR] src/main/java/com/maxmind/minfraud/request/Account.java:[5,39] package org.apache.commons.codec.digest does not exist
+[ERROR] src/main/java/com/maxmind/minfraud/request/Email.java:[153,20] cannot find symbol
+[ERROR]   symbol:   variable DigestUtils
+[ERROR]   location: class com.maxmind.minfraud.request.Email
+[ERROR] src/main/java/com/maxmind/minfraud/request/Account.java:[49,32] cannot find symbol
+[ERROR]   symbol:   variable DigestUtils
+[ERROR]   location: class com.maxmind.minfraud.request.Account.Builder
+[ERROR] -> [Help 1]
+```
+
+
+================================================================================
+📄 CURRENT FILE CONTENTS (ACTUAL SOURCE CODE):
+================================================================================
+
+=== src/main/java/com/maxmind/minfraud/request/Email.java ===
+```java
+package com.maxmind.minfraud.request;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.maxmind.minfraud.AbstractModel;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.validator.routines.DomainValidator;
+import org.apache.commons.validator.routines.EmailValidator;
+
+import java.net.IDN;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * The email information for the transaction.
+ */
+public final class Email extends AbstractModel {
+    private final String address;
+    private final boolean hashAddress;
+    private final String domain;
+    private static final Map<String, String> typoDomains;
+
+    static {
+        HashMap<String, String> m = new HashMap<>() {{
+            // gmail.com
+            put("35gmai.com", "gmail.com");
+            put("636gmail.com", "gmail.com");
+            put("gamil.com", "gmail.com");
+            put("gmail.comu", "gmail.com");
+            put("gmial.com", "gmail.com");
+            put("gmil.com", "gmail.com");
+            put("yahoogmail.com", "gmail.com");
+            // outlook.com
+            put("putlook.com", "outlook.com");
+        }};
+
+        typoDomains = Collections.unmodifiableMap(m);
+    }
+
+    private Email(Email.Builder builder) {
+        address = builder.address;
+        hashAddress = builder.hashAddress;
+        domain = builder.domain;
+    }
+
+    /**
+     * {@code Builder} creates instances of {@code Email}
+     * from values set by the builder's methods.
+     */
+    public static final class Builder {
+        private final boolean enableValidation;
+        private String address;
+        private boolean hashAddress;
+        private String domain;
+
+        /**
+         * The constructor for the builder.
+         * <p>
+         * By default, validation will be enabled.
+         */
+        public Builder() {
+            enableValidation = true;
+        }
+
+        /**
+         * The constructor for the builder.
+         *
+         * @param enableValidation Whether validation should be enabled.
+         */
+        public Builder(boolean enableValidation) {
+            this.enableValidation = enableValidation;
+        }
+
+        /**
+         * Set the email address and domain fields for the request. If
+         * you set the email address from this method, you do <em>not</em>
+         * need to set the domain separately. The domain will be set to
+         * the domain of the email address and the address field will be
+         * set to the email address passed.
+         * <p>
+         * The email address will be sent in plain text unless you also call
+         * {@link #hashAddress()} to instead send it as an MD5 hash.
+         *
+         * @param address The valid email address used in the transaction.
+         * @return The builder object.
+         * @throws IllegalArgumentException when address is not a valid email
+         *                                  address.
+         */
+        public Email.Builder address(String address) {
+            if (enableValidation && !EmailValidator.getInstance().isValid(address)) {
+                throw new IllegalArgumentException("The email address " + address + " is not valid.");
+            }
+
+            if (this.domain == null) {
+                int domainIndex = address.lastIndexOf('@') + 1;
+                if (domainIndex > 0 && domainIndex < address.length()) {
+                    this.domain = address.substring(domainIndex);
+                }
+            }
+            this.address = address;
+            return this;
+        }
+
+        /**
+         * Send the email address as its MD5 hash.
+         * <p>
+         * By default, the email address set by {@link #address(String)} will be
+         * sent in plain text. Enable sending it as an MD5 hash instead by
+         * calling this method.
+         *
+         * @return The builder object.
+         */
+        public Email.Builder hashAddress() {
+            this.hashAddress = true;
+            return this;
+        }
+
+        /**
+         * @param domain The domain of the email address. This only needs
+         *               to be set if the email address is not set.
+         * @return The builder object.
+         * @throws IllegalArgumentException when domain is not a valid domain.
+         */
+        public Email.Builder domain(String domain) {
+            if (enableValidation && !DomainValidator.getInstance().isValid(domain)) {
+                throw new IllegalArgumentException("The email domain " + domain + " is not valid.");
+            }
+            this.domain = domain;
+            return this;
+        }
+
+        /**
+         * @return An instance of {@code Email} created from the
+         * fields set on this builder.
+         */
+        public Email build() {
+            return new Email(this);
+        }
+    }
+
+    /**
+     * @return The email address field to use in the transaction. This will be
+     * a valid email address if you used {@link Builder#address(String)}, an MD5
+     * hash if you used {@link Builder#hashAddress()} as well, or null if you
+     * did not set an email address.
+     */
+    @JsonProperty("address")
+    public String getAddress() {
+        if (address == null) {
+            return null;
+        }
+        if (hashAddress) {
+            return DigestUtils.md5Hex(cleanAddress(address));
+        }
+        return address;
+    }
+
+    private String cleanAddress(String address) {
+        address = address.trim().toLowerCase();
+
+        int domainIndex = address.lastIndexOf('@');
+        if (domainIndex == -1 || domainIndex + 1 == address.length()) {
+            return address;
+        }
+
+        String localPart = address.substring(0, domainIndex);
+        String domain = address.substring(domainIndex + 1);
+
+        domain = cleanDomain(domain);
+
+        int stopChar;
+        if (domain.equals("yahoo.com")) {
+            stopChar = '-';
+        } else {
+            stopChar = '+';
+        }
+        int stopCharIndex = localPart.indexOf(stopChar);
+        if (stopCharIndex > 0) {
+            localPart = localPart.substring(0, stopCharIndex);
+        }
+
+        return localPart + "@" + domain;
+    }
+
+    private String cleanDomain(String domain) {
+        if (domain == null) {
+            return null;
+        }
+
+        domain = domain.trim();
+
+        if (domain.endsWith(".")) {
+            domain = domain.substring(0, domain.length() - 1);
+        }
+
+        domain = IDN.toASCII(domain);
+
+        if (typoDomains.containsKey(domain)) {
+            domain = typoDomains.get(domain);
+        }
+
+        return domain;
+    }
+
+    /**
+     * @return The domain of the email address used in the transaction.
+     */
+    @JsonProperty("domain")
+    public String getDomain() {
+        return domain;
+    }
+}
+
+```
+
+=== src/main/java/com/maxmind/minfraud/request/Account.java ===
+```java
+package com.maxmind.minfraud.request;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.maxmind.minfraud.AbstractModel;
+import org.apache.commons.codec.digest.DigestUtils;
+
+/**
+ * Account related data for the minFraud request
+ */
+public final class Account extends AbstractModel {
+    private final String userId;
+    private final String usernameMd5;
+
+    private Account(Account.Builder builder) {
+        userId = builder.userId;
+        usernameMd5 = builder.usernameMd5;
+    }
+
+    /**
+     * {@code Builder} creates instances of {@code Account}
+     * from values set by the builder's methods.
+     */
+    public static final class Builder {
+        String userId;
+        String usernameMd5;
+
+        /**
+         * @param id A unique user ID associated with the end-user in your
+         *           system. If your system allows the login name for the
+         *           account to be changed, this should not be the login
+         *           name for the account, but rather should be an internal
+         *           ID that does not change. This is not your MaxMind user
+         *           ID.
+         * @return The builder object.
+         */
+        public Account.Builder userId(String id) {
+            this.userId = id;
+            return this;
+        }
+
+        /**
+         * @param username The username associated with the account. This is
+         *                 <em>not</em> the MD5 of username. This method
+         *                 automatically runs {@code DigestUtils.md5Hex}
+         *                 on the string passed to it.
+         * @return The builder object.
+         */
+        public Account.Builder username(String username) {
+            this.usernameMd5 = DigestUtils.md5Hex(username);
+            return this;
+        }
+
+        /**
+         * @return An instance of {@code Account} created from the
+         * fields set on this builder.
+         */
+        public Account build() {
+            return new Account(this);
+        }
+    }
+
+    /**
+     * @return The user ID.
+     */
+    @JsonProperty("user_id")
+    public String getUserId() {
+        return userId;
+    }
+
+    /**
+     * @return The MD5 of the username passed to the builder.
+     */
+    @JsonProperty("username_md5")
+    public String getUsernameMd5() {
+        return usernameMd5;
+    }
+}
+```
+
+================================================================================
+⚠️  Your diff MUST match the EXACT lines shown above (including whitespace, blank lines, etc.)
+================================================================================
+
+
+YOUR TASK:
+1. Analyze the dependency changes in pom.xml
+2. Look at the ACTUAL file content provided above
+3. Identify what API changes occurred between the old and new versions
+4. Generate a diff that matches the EXACT lines from the actual file content
+5. Fix the Java source code to work with the new dependencies
+6. Validate your changes compile successfully
+
+⚠️ CRITICAL RULES:
+- DO NOT CHANGE versions of existing dependencies in pom.xml
+- The version upgrades are intentional and MUST be kept
+- You MUST update the Java code to be compatible with the NEW versions
+- Reverting dependency versions is FORBIDDEN
+- You MAY ADD new dependencies to pom.xml if needed to fix issues (e.g., adding missing transitive dependencies)
+- When adding dependencies, only add new <dependency> blocks - do NOT modify existing dependency versions
+- Your diff MUST match the exact lines shown in the file content above
+- Include proper context lines for the diff to apply correctly
+
+Use the provided tools to:
+- Validate diffs before applying them (validate_diffs tool)
+- Compile with Maven to check your fixes (compile_maven_stateful tool)
+- Reset the repository if needed to try different approaches
+
+Provide unified diff format changes to fix the Java source code AND/OR add new dependencies to pom.xml if needed.

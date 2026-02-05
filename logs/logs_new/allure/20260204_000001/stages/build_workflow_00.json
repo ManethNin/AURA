@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-02-04T00:00:02.456789",
+  "stage": "build_workflow",
+  "data": {
+    "build_tool": "maven",
+    "java_version": "11",
+    "pom_location": "pom.xml"
+  }
+}
