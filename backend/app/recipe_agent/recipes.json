@@ -5,9 +5,9 @@
     "arguments": ["groupId", "artifactId", "version", "scope", "type", "classifier"],
     "required_arguments": ["groupId", "artifactId", "version"],
     "example": {
-      "groupId": "commons-codec",
-      "artifactId": "commons-codec",
-      "version": "1.16.1"
+      "groupId": "org.apache.commons",
+      "artifactId": "commons-lang3",
+      "version": "3.14.0"
     }
   },
   {

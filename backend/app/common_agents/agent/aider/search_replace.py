@@ -20,7 +20,7 @@ from diff_match_patch import diff_match_patch
 from opentelemetry import trace as trace_api
 from tqdm import tqdm
 
-from app.masterthesis.agent.aider.GitTemporaryDirectory import GitTemporaryDirectory
+from app.common_agents.agent.aider.GitTemporaryDirectory import GitTemporaryDirectory
 
 tracer = trace_api.get_tracer(__name__)
 

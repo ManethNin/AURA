@@ -10,7 +10,7 @@ import shutil
 from pathlib import Path
 from langchain_groq import ChatGroq
 from langchain_core.messages import HumanMessage
-from app.masterthesis.agent.GitAgent import GitAgent
+from app.common_agents.agent.GitAgent import GitAgent
 from .tools import get_tools_for_repo
 from .workflow import build_workflow, SYSTEM_PROMPT
 

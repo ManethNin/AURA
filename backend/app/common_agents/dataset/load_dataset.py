@@ -6,7 +6,7 @@ import shutil
 import tempfile
 from typing import Any, Dict, Optional
 
-from app.masterthesis.dataset.dataset_types import DatasetEntry
+from app.common_agents.dataset.dataset_types import DatasetEntry
 
 # {
 #     "suspicious_files": [
@@ -41,7 +41,7 @@ from app.masterthesis.dataset.dataset_types import DatasetEntry
 #     },
 #     "updated_dependency_diff": "diff --git a/extensions/struts2/pom.xml b/extensions/struts2/pom.xml\nindex b5a897474f..93e097d6b6 100644\n--- a/extensions/struts2/pom.xml\n+++ b/extensions/struts2/pom.xml\n@@ -28,7 +28,7 @@\n     <dependency>\n       <groupId>org.apache.struts</groupId>\n       <artifactId>struts2-core</artifactId>\n-      <version>2.3.37</version>\n+      <version>2.5.22</version>\n       <scope>provided</scope>\n     </dependency>\n   </dependencies>\n",
 #     "file_in_scope": "extensions/struts2/test/com/google/inject/struts2/Struts2FactoryTest.java",
-#     "repo_path": "/Users/anonymous/Projects/masterthesis/dataset/acc50dabec6796c091b84c1ada2ae4cbcab8b562/repo",
+#     "repo_path": "/Users/anonymous/Projects/common_agents/dataset/acc50dabec6796c091b84c1ada2ae4cbcab8b562/repo",
 #     "version_upgrade_str": "org.apache.struts:struts2-core 2.3.37 -> 2.5.22",
 #     "repo_slug": "google/guice",
 #     "commit_hash": "12asc"

@@ -3,12 +3,12 @@ import os
 from pathlib import Path
 from typing import Dict, Optional, TypedDict, List
 from langchain.agents import tool
-from app.masterthesis.agent.GitAgent import GitAgent
-from app.masterthesis.agent.LSPAgent import LSPAgent
-from app.masterthesis.agent.MavenReproducerAgent import MavenReproducerAgent
-from app.masterthesis.agent.TreeAgent import get_directory_tree
-from app.masterthesis.agent.aider.AdvancedDiffAgent import UnifiedDiffCoder
-from app.masterthesis.dataset.find_compilation_errors import find_compilation_errors
+from app.common_agents.agent.GitAgent import GitAgent
+from app.common_agents.agent.LSPAgent import LSPAgent
+from app.common_agents.agent.MavenReproducerAgent import MavenReproducerAgent
+from app.common_agents.agent.TreeAgent import get_directory_tree
+from app.common_agents.agent.aider.AdvancedDiffAgent import UnifiedDiffCoder
+from app.common_agents.dataset.find_compilation_errors import find_compilation_errors
 from langchain_core.messages import BaseMessage
 
 from tenacity import (

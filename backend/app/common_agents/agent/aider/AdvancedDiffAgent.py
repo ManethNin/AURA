@@ -19,7 +19,7 @@ import pathvalidate
 from opentelemetry import trace as trace_api
 
 # Our Modification
-from app.masterthesis.agent.aider.search_replace import (
+from app.common_agents.agent.aider.search_replace import (
     SearchTextNotUnique,
     all_preprocs,
     diff_lines,

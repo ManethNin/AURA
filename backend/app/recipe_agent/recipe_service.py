@@ -89,18 +89,20 @@ These recipes modify Java source files. Note: They may not work on broken projec
 ## CRITICAL RULES:
 
 1. **Prefer Maven recipes** for broken projects - they're more reliable
-2. **Version strings must be EXACT** - Maven Central requires exact versions:
-   - ✅ "1.16.1" (exists)
-   - ❌ "1.16" (may not exist!)
+2. **Version strings must be EXACT** - Maven Central requires exact, fully-qualified version strings:
+   - ✅ "1.16.1", "2.15.1", "3.14.0" (exact patch versions that exist on Maven Central)
+   - ❌ "1.16", "2.15", "3.14" (incomplete versions that may not exist!)
+   - Always use the full X.Y.Z (or equivalent) version as published on Maven Central
+   - When unsure about the exact version, prefer the latest stable release
    
-3. **Common correct versions**:
-   - commons-codec:commons-codec → 1.16.1 or 1.17
-   - commons-io:commons-io → 2.15.1 or 2.11.0
-   - org.apache.commons:commons-lang3 → 3.14.0
-   - com.google.guava:guava → 32.1.3-jre
+3. **Identify the root cause** by analyzing:
+   - What dependency version changed in the pom.xml diff
+   - What packages/classes are missing according to the compilation errors
+   - Whether a transitive dependency was removed, a library was relocated, or an API changed
    
 4. **For AddDependency**: Do NOT use 'onlyIfUsing' parameter
 5. **Multiple recipes**: You can select multiple recipes if needed to fix the issue
+6. **Be general**: These recipes should work for ANY dependency issue - not just specific libraries
 
 ## RESPONSE FORMAT:
 

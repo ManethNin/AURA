@@ -15,7 +15,7 @@ from app.utils.logger import logger
 from app.recipe_agent.recipe_service import RecipeAgentService
 from app.recipe_agent.recipe_generator import RecipeGenerator
 from app.recipe_agent.recipe_executor import RecipeExecutor
-from app.masterthesis.agent.MavenReproducerAgent import MavenReproducerAgent
+from app.common_agents.agent.MavenReproducerAgent import MavenReproducerAgent
 
 
 class RecipeOrchestrator:
@@ -33,38 +33,6 @@ class RecipeOrchestrator:
     3. If recipes cannot fix or fail, return signal to use existing agent
     """
     
-    # Known correct versions for common dependencies
-    # When LLM provides incomplete versions, use these
-    # Maven Central requires exact version strings - incomplete versions will fail
-    KNOWN_VERSIONS = {
-        "commons-codec:commons-codec": {
-            "1.16": "1.16.1",  # 1.16 doesn't exist, use 1.16.1
-            "1.15": "1.15",
-            "1.17": "1.17",
-            "1.11": "1.11",
-        },
-        "commons-io:commons-io": {
-            "2.15": "2.15.1",
-            "2.14": "2.14.0",
-            "2.11": "2.11.0",
-            "2.6": "2.6",
-        },
-        "org.apache.commons:commons-lang3": {
-            "3.14": "3.14.0",
-            "3.13": "3.13.0",
-            "3.12": "3.12.0",
-        },
-        "com.google.guava:guava": {
-            "32": "32.1.3-jre",
-            "31": "31.1-jre",
-            "30": "30.1.1-jre",
-        },
-        "org.slf4j:slf4j-api": {
-            "2.0": "2.0.9",
-            "1.7": "1.7.36",
-        },
-    }
-    
     def __init__(self, groq_api_key: str = None):
         self.recipe_service = RecipeAgentService(groq_api_key)
         self.groq_api_key = groq_api_key or settings.GROQ_API_KEY
@@ -81,33 +49,22 @@ class RecipeOrchestrator:
             return version
         
         version = version.strip()
-        original_version = version
-            
-        # Check if we have a known mapping
-        if group_id and artifact_id:
-            key = f"{group_id}:{artifact_id}"
-            if key in self.KNOWN_VERSIONS:
-                if version in self.KNOWN_VERSIONS[key]:
-                    normalized = self.KNOWN_VERSIONS[key][version]
-                    logger.info(f"[RecipeOrchestrator] Normalized version {group_id}:{artifact_id}:{version} -> {normalized}")
-                    return normalized
         
-        # Specific fixes for commonly mis-versioned dependencies
-        # commons-codec 1.16 doesn't exist, but 1.16.0 and 1.16.1 do
-        if artifact_id == "commons-codec" and version == "1.16":
-            logger.info(f"[RecipeOrchestrator] Normalized commons-codec:1.16 -> 1.16.1")
-            return "1.16.1"
+        # Strip any leading 'v' prefix (e.g. "v2.1.0" -> "2.1.0")
+        if version.lower().startswith('v'):
+            version = version[1:]
+            logger.info(f"[RecipeOrchestrator] Stripped 'v' prefix from version: v{version} -> {version}")
         
-        # General heuristic: if version has only 2 parts (X.Y), try X.Y.0
-        # But warn that this may not always work
+        # General heuristic: if version has only 2 numeric parts (X.Y), try X.Y.0
+        # Many Maven artifacts use 3-part semver; 2-part versions often don't exist
         parts = version.split('.')
         if len(parts) == 2:
-            # Check if both parts are numeric
             try:
                 int(parts[0])
                 int(parts[1])
                 normalized = f"{version}.0"
-                logger.warning(f"[RecipeOrchestrator] Version {version} has only 2 parts, trying {normalized} (may not exist)")
+                dep_label = f"{group_id}:{artifact_id}" if group_id and artifact_id else "unknown"
+                logger.warning(f"[RecipeOrchestrator] Version '{version}' for {dep_label} has only 2 parts, trying '{normalized}' (may not exist on Maven Central)")
                 return normalized
             except ValueError:
                 pass

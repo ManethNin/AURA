@@ -2,9 +2,9 @@ from typing import List
 
 from tree_sitter import Parser
 
-from app.masterthesis.ast.collect_imports import collect_imports
-from app.masterthesis.ast.extract_usages import extract_usages
-from app.masterthesis.ast.read_java_files import read_java_files
+from app.common_agents.ast.collect_imports import collect_imports
+from app.common_agents.ast.extract_usages import extract_usages
+from app.common_agents.ast.read_java_files import read_java_files
 
 
 def find_dependency_usages(

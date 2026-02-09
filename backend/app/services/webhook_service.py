@@ -11,7 +11,7 @@ from app.utils.logger import logger
 import asyncio
 
 # Flag to enable/disable recipe-based agent (set to True to use recipes first)
-USE_RECIPE_AGENT = False
+USE_RECIPE_AGENT = True
 
 class WebhookService:
 
@@ -153,7 +153,7 @@ class WebhookService:
             await callback.update_status("preparing", 10, "Preparing environment...")
             
             # Get initial errors (compile without changes)
-            from app.masterthesis.agent.MavenReproducerAgent import MavenReproducerAgent
+            from app.common_agents.agent.MavenReproducerAgent import MavenReproducerAgent
             from pathlib import Path
             
             maven_agent = MavenReproducerAgent(Path(repo_path))
