@@ -337,6 +337,37 @@ Recipes Applied: {result.get('recipes_applied', [])}
         self._save_text(self.stages_dir / "recipe_result.txt", text_content)
         logger.info(f"[PIPELINE] Logged recipe result (success={result.get('success')})")
     
+    def log_docker_build_errors(self, mvn_output: str, mvn_errors: str):
+        """Log Maven build errors that occur after applying diffs in Docker compilation"""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        build_error_data = {
+            "timestamp": timestamp,
+            "stage": "docker_build_post_diff",
+            "mvn_output": mvn_output,
+            "mvn_errors": mvn_errors
+        }
+        
+        filepath = self.log_dir / "docker_build_errors.json"
+        self._save_json(filepath, build_error_data)
+        
+        # Save errors as readable text
+        error_text = f"""Docker Maven Build Errors (Post-Diff)
+Timestamp: {timestamp}
+{'=' * 80}
+
+MAVEN OUTPUT:
+{mvn_output}
+
+{'=' * 80}
+
+MAVEN ERRORS:
+{mvn_errors}
+"""
+        self._save_text(self.log_dir / "docker_build_errors.txt", error_text)
+        
+        logger.info(f"[PIPELINE] Logged Docker Maven build errors post-diff compilation")
+    
     def log_final_result(self, success: bool, result: Dict[str, Any]):
         """Log the final result"""
         final_data = {
@@ -400,6 +431,8 @@ Recipes Applied: {result.get('recipes_applied', [])}
 ├── tool_calls/                # Tool execution logs
 ├── api_changes/               # API analysis tool outputs (REVAPI/JApiCmp)
 ├── errors/                    # Error logs
+├── docker_build_errors.json   # Maven build errors post-diff (if compilation failed)
+├── docker_build_errors.txt    # Maven build errors readable format
 ├── 99_final_result.json       # Final result
 ├── 99_final_diff.txt          # Final diff (if successful)
 └── 99_solution.txt            # Solution text (if available)
@@ -430,6 +463,13 @@ Recipes Applied: {result.get('recipes_applied', [])}
         readme += f"- **LLM Calls:** {len(list(self.llm_dir.glob('*.json')))} calls in `llm_calls/`\n"
         readme += f"- **Tool Calls:** {len(list(self.tools_dir.glob('*.json')))} calls in `tool_calls/`\n"
         readme += f"- **API Changes:** {len(list(self.api_changes_dir.glob('*.txt')))} files in `api_changes/`\n"
+        
+        # Check for Docker build errors
+        
+        docker_errors = (self.log_dir / "docker_build_errors.json").exists()
+        if docker_errors:
+            readme += f"- **Docker Build Errors:** Post-diff Maven compilation errors logged in `docker_build_errors.txt`\n"
+        
         readme += f"- **Errors:** {len(list(self.errors_dir.glob('*.json')))} errors in `errors/`\n"
         readme += f"- **Final Result:** See `99_final_*.txt` files\n"
         
