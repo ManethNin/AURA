@@ -12,6 +12,7 @@ import git
 
 from app.core.config import settings
 from app.utils.logger import logger
+from app.utils.maven_tool import maven_central_tool
 from app.recipe_agent.recipe_service import RecipeAgentService
 from app.recipe_agent.recipe_generator import RecipeGenerator
 from app.recipe_agent.recipe_executor import RecipeExecutor
@@ -37,39 +38,21 @@ class RecipeOrchestrator:
         self.recipe_service = RecipeAgentService(groq_api_key)
         self.groq_api_key = groq_api_key or settings.GROQ_API_KEY
     
-    def _normalize_version(self, version: str, group_id: str = None, artifact_id: str = None) -> str:
+    def _verify_version(self, version: str, group_id: str = None, artifact_id: str = None) -> str:
         """
-        Normalize version numbers to ensure Maven can resolve them.
-        LLM sometimes provides incomplete versions like "1.16" instead of "1.16.0".
+        Verify a dependency version against Maven Central.
         
-        IMPORTANT: Maven Central requires exact version strings. Version "1.16" is NOT
-        the same as "1.16.0" and will fail to resolve if the exact version doesn't exist.
+        Instead of guessing version formats (adding .0 etc.), this queries
+        Maven Central to confirm the version actually exists and corrects
+        it if needed.
         """
-        if not version:
+        if not version or not group_id or not artifact_id:
             return version
         
-        version = version.strip()
-        
-        # Strip any leading 'v' prefix (e.g. "v2.1.0" -> "2.1.0")
-        if version.lower().startswith('v'):
-            version = version[1:]
-            logger.info(f"[RecipeOrchestrator] Stripped 'v' prefix from version: v{version} -> {version}")
-        
-        # General heuristic: if version has only 2 numeric parts (X.Y), try X.Y.0
-        # Many Maven artifacts use 3-part semver; 2-part versions often don't exist
-        parts = version.split('.')
-        if len(parts) == 2:
-            try:
-                int(parts[0])
-                int(parts[1])
-                normalized = f"{version}.0"
-                dep_label = f"{group_id}:{artifact_id}" if group_id and artifact_id else "unknown"
-                logger.warning(f"[RecipeOrchestrator] Version '{version}' for {dep_label} has only 2 parts, trying '{normalized}' (may not exist on Maven Central)")
-                return normalized
-            except ValueError:
-                pass
-        
-        return version
+        resolved = maven_central_tool.resolve_correct_version(group_id, artifact_id, version)
+        if resolved != version.strip():
+            logger.info(f"[RecipeOrchestrator] Version resolved via Maven Central: {group_id}:{artifact_id}:{version} -> {resolved}")
+        return resolved
     
     def process_breaking_change(
         self,
@@ -150,23 +133,23 @@ class RecipeOrchestrator:
                     logger.warning(f"[RecipeOrchestrator] Removing 'onlyIfUsing' from AddDependency (not supported for broken projects)")
                     del args["onlyIfUsing"]
             
-            # Normalize version numbers for all recipes that have version parameters
+            # Verify version numbers against Maven Central for all recipes
             # This is CRITICAL - Maven Central requires exact version strings
             if "version" in args:
                 group_id = args.get("groupId", "")
                 artifact_id = args.get("artifactId", "")
                 old_version = args["version"]
-                args["version"] = self._normalize_version(old_version, group_id, artifact_id)
+                args["version"] = self._verify_version(old_version, group_id, artifact_id)
                 if args["version"] != old_version:
-                    logger.info(f"[RecipeOrchestrator] Recipe version normalized: {old_version} -> {args['version']}")
+                    logger.info(f"[RecipeOrchestrator] Recipe version verified: {old_version} -> {args['version']}")
             
             if "newVersion" in args:
                 group_id = args.get("groupId", args.get("newGroupId", ""))
                 artifact_id = args.get("artifactId", args.get("newArtifactId", ""))
                 old_version = args["newVersion"]
-                args["newVersion"] = self._normalize_version(old_version, group_id, artifact_id)
+                args["newVersion"] = self._verify_version(old_version, group_id, artifact_id)
                 if args["newVersion"] != old_version:
-                    logger.info(f"[RecipeOrchestrator] Recipe newVersion normalized: {old_version} -> {args['newVersion']}")
+                    logger.info(f"[RecipeOrchestrator] Recipe newVersion verified: {old_version} -> {args['newVersion']}")
         
         # Step 3: Generate rewrite.yaml and update pom.xml
         logger.info(f"[RecipeOrchestrator] Generating rewrite.yaml with {len(selected_recipes)} recipes...")

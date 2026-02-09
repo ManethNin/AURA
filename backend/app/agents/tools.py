@@ -9,6 +9,7 @@ from app.common_agents.agent.MavenReproducerAgent import MavenReproducerAgent
 from app.common_agents.agent.TreeAgent import get_directory_tree
 from app.common_agents.agent.aider.AdvancedDiffAgent import UnifiedDiffCoder
 from app.common_agents.dataset.find_compilation_errors import find_compilation_errors
+from app.utils.maven_tool import maven_central_tool
 from langchain_core.messages import BaseMessage
 
 from tenacity import (
@@ -46,6 +47,7 @@ execution_details: Dict[str, ExecutionDetails] = defaultdict(
         "read_file": [],
         "get_directory_tree": [],
         "get_language_server_suggestions": [],
+        "verify_maven_dependency": [],
         "reset_repo": [],
     }
 )
@@ -307,6 +309,43 @@ def get_tools_for_repo(repo_path: Path, repo_slug: str, commit_hash: str = "HEAD
                     span_id=span.get_span_context().span_id,
                 )
             return output
+
+    @tool
+    def verify_maven_dependency(group_id: str, artifact_id: str, version: str) -> str:
+        """Verifies that a Maven dependency version exists on Maven Central before using it.
+        Call this BEFORE adding any new dependency to pom.xml to ensure the version string is valid.
+        Returns the verified (possibly corrected) version string.
+        Example: verify_maven_dependency('commons-codec', 'commons-codec', '1.15') -> '1.15'
+        """
+        with tracer.start_as_current_span("verify_maven_dependency") as span:
+            try:
+                resolved = maven_central_tool.resolve_correct_version(group_id, artifact_id, version)
+                exists = maven_central_tool.check_version_exists(group_id, artifact_id, resolved)
+                result = (
+                    f"✅ Verified: {group_id}:{artifact_id}:{resolved} exists on Maven Central."
+                    if exists
+                    else f"⚠️ Could not fully verify {group_id}:{artifact_id}:{resolved} on Maven Central. Using best guess."
+                )
+                if resolved != version:
+                    result += f" (corrected from '{version}' to '{resolved}')"
+                span.set_attribute("resolved_version", resolved)
+                log_tool_execution(
+                    tool_name="verify_maven_dependency",
+                    input_data=f"{group_id}:{artifact_id}:{version}",
+                    output=result,
+                    span_id=span.get_span_context().span_id,
+                )
+                return result
+            except Exception as e:
+                error_msg = f"Error verifying dependency: {e}"
+                log_tool_execution(
+                    tool_name="verify_maven_dependency",
+                    input_data=f"{group_id}:{artifact_id}:{version}",
+                    output="",
+                    error=error_msg,
+                    span_id=span.get_span_context().span_id,
+                )
+                return error_msg
 
     class LineInfo(TypedDict):
         line_no: int
@@ -702,6 +741,7 @@ def get_tools_for_repo(repo_path: Path, repo_slug: str, commit_hash: str = "HEAD
         read_file_lines,
         get_directory_tree_for_path,
         validate_diffs,
+        verify_maven_dependency,
         reset_repo,
         compile_maven_stateful,
         get_language_server_suggestions,
