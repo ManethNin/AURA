@@ -188,6 +188,14 @@ async def process_repository(
 
     # Initialize pipeline logger early so it can be used by API change analysis
     pipeline_logger = PipelineLogger(repo_name)
+    
+    # Log initial input data
+    pipeline_logger.log_input(
+        pom_diff=pom_diff,
+        initial_errors=initial_errors,
+        repo_path=str(repo_path),
+        commit_hash=commit_hash
+    )
 
     # Step 1.5: Generate API changes from dependency diff (REVAPI/JApiCmp)
     api_changes_text = ""
@@ -230,6 +238,8 @@ async def process_repository(
                 
                 if recipe_result and recipe_result.get("success"):
                     logger.info(f"[RecipeAgent] Successfully fixed using recipes for {repo_name}")
+                    pipeline_logger.log_final_result(True, recipe_result)
+                    pipeline_logger.finalize()
                     return {
                         "success": True,
                         "repository": repo_name,
@@ -261,6 +271,10 @@ async def process_repository(
             pipeline_logger=pipeline_logger  # Pass the same logger instance
         )
         
+        # Finalize pipeline logger after LLM agent completes
+        pipeline_logger.log_final_result(result.get("success", False), result)
+        pipeline_logger.finalize()
+        
         return {
             "success": result.get("success", False),
             "repository": repo_name,
@@ -271,6 +285,11 @@ async def process_repository(
     
     except Exception as e:
         logger.error(f"Error processing repository {repo_name}: {e}")
+        try:
+            pipeline_logger.log_error("process_error", str(e), __import__('traceback').format_exc())
+            pipeline_logger.finalize()
+        except:
+            pass  # If logging also failed, don't raise another exception
         raise HTTPException(status_code=500, detail=str(e))
 
 
