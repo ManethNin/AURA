@@ -98,7 +98,7 @@ class RecipeGenerator:
         )
         
         logger.info(f"Writing rewrite.yaml to {self.rewrite_yaml_path}")
-        logger.debug(f"Content:\n{yaml_content}")
+        logger.info(f"rewrite.yaml content:\n{yaml_content}")
         
         with open(self.rewrite_yaml_path, 'w', encoding='utf-8') as f:
             f.write(yaml_content)
@@ -195,7 +195,12 @@ class RecipeGenerator:
             if level and (not elem.tail or not elem.tail.strip()):
                 elem.tail = i
     
-    def add_rewrite_plugin_to_pom(self, recipe_name: str, maven_only_recipes: bool = True) -> bool:
+    def add_rewrite_plugin_to_pom(
+    self, 
+    recipe_name: str, 
+    maven_only_recipes: bool = True, 
+    plugin_dependencies: List[Dict[str, str]] = None  # <--- NEW ARGUMENT
+    ) -> bool:
         """
         Add OpenRewrite Maven plugin to pom.xml if not already present.
         
@@ -245,7 +250,8 @@ class RecipeGenerator:
                         return True
                 
                 # Add the plugin
-                plugin = self._create_rewrite_plugin_element(recipe_name, ns_uri)
+                # Add the plugin
+                plugin = self._create_rewrite_plugin_element(recipe_name, ns_uri, extra_dependencies=plugin_dependencies)
                 plugins.append(plugin)
             else:
                 # No namespace
@@ -282,8 +288,16 @@ class RecipeGenerator:
             logger.error(f"Failed to modify pom.xml: {e}")
             return False
     
-    def _create_rewrite_plugin_element(self, recipe_name: str, ns_uri: str) -> ET.Element:
-        """Create the rewrite-maven-plugin XML element."""
+    def _create_rewrite_plugin_element(self, recipe_name: str, ns_uri: str, 
+                                   extra_dependencies: list = None) -> ET.Element:
+        """
+        Create the rewrite-maven-plugin XML element.
+        
+        Args:
+            recipe_name: Recipe to activate
+            ns_uri: XML namespace URI
+            extra_dependencies: Optional list of dicts with 'groupId', 'artifactId', 'version'
+        """
         
         maven_only = getattr(self, '_maven_only_recipes', True)
         
@@ -342,28 +356,31 @@ class RecipeGenerator:
         executions.append(execution)
         plugin.append(executions)
         
-        # Dependencies - add rewrite-java for Java recipes
+        # Dependencies section
         dependencies = elem("dependencies")
         
-        # rewrite-maven dependency
+        # Default dependencies (rewrite-maven, rewrite-java)
         dependency = elem("dependency")
-        dep_group_id = elem("groupId", "org.openrewrite")
-        dependency.append(dep_group_id)
-        dep_artifact_id = elem("artifactId", "rewrite-maven")
-        dependency.append(dep_artifact_id)
-        dep_version = elem("version", self.REWRITE_MAVEN_DEPENDENCY_VERSION)
-        dependency.append(dep_version)
+        dependency.append(elem("groupId", "org.openrewrite"))
+        dependency.append(elem("artifactId", "rewrite-maven"))
+        dependency.append(elem("version", self.REWRITE_MAVEN_DEPENDENCY_VERSION))
         dependencies.append(dependency)
         
-        # rewrite-java dependency (needed for Java-related recipes)
         dependency2 = elem("dependency")
-        dep2_group_id = elem("groupId", "org.openrewrite")
-        dependency2.append(dep2_group_id)
-        dep2_artifact_id = elem("artifactId", "rewrite-java")
-        dependency2.append(dep2_artifact_id)
-        dep2_version = elem("version", self.REWRITE_MAVEN_DEPENDENCY_VERSION)
-        dependency2.append(dep2_version)
+        dependency2.append(elem("groupId", "org.openrewrite"))
+        dependency2.append(elem("artifactId", "rewrite-java"))
+        dependency2.append(elem("version", self.REWRITE_MAVEN_DEPENDENCY_VERSION))
         dependencies.append(dependency2)
+        
+        # Add extra dependencies (for migration recipes)
+        if extra_dependencies:
+            for extra_dep in extra_dependencies:
+                dependency = elem("dependency")
+                dependency.append(elem("groupId", extra_dep['groupId']))
+                dependency.append(elem("artifactId", extra_dep['artifactId']))
+                dependency.append(elem("version", extra_dep['version']))
+                dependencies.append(dependency)
+                logger.info(f"Added extra dependency: {extra_dep['groupId']}:{extra_dep['artifactId']}")
         
         plugin.append(dependencies)
         
@@ -389,3 +406,88 @@ class RecipeGenerator:
         if self.rewrite_yaml_path.exists():
             os.remove(self.rewrite_yaml_path)
             logger.info(f"Removed {self.rewrite_yaml_path}")
+
+    def add_migration_dependencies_to_plugin(self, old_deps: list, new_deps: list) -> bool:
+        """
+        Add old and new dependencies to the rewrite-maven-plugin for type migration recipes.
+        
+        Args:
+            old_deps: List of dicts with 'groupId', 'artifactId', 'version' for old types
+            new_deps: List of dicts with 'groupId', 'artifactId', 'version' for new types
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        if not self.pom_path.exists():
+            logger.error(f"pom.xml not found at {self.pom_path}")
+            return False
+        
+        try:
+            ET.register_namespace('', 'http://maven.apache.org/POM/4.0.0')
+            tree = ET.parse(self.pom_path)
+            root = tree.getroot()
+            
+            # Handle namespace
+            if root.tag.startswith('{'):
+                ns_uri = root.tag.split('}')[0] + '}'
+            else:
+                ns_uri = ""
+            
+            # Find the rewrite plugin
+            build = root.find(f"{ns_uri}build")
+            if build is None:
+                logger.error("No <build> section found")
+                return False
+            
+            plugins = build.find(f"{ns_uri}plugins")
+            if plugins is None:
+                logger.error("No <plugins> section found")
+                return False
+            
+            rewrite_plugin = None
+            for plugin in plugins.findall(f"{ns_uri}plugin"):
+                artifact_id = plugin.find(f"{ns_uri}artifactId")
+                if artifact_id is not None and artifact_id.text == "rewrite-maven-plugin":
+                    rewrite_plugin = plugin
+                    break
+            
+            if rewrite_plugin is None:
+                logger.error("rewrite-maven-plugin not found in pom.xml")
+                return False
+            
+            # Find or create dependencies section in plugin
+            dependencies = rewrite_plugin.find(f"{ns_uri}dependencies")
+            if dependencies is None:
+                dependencies = ET.SubElement(rewrite_plugin, f"{ns_uri}dependencies")
+            
+            def elem(tag, text=None):
+                e = ET.Element(f"{ns_uri}{tag}")
+                if text:
+                    e.text = text
+                return e
+            
+            # Add old dependencies
+            for old_dep in old_deps:
+                dependency = elem("dependency")
+                dependency.append(elem("groupId", old_dep['groupId']))
+                dependency.append(elem("artifactId", old_dep['artifactId']))
+                dependency.append(elem("version", old_dep['version']))
+                dependencies.append(dependency)
+                logger.info(f"Added old dependency: {old_dep['groupId']}:{old_dep['artifactId']}")
+            
+            # Add new dependencies
+            for new_dep in new_deps:
+                dependency = elem("dependency")
+                dependency.append(elem("groupId", new_dep['groupId']))
+                dependency.append(elem("artifactId", new_dep['artifactId']))
+                dependency.append(elem("version", new_dep['version']))
+                dependencies.append(dependency)
+                logger.info(f"Added new dependency: {new_dep['groupId']}:{new_dep['artifactId']}")
+            
+            tree.write(self.pom_path, encoding='utf-8', xml_declaration=True)
+            logger.info("Successfully added migration dependencies to rewrite-maven-plugin")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Failed to add migration dependencies: {e}")
+            return False

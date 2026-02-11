@@ -63,7 +63,8 @@ class JavaMigrationAgentService:
         pom_diff: str,
         initial_errors: str = "",
         api_changes_text: str = "",
-        pipeline_logger = None
+        pipeline_logger = None,
+        migration_plan: str = "",
     ):
         """
         Run the agent on a repository to fix Java dependency issues
@@ -76,6 +77,7 @@ class JavaMigrationAgentService:
             initial_errors: Compilation errors from Maven (if available)
             api_changes_text: API changes from REVAPI/JApiCmp
             pipeline_logger: Optional existing PipelineLogger instance
+            migration_plan: Plan produced by the planning agent
         
         Returns:
             dict with 'success', 'diff', 'solution' or 'error'
@@ -119,7 +121,7 @@ class JavaMigrationAgentService:
             app = build_workflow(self.llm, tools, output_path, pipeline_logger)
             
             # Create prompt for the agent WITH FILE CONTENT
-            prompt = self._create_prompt(pom_diff, initial_errors, file_contents, api_changes_text)
+            prompt = self._create_prompt(pom_diff, initial_errors, file_contents, api_changes_text, migration_plan)
             pipeline_logger.log_prompt(prompt, file_contents)
             
             # Run agent with reduced recursion limit to save tokens
@@ -137,7 +139,7 @@ class JavaMigrationAgentService:
                 {"messages": initial_messages, "proposed_diff": None},
                 config={
                     "run_name": commit_hash,
-                    "recursion_limit": 30,  # Reduced from 30 to save API tokens
+                    "recursion_limit": 5,  # Reduced from 30 to save API tokens
                     "configurable": {"thread_id": commit_hash}
                 }
             )
@@ -186,7 +188,7 @@ class JavaMigrationAgentService:
             
             return final_result
     
-    def _create_prompt(self, pom_diff: str, initial_errors: str, file_contents: dict = None, api_changes_text: str = "") -> str:
+    def _create_prompt(self, pom_diff: str, initial_errors: str, file_contents: dict = None, api_changes_text: str = "", migration_plan: str = "") -> str:
         """Create the prompt for the agent with actual file content"""
         prompt = f"""You are a Java dependency migration expert. A pom.xml file has been updated with new dependencies, causing compilation errors.
 
@@ -201,6 +203,14 @@ POM.XML CHANGES:
 API CHANGES (FROM DEPENDENCY DIFF TOOL):
 ```
 {api_changes_text}
+```
+"""
+
+        if migration_plan:
+            prompt += f"""
+MIGRATION PLAN (from planning agent — follow this plan closely):
+```
+{migration_plan}
 ```
 """
         

@@ -5,30 +5,9 @@
     "arguments": ["groupId", "artifactId", "version", "scope", "type", "classifier"],
     "required_arguments": ["groupId", "artifactId", "version"],
     "example": {
-      "groupId": "commons-codec",
-      "artifactId": "commons-codec",
-      "version": "1.16.1"
-    }
-  },
-  {
-    "name": "org.openrewrite.maven.UpgradeDependency",
-    "description": "Upgrades the version of a dependency in the pom.xml. Use this when you need to change a dependency to a newer version.",
-    "arguments": ["groupId", "artifactId", "newVersion", "versionPattern", "overrideManagedVersion"],
-    "required_arguments": ["groupId", "artifactId", "newVersion"],
-    "example": {
-      "groupId": "com.google.guava",
-      "artifactId": "guava",
-      "newVersion": "32.1.3-jre"
-    }
-  },
-  {
-    "name": "org.openrewrite.maven.RemoveDependency",
-    "description": "Removes a dependency from the pom.xml. Use this when a dependency is no longer needed or causes conflicts.",
-    "arguments": ["groupId", "artifactId"],
-    "required_arguments": ["groupId", "artifactId"],
-    "example": {
-      "groupId": "org.old.library",
-      "artifactId": "old-lib"
+      "groupId": "org.apache.commons",
+      "artifactId": "org.apache.commons",
+      "version": "3.13.0"
     }
   },
   {
@@ -81,8 +60,8 @@
     "arguments": ["oldFullyQualifiedTypeName", "newFullyQualifiedTypeName"],
     "required_arguments": ["oldFullyQualifiedTypeName", "newFullyQualifiedTypeName"],
     "example": {
-      "oldFullyQualifiedTypeName": "javax.servlet.http.HttpServlet",
-      "newFullyQualifiedTypeName": "jakarta.servlet.http.HttpServlet"
+      "oldFullyQualifiedTypeName": "org.apache.maven.doxia.module.xhtml.decoration.render.RenderingContext",
+      "newFullyQualifiedTypeName": "org.apache.maven.doxia.siterenderer.RenderingContext"
     }
   },
   {

@@ -96,7 +96,7 @@ These recipes modify Java source files. Note: They may not work on broken projec
    - ❌ "1.16" (may not exist!)
    
 3. **Common correct versions**:
-   - commons-codec:commons-codec → 1.16.1 or 1.17
+
    - commons-io:commons-io → 2.15.1 or 2.11.0
    - org.apache.commons:commons-lang3 → 3.14.0
    - com.google.guava:guava → 32.1.3-jre

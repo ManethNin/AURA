@@ -33,38 +33,6 @@ class RecipeOrchestrator:
     3. If recipes cannot fix or fail, return signal to use existing agent
     """
     
-    # Known correct versions for common dependencies
-    # When LLM provides incomplete versions, use these
-    # Maven Central requires exact version strings - incomplete versions will fail
-    KNOWN_VERSIONS = {
-        "commons-codec:commons-codec": {
-            "1.16": "1.16.1",  # 1.16 doesn't exist, use 1.16.1
-            "1.15": "1.15",
-            "1.17": "1.17",
-            "1.11": "1.11",
-        },
-        "commons-io:commons-io": {
-            "2.15": "2.15.1",
-            "2.14": "2.14.0",
-            "2.11": "2.11.0",
-            "2.6": "2.6",
-        },
-        "org.apache.commons:commons-lang3": {
-            "3.14": "3.14.0",
-            "3.13": "3.13.0",
-            "3.12": "3.12.0",
-        },
-        "com.google.guava:guava": {
-            "32": "32.1.3-jre",
-            "31": "31.1-jre",
-            "30": "30.1.1-jre",
-        },
-        "org.slf4j:slf4j-api": {
-            "2.0": "2.0.9",
-            "1.7": "1.7.36",
-        },
-    }
-    
     def __init__(self, groq_api_key: str = None, pipeline_logger=None):
         self.recipe_service = RecipeAgentService(groq_api_key)
         self.groq_api_key = groq_api_key or settings.GROQ_API_KEY
@@ -83,35 +51,6 @@ class RecipeOrchestrator:
         
         version = version.strip()
         original_version = version
-            
-        # Check if we have a known mapping
-        if group_id and artifact_id:
-            key = f"{group_id}:{artifact_id}"
-            if key in self.KNOWN_VERSIONS:
-                if version in self.KNOWN_VERSIONS[key]:
-                    normalized = self.KNOWN_VERSIONS[key][version]
-                    logger.info(f"[RecipeOrchestrator] Normalized version {group_id}:{artifact_id}:{version} -> {normalized}")
-                    return normalized
-        
-        # Specific fixes for commonly mis-versioned dependencies
-        # commons-codec 1.16 doesn't exist, but 1.16.0 and 1.16.1 do
-        if artifact_id == "commons-codec" and version == "1.16":
-            logger.info(f"[RecipeOrchestrator] Normalized commons-codec:1.16 -> 1.16.1")
-            return "1.16.1"
-        
-        # General heuristic: if version has only 2 parts (X.Y), try X.Y.0
-        # But warn that this may not always work
-        parts = version.split('.')
-        if len(parts) == 2:
-            # Check if both parts are numeric
-            try:
-                int(parts[0])
-                int(parts[1])
-                normalized = f"{version}.0"
-                logger.warning(f"[RecipeOrchestrator] Version {version} has only 2 parts, trying {normalized} (may not exist)")
-                return normalized
-            except ValueError:
-                pass
         
         return version
     
@@ -122,7 +61,8 @@ class RecipeOrchestrator:
         compilation_errors: str,
         commit_sha: str,
         repo_slug: str,
-        api_changes: str = ""
+        api_changes: str = "",
+        api_changes_raw: str = ""
     ) -> Dict[str, Any]:
         """
         Attempt to fix breaking changes using OpenRewrite recipes.
@@ -134,6 +74,7 @@ class RecipeOrchestrator:
             commit_sha: Current commit hash
             repo_slug: Repository slug (owner/repo)
             api_changes: Filtered API changes from REVAPI/JApiCmp
+            api_changes_raw: Full/raw API changes from REVAPI/JApiCmp (for logging)
             
         Returns:
             Dict with:
@@ -144,6 +85,16 @@ class RecipeOrchestrator:
                 - message: str - status message
         """
         logger.info(f"[RecipeOrchestrator] Starting recipe-based analysis for {repo_slug}")
+        
+        # Log full/raw API changes early if provided
+        if api_changes_raw:
+            logger.info(f"[RecipeOrchestrator] Full REVAPI output received ({len(api_changes_raw)} chars)")
+            if self.pipeline_logger:
+                self.pipeline_logger.log_stage("api_changes_raw", {
+                    "api_changes_length": len(api_changes_raw),
+                    "api_changes_preview": api_changes_raw[:500],
+                    "timestamp": __import__('datetime').datetime.now().isoformat()
+                })
         
         project_path = Path(repo_path)
         
@@ -170,6 +121,17 @@ class RecipeOrchestrator:
         # Step 2: Check if recipes can handle this
         if not analysis.get("can_use_recipes", False):
             logger.info(f"[RecipeOrchestrator] Recipes cannot fix this issue: {analysis.get('reasoning')}")
+            
+            # Log recipe decision stage
+            if self.pipeline_logger:
+                self.pipeline_logger.log_stage("recipe_decision", {
+                    "can_use_recipes": False,
+                    "reasoning": analysis.get("reasoning", "Unknown reason"),
+                    "selected_recipes": [],
+                    "fallback_to_existing_agent": True,
+                    "decision_timestamp": __import__('datetime').datetime.now().isoformat()
+                })
+            
             return {
                 "success": False,
                 "used_recipes": False,
@@ -181,6 +143,17 @@ class RecipeOrchestrator:
         selected_recipes = analysis.get("selected_recipes", [])
         if not selected_recipes:
             logger.info("[RecipeOrchestrator] No recipes selected by LLM")
+            
+            # Log recipe decision stage
+            if self.pipeline_logger:
+                self.pipeline_logger.log_stage("recipe_decision", {
+                    "can_use_recipes": True,
+                    "reasoning": "No recipes selected despite can_use_recipes=True",
+                    "selected_recipes": [],
+                    "fallback_to_existing_agent": True,
+                    "decision_timestamp": __import__('datetime').datetime.now().isoformat()
+                })
+            
             return {
                 "success": False,
                 "used_recipes": False,
@@ -200,6 +173,11 @@ class RecipeOrchestrator:
                 if "onlyIfUsing" in args:
                     logger.warning(f"[RecipeOrchestrator] Removing 'onlyIfUsing' from AddDependency (not supported for broken projects)")
                     del args["onlyIfUsing"]
+
+            if recipe_name == "org.openrewrite.java.ChangeType":
+                if "ignoreDefinition" not in args:
+                    logger.info("[RecipeOrchestrator] Setting ignoreDefinition=true for ChangeType")
+                    args["ignoreDefinition"] = True
             
             # Normalize version numbers for all recipes that have version parameters
             # This is CRITICAL - Maven Central requires exact version strings
@@ -222,6 +200,18 @@ class RecipeOrchestrator:
         # Step 3: Generate rewrite.yaml and update pom.xml
         logger.info(f"[RecipeOrchestrator] Generating rewrite.yaml with {len(selected_recipes)} recipes...")
         logger.info(f"[RecipeOrchestrator] Selected recipes: {selected_recipes}")
+        
+        # Log recipe decision - recipes will be attempted
+        if self.pipeline_logger:
+            self.pipeline_logger.log_stage("recipe_decision", {
+                "can_use_recipes": True,
+                "recipes_selected": len(selected_recipes),
+                "recipes_details": [{"name": r.get("name"), "arguments": r.get("arguments", {})} for r in selected_recipes],
+                "recipe_name": analysis.get("recipe_name", "com.aura.fix.AutoGeneratedFix"),
+                "recipe_display_name": analysis.get("recipe_display_name", "AURA Auto-Generated Fix"),
+                "fallback_to_existing_agent": False,
+                "decision_timestamp": __import__('datetime').datetime.now().isoformat()
+            })
         
         recipe_name = analysis.get("recipe_name", "com.aura.fix.AutoGeneratedFix")
         display_name = analysis.get("recipe_display_name", "AURA Auto-Generated Fix")
@@ -278,10 +268,36 @@ class RecipeOrchestrator:
                     yaml_content,
                     ""
                 )
+
+             
+            migration_deps = [
+                    # Old dependency (so Rewrite can find the old type)
+                        {
+                        'groupId': 'org.apache.maven.doxia',
+                        'artifactId': 'doxia-module-xhtml',
+                        'version': '1.0'
+                        },
+                    # New dependency (optional, but often needed on classpath)
+                        {
+                        'groupId': 'org.apache.maven.doxia',
+                        'artifactId': 'doxia-site-renderer',
+                        'version': '1.11.1'
+                        }
+                ]
             
             # Add plugin to pom.xml (skip Java parsing for Maven-only recipes)
-            if not generator.add_rewrite_plugin_to_pom(recipe_name, maven_only_recipes=maven_only):
+            if not generator.add_rewrite_plugin_to_pom(recipe_name, maven_only_recipes=maven_only, plugin_dependencies=migration_deps):
                 logger.error("[RecipeOrchestrator] Failed to add plugin to pom.xml")
+                
+                # Log recipe failure
+                if self.pipeline_logger:
+                    self.pipeline_logger.log_stage("recipe_failure", {
+                        "stage": "add_plugin_to_pom",
+                        "reason": "Failed to add OpenRewrite plugin to pom.xml",
+                        "recipes_attempted": [r.get("name") for r in selected_recipes],
+                        "failure_timestamp": __import__('datetime').datetime.now().isoformat()
+                    })
+                
                 generator.cleanup()
                 return {
                     "success": False,
@@ -293,6 +309,15 @@ class RecipeOrchestrator:
             
         except Exception as e:
             logger.error(f"[RecipeOrchestrator] Error generating recipe files: {e}")
+            
+            # Log recipe failure
+            if self.pipeline_logger:
+                self.pipeline_logger.log_error(
+                    "recipe_file_generation",
+                    str(e),
+                    __import__('traceback').format_exc()
+                )
+            
             generator.cleanup()
             return {
                 "success": False,
@@ -323,6 +348,17 @@ class RecipeOrchestrator:
                 
                 if not rewrite_success:
                     logger.error(f"[RecipeOrchestrator] rewrite:run failed: {rewrite_error or rewrite_output[:500]}")
+                    
+                    # Log rewrite failure
+                    if self.pipeline_logger:
+                        self.pipeline_logger.log_stage("recipe_failure", {
+                            "stage": "mvn_rewrite_run",
+                            "reason": "OpenRewrite execution failed",
+                            "error": rewrite_error[:500] if rewrite_error else rewrite_output[:500],
+                            "recipes_attempted": [r.get("name") for r in selected_recipes],
+                            "failure_timestamp": __import__('datetime').datetime.now().isoformat()
+                        })
+                    
                     generator.cleanup()
                     return {
                         "success": False,
@@ -387,6 +423,16 @@ class RecipeOrchestrator:
                 else:
                     logger.warning(f"[RecipeOrchestrator] Compilation still fails after rewrite: {compile_output[:500]}")
                     
+                    # Log recipe failure
+                    if self.pipeline_logger:
+                        self.pipeline_logger.log_stage("recipe_failure", {
+                            "stage": "post_rewrite_compilation",
+                            "reason": "Compilation failed after rewrite",
+                            "error": compile_output[:500],
+                            "recipes_attempted": [r.get("name") for r in selected_recipes],
+                            "failure_timestamp": __import__('datetime').datetime.now().isoformat()
+                        })
+                    
                     # Revert the changes
                     self._revert_changes(project_path, commit_sha)
                     generator.cleanup()
@@ -401,6 +447,15 @@ class RecipeOrchestrator:
                     
         except Exception as e:
             logger.error(f"[RecipeOrchestrator] Error executing recipes: {e}")
+            
+            # Log recipe execution error
+            if self.pipeline_logger:
+                self.pipeline_logger.log_error(
+                    "recipe_execution",
+                    str(e),
+                    __import__('traceback').format_exc()
+                )
+            
             generator.cleanup()
             return {
                 "success": False,
