@@ -6,12 +6,12 @@ from typing import Any, Callable, List
 import tiktoken
 from opentelemetry import trace as trace_api
 
-from app.masterthesis.agent.aider.AdvancedDiffAgent import UnifiedDiffCoder
-from app.masterthesis.agent.GitAgent import GitAgent
-from app.masterthesis.agent.LSPAgent import LSPAgent
-from app.masterthesis.agent.MavenReproducerAgent import MavenReproducerAgent
-from app.masterthesis.dataset.dataset_types import DatasetEntry
-from app.masterthesis.dataset.feature_flags import (
+from app.common_agents.agent.aider.AdvancedDiffAgent import UnifiedDiffCoder
+from app.common_agents.agent.GitAgent import GitAgent
+from app.common_agents.agent.LSPAgent import LSPAgent
+from app.common_agents.agent.MavenReproducerAgent import MavenReproducerAgent
+from app.common_agents.dataset.dataset_types import DatasetEntry
+from app.common_agents.dataset.feature_flags import (
     APIChangeType,
     CodeType,
     DependencyChangeType,
@@ -19,8 +19,8 @@ from app.masterthesis.dataset.feature_flags import (
     FeatureFlags,
     OmissionsType,
 )
-from app.masterthesis.llm.generate_signatures import FILE_EDITING_RULES
-from app.masterthesis.llm.types import DiffCallbackParams, DiffInfo, TokenizerType
+from app.common_agents.llm.generate_signatures import FILE_EDITING_RULES
+from app.common_agents.llm.types import DiffCallbackParams, DiffInfo, TokenizerType
 
 
 def pipeline(

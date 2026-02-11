@@ -6,7 +6,7 @@ from typing import List
 import git
 from unidiff import PatchSet, PatchedFile
 
-from app.masterthesis.agent.DiffAgent import Patch, PatchError
+from app.common_agents.agent.DiffAgent import Patch, PatchError
 
 
 class GitAgent:

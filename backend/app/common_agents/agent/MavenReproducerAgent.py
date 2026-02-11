@@ -6,9 +6,9 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Dict, Tuple
 
-from app.masterthesis.agent.aider.AdvancedDiffAgent import UnifiedDiffCoder
-from app.masterthesis.agent.DockerAgent import DockerAgent
-from app.masterthesis.agent.LSPAgent import extract_error_lines
+from app.common_agents.agent.aider.AdvancedDiffAgent import UnifiedDiffCoder
+from app.common_agents.agent.DockerAgent import DockerAgent
+from app.common_agents.agent.LSPAgent import extract_error_lines
 
 
 class MavenReproducerAgent:

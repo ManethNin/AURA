@@ -9,11 +9,11 @@ from pathlib import Path
 import pandas as pd
 import requests
 
-from app.masterthesis.agent.aider.AdvancedDiffAgent import UnifiedDiffCoder
-from app.masterthesis.agent.GitAgent import GitAgent
-from app.masterthesis.agent.LSPAgent import extract_error_lines
-from app.masterthesis.agent.SpoonAgent import SpoonAgent
-from app.masterthesis.dataset.find_compilation_errors import (
+from app.common_agents.agent.aider.AdvancedDiffAgent import UnifiedDiffCoder
+from app.common_agents.agent.GitAgent import GitAgent
+from app.common_agents.agent.LSPAgent import extract_error_lines
+from app.common_agents.agent.SpoonAgent import SpoonAgent
+from app.common_agents.dataset.find_compilation_errors import (
     find_compilation_errors,
     java_error_pattern,
 )

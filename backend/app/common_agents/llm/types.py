@@ -2,7 +2,7 @@ from enum import Enum
 from pathlib import Path
 from typing import TypedDict
 
-from app.masterthesis.dataset.feature_flags import OmissionsType
+from app.common_agents.dataset.feature_flags import OmissionsType
 
 
 class DiffInfo(TypedDict):

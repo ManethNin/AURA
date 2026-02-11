@@ -96,7 +96,7 @@ aura/
 │   │   ├── repositories/      # Data access layer
 │   │   ├── schemas/           # Pydantic schemas
 │   │   ├── services/          # Business logic
-│   │   ├── masterthesis/      # Research components
+│   │   ├── common_agents/      # Research components
 │   │   │   ├── agent/         # Specialized agents
 │   │   │   ├── ast/           # AST parsing
 │   │   │   ├── llm/           # LLM utilities

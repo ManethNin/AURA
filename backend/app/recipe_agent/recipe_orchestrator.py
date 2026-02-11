@@ -12,10 +12,11 @@ import git
 
 from app.core.config import settings
 from app.utils.logger import logger
+from app.utils.maven_tool import maven_central_tool
 from app.recipe_agent.recipe_service import RecipeAgentService
 from app.recipe_agent.recipe_generator import RecipeGenerator
 from app.recipe_agent.recipe_executor import RecipeExecutor
-from app.masterthesis.agent.MavenReproducerAgent import MavenReproducerAgent
+from app.common_agents.agent.MavenReproducerAgent import MavenReproducerAgent
 
 
 class RecipeOrchestrator:
@@ -38,15 +39,15 @@ class RecipeOrchestrator:
         self.groq_api_key = groq_api_key or settings.GROQ_API_KEY
         self.pipeline_logger = pipeline_logger
     
-    def _normalize_version(self, version: str, group_id: str = None, artifact_id: str = None) -> str:
+    def _verify_version(self, version: str, group_id: str = None, artifact_id: str = None) -> str:
         """
-        Normalize version numbers to ensure Maven can resolve them.
-        LLM sometimes provides incomplete versions like "1.16" instead of "1.16.0".
+        Verify a dependency version against Maven Central.
         
-        IMPORTANT: Maven Central requires exact version strings. Version "1.16" is NOT
-        the same as "1.16.0" and will fail to resolve if the exact version doesn't exist.
+        Instead of guessing version formats (adding .0 etc.), this queries
+        Maven Central to confirm the version actually exists and corrects
+        it if needed.
         """
-        if not version:
+        if not version or not group_id or not artifact_id:
             return version
         
         version = version.strip()
@@ -162,23 +163,23 @@ class RecipeOrchestrator:
                     logger.warning(f"[RecipeOrchestrator] Removing 'onlyIfUsing' from AddDependency (not supported for broken projects)")
                     del args["onlyIfUsing"]
             
-            # Normalize version numbers for all recipes that have version parameters
+            # Verify version numbers against Maven Central for all recipes
             # This is CRITICAL - Maven Central requires exact version strings
             if "version" in args:
                 group_id = args.get("groupId", "")
                 artifact_id = args.get("artifactId", "")
                 old_version = args["version"]
-                args["version"] = self._normalize_version(old_version, group_id, artifact_id)
+                args["version"] = self._verify_version(old_version, group_id, artifact_id)
                 if args["version"] != old_version:
-                    logger.info(f"[RecipeOrchestrator] Recipe version normalized: {old_version} -> {args['version']}")
+                    logger.info(f"[RecipeOrchestrator] Recipe version verified: {old_version} -> {args['version']}")
             
             if "newVersion" in args:
                 group_id = args.get("groupId", args.get("newGroupId", ""))
                 artifact_id = args.get("artifactId", args.get("newArtifactId", ""))
                 old_version = args["newVersion"]
-                args["newVersion"] = self._normalize_version(old_version, group_id, artifact_id)
+                args["newVersion"] = self._verify_version(old_version, group_id, artifact_id)
                 if args["newVersion"] != old_version:
-                    logger.info(f"[RecipeOrchestrator] Recipe newVersion normalized: {old_version} -> {args['newVersion']}")
+                    logger.info(f"[RecipeOrchestrator] Recipe newVersion verified: {old_version} -> {args['newVersion']}")
         
         # Step 3: Generate rewrite.yaml and update pom.xml
         logger.info(f"[RecipeOrchestrator] Generating rewrite.yaml with {len(selected_recipes)} recipes...")

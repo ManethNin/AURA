@@ -11,7 +11,7 @@ from typing import Dict, Any, Tuple, Optional
 from contextlib import contextmanager
 
 from app.utils.logger import logger
-from app.masterthesis.agent.DockerAgent import DockerAgent, DockerError
+from app.common_agents.agent.DockerAgent import DockerAgent, DockerError
 
 
 class RecipeExecutor:
