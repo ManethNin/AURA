@@ -74,6 +74,49 @@ class JapiCmpAgent:
 
         return "\n\n".join(results).strip()
 
+    def generate_api_changes_with_raw(self, repo_path: str, pom_diff: str, compilation_errors: str = "") -> dict:
+        """
+        Generate API changes with BOTH raw and filtered outputs.
+        Returns a dict with 'raw' and 'filtered' keys for explicit logging.
+        
+        Args:
+            repo_path: Path to the repository
+            pom_diff: Diff of pom.xml changes
+            compilation_errors: Optional compilation errors to filter relevant API changes
+            
+        Returns:
+            dict with:
+                - raw: Full unfiltered API changes from the tool
+                - filtered: Summarized/filtered API changes for LLM
+                - tool_used: Which tool was used (revapi, japicmp, etc.)
+        """
+        changes = self._extract_dependency_changes(pom_diff)
+        if not changes:
+            return {"raw": "", "filtered": "", "tool_used": "none"}
+
+        raw_results = []
+        filtered_results = []
+        tools_used = set()
+        
+        for change in changes:
+            tool_used, output, error = self._run_tool(change, repo_path, compilation_errors)
+            tools_used.add(tool_used)
+            header = f"{change.group_id}:{change.artifact_id} {change.old_version} -> {change.new_version}"
+            
+            if output:
+                raw_results.append(f"[{tool_used}] {header}\n{output}")
+                filtered_results.append(f"[{tool_used}] {header}\n{output}")
+            else:
+                error_msg = error or "No output"
+                raw_results.append(f"[{tool_used}] {header}\n{error_msg}")
+                filtered_results.append(f"[{tool_used}] {header}\n{error_msg}")
+
+        return {
+            "raw": "\n\n".join(raw_results).strip(),
+            "filtered": "\n\n".join(filtered_results).strip(),
+            "tool_used": ", ".join(sorted(tools_used))
+        }
+
     def _run_tool(self, change: DependencyChange, repo_path: str, compilation_errors: str = "") -> Tuple[str, str, str]:
         """
         Try preferred tool (REVAPI, JApiCmp). Returns (tool_used, output, error).
@@ -171,127 +214,157 @@ class JapiCmpAgent:
 
     def _summarize_revapi_output(self, raw_output: str, compilation_errors: str = "") -> str:
         """
-        Summarize REVAPI output to only show truly BREAKING changes.
-        If compilation_errors is provided, only show changes relevant to classes/methods in errors.
-        Filters out EQUIVALENT and many POTENTIALLY_BREAKING changes to reduce token usage.
+        Summarize REVAPI output to show only changes directly causing the compilation errors.
+        
+        For import/package errors like "package X does not exist", we filter for changes where
+        the OLD element contains the missing package - this shows what was removed/moved.
+        
+        For "cannot find symbol class X" errors, we filter for changes involving that class.
         """
-        # Extract class/method names from compilation errors
-        relevant_symbols = set()
+        # Extract SPECIFIC missing packages and classes from compilation errors
+        missing_packages = set()  # High priority: packages that don't exist anymore
+        missing_classes = set()   # Classes that can't be found
+        
         if compilation_errors:
-            # STRICT filtering: only exact class and method names, no parent packages
-            # Full qualified class names: com.package.ClassName
-            fqcn_pattern = r'\b(com\.[\w.]+\.([A-Z][\w]+))\b'
-            # Class names only (last part after dot)
-            class_pattern = r'\b([A-Z][\w]{2,}(?:Exception|Response|Request|Client|Service|Builder|Model|Record|Traits|Error|Handler))\b'
-            # Method names (must be followed by parentheses)
-            method_pattern = r'\b([a-z][\w]+)\s*\('
+            # Extract missing packages from "package X does not exist" errors
+            package_pattern = r'package\s+([\w.]+)\s+does not exist'
+            for match in re.finditer(package_pattern, compilation_errors):
+                missing_packages.add(match.group(1))
             
-            # Extract fully qualified class names
-            for match in re.finditer(fqcn_pattern, compilation_errors):
-                relevant_symbols.add(match.group(1))  # Full: com.package.ClassName
-                relevant_symbols.add(match.group(2))  # Short: ClassName
+            # Extract missing classes from "cannot find symbol class X" errors
+            symbol_pattern = r'(?:symbol:?\s*class|cannot find symbol\s*\n.*class)\s+([A-Z][\w]+)'
+            for match in re.finditer(symbol_pattern, compilation_errors, re.IGNORECASE):
+                missing_classes.add(match.group(1))
             
-            # Extract class names
+            # Also extract class names directly after "class" keyword
+            class_pattern = r'\bclass\s+([A-Z][\w]+)'
             for match in re.finditer(class_pattern, compilation_errors):
-                relevant_symbols.add(match.group(1))
-            
-            # Extract method names (only if they look like method calls)
-            for match in re.finditer(method_pattern, compilation_errors):
-                method_name = match.group(1)
-                # Filter out common keywords that aren't actual methods
-                if method_name not in {'if', 'for', 'while', 'switch', 'return', 'new', 'throw'}:
-                    relevant_symbols.add(method_name)
+                missing_classes.add(match.group(1))
+        
+        # If we have specific missing packages/classes, use strict filtering
+        # Otherwise fall back to looser filtering
+        use_strict_filter = bool(missing_packages or missing_classes)
         
         lines = raw_output.split('\n')
-        filtered_breaking_changes = []
+        filtered_changes = []
         current_change = []
+        current_old_line = ""
         is_breaking = False
-        is_relevant = not compilation_errors  # If no errors provided, all changes are relevant
         
         for line in lines:
             # Skip log lines and headers
-            if any(x in line for x in ['INFO', 'WARN', 'Analysis results', 'Old API:', 'New API:', '---']):
+            if any(x in line for x in ['INFO', 'WARN', 'Analysis results', 'Old API:', 'New API:']):
                 continue
             
-            # Detect breaking severity
-            if 'BINARY: BREAKING' in line or 'SOURCE: BREAKING' in line:
-                is_breaking = True
+            stripped = line.strip()
             
-            # Check if this change is relevant to our codebase
-            if compilation_errors and relevant_symbols:
-                for symbol in relevant_symbols:
-                    if symbol in line:
-                        is_relevant = True
-                        break
-            
-            # Check if this is a new change entry (starts with 'old:' or 'new:')
-            if line.strip().startswith('old:') or (line.strip().startswith('new:') and not current_change):
-                # Save previous change if it was breaking and relevant
-                if current_change and is_breaking and is_relevant:
-                    filtered_breaking_changes.append('\n'.join(current_change))
+            # Detect new change entry
+            if stripped.startswith('old:') or (stripped.startswith('new:') and not current_change):
+                # Save previous change if it passes our filter
+                if current_change and is_breaking:
+                    if self._is_relevant_change(current_old_line, missing_packages, missing_classes, use_strict_filter):
+                        filtered_changes.append('\n'.join(current_change))
+                
                 # Start new change
                 current_change = [line]
+                current_old_line = stripped if stripped.startswith('old:') else ""
                 is_breaking = False
-                is_relevant = not compilation_errors
             elif current_change:
                 current_change.append(line)
+                # Track the old: line for filtering
+                if stripped.startswith('old:'):
+                    current_old_line = stripped
+                # Detect breaking severity
+                if 'BINARY: BREAKING' in line or 'SOURCE: BREAKING' in line:
+                    is_breaking = True
         
         # Don't forget the last change
-        if current_change and is_breaking and is_relevant:
-            filtered_breaking_changes.append('\n'.join(current_change))
+        if current_change and is_breaking:
+            if self._is_relevant_change(current_old_line, missing_packages, missing_classes, use_strict_filter):
+                filtered_changes.append('\n'.join(current_change))
         
-        if not filtered_breaking_changes:
+        if not filtered_changes:
             if compilation_errors:
-                return "No breaking API changes detected for classes/methods used in your code"
+                return "No breaking API changes detected for the missing packages/classes in your errors"
             return "No breaking API changes detected"
         
-        # Format concisely
-        result = f"Breaking API changes affecting your code ({len(filtered_breaking_changes)} changes):\n\n"
-        # Limit to 15 changes to save tokens
-        result += "\n\n".join(filtered_breaking_changes[:15])
+        # Format concisely - show what package/class is missing and what changed
+        if missing_packages:
+            result = f"Missing package(s): {', '.join(missing_packages)}\n"
+        else:
+            result = ""
+        if missing_classes:
+            result += f"Missing class(es): {', '.join(missing_classes)}\n"
         
-        if len(filtered_breaking_changes) > 15:
-            result += f"\n\n... and {len(filtered_breaking_changes) - 15} more breaking changes"
+        result += f"\nRelevant API changes ({len(filtered_changes)} found):\n\n"
+        # Limit to 10 changes for token efficiency
+        result += "\n\n".join(filtered_changes[:10])
+        
+        if len(filtered_changes) > 10:
+            result += f"\n\n... and {len(filtered_changes) - 10} more related changes"
         
         return result
+    
+    def _is_relevant_change(self, old_line: str, missing_packages: set, missing_classes: set, strict: bool) -> bool:
+        """
+        Check if a REVAPI change is relevant to the compilation errors.
+        
+        For strict filtering (when we have specific missing packages/classes):
+        - The OLD element must contain the missing package or class
+        
+        For loose filtering:
+        - Any breaking change is considered relevant
+        """
+        if not strict:
+            return True
+        
+        if not old_line:
+            return False
+        
+        # Check if the old element contains any missing package
+        for pkg in missing_packages:
+            if pkg in old_line:
+                return True
+        
+        # Check if the old element contains any missing class name
+        for cls in missing_classes:
+            if cls in old_line:
+                return True
+        
+        return False
 
     def _summarize_japicmp_output(self, raw_output: str, compilation_errors: str = "") -> str:
         """
-        Summarize JApiCmp output to only show changes relevant to user's code.
-        If compilation_errors is provided, only show changes relevant to classes/methods in errors.
-        Filters out irrelevant changes to reduce token usage.
+        Summarize JApiCmp output to show only changes directly causing the compilation errors.
+        
+        For import/package errors, we filter for classes containing the missing package name.
         """
-        # Extract class/method names from compilation errors
-        relevant_symbols = set()
+        # Extract SPECIFIC missing packages and classes from compilation errors
+        missing_packages = set()
+        missing_classes = set()
+        
         if compilation_errors:
-            # STRICT filtering: only exact class and method names, no parent packages
-            # Full qualified class names: com.package.ClassName
-            fqcn_pattern = r'\b(com\.[\w.]+\.([A-Z][\w]+))\b'
-            # Class names only (last part after dot)
-            class_pattern = r'\b([A-Z][\w]{2,}(?:Exception|Response|Request|Client|Service|Builder|Model|Record|Traits|Error|Handler))\b'
-            # Method names (must be followed by parentheses)
-            method_pattern = r'\b([a-z][\w]+)\s*\('
+            # Extract missing packages from "package X does not exist" errors
+            package_pattern = r'package\s+([\w.]+)\s+does not exist'
+            for match in re.finditer(package_pattern, compilation_errors):
+                missing_packages.add(match.group(1))
             
-            # Extract fully qualified class names
-            for match in re.finditer(fqcn_pattern, compilation_errors):
-                relevant_symbols.add(match.group(1))  # Full: com.package.ClassName
-                relevant_symbols.add(match.group(2))  # Short: ClassName
+            # Extract missing classes from "cannot find symbol class X" errors
+            symbol_pattern = r'(?:symbol:?\s*class|cannot find symbol\s*\n.*class)\s+([A-Z][\w]+)'
+            for match in re.finditer(symbol_pattern, compilation_errors, re.IGNORECASE):
+                missing_classes.add(match.group(1))
             
-            # Extract class names
+            # Also extract class names directly after "class" keyword
+            class_pattern = r'\bclass\s+([A-Z][\w]+)'
             for match in re.finditer(class_pattern, compilation_errors):
-                relevant_symbols.add(match.group(1))
-            
-            # Extract method names (only if they look like method calls)
-            for match in re.finditer(method_pattern, compilation_errors):
-                method_name = match.group(1)
-                # Filter out common keywords that aren't actual methods
-                if method_name not in {'if', 'for', 'while', 'switch', 'return', 'new', 'throw'}:
-                    relevant_symbols.add(method_name)
+                missing_classes.add(match.group(1))
+        
+        use_strict_filter = bool(missing_packages or missing_classes)
         
         lines = raw_output.split('\n')
         filtered_changes = []
         current_class_section = []
-        is_relevant_class = not compilation_errors  # If no errors provided, all changes are relevant
+        current_class_name = ""
         
         for line in lines:
             # Skip warning and header lines
@@ -301,49 +374,65 @@ class JapiCmpAgent:
             # Detect start of a class section (MODIFIED/REMOVED/NEW CLASS)
             if 'CLASS:' in line:
                 # Save previous class section if it was relevant
-                if current_class_section and is_relevant_class:
-                    # Filter out non-breaking changes within this class
-                    filtered_section = self._filter_japicmp_class_section(current_class_section)
-                    if filtered_section:
-                        filtered_changes.append(filtered_section)
+                if current_class_section:
+                    if self._is_relevant_japicmp_class(current_class_name, missing_packages, missing_classes, use_strict_filter):
+                        filtered_section = self._filter_japicmp_class_section(current_class_section)
+                        if filtered_section:
+                            filtered_changes.append(filtered_section)
                 
                 # Start new class section
                 current_class_section = [line]
-                is_relevant_class = not compilation_errors
-                
-                # Check if this class is relevant to our codebase
-                if compilation_errors and relevant_symbols:
-                    for symbol in relevant_symbols:
-                        if symbol in line:
-                            is_relevant_class = True
-                            break
+                current_class_name = line  # Store full line for matching
             elif current_class_section:
-                # Add line to current class section
                 current_class_section.append(line)
-                
-                # Also check if individual methods/fields are relevant
-                if compilation_errors and relevant_symbols and not is_relevant_class:
-                    for symbol in relevant_symbols:
-                        if symbol in line:
-                            is_relevant_class = True
-                            break
         
         # Don't forget the last class section
-        if current_class_section and is_relevant_class:
-            filtered_section = self._filter_japicmp_class_section(current_class_section)
-            if filtered_section:
-                filtered_changes.append(filtered_section)
+        if current_class_section:
+            if self._is_relevant_japicmp_class(current_class_name, missing_packages, missing_classes, use_strict_filter):
+                filtered_section = self._filter_japicmp_class_section(current_class_section)
+                if filtered_section:
+                    filtered_changes.append(filtered_section)
         
         if not filtered_changes:
             if compilation_errors:
-                return "No breaking API changes detected for classes/methods used in your code"
+                return "No breaking API changes detected for the missing packages/classes"
             return "No breaking API changes detected"
         
         # Format concisely
-        result = f"Breaking API changes affecting your code ({len(filtered_changes)} classes):\n\n"
-        result += "\n".join(filtered_changes)
+        if missing_packages:
+            result = f"Missing package(s): {', '.join(missing_packages)}\n"
+        else:
+            result = ""
+        if missing_classes:
+            result += f"Missing class(es): {', '.join(missing_classes)}\n"
+        
+        result += f"\nRelevant class changes ({len(filtered_changes)} found):\n\n"
+        result += "\n".join(filtered_changes[:10])
+        
+        if len(filtered_changes) > 10:
+            result += f"\n\n... and {len(filtered_changes) - 10} more related changes"
         
         return result
+    
+    def _is_relevant_japicmp_class(self, class_line: str, missing_packages: set, missing_classes: set, strict: bool) -> bool:
+        """Check if a JApiCmp class section is relevant to the compilation errors."""
+        if not strict:
+            return True
+        
+        if not class_line:
+            return False
+        
+        # Check if the class line contains any missing package
+        for pkg in missing_packages:
+            if pkg in class_line:
+                return True
+        
+        # Check if the class line contains any missing class name
+        for cls in missing_classes:
+            if cls in class_line:
+                return True
+        
+        return False
 
     def _filter_japicmp_class_section(self, section_lines: List[str]) -> str:
         """
@@ -481,7 +570,7 @@ class JapiCmpAgent:
                 cwd=repo_path,
                 capture_output=True,
                 text=True,
-                timeout=180,
+                timeout=600,
             )
             if result.returncode != 0:
                 stderr = (result.stderr or "").strip()

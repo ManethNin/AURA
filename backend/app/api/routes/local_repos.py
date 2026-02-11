@@ -14,8 +14,9 @@ from app.core.config import settings
 from app.utils.logger import logger
 from app.utils.pipeline_logger import PipelineLogger
 
-# Import the agent service
+# Import the agent services
 from app.agents.service import JavaMigrationAgentService
+from app.agents.planning_service import PlanningAgentService
 
 
 router = APIRouter()
@@ -140,21 +141,117 @@ async def process_repository(
     # If no pom_diff provided, try to detect recent changes
     pom_diff = request.pom_diff
     if not pom_diff:
-        # Try to get recent git diff for pom.xml
+        # Try to get recent git diff for pom.xml (including nested ones)
         try:
             import subprocess
-            result = subprocess.run(
-                ["git", "diff", "HEAD~1", "HEAD", "--", "**/pom.xml"],
+            
+            # First, find all pom.xml files in the repo
+            logger.info(f"[GIT] Searching for pom.xml files in {repo_path}")
+            find_result = subprocess.run(
+                ["git", "ls-files", "*pom.xml"],
                 cwd=repo_path,
                 capture_output=True,
                 text=True
             )
-            if result.returncode == 0 and result.stdout:
-                pom_diff = result.stdout
-                logger.info(f"Detected pom.xml changes from git diff")
+            
+            logger.info(f"[GIT] Command: git ls-files *pom.xml")
+            logger.info(f"[GIT] Return code: {find_result.returncode}")
+            if find_result.stderr:
+                logger.info(f"[GIT] Stderr: {find_result.stderr}")
+            
+            pom_files = [f.strip() for f in find_result.stdout.split('\n') if f.strip()]
+            logger.info(f"[GIT] Found {len(pom_files)} pom.xml file(s): {pom_files}")
+            
+            if not pom_files:
+                logger.warning(f"[GIT] No pom.xml files found in git repo")
+            else:
+                # Try HEAD~1 first (most recent change)
+                cmd = ["git", "diff", "HEAD~1", "HEAD", "--"] + pom_files
+                logger.info(f"[GIT] Command: {' '.join(cmd)}")
+                result = subprocess.run(
+                    cmd,
+                    cwd=repo_path,
+                    capture_output=True,
+                    text=True
+                )
+                
+                logger.info(f"[GIT] Return code: {result.returncode}")
+                logger.info(f"[GIT] Output length: {len(result.stdout)} chars")
+                if result.stderr:
+                    logger.info(f"[GIT] Stderr: {result.stderr}")
+                
+                if result.returncode == 0 and result.stdout:
+                    pom_diff = result.stdout
+                    logger.info(f"[GIT] ✓ Detected pom.xml changes from git diff (HEAD~1 vs HEAD)")
+                else:
+                    # Try without HEAD~1 (in case only one commit exists)
+                    logger.info(f"[GIT] ✗ No diff between HEAD~1 and HEAD, trying uncommitted changes...")
+                    cmd = ["git", "diff", "HEAD", "--"] + pom_files
+                    logger.info(f"[GIT] Command: {' '.join(cmd)}")
+                    result = subprocess.run(
+                        cmd,
+                        cwd=repo_path,
+                        capture_output=True,
+                        text=True
+                    )
+                    
+                    logger.info(f"[GIT] Return code: {result.returncode}")
+                    logger.info(f"[GIT] Output length: {len(result.stdout)} chars")
+                    if result.stderr:
+                        logger.info(f"[GIT] Stderr: {result.stderr}")
+                    
+                    if result.returncode == 0 and result.stdout:
+                        pom_diff = result.stdout
+                        logger.info(f"[GIT] ✓ Detected uncommitted pom.xml changes")
+                    else:
+                        # Try to get diffs of last changes to any pom.xml
+                        logger.info(f"[GIT] ✗ No changes detected, checking git log for pom.xml modifications...")
+                        cmd = ["git", "log", "--pretty=format:%H", "-n", "1", "--"] + pom_files
+                        logger.info(f"[GIT] Command: {' '.join(cmd)}")
+                        result = subprocess.run(
+                            cmd,
+                            cwd=repo_path,
+                            capture_output=True,
+                            text=True
+                        )
+                        
+                        logger.info(f"[GIT] Return code: {result.returncode}")
+                        logger.info(f"[GIT] Output length: {len(result.stdout)} chars")
+                        if result.stderr:
+                            logger.info(f"[GIT] Stderr: {result.stderr}")
+                        
+                        if result.returncode == 0 and result.stdout:
+                            last_commit = result.stdout.strip()
+                            logger.info(f"[GIT] ✓ Found pom.xml last modified in commit: {last_commit[:7]}")
+                            # Get diff of last change to any pom.xml
+                            cmd = ["git", "show", f"{last_commit}^..{last_commit}", "--"] + pom_files
+                            logger.info(f"[GIT] Command: {' '.join(cmd)}")
+                            result = subprocess.run(
+                                cmd,
+                                cwd=repo_path,
+                                capture_output=True,
+                                text=True
+                            )
+                            
+                            logger.info(f"[GIT] Return code: {result.returncode}")
+                            logger.info(f"[GIT] Output length: {len(result.stdout)} chars")
+                            if result.stderr:
+                                logger.info(f"[GIT] Stderr: {result.stderr}")
+                            
+                            if result.returncode == 0 and result.stdout:
+                                pom_diff = result.stdout
+                                logger.info(f"[GIT] ✓ Got pom.xml changes from history")
+                        
+                        if not pom_diff:
+                            logger.warning(f"[GIT] ✗ Could not find any pom.xml changes")
+                            pom_diff = ""
         except Exception as e:
-            logger.warning(f"Could not detect pom.xml changes: {e}")
-            pom_diff = "No diff provided"
+            logger.warning(f"[GIT] Exception during pom.xml detection: {e}")
+            import traceback
+            logger.warning(traceback.format_exc())
+            pom_diff = ""
+    
+    logger.info(f"[GIT] Final result: pom_diff length = {len(pom_diff) if pom_diff else 0} chars")
     
     # Step 1: Compile in Docker to get initial errors
     initial_errors = request.initial_errors
@@ -199,16 +296,27 @@ async def process_repository(
 
     # Step 1.5: Generate API changes from dependency diff (REVAPI/JApiCmp)
     api_changes_text = ""
+    api_result = {"raw": "", "filtered": "", "tool_used": "none"}  # Initialize with defaults
+    
     if pom_diff:
         try:
             from app.masterthesis.agent.JapiCmpAgent import JapiCmpAgent
 
             api_change_agent = JapiCmpAgent(pipeline_logger=pipeline_logger)
-            api_changes_text = api_change_agent.generate_api_changes(
+            api_result = api_change_agent.generate_api_changes_with_raw(
                 repo_path=str(repo_path),
                 pom_diff=pom_diff,
                 compilation_errors=initial_errors  # Filter API changes to only relevant ones
             )
+            
+            # Log full/raw API changes result
+            if api_result.get("raw"):
+                logger.info(f"[REVAPI] Full raw API changes ({len(api_result['raw'])} chars):")
+                logger.info(api_result["raw"][:500])  # Log first 500 chars to console
+            
+            # Use filtered version for next stage (LLM processing)
+            api_changes_text = api_result.get("filtered", "")
+            
             if api_changes_text:
                 logger.info(f"Generated API changes ({len(api_changes_text)} chars)")
             else:
@@ -217,6 +325,31 @@ async def process_repository(
             logger.warning(f"API change analysis failed: {e}")
     
     try:
+        # ========================================
+        # PLANNING AGENT (runs first, creates migration plan)
+        # ========================================
+        # migration_plan = ""
+        # if initial_errors:
+        #     logger.info(f"[PlanningAgent] Generating migration plan for {repo_name}")
+        #     try:
+        #         planning_service = PlanningAgentService()
+        #         plan_result = planning_service.create_plan(
+        #             repo_path=str(repo_path),
+        #             commit_hash=commit_hash,
+        #             repo_slug=repo_name,
+        #             pom_diff=pom_diff,
+        #             initial_errors=initial_errors,
+        #             api_changes_text=api_changes_text,
+        #             pipeline_logger=pipeline_logger,
+        #         )
+        #         if plan_result and plan_result.get("success"):
+        #             migration_plan = plan_result["plan"]
+        #             logger.info(f"[PlanningAgent] Migration plan ready ({len(migration_plan)} chars)")
+        #         else:
+        #             logger.warning(f"[PlanningAgent] Planning failed: {plan_result.get('error')}, continuing without plan")
+        #     except Exception as e:
+        #         logger.warning(f"[PlanningAgent] Planning agent error: {e}, continuing without plan")
+
         # ========================================
         # RECIPE-BASED AGENT (tries first)
         # ========================================
@@ -233,7 +366,8 @@ async def process_repository(
                     compilation_errors=initial_errors,  # Use the local variable
                     commit_sha=commit_hash,
                     repo_slug=repo_name,
-                    api_changes=api_changes_text  # Pass filtered API changes
+                    api_changes=api_changes_text,  # Pass filtered API changes
+                    api_changes_raw=api_result.get("raw", "")  # Pass full/raw API changes for logging
                 )
                 
                 if recipe_result and recipe_result.get("success"):
@@ -268,7 +402,8 @@ async def process_repository(
             pom_diff=pom_diff,
             initial_errors=initial_errors,  # Use the local variable
             api_changes_text=api_changes_text,
-            pipeline_logger=pipeline_logger  # Pass the same logger instance
+            pipeline_logger=pipeline_logger,  # Pass the same logger instance
+            # migration_plan=migration_plan,  # Pass the planning agent's output
         )
         
         # Finalize pipeline logger after LLM agent completes

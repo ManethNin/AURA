@@ -61,7 +61,8 @@ class RecipeOrchestrator:
         compilation_errors: str,
         commit_sha: str,
         repo_slug: str,
-        api_changes: str = ""
+        api_changes: str = "",
+        api_changes_raw: str = ""
     ) -> Dict[str, Any]:
         """
         Attempt to fix breaking changes using OpenRewrite recipes.
@@ -73,6 +74,7 @@ class RecipeOrchestrator:
             commit_sha: Current commit hash
             repo_slug: Repository slug (owner/repo)
             api_changes: Filtered API changes from REVAPI/JApiCmp
+            api_changes_raw: Full/raw API changes from REVAPI/JApiCmp (for logging)
             
         Returns:
             Dict with:
@@ -83,6 +85,16 @@ class RecipeOrchestrator:
                 - message: str - status message
         """
         logger.info(f"[RecipeOrchestrator] Starting recipe-based analysis for {repo_slug}")
+        
+        # Log full/raw API changes early if provided
+        if api_changes_raw:
+            logger.info(f"[RecipeOrchestrator] Full REVAPI output received ({len(api_changes_raw)} chars)")
+            if self.pipeline_logger:
+                self.pipeline_logger.log_stage("api_changes_raw", {
+                    "api_changes_length": len(api_changes_raw),
+                    "api_changes_preview": api_changes_raw[:500],
+                    "timestamp": __import__('datetime').datetime.now().isoformat()
+                })
         
         project_path = Path(repo_path)
         
@@ -161,6 +173,11 @@ class RecipeOrchestrator:
                 if "onlyIfUsing" in args:
                     logger.warning(f"[RecipeOrchestrator] Removing 'onlyIfUsing' from AddDependency (not supported for broken projects)")
                     del args["onlyIfUsing"]
+
+            if recipe_name == "org.openrewrite.java.ChangeType":
+                if "ignoreDefinition" not in args:
+                    logger.info("[RecipeOrchestrator] Setting ignoreDefinition=true for ChangeType")
+                    args["ignoreDefinition"] = True
             
             # Normalize version numbers for all recipes that have version parameters
             # This is CRITICAL - Maven Central requires exact version strings
@@ -251,9 +268,25 @@ class RecipeOrchestrator:
                     yaml_content,
                     ""
                 )
+
+             
+            migration_deps = [
+                    # Old dependency (so Rewrite can find the old type)
+                        {
+                        'groupId': 'org.apache.maven.doxia',
+                        'artifactId': 'doxia-module-xhtml',
+                        'version': '1.0'
+                        },
+                    # New dependency (optional, but often needed on classpath)
+                        {
+                        'groupId': 'org.apache.maven.doxia',
+                        'artifactId': 'doxia-site-renderer',
+                        'version': '1.11.1'
+                        }
+                ]
             
             # Add plugin to pom.xml (skip Java parsing for Maven-only recipes)
-            if not generator.add_rewrite_plugin_to_pom(recipe_name, maven_only_recipes=maven_only):
+            if not generator.add_rewrite_plugin_to_pom(recipe_name, maven_only_recipes=maven_only, plugin_dependencies=migration_deps):
                 logger.error("[RecipeOrchestrator] Failed to add plugin to pom.xml")
                 
                 # Log recipe failure

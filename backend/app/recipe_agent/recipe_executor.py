@@ -256,7 +256,7 @@ class RecipeExecutorLocal:
         
         try:
             result = subprocess.run(
-                ["mvn", "rewrite:run", "-B"],
+                ["mvn", "rewrite:run","-Drewrite.skipMavenCompile=true", "-B"],
                 cwd=self.project_path,
                 capture_output=True,
                 text=True,

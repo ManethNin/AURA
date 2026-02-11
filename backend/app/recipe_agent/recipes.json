@@ -11,27 +11,6 @@
     }
   },
   {
-    "name": "org.openrewrite.maven.UpgradeDependency",
-    "description": "Upgrades the version of a dependency in the pom.xml. Use this when you need to change a dependency to a newer version.",
-    "arguments": ["groupId", "artifactId", "newVersion", "versionPattern", "overrideManagedVersion"],
-    "required_arguments": ["groupId", "artifactId", "newVersion"],
-    "example": {
-      "groupId": "com.google.guava",
-      "artifactId": "guava",
-      "newVersion": "32.1.3-jre"
-    }
-  },
-  {
-    "name": "org.openrewrite.maven.RemoveDependency",
-    "description": "Removes a dependency from the pom.xml. Use this when a dependency is no longer needed or causes conflicts.",
-    "arguments": ["groupId", "artifactId"],
-    "required_arguments": ["groupId", "artifactId"],
-    "example": {
-      "groupId": "org.old.library",
-      "artifactId": "old-lib"
-    }
-  },
-  {
     "name": "org.openrewrite.maven.ChangeDependencyGroupIdAndArtifactId",
     "description": "Changes the groupId and/or artifactId of a dependency. Use when a library has been renamed or relocated (e.g., mysql:mysql-connector-java to com.mysql:mysql-connector-j).",
     "arguments": ["oldGroupId", "oldArtifactId", "newGroupId", "newArtifactId", "newVersion"],
@@ -81,8 +60,8 @@
     "arguments": ["oldFullyQualifiedTypeName", "newFullyQualifiedTypeName"],
     "required_arguments": ["oldFullyQualifiedTypeName", "newFullyQualifiedTypeName"],
     "example": {
-      "oldFullyQualifiedTypeName": "javax.servlet.http.HttpServlet",
-      "newFullyQualifiedTypeName": "jakarta.servlet.http.HttpServlet"
+      "oldFullyQualifiedTypeName": "org.apache.maven.doxia.module.xhtml.decoration.render.RenderingContext",
+      "newFullyQualifiedTypeName": "org.apache.maven.doxia.siterenderer.RenderingContext"
     }
   },
   {
