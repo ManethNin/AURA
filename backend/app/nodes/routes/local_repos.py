@@ -694,26 +694,26 @@ async def process_repository(
                     "result": recipe_result
                 }
 
-        # # 4d. LLM Fallback / Primary Engine
-        # llm_result = _apply_llm_agent(
-        #     repo_path=repo_path,
-        #     pom_diff=pom_diff,
-        #     migration_plan=migration_plan,
-        #     commit_hash=commit_hash,
-        #     repo_name=repo_name,
-        #     pipeline_logger=pipeline_logger,
-        # )
+        # 4d. LLM Fallback / Primary Engine
+        llm_result = _apply_llm_agent(
+            repo_path=repo_path,
+            pom_diff=pom_diff,
+            migration_plan=migration_plan,
+            commit_hash=commit_hash,
+            repo_name=repo_name,
+            pipeline_logger=pipeline_logger,
+        )
 
-        # pipeline_logger.log_final_result(llm_result.get("success", False), llm_result)
-        # pipeline_logger.finalize()
+        pipeline_logger.log_final_result(llm_result.get("success", False), llm_result)
+        pipeline_logger.finalize()
         
-        # return {
-        #     "success": llm_result.get("success", False),
-        #     "repository": repo_name,
-        #     "commit": commit_hash,
-        #     "method": LLM_AGENT_METHOD,
-        #     "result": llm_result
-        # }
+        return {
+            "success": llm_result.get("success", False),
+            "repository": repo_name,
+            "commit": commit_hash,
+            "method": LLM_AGENT_METHOD,
+            "result": llm_result
+        }
 
     except Exception as e:
         logger.error(f"Error processing repository {repo_name}: {e}")
