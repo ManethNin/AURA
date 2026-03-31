@@ -8,6 +8,7 @@ from app.tools.agents.MavenReproducerAgent import MavenReproducerAgent
 from app.tools.agents.TreeAgent import get_directory_tree
 from app.tools.agents.aider.AdvancedDiffAgent import UnifiedDiffCoder
 from app.utilities.dataset.find_compilation_errors import find_compilation_errors
+from app.utilities.maven_tool import maven_central_tool
 
 from tenacity import (
     retry,
@@ -41,11 +42,21 @@ execution_details: Dict[str, ExecutionDetails] = defaultdict(
         "read_file": [],
         "get_directory_tree": [],
         "get_language_server_suggestions": [],
+        "verify_maven_dependency": [],
         "reset_repo": [],
     }
 )
 
 tracer = trace_api.get_tracer(__name__)
+
+
+def verify_maven_dependency_version(group_id: str, artifact_id: str, version: str) -> tuple[Optional[str], bool]:
+    """Resolve and verify a Maven dependency version against Maven Central."""
+    resolved = maven_central_tool.resolve_correct_version(group_id, artifact_id, version)
+    if resolved is None:
+        return None, False
+    exists = maven_central_tool.check_version_exists(group_id, artifact_id, resolved)
+    return resolved, exists
 
 
 def process_error_text(error_text: str, project_path: str) -> str:
@@ -330,6 +341,49 @@ def get_tools_for_repo(repo_path: Path, repo_slug: str, commit_hash: str = "HEAD
         print("[TOOL] Compiling Maven with full file edit", file_path, new_file_content)
 
         return _compile_maven(new_file_content, file_path)
+
+    @tool
+    def verify_maven_dependency(group_id: str, artifact_id: str, version: str) -> str:
+        """Verifies that a Maven dependency version exists on Maven Central before using it.
+        Call this BEFORE adding any new dependency to pom.xml to ensure the version string is valid.
+        Returns the verified (possibly corrected) version string.
+        
+        Use this JSON format to call the tool:
+        {"tool": "verify_maven_dependency", "args": {"group_id": "commons-codec", "artifact_id": "commons-codec", "version": "1.15"}}
+        
+        Example: verify_maven_dependency('commons-codec', 'commons-codec', '1.15') -> '1.15'
+        """
+        with tracer.start_as_current_span("verify_maven_dependency") as span:
+            try:
+                resolved, exists = verify_maven_dependency_version(group_id, artifact_id, version)
+                if resolved is None:
+                    result = f"❌ Artifact does not exist on Maven Central: {group_id}:{artifact_id}"
+                else:
+                    result = (
+                        f"✅ Verified: {group_id}:{artifact_id}:{resolved} exists on Maven Central."
+                        if exists
+                        else f"⚠️ Could not fully verify {group_id}:{artifact_id}:{resolved} on Maven Central. Using best guess."
+                    )
+                if resolved is not None and resolved != version:
+                    result += f" (corrected from '{version}' to '{resolved}')"
+                span.set_attribute("resolved_version", resolved or "")
+                log_tool_execution(
+                    tool_name="verify_maven_dependency",
+                    input_data=f"{group_id}:{artifact_id}:{version}",
+                    output=result,
+                    span_id=span.get_span_context().span_id,
+                )
+                return result
+            except Exception as e:
+                error_msg = f"Error verifying dependency: {e}"
+                log_tool_execution(
+                    tool_name="verify_maven_dependency",
+                    input_data=f"{group_id}:{artifact_id}:{version}",
+                    output="",
+                    error=error_msg,
+                    span_id=span.get_span_context().span_id,
+                )
+                return error_msg
 
     def _compile_maven(diff: str, file_path: Optional[str] = None) -> MavenReturn:
         with tracer.start_as_current_span("compile_maven") as span:
@@ -697,6 +751,7 @@ def get_tools_for_repo(repo_path: Path, repo_slug: str, commit_hash: str = "HEAD
         read_file_lines,
         get_directory_tree_for_path,
         validate_diffs,
+        verify_maven_dependency,
         reset_repo,
         compile_maven_stateful,
         get_language_server_suggestions,

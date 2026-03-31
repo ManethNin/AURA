@@ -33,6 +33,7 @@ Reverting dependency versions is NOT an acceptable solution.
 You CAN MODIFY pom.xml to ADD NEW dependencies if needed to fix compilation issues.
 For example, you may need to add missing transitive dependencies that were removed in version upgrades.
 When adding dependencies:
+- ALWAYS use the verify_maven_dependency tool to verify the version exists on Maven Central BEFORE adding it to pom.xml
 - Place new dependencies in the <dependencies> section
 - Add complete <dependency> blocks with <groupId>, <artifactId>, and <version> tags
 - Do NOT modify or remove existing dependency versions
@@ -128,28 +129,53 @@ When you have a diff ready to test, provide it ONLY as a markdown code block sta
         # Parse JSON tool calls from content if present
         content = response.content.strip() if hasattr(response, 'content') else str(response)
         
-        # Check if it's a JSON tool request
-        if content.startswith("{") and '"tool"' in content:
+        # Check if it's a JSON tool request (JSON may be preceded by explanatory text)
+        if '"tool"' in content:
             try:
-                # Extract JSON (might have extra text after)
-                json_end = content.find("}")
-                if json_end != -1:
-                    json_str = content[:json_end+1]
-                    tool_request = json.loads(json_str)
-                    
-                    # Convert to proper tool call format
-                    tool_call = {
-                        "name": tool_request["tool"],
-                        "args": tool_request.get("args", {}),
-                        "id": "".join(random.choices(string.ascii_uppercase + string.digits, k=9))
-                    }
-                    
-                    # Create AIMessage with tool_calls
-                    if not hasattr(response, 'tool_calls'):
-                        response.tool_calls = []
-                    response.tool_calls = [tool_call]
-                    
-                    print(f"[DEBUG] Parsed tool call: {tool_request['tool']}")
+                json_start = content.find("{")
+                if json_start != -1:
+                    # Use brace-counting to find the matching closing brace,
+                    # correctly skipping braces inside string values.
+                    depth = 0
+                    in_string = False
+                    escape_next = False
+                    json_end = -1
+                    for idx, ch in enumerate(content[json_start:], json_start):
+                        if escape_next:
+                            escape_next = False
+                            continue
+                        if ch == "\\" and in_string:
+                            escape_next = True
+                            continue
+                        if ch == '"':
+                            in_string = not in_string
+                            continue
+                        if not in_string:
+                            if ch == "{":
+                                depth += 1
+                            elif ch == "}":
+                                depth -= 1
+                                if depth == 0:
+                                    json_end = idx
+                                    break
+
+                    if json_end != -1:
+                        json_str = content[json_start:json_end + 1]
+                        tool_request = json.loads(json_str)
+
+                        # Convert to proper tool call format
+                        tool_call = {
+                            "name": tool_request["tool"],
+                            "args": tool_request.get("args", {}),
+                            "id": "".join(random.choices(string.ascii_uppercase + string.digits, k=9))
+                        }
+
+                        # Attach tool_calls to the response so the router sends it to the tools node
+                        if not hasattr(response, 'tool_calls'):
+                            response.tool_calls = []
+                        response.tool_calls = [tool_call]
+
+                        print(f"[DEBUG] Parsed tool call: {tool_request['tool']}")
             except Exception as e:
                 print(f"[DEBUG] Failed to parse tool call: {e}")
         
@@ -170,7 +196,8 @@ When you have a diff ready to test, provide it ONLY as a markdown code block sta
                 # Get the tool function and invoke it directly
                 tool_func = tools_by_name.get(tool_call["name"])
                 if not tool_func:
-                    raise ValueError(f"Tool {tool_call['name']} not found")
+                    available = ", ".join(tools_by_name.keys())
+                    raise ValueError(f"Tool '{tool_call['name']}' not found. Available tools: {available}")
                 
                 # Invoke the tool with its arguments
                 result = tool_func.invoke(tool_call["args"])
@@ -278,6 +305,10 @@ When you have a diff ready to test, provide it ONLY as a markdown code block sta
                 if compilation_succeeded and test_succeeded:
                     result_content = f"Compilation and Testing successful: The diff was applied successfully and all tests passed."
                 else:
+                    # Log maven errors to disk for offline debugging
+                    if pipeline_logger and not compilation_succeeded:
+                        pipeline_logger.log_docker_build_errors(error_text, error_text)
+
                     # Format error message clearly
                     error_msg_parts = []
                     error_msg_parts.append(f"Compilation {'succeeded' if compilation_succeeded else 'FAILED'}")
@@ -350,7 +381,7 @@ When you have a diff ready to test, provide it ONLY as a markdown code block sta
         print("[AGENT] Routing to compile agent")
         return "compile_agent"
     
-    def should_improve_non_test_diff(state: MessagesState) -> Literal["agent", END]:
+    def should_improve_non_test_diff(state: MessagesState) -> Literal["agent"] | str:
         """Check if compilation succeeded - copy from langchain-agent.py line 800"""
         messages = state["messages"]
         last_message = messages[-1]

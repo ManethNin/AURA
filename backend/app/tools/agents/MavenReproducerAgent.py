@@ -12,6 +12,19 @@ from app.tools.agents.LSPAgent import extract_error_lines
 
 
 class MavenReproducerAgent:
+    INITIAL_ERROR_SCAN_FLAGS = (
+        " -Dcheckstyle.skip=true"
+        " -Dmaven.remote.resources.skip=true"
+        " -Dpmd.skip=true"
+        " -Dspotbugs.skip=true"
+        " -Dfindbugs.skip=true"
+    )
+    NORMALIZE_JAVA_LINE_ENDINGS_CMD = (
+        "if [ -d /mnt/repo/src ]; then "
+        "find /mnt/repo/src -name \"*.java\" -exec sed -i 's/\\r//' {} +; "
+        "fi"
+    )
+
     def __init__(self, project_path: Path) -> None:
 
         self.dockerAgent = DockerAgent("maven:3.9.8-amazoncorretto-17", project_path)
@@ -66,16 +79,31 @@ class MavenReproducerAgent:
         file_path: str,
         run_tests: bool = True,
         timeout: int = 1800,
+        collect_all_errors: bool = False,
+        errors_only: bool = False,
+        initial_error_scan: bool = False,
     ) -> Tuple[Tuple[bool, bool], str, dict]:
         with open(file_path, "w", encoding="utf-8") as out_file_wrapper:
             out_file_wrapper.write(file_content)
 
-        (compile, test), error_text = self._compile_maven(run_tests, timeout)
+        (compile, test), error_text = self._compile_maven(
+            run_tests,
+            timeout,
+            collect_all_errors=collect_all_errors,
+            errors_only=errors_only,
+            initial_error_scan=initial_error_scan,
+        )
 
         return (compile, test), error_text, {file_path: file_content}
 
     def compile_maven(
-        self, diffs: list[str], run_tests: bool, timeout: int = 1800
+        self,
+        diffs: list[str],
+        run_tests: bool,
+        timeout: int = 1800,
+        collect_all_errors: bool = False,
+        errors_only: bool = False,
+        initial_error_scan: bool = False,
     ) -> Tuple[Tuple[bool, bool], str, dict]:
 
         assert self.container is not None, "Container is not initialized"
@@ -103,12 +131,23 @@ class MavenReproducerAgent:
         except Exception as e:
             return (False, False), f"Failed to prepare diffs: {e}", {}
 
-        (compile, test), error_text = self._compile_maven(run_tests, timeout)
+        (compile, test), error_text = self._compile_maven(
+            run_tests,
+            timeout,
+            collect_all_errors=collect_all_errors,
+            errors_only=errors_only,
+            initial_error_scan=initial_error_scan,
+        )
 
         return (compile, test), error_text, updated_files
 
     def _compile_maven(
-        self, run_tests: bool, timeout: int = 1800
+        self,
+        run_tests: bool,
+        timeout: int = 1800,
+        collect_all_errors: bool = False,
+        errors_only: bool = False,
+        initial_error_scan: bool = False,
     ) -> Tuple[Tuple[bool, bool], str]:
         try:
             reproduction_command = "mvn clean test -Dsurefire.printSummary=true -Dsurefire.redirectTestOutputToFile=false"
@@ -118,10 +157,21 @@ class MavenReproducerAgent:
 
             reproduction_command += " -B"
 
+            if collect_all_errors:
+                reproduction_command += " -fn"
+
             if not run_tests:
                 reproduction_command = "mvn clean compile -DskipTests -B"
+                if collect_all_errors:
+                    reproduction_command += " -fn"
 
-            timeout_command = f"timeout -k 10s {timeout}s {reproduction_command}"
+            if initial_error_scan:
+                reproduction_command += self.INITIAL_ERROR_SCAN_FLAGS
+
+            wrapped_command = (
+                f"{self.NORMALIZE_JAVA_LINE_ENDINGS_CMD} && {reproduction_command}"
+            )
+            timeout_command = f"timeout -k 10s {timeout}s sh -c \"{wrapped_command}\""
 
             print(f"Running maven command {timeout_command}")
             output_code, docker_output = self.dockerAgent.execute_command(
@@ -138,7 +188,13 @@ class MavenReproducerAgent:
             ):
                 self.force_upgrade_compiler_version = True
                 self.compiler_upgrade_attempted = True
-                return self._compile_maven(run_tests, timeout)
+                return self._compile_maven(
+                    run_tests,
+                    timeout,
+                    collect_all_errors=collect_all_errors,
+                    errors_only=errors_only,
+                    initial_error_scan=initial_error_scan,
+                )
 
             self.compiler_upgrade_attempted = False
 
@@ -170,15 +226,29 @@ class MavenReproducerAgent:
                         "/mnt/repo/", ""
                     )
                 else:
+                    if errors_only:
+                        return (has_succeeded, has_succeeded), ""
                     return (has_succeeded, has_succeeded), docker_output.replace(
                         "/mnt/repo/", ""
                     )
             else:
-                # Better isolator for test results
+                if collect_all_errors:
+                    error_lines = extract_error_lines(docker_output)
+                    has_errors = len(error_lines) > 0
+                    if has_errors:
+                        return (False, False), "\n".join(error_lines).replace(
+                            "/mnt/repo/", ""
+                        )
+                    if errors_only:
+                        return (True, True), ""
+
+                # Better isolator for compile vs test failures
                 lines = docker_output.split("\n")
                 test_index = -1
                 compilation_index = -1
                 compilation_failed = False
+                output_code_int = int(output_code)
+
                 for i, line in enumerate(lines):
                     if "[INFO] Results:" in line:
                         test_index = i
@@ -189,9 +259,47 @@ class MavenReproducerAgent:
                         compilation_index = i
                         break
 
+                if not compilation_failed:
+                    compilation_error_markers = [
+                        "Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin",
+                        "Compilation failure",
+                        "[ERROR] COMPILATION ERROR",
+                    ]
+                    for i, line in enumerate(lines):
+                        if any(marker in line for marker in compilation_error_markers):
+                            compilation_failed = True
+                            compilation_index = i
+                            break
+
                 if compilation_failed:
                     test_output = "\n".join(lines[(compilation_index - 1) :])
                     return (False, False), test_output
+
+                explicit_test_failure = (
+                    "There are test failures." in docker_output
+                    or "Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" in docker_output
+                    or "Failed to execute goal org.apache.maven.plugins:maven-failsafe-plugin" in docker_output
+                )
+
+                if output_code_int != 0 and explicit_test_failure:
+                    if test_index == -1:
+                        lines_without_downloads = [
+                            line
+                            for line in lines
+                            if "Downloading" not in line and "Downloaded" not in line
+                        ]
+                        return (True, False), "\n".join(lines_without_downloads)
+
+                    test_output = "\n".join(lines[(test_index - 1) :])
+                    return (True, False), test_output
+
+                if output_code_int != 0:
+                    lines_without_downloads = [
+                        line
+                        for line in lines
+                        if "Downloading" not in line and "Downloaded" not in line
+                    ]
+                    return (False, False), "\n".join(lines_without_downloads)
 
                 if test_index == -1:
                     lines_without_downloads = [
@@ -199,12 +307,11 @@ class MavenReproducerAgent:
                         for line in lines
                         if "Downloading" not in line and "Downloaded" not in line
                     ]
-                    return (True, int(output_code) == 0), "\n".join(
+                    return (True, True), "\n".join(
                         lines_without_downloads
                     )
 
                 test_output = "\n".join(lines[(test_index - 1) :])
-                succeeded_both = int(output_code) == 0
-                return (True, succeeded_both), test_output
+                return (True, True), test_output
         except Exception as e:
-            return False, f"An error occurred: {str(e)}"
+            return (False, False), f"An error occurred: {str(e)}"

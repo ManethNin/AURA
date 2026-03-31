@@ -4,6 +4,7 @@ Generates rewrite.yaml files and updates pom.xml with OpenRewrite plugin.
 """
 
 import os
+import re
 from pathlib import Path
 from typing import Dict, List, Any
 import xml.etree.ElementTree as ET
@@ -54,8 +55,13 @@ class RecipeGenerator:
         ]
         
         for recipe in recipe_list:
-            recipe_name_item = recipe.get("name", "")
-            arguments = recipe.get("arguments", {})
+            # Support both Recipe dataclass and plain dict
+            if hasattr(recipe, 'name') and hasattr(recipe, 'arguments'):
+                recipe_name_item = recipe.name
+                arguments = recipe.arguments
+            else:
+                recipe_name_item = recipe.get("name", "")
+                arguments = recipe.get("arguments", {})
             
             if arguments:
                 # Recipe with arguments
@@ -194,6 +200,192 @@ class RecipeGenerator:
         else:
             if level and (not elem.tail or not elem.tail.strip()):
                 elem.tail = i
+
+    def _detect_newline(self, content: str) -> str:
+        return "\r\n" if "\r\n" in content else "\n"
+
+    def _indent_block(self, block: str, indent: str, newline: str) -> str:
+        return newline.join(f"{indent}{line}" if line else line for line in block.splitlines())
+
+    def _find_rewrite_plugin_block(self, pom_content: str) -> tuple[int, int, str] | None:
+        plugin_start_pattern = re.compile(r"(?m)^(?P<indent>[ \t]*)<plugin>\s*$")
+
+        for match in plugin_start_pattern.finditer(pom_content):
+            start = match.start()
+            indent = match.group("indent")
+            end_match = re.search(r"(?m)^[ \t]*</plugin>\s*$", pom_content[match.end():])
+            if not end_match:
+                continue
+
+            end = match.end() + end_match.end()
+            plugin_block = pom_content[start:end]
+            if "<artifactId>rewrite-maven-plugin</artifactId>" not in plugin_block:
+                continue
+
+            line_end_match = re.match(r"(?:\r\n|\n)?", pom_content[end:])
+            if line_end_match:
+                end += line_end_match.end()
+            return start, end, indent
+
+        return None
+
+    def _build_rewrite_plugin_xml(
+        self,
+        recipe_name: str,
+        maven_only_recipes: bool,
+        plugin_dependencies: List[Dict[str, str]] = None,
+        newline: str = "\n",
+        indent_unit: str = "    ",
+    ) -> str:
+        lines = [
+            "<plugin>",
+            f"{indent_unit}<groupId>org.openrewrite.maven</groupId>",
+            f"{indent_unit}<artifactId>rewrite-maven-plugin</artifactId>",
+            f"{indent_unit}<version>{self.REWRITE_MAVEN_PLUGIN_VERSION}</version>",
+            f"{indent_unit}<configuration>",
+            f"{indent_unit * 2}<configLocation>${{maven.multiModuleProjectDirectory}}/rewrite.yaml</configLocation>",
+        ]
+
+        if maven_only_recipes:
+            lines.extend([
+                f"{indent_unit * 2}<plainTextMasks>",
+                f"{indent_unit * 3}<plainTextMask>**/*.java</plainTextMask>",
+                f"{indent_unit * 2}</plainTextMasks>",
+            ])
+
+        lines.extend([
+            f"{indent_unit * 2}<activeRecipes>",
+            f"{indent_unit * 3}<recipe>{recipe_name}</recipe>",
+            f"{indent_unit * 2}</activeRecipes>",
+            f"{indent_unit}</configuration>",
+            f"{indent_unit}<executions>",
+            f"{indent_unit * 2}<execution>",
+            f"{indent_unit * 3}<id>run-rewrite</id>",
+            f"{indent_unit * 3}<phase>validate</phase>",
+            f"{indent_unit * 3}<goals>",
+            f"{indent_unit * 4}<goal>run</goal>",
+            f"{indent_unit * 3}</goals>",
+            f"{indent_unit * 2}</execution>",
+            f"{indent_unit}</executions>",
+            f"{indent_unit}<dependencies>",
+            f"{indent_unit * 2}<dependency>",
+            f"{indent_unit * 3}<groupId>org.openrewrite</groupId>",
+            f"{indent_unit * 3}<artifactId>rewrite-maven</artifactId>",
+            f"{indent_unit * 3}<version>{self.REWRITE_MAVEN_DEPENDENCY_VERSION}</version>",
+            f"{indent_unit * 2}</dependency>",
+            f"{indent_unit * 2}<dependency>",
+            f"{indent_unit * 3}<groupId>org.openrewrite</groupId>",
+            f"{indent_unit * 3}<artifactId>rewrite-java</artifactId>",
+            f"{indent_unit * 3}<version>{self.REWRITE_MAVEN_DEPENDENCY_VERSION}</version>",
+            f"{indent_unit * 2}</dependency>",
+        ])
+
+        for extra_dep in plugin_dependencies or []:
+            lines.extend([
+                f"{indent_unit * 2}<dependency>",
+                f"{indent_unit * 3}<groupId>{extra_dep['groupId']}</groupId>",
+                f"{indent_unit * 3}<artifactId>{extra_dep['artifactId']}</artifactId>",
+                f"{indent_unit * 3}<version>{extra_dep['version']}</version>",
+                f"{indent_unit * 2}</dependency>",
+            ])
+
+        lines.extend([
+            f"{indent_unit}</dependencies>",
+            "</plugin>",
+        ])
+
+        return newline.join(lines)
+
+    def _replace_or_insert_rewrite_plugin(
+        self,
+        pom_content: str,
+        plugin_xml: str,
+    ) -> str:
+        existing_plugin = self._find_rewrite_plugin_block(pom_content)
+        if existing_plugin:
+            start, end, indent = existing_plugin
+            newline = self._detect_newline(pom_content)
+            replacement = self._indent_block(plugin_xml, indent, newline)
+            return pom_content[:start] + replacement + pom_content[end:]
+
+        newline = self._detect_newline(pom_content)
+        build_match = re.search(
+            r"(?s)(?P<indent>^[ \t]*)<build>(?P<body>.*?)(?P=indent)</build>",
+            pom_content,
+            re.MULTILINE,
+        )
+        if build_match:
+            build_indent = build_match.group("indent")
+            build_body = build_match.group("body")
+            search_start = 0
+
+            plugin_management_match = re.search(
+                r"(?s)^[ \t]*<pluginManagement>.*?^[ \t]*</pluginManagement>\s*",
+                build_body,
+                re.MULTILINE,
+            )
+            if plugin_management_match:
+                search_start = plugin_management_match.end()
+
+            direct_plugins_close = re.search(
+                r"(?m)^(?P<indent>[ \t]*)</plugins>",
+                build_body[search_start:],
+            )
+            if direct_plugins_close:
+                indent = direct_plugins_close.group("indent")
+                plugin_block = self._indent_block(plugin_xml, indent + "    ", newline)
+                insertion = f"{plugin_block}{newline}"
+                insert_at = build_match.start("body") + search_start + direct_plugins_close.start()
+                return pom_content[:insert_at] + insertion + pom_content[insert_at:]
+
+            build_close = build_match.end() - len(f"{build_indent}</build>")
+            plugin_block = self._indent_block(plugin_xml, build_indent + "        ", newline)
+            plugins_block = (
+                f"{build_indent}    <plugins>{newline}"
+                f"{plugin_block}{newline}"
+                f"{build_indent}    </plugins>{newline}"
+            )
+            return pom_content[:build_close] + plugins_block + pom_content[build_close:]
+
+        project_close = re.search(r"(?m)^(?P<indent>[ \t]*)</project>", pom_content)
+        if project_close:
+            indent = project_close.group("indent")
+            plugin_block = self._indent_block(plugin_xml, indent + "        ", newline)
+            build_block = (
+                f"{indent}    <build>{newline}"
+                f"{indent}        <plugins>{newline}"
+                f"{plugin_block}{newline}"
+                f"{indent}        </plugins>{newline}"
+                f"{indent}    </build>{newline}"
+            )
+            return pom_content[:project_close.start()] + build_block + pom_content[project_close.start():]
+
+        raise ValueError("Could not find insertion point for rewrite-maven-plugin in pom.xml")
+
+    def remove_rewrite_plugin_from_pom(self) -> bool:
+        """Remove the temporary rewrite plugin without reserializing the whole pom.xml."""
+        if not self.pom_path.exists():
+            return False
+
+        try:
+            pom_content = self.pom_path.read_text(encoding='utf-8')
+            original_content = pom_content
+
+            existing_plugin = self._find_rewrite_plugin_block(pom_content)
+            if existing_plugin:
+                start, end, _ = existing_plugin
+                pom_content = pom_content[:start] + pom_content[end:]
+
+            pom_content = re.sub(r"(?ms)^([ \t]*)<plugins>\s*</plugins>\s*\n?", "", pom_content)
+            pom_content = re.sub(r"(?ms)^([ \t]*)<build>\s*</build>\s*\n?", "", pom_content)
+
+            if pom_content != original_content:
+                self.pom_path.write_text(pom_content, encoding='utf-8')
+                logger.info(f"Removed rewrite-maven-plugin from {self.pom_path} without rewriting pom.xml structure")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to remove rewrite plugin from pom.xml: {e}")
+            return False
     
     def add_rewrite_plugin_to_pom(
     self, 
@@ -218,72 +410,17 @@ class RecipeGenerator:
             return False
         
         try:
-            # Register namespaces to preserve them
-            namespaces = {'': 'http://maven.apache.org/POM/4.0.0'}
-            ET.register_namespace('', 'http://maven.apache.org/POM/4.0.0')
-            
-            tree = ET.parse(self.pom_path)
-            root = tree.getroot()
-            
-            # Handle namespace
-            ns = {'m': 'http://maven.apache.org/POM/4.0.0'}
-            
-            # Check if using namespace
-            if root.tag.startswith('{'):
-                ns_uri = root.tag.split('}')[0] + '}'
-                build = root.find(f"{ns_uri}build")
-                if build is None:
-                    build = ET.SubElement(root, f"{ns_uri}build")
-                
-                plugins = build.find(f"{ns_uri}plugins")
-                if plugins is None:
-                    plugins = ET.SubElement(build, f"{ns_uri}plugins")
-                
-                # Check if rewrite plugin already exists
-                for plugin in plugins.findall(f"{ns_uri}plugin"):
-                    artifact_id = plugin.find(f"{ns_uri}artifactId")
-                    if artifact_id is not None and artifact_id.text == "rewrite-maven-plugin":
-                        logger.info("rewrite-maven-plugin already exists in pom.xml")
-                        # Update the active recipe
-                        self._update_active_recipe(plugin, recipe_name, ns_uri)
-                        tree.write(self.pom_path, encoding='utf-8', xml_declaration=True)
-                        return True
-                
-                # Add the plugin
-                # Add the plugin
-                plugin = self._create_rewrite_plugin_element(recipe_name, ns_uri, extra_dependencies=plugin_dependencies)
-                plugins.append(plugin)
-            else:
-                # No namespace
-                build = root.find("build")
-                if build is None:
-                    build = ET.SubElement(root, "build")
-                
-                plugins = build.find("plugins")
-                if plugins is None:
-                    plugins = ET.SubElement(build, "plugins")
-                
-                # Check if rewrite plugin already exists
-                for plugin in plugins.findall("plugin"):
-                    artifact_id = plugin.find("artifactId")
-                    if artifact_id is not None and artifact_id.text == "rewrite-maven-plugin":
-                        logger.info("rewrite-maven-plugin already exists in pom.xml")
-                        self._update_active_recipe(plugin, recipe_name, "")
-                        tree.write(self.pom_path, encoding='utf-8', xml_declaration=True)
-                        return True
-                
-                # Add the plugin
-                plugin = self._create_rewrite_plugin_element(recipe_name, "")
-                plugins.append(plugin)
-            
-            # Write back to file
-            tree.write(self.pom_path, encoding='utf-8', xml_declaration=True)
+            pom_content = self.pom_path.read_text(encoding='utf-8')
+            plugin_xml = self._build_rewrite_plugin_xml(
+                recipe_name=recipe_name,
+                maven_only_recipes=maven_only_recipes,
+                plugin_dependencies=plugin_dependencies,
+                newline=self._detect_newline(pom_content),
+            )
+            updated_content = self._replace_or_insert_rewrite_plugin(pom_content, plugin_xml)
+            self.pom_path.write_text(updated_content, encoding='utf-8')
             logger.info(f"Added rewrite-maven-plugin to {self.pom_path}")
             return True
-            
-        except ET.ParseError as e:
-            logger.error(f"Failed to parse pom.xml: {e}")
-            return False
         except Exception as e:
             logger.error(f"Failed to modify pom.xml: {e}")
             return False
@@ -322,7 +459,7 @@ class RecipeGenerator:
         configuration = elem("configuration")
         
         # Point to the rewrite.yaml file
-        config_location = elem("configLocation", "${project.basedir}/rewrite.yaml")
+        config_location = elem("configLocation", "${maven.multiModuleProjectDirectory}/rewrite.yaml")
         configuration.append(config_location)
         
         # For Maven-only recipes (AddDependency, UpgradeDependency, etc.)

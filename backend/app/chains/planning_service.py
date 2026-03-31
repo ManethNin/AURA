@@ -38,7 +38,9 @@ Given:
 - API changes between the old and new dependency versions (if available)
 - The actual source code of affected files
 
-Your global plan will be handed to an Executor agent which will perform the actual file edits to convert your plan into a sequence of modifications and resolve the compilation errors.
+Your global plan will be utilized by a dual-executor system: 
+1. A Recipe Agent (which attempts to apply automated, deterministic AST-level transformation recipes).
+2. An LLM Repair Agent (which acts as a fallback to handle complex, custom logic rewrites if recipes fail).
 
 ## Expected Output Format
 You must produce a structured plan in a numbered list format, starting with '## Step 1' and incrementing for each subsequent step. 
@@ -46,15 +48,35 @@ You must produce a structured plan in a numbered list format, starting with '## 
 Each step MUST exactly follow this format:
 ## Step N
 Reasoning: [Your detailed thought process]
-Step: [The concrete, high-level directive for the Executor]
+Step: [The concrete, high-level directive for the Executors]
+Classification: [Standard API Migration | Complex Logic Rewrite | Dependency Management]
 
 ## Detailed Guidelines:
 1. **Initial State Grounding**: In the 'Reasoning' section of '## Step 1', you MUST provide an observation of the initial state. Analyze the provided pom.xml changes and summarize the root cause of the compilation errors based on the provided API changes.
 2. **Chain of Thought**: For every step, use the 'Reasoning' block to explain *why* this step is logically necessary before stating the step itself.
-3. **Cluster Related Actions**: Group logically related changes together to minimize the number of steps. For example, if multiple files require the same import update (e.g., `javax.servlet` to `jakarta.servlet`), combine them into a single step like "Update servlet imports across X, Y, and Z files". 
+3. **Cluster Related Actions**: Group logically related changes together to minimize the number of steps. For example, if multiple files require the same import update, combine them into a single step like "Update servlet imports across X, Y, and Z files". 
 4. **Be Specific (WHAT, not HOW)**: Focus on describing WHAT needs to be accomplished rather than outputting exact diffs. Use actual class names, old signature → new signature mappings, and specific file targets. Do not use vague phrasing.
-5. **Suggested Order**: Structure your steps in the exact, safest execution order. Fix shared utilities, interfaces, or base classes before updating the concrete implementations that depend on them.
-6. **Risk Flagging**: If a step carries runtime behavior risks beyond just fixing the compilation error, explicitly state this in the 'Reasoning' block of that step.
+5. **Action Classification**: Use the 'Classification' field to help route the task. 
+   - Use 'Standard API Migration' for import swaps, method renames, or deprecated class replacements (ideal for the Recipe Agent).
+   - Use 'Complex Logic Rewrite' for structural changes, rewriting test frameworks, or migrating entirely removed APIs without direct replacements (ideal for the LLM Repair Agent).
+   - Use 'Dependency Management' for pom.xml updates.
+6. **Suggested Order**: Structure your steps in the exact, safest execution order. Fix shared utilities, interfaces, or base classes before updating the concrete implementations that depend on them.
+7. **Risk Flagging**: If a step carries runtime behavior risks beyond just fixing the compilation error, explicitly state this in the 'Reasoning' block of that step.
+
+## Repair Strategy Guidelines
+When multiple possible fixes exist, prefer the **least invasive change that restores compilation**.
+
+Follow this priority order when planning fixes:
+1. Update imports or package names if classes were relocated.
+2. Add missing dependencies that contain the relocated classes.
+3. Update method signatures or API usage if the API changed.
+4. Replace deprecated classes with recommended alternatives.
+5. Perform structural refactors (e.g., switching runners, rewriting tests, migrating frameworks) **ONLY if the previous options cannot resolve the compilation errors.**
+
+Avoid introducing new architectural patterns or test frameworks unless the original API is completely removed and no compatibility layer exists.
+
+## Consistency Requirement
+If a missing class appears to have been **relocated to another package or artifact**, prefer restoring the same class via import or dependency updates rather than replacing it with a different mechanism.
 
 IMPORTANT RULES:
 - DO NOT produce any code diffs or patches.

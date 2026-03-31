@@ -238,16 +238,33 @@ Purpose: Filtered output for LLM processing
         self._save_text(filepath, content)
         logger.info(f"[PIPELINE] Logged filtered API changes for {artifact} (will be used in next stage)")
     
-    def log_recipe_analysis(self, analysis_result: Dict[str, Any]):
+    def log_recipe_analysis(self, analysis_result) -> None:
         """Log recipe agent LLM analysis result"""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        
+
+        # Support both dataclass (RecipeAnalysisResult) and plain dict
+        def _get(obj, key, default=None):
+            if hasattr(obj, key):
+                return getattr(obj, key) or default
+            return obj.get(key, default) if isinstance(obj, dict) else default
+
+        can_use = _get(analysis_result, "can_use_recipes", False)
+        selected = _get(analysis_result, "selected_recipes", [])
+        reasoning = _get(analysis_result, "reasoning", "")
+        recipe_name = _get(analysis_result, "recipe_name", "")
+
+        # Serialize Recipe dataclass instances to plain dicts for JSON storage
+        def _recipe_to_dict(r):
+            if hasattr(r, 'name') and hasattr(r, 'arguments'):
+                return {"name": r.name, "arguments": dict(r.arguments)}
+            return r
+
         analysis_data = {
             "timestamp": timestamp,
-            "can_use_recipes": analysis_result.get("can_use_recipes", False),
-            "selected_recipes": analysis_result.get("selected_recipes", []),
-            "recipe_name": analysis_result.get("recipe_name", ""),
-            "reasoning": analysis_result.get("reasoning", ""),
+            "can_use_recipes": can_use,
+            "selected_recipes": [_recipe_to_dict(r) for r in selected],
+            "recipe_name": recipe_name,
+            "reasoning": reasoning,
             "analysis": self._serialize_value(analysis_result)
         }
         
@@ -257,18 +274,20 @@ Purpose: Filtered output for LLM processing
         # Also save as text for easy reading
         text_content = f"""Recipe Analysis Result
 Timestamp: {timestamp}
-Can Use Recipes: {analysis_result.get('can_use_recipes', False)}
-Reasoning: {analysis_result.get('reasoning', '')}
+Can Use Recipes: {can_use}
+Reasoning: {reasoning}
 
-Selected Recipes ({len(analysis_result.get('selected_recipes', []))}):
+Selected Recipes ({len(selected)}):
 """
-        for i, recipe in enumerate(analysis_result.get("selected_recipes", []), 1):
-            text_content += f"\n{i}. {recipe.get('name', 'Unknown')}"
-            if recipe.get('arguments'):
-                text_content += f"\n   Arguments: {recipe.get('arguments')}"
+        for i, recipe in enumerate(selected, 1):
+            r_name = recipe.name if hasattr(recipe, 'name') else recipe.get('name', 'Unknown')
+            r_args = recipe.arguments if hasattr(recipe, 'arguments') else recipe.get('arguments')
+            text_content += f"\n{i}. {r_name}"
+            if r_args:
+                text_content += f"\n   Arguments: {r_args}"
         
         self._save_text(self.stages_dir / "recipe_analysis.txt", text_content)
-        logger.info(f"[PIPELINE] Logged recipe analysis (can_use_recipes={analysis_result.get('can_use_recipes')})")
+        logger.info(f"[PIPELINE] Logged recipe analysis (can_use_recipes={can_use})")
     
     def log_recipe_execution(self, execution_type: str, success: bool, output: str, error: str = ""):
         """Log recipe execution steps (rewrite.yaml generation, mvn rewrite:run, compilation)"""
@@ -478,7 +497,7 @@ MAVEN ERRORS:
     def _save_json(self, filepath: Path, data: Any):
         """Save data as JSON"""
         with open(filepath, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
+            json.dump(self._serialize_value(data), f, indent=2, ensure_ascii=False)
     
     def _save_text(self, filepath: Path, text: str):
         """Save text to file"""

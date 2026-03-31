@@ -101,6 +101,54 @@ class CompilationResult(NamedTuple):
     errors: str
 
 
+def _sanitize_initial_errors(raw_errors: str) -> str:
+    """
+    Keep only Maven error-relevant lines and remove [INFO] / noise lines.
+
+    Preserves [ERROR] lines and their indented continuation details (e.g. symbol/location).
+    """
+    if not raw_errors:
+        return ""
+
+    cleaned_lines: list[str] = []
+    previous_was_error = False
+
+    for raw_line in raw_errors.splitlines():
+        line = raw_line.rstrip("\r")
+        stripped = line.strip()
+
+        if not stripped:
+            if previous_was_error:
+                cleaned_lines.append("")
+            continue
+
+        if stripped.startswith("[INFO]"):
+            previous_was_error = False
+            continue
+
+        if stripped.startswith("[ERROR]"):
+            cleaned_lines.append(line)
+            previous_was_error = True
+            continue
+
+        if previous_was_error and (line.startswith(" ") or line.startswith("\t")):
+            cleaned_lines.append(line)
+            continue
+
+        if previous_was_error and (
+            stripped.startswith("symbol:")
+            or stripped.startswith("location:")
+            or stripped.startswith("-> [Help")
+            or stripped.startswith("For more information")
+        ):
+            cleaned_lines.append(line)
+            continue
+
+        previous_was_error = False
+
+    return "\n".join(cleaned_lines).replace("/mnt/repo/", "").strip()
+
+
 # --- Helper Functions ---
 def _require_local_mode() -> None:
     """
@@ -218,15 +266,25 @@ def _get_initial_errors_from_docker(repo_path: Path, repo_name: str) -> Compilat
     try:
         maven_agent = MavenReproducerAgent(repo_path)
         with maven_agent.start_container():
-            (compile_ok, _test_ok), error_text, _ = maven_agent.compile_maven(
-                diffs=[], run_tests=False, timeout=MAVEN_TIMEOUT_SEC
+            (compile_ok, test_ok), error_text, _ = maven_agent.compile_maven(
+                diffs=[],
+                run_tests=False,
+                timeout=MAVEN_TIMEOUT_SEC,
+                collect_all_errors=True,
+                errors_only=True,
+                initial_error_scan=True,
             )
+        error_text = _sanitize_initial_errors(error_text)
 
         if not compile_ok:
             logger.info(f"Compilation failed - detected errors ({len(error_text)} chars)")
             return CompilationResult(needs_fixes=True, errors=error_text)
 
-        logger.info("Project compiles successfully - no errors to fix")
+        if not test_ok:
+            logger.info(f"Tests failed - detected errors ({len(error_text)} chars)")
+            return CompilationResult(needs_fixes=True, errors=error_text)
+
+        logger.info("Project compiles and tests successfully - no errors to fix")
         return CompilationResult(needs_fixes=False, errors="")
 
     except Exception as e:
@@ -572,14 +630,14 @@ async def process_repository(
     logger.info(f"[GIT] Final result: pom_diff length = {len(pom_diff)} chars")
     
     # 2. Baseline Docker Compilation
-    initial_errors = request.initial_errors
+    initial_errors = _sanitize_initial_errors(request.initial_errors or "")
     if not initial_errors:
         comp_result = _get_initial_errors_from_docker(repo_path, repo_name)
         if not comp_result.needs_fixes:
             return {
                 "success": True,
                 "repository": repo_name,
-                "message": "Project compiles successfully, no fixes needed"
+                "message": "Project compiles and tests successfully, no fixes needed"
             }
         initial_errors = comp_result.errors
 
@@ -636,26 +694,26 @@ async def process_repository(
                     "result": recipe_result
                 }
 
-        # 4d. LLM Fallback / Primary Engine
-        llm_result = _apply_llm_agent(
-            repo_path=repo_path,
-            pom_diff=pom_diff,
-            migration_plan=migration_plan,
-            commit_hash=commit_hash,
-            repo_name=repo_name,
-            pipeline_logger=pipeline_logger,
-        )
+        # # 4d. LLM Fallback / Primary Engine
+        # llm_result = _apply_llm_agent(
+        #     repo_path=repo_path,
+        #     pom_diff=pom_diff,
+        #     migration_plan=migration_plan,
+        #     commit_hash=commit_hash,
+        #     repo_name=repo_name,
+        #     pipeline_logger=pipeline_logger,
+        # )
 
-        pipeline_logger.log_final_result(llm_result.get("success", False), llm_result)
-        pipeline_logger.finalize()
+        # pipeline_logger.log_final_result(llm_result.get("success", False), llm_result)
+        # pipeline_logger.finalize()
         
-        return {
-            "success": llm_result.get("success", False),
-            "repository": repo_name,
-            "commit": commit_hash,
-            "method": LLM_AGENT_METHOD,
-            "result": llm_result
-        }
+        # return {
+        #     "success": llm_result.get("success", False),
+        #     "repository": repo_name,
+        #     "commit": commit_hash,
+        #     "method": LLM_AGENT_METHOD,
+        #     "result": llm_result
+        # }
 
     except Exception as e:
         logger.error(f"Error processing repository {repo_name}: {e}")

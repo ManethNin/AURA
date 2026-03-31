@@ -161,7 +161,10 @@ class WebhookService:
                 (compile_ok, test_ok), error_text, _ = maven_agent.compile_maven(
                     diffs=[],
                     run_tests=False,
-                    timeout=300
+                    timeout=300,
+                    collect_all_errors=True,
+                    errors_only=True,
+                    initial_error_scan=True,
                 )
             
             initial_errors = error_text if not compile_ok else ""
