@@ -27,7 +27,7 @@ The pipeline logging system tracks **every step** of the agent processing workfl
 ## Log Directory Structure
 
 ```
-D:/FYP/logs/pipeline/
+D:/FYP/master/AURA/logs/
 └── {repo_name}/
     └── {YYYYMMDD_HHMMSS}/
         ├── README.md                  # Navigation guide
@@ -67,7 +67,7 @@ curl -X POST http://localhost:8000/local/process/my-project
 
 ### Logs created at:
 ```
-D:/FYP/logs/pipeline/my-project/20260202_205217/
+D:/FYP/master/AURA/logs/my-project/20260202_205217/
 ```
 
 ### What's logged:
@@ -100,7 +100,7 @@ The API response includes the log directory path:
 ```json
 {
   "success": true,
-  "log_directory": "D:\\FYP\\logs\\pipeline\\my-project\\20260202_205217"
+  "log_directory": "D:\\FYP\\master\\AURA\\logs\\my-project\\20260202_205217"
 }
 ```
 
@@ -124,10 +124,10 @@ The API response includes the log directory path:
 
 In `.env`:
 ```env
-PIPELINE_LOG_PATH=D:/FYP/logs/pipeline
+PIPELINE_LOG_PATH=D:/FYP/master/AURA/logs
 ```
 
-Default: `./logs/pipeline` (relative to backend/)
+Default: `<workspace-root>/logs` (for this repo: `D:/FYP/master/AURA/logs`)
 
 ## Retention
 

@@ -21,14 +21,19 @@ class PipelineLogger:
         
         Args:
             repo_name: Name of the repository being processed
-            base_log_path: Base path for logs (default: from settings or ./logs/pipeline)
+            base_log_path: Base path for logs (default: from settings or <workspace-root>/logs)
         """
         self.repo_name = repo_name
         self.session_id = datetime.now().strftime("%Y%m%d_%H%M%S")
         
         # Create log directory structure
         if base_log_path is None:
-            base_log_path = settings.PIPELINE_LOG_PATH or "logs/pipeline"
+            if settings.PIPELINE_LOG_PATH:
+                base_log_path = settings.PIPELINE_LOG_PATH
+            else:
+                # Default to <workspace-root>/logs, where workspace-root is master/AURA
+                workspace_root = Path(__file__).resolve().parents[3]
+                base_log_path = workspace_root / "logs"
         
         base_log_path = Path(base_log_path)
         

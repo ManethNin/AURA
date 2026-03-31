@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     # Operation Mode
     LOCAL_MODE: bool = True  # Set to True for local file system operations
     LOCAL_WORKSPACE_PATH: Optional[str] = None  # Base path for local repositories
-    PIPELINE_LOG_PATH: Optional[str] = None  # Path for pipeline logs (default: ./logs/pipeline)
+    PIPELINE_LOG_PATH: Optional[str] = None  # Path for pipeline logs (default: <workspace-root>/logs)
     
     # MongoDB
     MONGODB_URL: str
