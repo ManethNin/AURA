@@ -471,6 +471,7 @@ def _apply_recipe_agent(
 def _apply_llm_agent(
     repo_path: Path,
     pom_diff: str,
+    initial_errors: str,
     migration_plan: str,
     commit_hash: str,
     repo_name: str,
@@ -482,6 +483,7 @@ def _apply_llm_agent(
     Args:
         repo_path: Path to the repository.
         pom_diff: Contextual pom diff.
+        initial_errors: Baseline compilation errors used for file targeting.
         migration_plan: Guided plan from the Planning Agent.
         commit_hash: Current commit SHA.
         repo_name: Repository directory name.
@@ -514,6 +516,7 @@ def _apply_llm_agent(
         commit_hash=commit_hash,
         repo_slug=repo_name,
         pom_diff=pom_diff,
+        initial_errors=initial_errors,
         migration_plan=migration_plan,
         pipeline_logger=pipeline_logger,
     )
@@ -608,6 +611,7 @@ async def process_repository(
         HTTPException: 500 if the process critically fails.
     """
     _require_local_mode()
+    logger.info(f"[PROGRESS] Processing started for {repo_name}")
     
     repo_path = local_repo_service.get_repository_path(repo_name)
     if not repo_path:
@@ -628,18 +632,21 @@ async def process_repository(
     # 1. Diff Detection
     pom_diff = request.pom_diff or _detect_pom_diff(repo_path)
     logger.info(f"[GIT] Final result: pom_diff length = {len(pom_diff)} chars")
+    logger.info("[PROGRESS] Stage 1/4 complete: pom diff detected")
     
     # 2. Baseline Docker Compilation
     initial_errors = _sanitize_initial_errors(request.initial_errors or "")
     if not initial_errors:
         comp_result = _get_initial_errors_from_docker(repo_path, repo_name)
         if not comp_result.needs_fixes:
+            logger.info(f"[RESULT] {repo_name} success=True method=no_fix_needed")
             return {
                 "success": True,
                 "repository": repo_name,
                 "message": "Project compiles and tests successfully, no fixes needed"
             }
         initial_errors = comp_result.errors
+    logger.info("[PROGRESS] Stage 2/4 complete: baseline errors collected")
 
     # 3. Pipeline Initialization
     pipeline_logger = PipelineLogger(repo_name)
@@ -659,6 +666,7 @@ async def process_repository(
             initial_errors=initial_errors,
             pipeline_logger=pipeline_logger,
         )
+        logger.info("[PROGRESS] Stage 3/4 complete: API changes analyzed")
 
         # 4b. Planning
         migration_plan = _create_migration_plan(
@@ -670,6 +678,7 @@ async def process_repository(
             api_changes_text=api_changes_text,
             pipeline_logger=pipeline_logger,
         )
+        logger.info("[PROGRESS] Stage 4/4 complete: planning finished")
 
         # 4c. Recipe Execution
         if initial_errors:
@@ -689,6 +698,7 @@ async def process_repository(
                     agent_method=RECIPE_AGENT_METHOD,
                 )
                 pipeline_logger.finalize()
+                logger.info(f"[RESULT] {repo_name} success=True method={RECIPE_AGENT_METHOD}")
                 return {
                     "success": True,
                     "repository": repo_name,
@@ -702,6 +712,7 @@ async def process_repository(
         llm_result = _apply_llm_agent(
             repo_path=repo_path,
             pom_diff=pom_diff,
+            initial_errors=initial_errors,
             migration_plan=migration_plan,
             commit_hash=commit_hash,
             repo_name=repo_name,
@@ -714,6 +725,9 @@ async def process_repository(
             agent_method=LLM_AGENT_METHOD,
         )
         pipeline_logger.finalize()
+        logger.info(
+            f"[RESULT] {repo_name} success={llm_result.get('success', False)} method={LLM_AGENT_METHOD}"
+        )
         
         return {
             "success": llm_result.get("success", False),

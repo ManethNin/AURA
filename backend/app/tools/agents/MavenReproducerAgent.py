@@ -177,7 +177,7 @@ class MavenReproducerAgent:
             output_code, docker_output = self.dockerAgent.execute_command(
                 self.container, timeout_command, "/mnt/repo"
             )
-            print("maven output_code", output_code)
+            logging.debug("[MavenReproducer] Maven output code: %s", output_code)
             # logging.info("docker_output %s", docker_output)
             # print("docker_output", output_code, docker_output)
 
@@ -211,14 +211,23 @@ class MavenReproducerAgent:
             if not run_tests:
                 error_lines = extract_error_lines(docker_output)
 
-                print(
-                    "has_failed output code is",
-                    output_code,
-                    "error line length was",
-                    len(error_lines),
-                )
                 has_succeeded = int(output_code) == 0 and len(error_lines) < 1
-                print("has_succeeded", has_succeeded, error_lines)
+                if has_succeeded:
+                    logging.info(
+                        "[PROGRESS] Maven compile scan: has_succeeded=%s output_code=%s errors=%s",
+                        has_succeeded,
+                        output_code,
+                        len(error_lines),
+                    )
+                else:
+                    preview = " | ".join(error_lines[:3])
+                    logging.warning(
+                        "[MavenReproducer] Compile scan failed has_succeeded=%s output_code=%s errors=%s preview=%s",
+                        has_succeeded,
+                        output_code,
+                        len(error_lines),
+                        preview[:500],
+                    )
 
                 if len(error_lines) > 0:
                     error_text = "\n".join(error_lines)

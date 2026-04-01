@@ -8,7 +8,7 @@ before the recipe agent or LLM repair agent executes the changes.
 import re
 import traceback
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, TypedDict, Union
+from typing import Any, Dict, List, Optional, TypedDict, Union
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
@@ -105,20 +105,7 @@ class PlanningAgentService:
     DEFAULT_REASONING_EFFORT = "medium"
 
     # Regex compilation for performance
-    JAVA_FILE_PATTERN = re.compile(r"(src/main/java/[\w/]+\.java)")
-    JAVA_ERROR_LOCATION_PATTERN = re.compile(
-        r"(?:^|/)(src/main/java/[\w./-]+\.java):\[(\d+),(\d+)\]"
-    )
-
-    # Prompt budget controls
-    MAX_POM_DIFF_CHARS = 12_000
-    MAX_API_CHANGES_CHARS = 20_000
-    MAX_COMPILATION_ERRORS_CHARS = 20_000
-    MAX_FILES_IN_PROMPT = 8
-    SNIPPET_RADIUS_LINES = 35
-    MAX_SNIPPETS_PER_FILE = 3
-    MAX_FILE_SNIPPET_CHARS = 8_000
-    MAX_TOTAL_FILE_CONTEXT_CHARS = 45_000
+    JAVA_FILE_PATTERN = re.compile(r"(src[\\/][\w./-]+\.java)")
 
     def __init__(
         self,
@@ -348,95 +335,21 @@ class PlanningAgentService:
         if not initial_errors:
             return file_contents
 
-        error_locations = cls._extract_error_locations(initial_errors)
-        unique_files = list(error_locations.keys())
+        unique_files = list(set(cls.JAVA_FILE_PATTERN.findall(initial_errors)))
 
-        if not unique_files:
-            unique_files = list(set(cls.JAVA_FILE_PATTERN.findall(initial_errors)))
-
-        total_chars = 0
-
-        for file_path in unique_files[: cls.MAX_FILES_IN_PROMPT]:
+        for file_path in unique_files:
             try:
                 full_path = repo_path / file_path
                 if full_path.exists():
                     content = full_path.read_text(encoding="utf-8")
-                    snippet = cls._extract_relevant_snippets(
-                        content=content,
-                        line_numbers=error_locations.get(file_path, set()),
-                    )
-
-                    remaining_budget = cls.MAX_TOTAL_FILE_CONTEXT_CHARS - total_chars
-                    if remaining_budget <= 0:
-                        break
-
-                    bounded_snippet = snippet[: min(cls.MAX_FILE_SNIPPET_CHARS, remaining_budget)]
-                    if len(bounded_snippet) < len(snippet):
-                        bounded_snippet += "\n\n... [truncated file context for token budget]"
-
-                    file_contents[file_path] = bounded_snippet
-                    total_chars += len(bounded_snippet)
+                    file_contents[file_path] = content
                     logger.debug(
-                        f"[PlanningAgent] Pre-read {file_path} ({len(bounded_snippet)} chars)"
+                        f"[PlanningAgent] Pre-read {file_path} ({len(content)} chars)"
                     )
             except OSError as e:
                 logger.warning(f"[PlanningAgent] Could not read {file_path}: {e}")
 
         return file_contents
-
-    @classmethod
-    def _extract_error_locations(cls, initial_errors: str) -> Dict[str, Set[int]]:
-        """Extract java file paths and line numbers from Maven-style errors."""
-        locations: Dict[str, Set[int]] = {}
-        for path, line, _column in cls.JAVA_ERROR_LOCATION_PATTERN.findall(initial_errors):
-            locations.setdefault(path, set()).add(int(line))
-        return locations
-
-    @classmethod
-    def _extract_relevant_snippets(
-        cls,
-        content: str,
-        line_numbers: Set[int],
-    ) -> str:
-        """Extract line-focused snippets around compile errors; fallback to a file head sample."""
-        lines = content.splitlines()
-        total_lines = len(lines)
-
-        if not line_numbers:
-            head_lines = lines[: min(total_lines, 180)]
-            return "\n".join(head_lines)
-
-        ranges: List[tuple[int, int]] = []
-        for line in sorted(line_numbers):
-            start = max(1, line - cls.SNIPPET_RADIUS_LINES)
-            end = min(total_lines, line + cls.SNIPPET_RADIUS_LINES)
-            ranges.append((start, end))
-
-        merged: List[tuple[int, int]] = []
-        for start, end in ranges:
-            if not merged or start > merged[-1][1] + 1:
-                merged.append((start, end))
-            else:
-                merged[-1] = (merged[-1][0], max(merged[-1][1], end))
-
-        snippets: List[str] = []
-        for start, end in merged[: cls.MAX_SNIPPETS_PER_FILE]:
-            snippet_body = "\n".join(lines[start - 1 : end])
-            snippets.append(f"// lines {start}-{end}\n{snippet_body}")
-
-        return "\n\n...\n\n".join(snippets)
-
-    @staticmethod
-    def _truncate_section(content: str, max_chars: int, section_name: str) -> str:
-        """Trim oversized context sections while preserving deterministic behavior."""
-        if len(content) <= max_chars:
-            return content
-
-        kept = content[:max_chars]
-        return (
-            f"{kept}\n\n"
-            f"... [truncated {section_name}; kept first {max_chars} chars of {len(content)}]"
-        )
 
     @staticmethod
     def _build_prompt(
@@ -456,33 +369,17 @@ class PlanningAgentService:
         Returns:
             The fully assembled prompt string.
         """
-        pom_diff_bounded = PlanningAgentService._truncate_section(
-            pom_diff or "(no diff provided)",
-            PlanningAgentService.MAX_POM_DIFF_CHARS,
-            "pom diff",
-        )
-
         sections: List[str] = [
-            f"## POM.XML DEPENDENCY CHANGES\n```diff\n{pom_diff_bounded}\n```"
+            f"## POM.XML DEPENDENCY CHANGES\n```diff\n{pom_diff or '(no diff provided)'}\n```"
         ]
 
         if api_changes_text:
-            api_changes_bounded = PlanningAgentService._truncate_section(
-                api_changes_text,
-                PlanningAgentService.MAX_API_CHANGES_CHARS,
-                "api changes",
-            )
             sections.append(
-                f"## API CHANGES BETWEEN OLD AND NEW DEPENDENCY VERSIONS\n```\n{api_changes_bounded}\n```"
+                f"## API CHANGES BETWEEN OLD AND NEW DEPENDENCY VERSIONS\n```\n{api_changes_text}\n```"
             )
 
         if initial_errors:
-            initial_errors_bounded = PlanningAgentService._truncate_section(
-                initial_errors,
-                PlanningAgentService.MAX_COMPILATION_ERRORS_CHARS,
-                "compilation errors",
-            )
-            sections.append(f"## COMPILATION ERRORS\n```\n{initial_errors_bounded}\n```")
+            sections.append(f"## COMPILATION ERRORS\n```\n{initial_errors}\n```")
 
         if file_contents:
             file_section = ["## AFFECTED SOURCE FILES"]

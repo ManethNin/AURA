@@ -61,6 +61,7 @@ class JavaMigrationAgentService:
         commit_hash: str,
         repo_slug: str,
         pom_diff: str,
+        initial_errors: str = "",
         migration_plan: str = "",
         pipeline_logger = None,
     ):
@@ -72,6 +73,7 @@ class JavaMigrationAgentService:
             commit_hash: Git commit hash
             repo_slug: Repository identifier (owner/repo)
             pom_diff: The pom.xml changes that caused issues
+            initial_errors: Initial compilation errors from baseline scan
             migration_plan: Plan produced by the planning agent (primary context)
             pipeline_logger: Optional existing PipelineLogger instance
 
@@ -96,11 +98,11 @@ class JavaMigrationAgentService:
                 commit_hash=commit_hash
             )
 
-            # PRE-READ ERROR FILES from migration plan
+            # PRE-READ ERROR FILES from initial errors first, then migration plan fallback
             import re
-            # Extract file paths from migration plan (looks for "Affected Files" section)
-            error_file_matches = re.findall(r'(src/main/java/[\w/]+\.java)', migration_plan)
-            unique_files = list(set(error_file_matches))
+            initial_error_matches = re.findall(r'(src/main/java/[\w/]+\.java)', initial_errors or "")
+            plan_matches = re.findall(r'(src/main/java/[\w/]+\.java)', migration_plan or "")
+            unique_files = list(set(initial_error_matches + plan_matches))
 
             file_contents = {}
             for file_path in unique_files:

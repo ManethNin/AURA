@@ -517,7 +517,11 @@ def get_tools_for_repo(repo_path: Path, repo_slug: str, commit_hash: str = "HEAD
                     print(f"[WARN] Error parsing compilation errors: {e}")
                 
                 output_errors = dict(output_errors)
-                print("[TOOL] Maven Output errors", output_errors)
+                files_with_errors = len(output_errors)
+                error_groups = sum(len(v) for v in output_errors.values())
+                print(
+                    f"[TOOL] Maven output parsed: files_with_errors={files_with_errors}, error_groups={error_groups}"
+                )
                 
                 # If structured parsing failed, ensure raw error_text is available
                 if not output_errors and error_text:
