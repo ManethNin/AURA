@@ -8,7 +8,7 @@ before the recipe agent or LLM repair agent executes the changes.
 import re
 import traceback
 from pathlib import Path
-from typing import Any, Dict, List, Optional, TypedDict, Union
+from typing import Any, Dict, List, Optional, Set, TypedDict, Union
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
@@ -104,6 +104,19 @@ class PlanningAgentService:
 
     # Regex compilation for performance
     JAVA_FILE_PATTERN = re.compile(r"(src/main/java/[\w/]+\.java)")
+    JAVA_ERROR_LOCATION_PATTERN = re.compile(
+        r"(?:^|/)(src/main/java/[\w./-]+\.java):\[(\d+),(\d+)\]"
+    )
+
+    # Prompt budget controls
+    MAX_POM_DIFF_CHARS = 12_000
+    MAX_API_CHANGES_CHARS = 20_000
+    MAX_COMPILATION_ERRORS_CHARS = 20_000
+    MAX_FILES_IN_PROMPT = 8
+    SNIPPET_RADIUS_LINES = 35
+    MAX_SNIPPETS_PER_FILE = 3
+    MAX_FILE_SNIPPET_CHARS = 8_000
+    MAX_TOTAL_FILE_CONTEXT_CHARS = 45_000
 
     def __init__(
         self,
@@ -222,6 +235,14 @@ class PlanningAgentService:
             )
 
             if pipeline_logger:
+                self._log_planning_input(
+                    pipeline_logger=pipeline_logger,
+                    prompt=prompt,
+                    pom_diff=pom_diff,
+                    initial_errors=initial_errors,
+                    api_changes_text=api_changes_text,
+                    file_contents=file_contents,
+                )
                 pipeline_logger.log_stage(
                     "planning_agent_prompt",
                     {
@@ -304,21 +325,95 @@ class PlanningAgentService:
         if not initial_errors:
             return file_contents
 
-        unique_files = list(set(cls.JAVA_FILE_PATTERN.findall(initial_errors)))
+        error_locations = cls._extract_error_locations(initial_errors)
+        unique_files = list(error_locations.keys())
 
-        for file_path in unique_files:
+        if not unique_files:
+            unique_files = list(set(cls.JAVA_FILE_PATTERN.findall(initial_errors)))
+
+        total_chars = 0
+
+        for file_path in unique_files[: cls.MAX_FILES_IN_PROMPT]:
             try:
                 full_path = repo_path / file_path
                 if full_path.exists():
                     content = full_path.read_text(encoding="utf-8")
-                    file_contents[file_path] = content
+                    snippet = cls._extract_relevant_snippets(
+                        content=content,
+                        line_numbers=error_locations.get(file_path, set()),
+                    )
+
+                    remaining_budget = cls.MAX_TOTAL_FILE_CONTEXT_CHARS - total_chars
+                    if remaining_budget <= 0:
+                        break
+
+                    bounded_snippet = snippet[: min(cls.MAX_FILE_SNIPPET_CHARS, remaining_budget)]
+                    if len(bounded_snippet) < len(snippet):
+                        bounded_snippet += "\n\n... [truncated file context for token budget]"
+
+                    file_contents[file_path] = bounded_snippet
+                    total_chars += len(bounded_snippet)
                     logger.debug(
-                        f"[PlanningAgent] Pre-read {file_path} ({len(content)} chars)"
+                        f"[PlanningAgent] Pre-read {file_path} ({len(bounded_snippet)} chars)"
                     )
             except OSError as e:
                 logger.warning(f"[PlanningAgent] Could not read {file_path}: {e}")
 
         return file_contents
+
+    @classmethod
+    def _extract_error_locations(cls, initial_errors: str) -> Dict[str, Set[int]]:
+        """Extract java file paths and line numbers from Maven-style errors."""
+        locations: Dict[str, Set[int]] = {}
+        for path, line, _column in cls.JAVA_ERROR_LOCATION_PATTERN.findall(initial_errors):
+            locations.setdefault(path, set()).add(int(line))
+        return locations
+
+    @classmethod
+    def _extract_relevant_snippets(
+        cls,
+        content: str,
+        line_numbers: Set[int],
+    ) -> str:
+        """Extract line-focused snippets around compile errors; fallback to a file head sample."""
+        lines = content.splitlines()
+        total_lines = len(lines)
+
+        if not line_numbers:
+            head_lines = lines[: min(total_lines, 180)]
+            return "\n".join(head_lines)
+
+        ranges: List[tuple[int, int]] = []
+        for line in sorted(line_numbers):
+            start = max(1, line - cls.SNIPPET_RADIUS_LINES)
+            end = min(total_lines, line + cls.SNIPPET_RADIUS_LINES)
+            ranges.append((start, end))
+
+        merged: List[tuple[int, int]] = []
+        for start, end in ranges:
+            if not merged or start > merged[-1][1] + 1:
+                merged.append((start, end))
+            else:
+                merged[-1] = (merged[-1][0], max(merged[-1][1], end))
+
+        snippets: List[str] = []
+        for start, end in merged[: cls.MAX_SNIPPETS_PER_FILE]:
+            snippet_body = "\n".join(lines[start - 1 : end])
+            snippets.append(f"// lines {start}-{end}\n{snippet_body}")
+
+        return "\n\n...\n\n".join(snippets)
+
+    @staticmethod
+    def _truncate_section(content: str, max_chars: int, section_name: str) -> str:
+        """Trim oversized context sections while preserving deterministic behavior."""
+        if len(content) <= max_chars:
+            return content
+
+        kept = content[:max_chars]
+        return (
+            f"{kept}\n\n"
+            f"... [truncated {section_name}; kept first {max_chars} chars of {len(content)}]"
+        )
 
     @staticmethod
     def _build_prompt(
@@ -338,17 +433,33 @@ class PlanningAgentService:
         Returns:
             The fully assembled prompt string.
         """
+        pom_diff_bounded = PlanningAgentService._truncate_section(
+            pom_diff or "(no diff provided)",
+            PlanningAgentService.MAX_POM_DIFF_CHARS,
+            "pom diff",
+        )
+
         sections: List[str] = [
-            f"## POM.XML DEPENDENCY CHANGES\n```diff\n{pom_diff or '(no diff provided)'}\n```"
+            f"## POM.XML DEPENDENCY CHANGES\n```diff\n{pom_diff_bounded}\n```"
         ]
 
         if api_changes_text:
+            api_changes_bounded = PlanningAgentService._truncate_section(
+                api_changes_text,
+                PlanningAgentService.MAX_API_CHANGES_CHARS,
+                "api changes",
+            )
             sections.append(
-                f"## API CHANGES BETWEEN OLD AND NEW DEPENDENCY VERSIONS\n```\n{api_changes_text}\n```"
+                f"## API CHANGES BETWEEN OLD AND NEW DEPENDENCY VERSIONS\n```\n{api_changes_bounded}\n```"
             )
 
         if initial_errors:
-            sections.append(f"## COMPILATION ERRORS\n```\n{initial_errors}\n```")
+            initial_errors_bounded = PlanningAgentService._truncate_section(
+                initial_errors,
+                PlanningAgentService.MAX_COMPILATION_ERRORS_CHARS,
+                "compilation errors",
+            )
+            sections.append(f"## COMPILATION ERRORS\n```\n{initial_errors_bounded}\n```")
 
         if file_contents:
             file_section = ["## AFFECTED SOURCE FILES"]
@@ -379,6 +490,57 @@ class PlanningAgentService:
             logger.info(f"[PlanningAgent] Plan saved to {plan_file}")
         except OSError as e:
             logger.warning(f"[PlanningAgent] Could not save plan file: {e}")
+
+    @staticmethod
+    def _log_planning_input(
+        pipeline_logger: Any,
+        prompt: str,
+        pom_diff: str,
+        initial_errors: str,
+        api_changes_text: str,
+        file_contents: Dict[str, str],
+    ) -> None:
+        """Persist the exact planning-agent input and context metrics for observability."""
+        try:
+            file_context_lengths = {
+                path: len(content) for path, content in file_contents.items()
+            }
+            pipeline_logger.log_stage(
+                "planning_agent_input",
+                {
+                    "pom_diff_length": len(pom_diff or ""),
+                    "initial_errors_length": len(initial_errors or ""),
+                    "api_changes_length": len(api_changes_text or ""),
+                    "files_included": list(file_contents.keys()),
+                    "file_context_lengths": file_context_lengths,
+                    "total_file_context_length": sum(file_context_lengths.values()),
+                    "prompt_length": len(prompt),
+                },
+            )
+
+            planning_input_path = Path(pipeline_logger.log_dir) / "planning_agent_input.txt"
+            full_input_text = (
+                "=== PLANNING AGENT INPUT ===\n"
+                "This file contains the complete model input payload for planning.\n\n"
+                "## METADATA\n"
+                f"prompt_length={len(prompt)}\n"
+                f"pom_diff_length={len(pom_diff or '')}\n"
+                f"initial_errors_length={len(initial_errors or '')}\n"
+                f"api_changes_length={len(api_changes_text or '')}\n"
+                f"files_included={len(file_contents)}\n"
+                f"total_file_context_length={sum(file_context_lengths.values())}\n\n"
+                "## SYSTEM PROMPT\n"
+                f"{PLANNING_SYSTEM_PROMPT}\n\n"
+                "## USER PROMPT\n"
+                f"{prompt}\n"
+            )
+            planning_input_path.write_text(full_input_text, encoding="utf-8")
+
+            logger.info(
+                f"[PlanningAgent] Logged planning input ({len(prompt)} chars) to {planning_input_path}"
+            )
+        except Exception as e:
+            logger.warning(f"[PlanningAgent] Could not log planning input: {e}")
 
     @staticmethod
     def _handle_error(e: Exception, pipeline_logger: Optional[Any]) -> PlanResult:
