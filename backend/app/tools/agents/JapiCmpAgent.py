@@ -216,39 +216,54 @@ class JapiCmpAgent:
         """
         Summarize REVAPI output to show only changes directly causing the compilation errors.
         
-        For import/package errors like "package X does not exist", we filter for changes where
-        the OLD element contains the missing package - this shows what was removed/moved.
-        
-        For "cannot find symbol class X" errors, we filter for changes involving that class.
+        Extracts specific missing symbols from Maven compilation errors and filters
+        RevAPI changes to only show API changes that affect those symbols.
         """
-        # Extract SPECIFIC missing packages and classes from compilation errors
-        missing_packages = set()  # High priority: packages that don't exist anymore
-        missing_classes = set()   # Classes that can't be found
+        missing_packages = set()
+        missing_classes = set()
+        error_file_paths = set()
         
         if compilation_errors:
             # Extract missing packages from "package X does not exist" errors
-            package_pattern = r'package\s+([\w.]+)\s+does not exist'
+            # Matches: "package com.hazelcast.config does not exist"
+            package_pattern = r'package\s+([\w.$]+)\s+does not exist'
             for match in re.finditer(package_pattern, compilation_errors):
-                missing_packages.add(match.group(1))
+                pkg = match.group(1)
+                # Only add if it looks like a real package (has at least one dot)
+                if '.' in pkg:
+                    missing_packages.add(pkg)
             
-            # Extract missing classes from "cannot find symbol class X" errors
-            symbol_pattern = r'(?:symbol:?\s*class|cannot find symbol\s*\n.*class)\s+([A-Z][\w]+)'
-            for match in re.finditer(symbol_pattern, compilation_errors, re.IGNORECASE):
+            # Extract missing class names from "cannot find symbol" errors
+            # Matches: "[ERROR]   symbol:   class MaxSizeConfig"
+            #          "[ERROR] /path/File.java:[19,46] error: cannot find symbol"
+            #          followed by "class SomeClass" on next line
+            symbol_class_pattern = r'symbol:\s*(?:class|method|variable)\s+([A-Z]\w*)'
+            for match in re.finditer(symbol_class_pattern, compilation_errors):
+                cls = match.group(1)
+                # Filter out generic words that aren't class names
+                if cls not in ('class', 'method', 'variable', 'type', 'annotation'):
+                    missing_classes.add(cls)
+            
+            # Extract class names from the line after "cannot find symbol"
+            # Format: "[ERROR]  class MaxSizeConfig"
+            standalone_class_pattern = r'^\s*\[ERROR\]\s+class\s+([A-Z]\w*)'
+            for match in re.finditer(standalone_class_pattern, compilation_errors, re.MULTILINE):
                 missing_classes.add(match.group(1))
             
-            # Also extract class names directly after "class" keyword
-            class_pattern = r'\bclass\s+([A-Z][\w]+)'
-            for match in re.finditer(class_pattern, compilation_errors):
-                missing_classes.add(match.group(1))
+            # Extract file paths from errors to understand context
+            # Matches: "/mnt/repo/src/java/org/jivesoftware/.../ClusteredCacheFactory.java:[22,28]"
+            file_pattern = r'([^\s]+\.(?:java|xml)):\[\d+,\d+\]'
+            for match in re.finditer(file_pattern, compilation_errors):
+                error_file_paths.add(match.group(1))
         
-        # If we have specific missing packages/classes, use strict filtering
-        # Otherwise fall back to looser filtering
+        # Strict filtering: only return changes related to extracted symbols
         use_strict_filter = bool(missing_packages or missing_classes)
         
         lines = raw_output.split('\n')
         filtered_changes = []
         current_change = []
         current_old_line = ""
+        current_new_line = ""
         is_breaking = False
         
         for line in lines:
@@ -262,25 +277,32 @@ class JapiCmpAgent:
             if stripped.startswith('old:') or (stripped.startswith('new:') and not current_change):
                 # Save previous change if it passes our filter
                 if current_change and is_breaking:
-                    if self._is_relevant_change(current_old_line, missing_packages, missing_classes, use_strict_filter):
+                    if self._is_relevant_change(current_old_line, current_new_line, missing_packages, missing_classes, error_file_paths, use_strict_filter):
                         filtered_changes.append('\n'.join(current_change))
                 
                 # Start new change
                 current_change = [line]
-                current_old_line = stripped if stripped.startswith('old:') else ""
+                if stripped.startswith('old:'):
+                    current_old_line = stripped
+                    current_new_line = ""
+                else:
+                    current_new_line = stripped
+                    current_old_line = ""
                 is_breaking = False
             elif current_change:
                 current_change.append(line)
-                # Track the old: line for filtering
+                # Track the old/new lines for filtering
                 if stripped.startswith('old:'):
                     current_old_line = stripped
+                elif stripped.startswith('new:'):
+                    current_new_line = stripped
                 # Detect breaking severity
                 if 'BINARY: BREAKING' in line or 'SOURCE: BREAKING' in line:
                     is_breaking = True
         
         # Don't forget the last change
         if current_change and is_breaking:
-            if self._is_relevant_change(current_old_line, missing_packages, missing_classes, use_strict_filter):
+            if self._is_relevant_change(current_old_line, current_new_line, missing_packages, missing_classes, error_file_paths, use_strict_filter):
                 filtered_changes.append('\n'.join(current_change))
         
         if not filtered_changes:
@@ -289,12 +311,11 @@ class JapiCmpAgent:
             return "No breaking API changes detected"
         
         # Format concisely - show what package/class is missing and what changed
+        result = ""
         if missing_packages:
-            result = f"Missing package(s): {', '.join(missing_packages)}\n"
-        else:
-            result = ""
+            result = f"Missing package(s): {', '.join(sorted(missing_packages))}\n"
         if missing_classes:
-            result += f"Missing class(es): {', '.join(missing_classes)}\n"
+            result += f"Missing class(es): {', '.join(sorted(missing_classes))}\n"
         
         result += f"\nRelevant API changes ({len(filtered_changes)} found):\n\n"
         # Limit to 10 changes for token efficiency
@@ -305,30 +326,44 @@ class JapiCmpAgent:
         
         return result
     
-    def _is_relevant_change(self, old_line: str, missing_packages: set, missing_classes: set, strict: bool) -> bool:
+    def _is_relevant_change(self, old_line: str, new_line: str, missing_packages: set, missing_classes: set, error_file_paths: set, strict: bool) -> bool:
         """
         Check if a REVAPI change is relevant to the compilation errors.
         
         For strict filtering (when we have specific missing packages/classes):
-        - The OLD element must contain the missing package or class
+        - The OLD element must contain the missing package or class name
+        - Matching is done on fully-qualified names, not substrings
         
-        For loose filtering:
-        - Any breaking change is considered relevant
+        For loose filtering (no specific errors extracted):
+        - Return False to avoid flooding with irrelevant changes
         """
-        if not strict:
-            return True
-        
         if not old_line:
             return False
         
-        # Check if the old element contains any missing package
+        if not strict:
+            return False
+        
+        # Extract the fully-qualified type name from the old: line
+        # Format: "old: method void com.example.Class.method()"
+        #         "old: class com.example.Class"
+        #         "old: field com.example.Class.field"
+        old_content = old_line[4:].strip()  # Remove "old:" prefix
+        
+        # Check for exact package match (package prefix match)
         for pkg in missing_packages:
-            if pkg in old_line:
+            # Match if the old element is within the missing package
+            # e.g., missing package "com.hazelcast.config" matches "class com.hazelcast.config.MaxSizeConfig"
+            if f' {pkg}.' in old_content or f' {pkg}(' in old_content or old_content.endswith(f' {pkg}'):
+                return True
+            # Also match fully qualified class names starting with this package
+            if re.search(rf'\b{re.escape(pkg)}\.[A-Z]\w*', old_content):
                 return True
         
-        # Check if the old element contains any missing class name
+        # Check for exact class name match (must be part of a fully-qualified name)
         for cls in missing_classes:
-            if cls in old_line:
+            # Match "com.hazelcast.MaxSizeConfig" but not "SomeMaxSizeConfigHelper"
+            # Use word boundary to ensure exact class name match
+            if re.search(rf'\b{re.escape(cls)}\b', old_content):
                 return True
         
         return False
@@ -337,26 +372,30 @@ class JapiCmpAgent:
         """
         Summarize JApiCmp output to show only changes directly causing the compilation errors.
         
-        For import/package errors, we filter for classes containing the missing package name.
+        Extracts specific missing symbols from Maven compilation errors and filters
+        JApiCmp changes to only show API changes that affect those symbols.
         """
-        # Extract SPECIFIC missing packages and classes from compilation errors
         missing_packages = set()
         missing_classes = set()
         
         if compilation_errors:
             # Extract missing packages from "package X does not exist" errors
-            package_pattern = r'package\s+([\w.]+)\s+does not exist'
+            package_pattern = r'package\s+([\w.$]+)\s+does not exist'
             for match in re.finditer(package_pattern, compilation_errors):
-                missing_packages.add(match.group(1))
+                pkg = match.group(1)
+                if '.' in pkg:
+                    missing_packages.add(pkg)
             
-            # Extract missing classes from "cannot find symbol class X" errors
-            symbol_pattern = r'(?:symbol:?\s*class|cannot find symbol\s*\n.*class)\s+([A-Z][\w]+)'
-            for match in re.finditer(symbol_pattern, compilation_errors, re.IGNORECASE):
-                missing_classes.add(match.group(1))
+            # Extract missing class names from "cannot find symbol" errors
+            symbol_class_pattern = r'symbol:\s*(?:class|method|variable)\s+([A-Z]\w*)'
+            for match in re.finditer(symbol_class_pattern, compilation_errors):
+                cls = match.group(1)
+                if cls not in ('class', 'method', 'variable', 'type', 'annotation'):
+                    missing_classes.add(cls)
             
-            # Also extract class names directly after "class" keyword
-            class_pattern = r'\bclass\s+([A-Z][\w]+)'
-            for match in re.finditer(class_pattern, compilation_errors):
+            # Extract class names from the line after "cannot find symbol"
+            standalone_class_pattern = r'^\s*\[ERROR\]\s+class\s+([A-Z]\w*)'
+            for match in re.finditer(standalone_class_pattern, compilation_errors, re.MULTILINE):
                 missing_classes.add(match.group(1))
         
         use_strict_filter = bool(missing_packages or missing_classes)
@@ -382,7 +421,7 @@ class JapiCmpAgent:
                 
                 # Start new class section
                 current_class_section = [line]
-                current_class_name = line  # Store full line for matching
+                current_class_name = line
             elif current_class_section:
                 current_class_section.append(line)
         
@@ -399,12 +438,11 @@ class JapiCmpAgent:
             return "No breaking API changes detected"
         
         # Format concisely
+        result = ""
         if missing_packages:
-            result = f"Missing package(s): {', '.join(missing_packages)}\n"
-        else:
-            result = ""
+            result = f"Missing package(s): {', '.join(sorted(missing_packages))}\n"
         if missing_classes:
-            result += f"Missing class(es): {', '.join(missing_classes)}\n"
+            result += f"Missing class(es): {', '.join(sorted(missing_classes))}\n"
         
         result += f"\nRelevant class changes ({len(filtered_changes)} found):\n\n"
         result += "\n".join(filtered_changes[:10])
@@ -416,20 +454,25 @@ class JapiCmpAgent:
     
     def _is_relevant_japicmp_class(self, class_line: str, missing_packages: set, missing_classes: set, strict: bool) -> bool:
         """Check if a JApiCmp class section is relevant to the compilation errors."""
-        if not strict:
-            return True
-        
         if not class_line:
             return False
         
-        # Check if the class line contains any missing package
+        if not strict:
+            return False
+        
+        # Extract the fully-qualified class name from the JApiCmp line
+        # Format: "com.example.MyClass *** REMOVED CLASS"
+        # Extract just the class name part before the markers
+        class_name_part = class_line.split('***')[0].split('---')[0].strip()
+        
+        # Check for exact package match (package prefix match)
         for pkg in missing_packages:
-            if pkg in class_line:
+            if re.search(rf'\b{re.escape(pkg)}\.[A-Z]\w*', class_name_part):
                 return True
         
-        # Check if the class line contains any missing class name
+        # Check for exact class name match (must be part of a fully-qualified name)
         for cls in missing_classes:
-            if cls in class_line:
+            if re.search(rf'\b{re.escape(cls)}\b', class_name_part):
                 return True
         
         return False

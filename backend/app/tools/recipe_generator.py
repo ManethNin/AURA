@@ -24,6 +24,8 @@ class RecipeGenerator:
         self.project_path = Path(project_path)
         self.pom_path = self.project_path / "pom.xml"
         self.rewrite_yaml_path = self.project_path / "rewrite.yaml"
+        logger.info(f"[RecipeGenerator] Initialized for project at {self.project_path}")
+        logger.info(f"[RecipeGenerator] Initialized for project at {self.project_path}")
     
     def generate_rewrite_yaml(
         self,

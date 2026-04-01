@@ -26,11 +26,14 @@ class RecipeExecutor:
         self.docker_agent = DockerAgent(self.MAVEN_IMAGE, project_path)
         self.container = None
         self.results_dir = tempfile.mkdtemp()
+        logger.info(f"[RecipeExecutor] Initialized with project at {self.project_path}, results dir: {self.results_dir}")
+        logger.info(f"[RecipeExecutor] Initialized with project at {self.project_path}, results dir: {self.results_dir}")
     
     @contextmanager
     def start_container(self):
         """Context manager to handle container lifecycle."""
         try:
+            logger.info(f"[RecipeExecutor] Starting Docker container with image {self.MAVEN_IMAGE}...")
             container, setup_stdout, setup_stderr = (
                 self.docker_agent.execute_command_with_mounts(
                     mounts={
@@ -41,15 +44,19 @@ class RecipeExecutor:
                 )
             )
             self.container = container
+            logger.info(f"[RecipeExecutor] Docker container started successfully")
             yield self.container
         finally:
             if self.container is not None:
+                logger.info(f"[RecipeExecutor] Cleaning up Docker container...")
                 self.docker_agent.clean_up(self.container)
             else:
                 self.docker_agent.clean_up()
             
             if os.path.exists(self.results_dir):
                 shutil.rmtree(self.results_dir)
+            logger.info(f"[RecipeExecutor] Container cleanup complete")
+            logger.info(f"[RecipeExecutor] Container cleanup complete")
     
     def run_rewrite(self, maven_only: bool = True, timeout: int = 600) -> Tuple[bool, str, str]:
         """
@@ -246,6 +253,7 @@ class RecipeExecutorLocal:
     
     def __init__(self, project_path: Path):
         self.project_path = Path(project_path)
+        logger.info(f"[RecipeExecutorLocal] Initialized with project at {self.project_path}")
     
     def run_rewrite(self, timeout: int = 600) -> Tuple[bool, str, str]:
         """
@@ -253,6 +261,7 @@ class RecipeExecutorLocal:
         """
         import subprocess
         
+        logger.info(f"[RecipeExecutorLocal] Running mvn rewrite:run in {self.project_path}...")
         try:
             result = subprocess.run(
                 ["mvn", "rewrite:run","-Drewrite.skipMavenCompile=true", "-B"],
@@ -263,11 +272,17 @@ class RecipeExecutorLocal:
             )
             
             success = result.returncode == 0
+            if success:
+                logger.info(f"[RecipeExecutorLocal] mvn rewrite:run completed successfully")
+            else:
+                logger.warning(f"[RecipeExecutorLocal] mvn rewrite:run failed with return code {result.returncode}")
             return success, result.stdout, result.stderr
             
         except subprocess.TimeoutExpired:
+            logger.error(f"[RecipeExecutorLocal] mvn rewrite:run timed out after {timeout}s")
             return False, "", "Command timed out"
         except Exception as e:
+            logger.error(f"[RecipeExecutorLocal] mvn rewrite:run error: {e}")
             return False, "", str(e)
     
     def compile_after_rewrite(self, timeout: int = 300) -> Tuple[bool, str]:
@@ -276,6 +291,7 @@ class RecipeExecutorLocal:
         """
         import subprocess
         
+        logger.info(f"[RecipeExecutorLocal] Compiling project in {self.project_path}...")
         try:
             result = subprocess.run(
                 ["mvn", "compile", "-B", "-q"],
@@ -286,11 +302,17 @@ class RecipeExecutorLocal:
             )
             
             success = result.returncode == 0
+            if success:
+                logger.info(f"[RecipeExecutorLocal] Compilation successful")
+            else:
+                logger.warning(f"[RecipeExecutorLocal] Compilation failed with return code {result.returncode}")
             return success, result.stdout + result.stderr
             
         except subprocess.TimeoutExpired:
+            logger.error(f"[RecipeExecutorLocal] Compilation timed out after {timeout}s")
             return False, "Command timed out"
         except Exception as e:
+            logger.error(f"[RecipeExecutorLocal] Compilation error: {e}")
             return False, str(e)
     
     def get_git_diff(self) -> str:

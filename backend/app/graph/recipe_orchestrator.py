@@ -68,6 +68,7 @@ class RecipeOrchestrator:
     def _extract_dependency_version_changes(self, pom_diff: str) -> List[Dict[str, str]]:
         """Extract dependency version changes from a pom.xml diff."""
         if not pom_diff:
+            logger.info("[RecipeOrchestrator] No pom diff provided for dependency version extraction")
             return []
 
         group_id = None
@@ -124,6 +125,12 @@ class RecipeOrchestrator:
                 "oldVersion": old_version,
                 "newVersion": new_version,
             })
+
+        if changes:
+            change_summary = [f"{c['groupId']}:{c['artifactId']} {c['oldVersion']}->{c['newVersion']}" for c in changes]
+            logger.info(f"[RecipeOrchestrator] Extracted {len(changes)} dependency version change(s) from pom diff: {change_summary}")
+        else:
+            logger.info("[RecipeOrchestrator] No dependency version changes found in pom diff")
 
         return changes
 
@@ -239,6 +246,9 @@ class RecipeOrchestrator:
         if pom_path.exists():
             with open(pom_path, 'r', encoding='utf-8') as f:
                 pom_content = f.read()
+            logger.info(f"[RecipeOrchestrator] Read pom.xml ({len(pom_content)} bytes) from {pom_path}")
+        else:
+            logger.warning(f"[RecipeOrchestrator] pom.xml not found at {pom_path}, proceeding without pom context")
 
         # Log the full context that will be sent to the recipe agent's LLM
         if self.pipeline_logger:
@@ -265,6 +275,10 @@ class RecipeOrchestrator:
             migration_plan=migration_plan,
             pom_content=pom_content,
         )
+        
+        logger.info(f"[RecipeOrchestrator] LLM analysis: can_use_recipes={analysis.can_use_recipes}, {len(analysis.selected_recipes)} recipe(s) selected")
+        if analysis.recipe_name:
+            logger.info(f"[RecipeOrchestrator] LLM suggested recipe name: {analysis.recipe_name}")
         
         # Log the analysis result
         if self.pipeline_logger:
@@ -315,6 +329,7 @@ class RecipeOrchestrator:
             }
         
         # SAFETY & NORMALIZATION: Clean up recipe arguments
+        logger.info(f"[RecipeOrchestrator] Normalizing {len(selected_recipes)} recipe(s)...")
         normalized_recipes: List[Recipe] = []
         for recipe in selected_recipes:
             recipe_name = recipe.name
@@ -360,6 +375,7 @@ class RecipeOrchestrator:
 
             normalized_recipes.append(recipe)
 
+        logger.info(f"[RecipeOrchestrator] Normalization complete: {len(selected_recipes)} -> {len(normalized_recipes)} recipe(s)")
         selected_recipes = normalized_recipes
 
         if not selected_recipes:
@@ -583,46 +599,20 @@ class RecipeOrchestrator:
                     # IMPORTANT: Revert changes after capturing diff
                     # This ensures the repository stays clean for repeated testing
                     # Similar to LLM agent pipeline pattern
-                    self._revert_changes(project_path, commit_sha)
-                    logger.info("[RecipeOrchestrator] Repository reverted to original state (can test again)")
+                    self._revert_changes(project_path, commit_sha, success=True)
+                    generator.cleanup()
                     
-                    result = {
+                    return {
                         "success": True,
                         "used_recipes": True,
                         "should_use_existing_agent": False,
-                        "message": "Successfully fixed using OpenRewrite recipes",
+                        "message": "Recipe-based fix successful",
                         "diff": diff,
-                        "modified_files": modified_files,  # Actual file contents!
-                        "recipe_name": recipe_name,
-                        "recipes_applied": [r.name for r in selected_recipes]
+                        "modified_files": modified_files
                     }
-                    
-                    # Log final result
-                    if self.pipeline_logger:
-                        self.pipeline_logger.log_recipe_result(result)
-                    
-                    return result
                 else:
-                    logger.warning(f"[RecipeOrchestrator] Compilation still fails after rewrite: {compile_output[:500]}")
-
-                    # Write maven errors to docker_build_errors.txt in the root log dir
-                    if self.pipeline_logger:
-                        self.pipeline_logger.log_docker_build_errors(compile_output, compile_output)
-                    
-                    # Log recipe failure
-                    if self.pipeline_logger:
-                        self.pipeline_logger.log_stage("recipe_failure", {
-                            "stage": "post_rewrite_compilation",
-                            "reason": "Compilation failed after rewrite",
-                            "error": compile_output[:500],
-                            "recipes_attempted": [r.name for r in selected_recipes],
-                            "failure_timestamp": __import__('datetime').datetime.now().isoformat()
-                        })
-                    
-                    # Revert the changes
-                    self._revert_changes(project_path, commit_sha)
+                    logger.warning(f"[RecipeOrchestrator] Compilation failed after rewrite: {compile_output[:200]}")
                     generator.cleanup()
-                    
                     return {
                         "success": False,
                         "used_recipes": True,
@@ -681,8 +671,8 @@ class RecipeOrchestrator:
                 if diff.b_path:
                     modified_paths.add(diff.b_path)
             
-            # Also check for untracked files that might be relevant
-            # (though OpenRewrite typically modifies existing files)
+            if not modified_paths:
+                logger.warning("[RecipeOrchestrator] No modified files detected after rewrite - recipe may not have matched any sources")
             
             # Read the content of each modified file
             for rel_path in modified_paths:
@@ -702,13 +692,16 @@ class RecipeOrchestrator:
         
         return modified_files
     
-    def _revert_changes(self, project_path: Path, commit_sha: str) -> None:
+    def _revert_changes(self, project_path: Path, commit_sha: str, success: bool = False) -> None:
         """Revert all changes in the repository."""
         try:
             repo = git.Repo(project_path)
             repo.git.checkout("--", ".")
             repo.git.clean("-fd")
-            logger.info("[RecipeOrchestrator] Reverted changes after failed recipe application")
+            if success:
+                logger.info("[RecipeOrchestrator] Reverted changes after successful recipe application (diff already captured)")
+            else:
+                logger.info("[RecipeOrchestrator] Reverted changes after failed recipe application")
         except Exception as e:
             logger.error(f"[RecipeOrchestrator] Error reverting changes: {e}")
     
@@ -738,10 +731,17 @@ class RecipeOrchestrator:
             # Find plugins section
             build = root.find(f"{ns_uri}build")
             if build is None:
+                logger.warning(f"[RecipeOrchestrator] No <build> section found in pom.xml, cannot remove plugin")
                 return
             
             plugins = build.find(f"{ns_uri}plugins")
             if plugins is None:
+                logger.warning(f"[RecipeOrchestrator] No <plugins> section found in pom.xml, cannot remove plugin")
+                return
+            
+            plugins = build.find(f"{ns_uri}plugins")
+            if plugins is None:
+                logger.warning(f"[RecipeOrchestrator] No <plugins> section found in pom.xml, cannot remove plugin")
                 return
             
             # Find and remove rewrite-maven-plugin

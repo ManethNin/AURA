@@ -11,7 +11,7 @@ LOG_FORMAT = "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
 class CompactConsoleFilter(logging.Filter):
     """Reduce console noise while preserving high-value progress and failures."""
 
-    KEEP_INFO_PREFIXES = ("[PROGRESS]", "[RESULT]")
+    KEEP_INFO_PREFIXES = ("[PROGRESS]", "[RESULT]", "[RecipeOrchestrator]", "[RecipeService]", "[RecipeGenerator]", "[RecipeExecutor]")
 
     def __init__(self, mode: str):
         super().__init__()
