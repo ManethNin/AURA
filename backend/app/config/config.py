@@ -36,16 +36,21 @@ class Settings(BaseSettings):
     FRONTEND_URL: str
 
     # LLM Configuration
-    LLM_PROVIDER: str = "groq"  # Options: "groq" or "gemini"
+    LLM_PROVIDER: str = "groq"  # Options: "groq", "openrouter", or "gemini"
 
     # Groq Configuration
     GROQ_API_KEY: Optional[str] = None
     GROQ_MODEL: str = "llama-3.3-70b-versatile"  # Default for Recipe/LLM agents
-    GROQ_PLANNING_MODEL: str = "openai/gpt-oss-120b"  # Model for Planning agent
+    GROQ_PLANNING_MODEL: str = "llama-3.3-70b-versatile"  # Model for Planning agent
 
     # Gemini Configuration
     GOOGLE_API_KEY: Optional[str] = None
     GEMINI_MODEL: str = "gemini-2.5-flash-lite"
+
+    # OpenRouter Configuration (Planning Agent)
+    OPENROUTER_API_KEY: Optional[str] = None
+    OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
+    OPENROUTER_PLANNING_MODEL: str = "qwen/qwen3.6-plus-preview:free"
     
     # General LLM Settings
     LLM_MAX_RECURSION: int = 30

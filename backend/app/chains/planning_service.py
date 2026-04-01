@@ -13,6 +13,7 @@ from typing import Any, Dict, List, Optional, Set, TypedDict, Union
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
 from groq import Groq
+from openai import OpenAI
 
 from app.config.config import settings
 from app.utilities.logger import logger
@@ -92,6 +93,7 @@ class PlanningAgentService:
     PROVIDER_GEMINI = "gemini"
     PROVIDER_GROQ_NATIVE = "gpt-oss-120"
     PROVIDER_GROQ_LANGCHAIN = "groq"
+    PROVIDER_OPENROUTER = "openrouter"
 
     # LLM Configuration Constants
     DEFAULT_TEMPERATURE = 0.0
@@ -128,12 +130,12 @@ class PlanningAgentService:
 
         Args:
             provider: LLM provider identifier (defaults to settings.LLM_PROVIDER).
-                Valid options: "groq", "gpt-oss-120", or "gemini".
+                Valid options: "groq", "gpt-oss-120", "openrouter", or "gemini".
             api_key: Provider API key (defaults to appropriate key from settings).
             model: Target model name (defaults to appropriate model from settings).
         """
         self.provider = provider or settings.LLM_PROVIDER
-        self.client: Optional[Groq] = None
+        self.client: Optional[Any] = None
         self.llm: Optional[Union[ChatGoogleGenerativeAI, ChatGroq]] = None
         self.model: Optional[str] = None
 
@@ -148,6 +150,8 @@ class PlanningAgentService:
         """
         if self.provider == self.PROVIDER_GEMINI:
             self._setup_gemini(api_key, model)
+        elif self.provider == self.PROVIDER_OPENROUTER:
+            self._setup_openrouter(api_key, model)
         elif self.provider == self.PROVIDER_GROQ_NATIVE:
             self._setup_groq_native(api_key, model)
         else:
@@ -182,6 +186,15 @@ class PlanningAgentService:
             temperature=self.DEFAULT_TEMPERATURE,
             max_retries=self.DEFAULT_MAX_RETRIES,
             timeout=self.DEFAULT_TIMEOUT,
+        )
+
+    def _setup_openrouter(self, api_key: Optional[str], model: Optional[str]) -> None:
+        """Initialize OpenRouter client via OpenAI-compatible SDK."""
+        key = api_key or settings.OPENROUTER_API_KEY
+        self.model = model or settings.OPENROUTER_PLANNING_MODEL
+        self.client = OpenAI(
+            base_url=settings.OPENROUTER_BASE_URL,
+            api_key=key,
         )
 
     # ------------------------------------------------------------------
@@ -299,6 +312,16 @@ class PlanningAgentService:
                 stream=False,
             )
             return completion.choices[0].message.content.strip()
+
+        if self.provider == self.PROVIDER_OPENROUTER and self.client:
+            completion = self.client.chat.completions.create(
+                model=self.model,
+                messages=messages,
+                temperature=self.DEFAULT_TEMPERATURE,
+                max_tokens=self.MAX_COMPLETION_TOKENS,
+            )
+            content = completion.choices[0].message.content
+            return content.strip() if content else ""
 
         if self.llm:
             response = self.llm.invoke(messages)

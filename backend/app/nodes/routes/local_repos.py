@@ -42,7 +42,7 @@ __all__ = [
 # --- Constants ---
 LOCAL_MODE_ERROR: Final[str] = "This endpoint is only available in LOCAL_MODE"
 DEFAULT_COMMIT: Final[str] = "local"
-PLANNING_PROVIDER: Final[str] = "gpt-oss-120"
+PLANNING_PROVIDER: Final[str] = "openrouter"
 MAVEN_TIMEOUT_SEC: Final[int] = 300
 RECIPE_AGENT_METHOD: Final[str] = "recipe_agent"
 LLM_AGENT_METHOD: Final[str] = "llm_agent"
