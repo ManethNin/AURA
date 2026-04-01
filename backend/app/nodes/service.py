@@ -161,7 +161,7 @@ class JavaMigrationAgentService:
                 "log_directory": str(pipeline_logger.log_dir)
             }
             
-            pipeline_logger.log_final_result(True, final_result)
+            pipeline_logger.log_final_result(True, final_result, agent_method="llm_agent")
             pipeline_logger.finalize()
             
             return final_result
@@ -180,7 +180,7 @@ class JavaMigrationAgentService:
                 "log_directory": str(pipeline_logger.log_dir)
             }
             
-            pipeline_logger.log_final_result(False, final_result)
+            pipeline_logger.log_final_result(False, final_result, agent_method="llm_agent")
             pipeline_logger.finalize()
             
             return final_result

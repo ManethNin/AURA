@@ -683,7 +683,11 @@ async def process_repository(
             )
             
             if recipe_result:
-                pipeline_logger.log_final_result(True, recipe_result)
+                pipeline_logger.log_final_result(
+                    True,
+                    recipe_result,
+                    agent_method=RECIPE_AGENT_METHOD,
+                )
                 pipeline_logger.finalize()
                 return {
                     "success": True,
@@ -704,7 +708,11 @@ async def process_repository(
             pipeline_logger=pipeline_logger,
         )
 
-        pipeline_logger.log_final_result(llm_result.get("success", False), llm_result)
+        pipeline_logger.log_final_result(
+            llm_result.get("success", False),
+            llm_result,
+            agent_method=LLM_AGENT_METHOD,
+        )
         pipeline_logger.finalize()
         
         return {

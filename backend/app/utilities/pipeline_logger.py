@@ -392,11 +392,25 @@ MAVEN ERRORS:
         
         logger.info(f"[PIPELINE] Logged Docker Maven build errors post-diff compilation")
     
-    def log_final_result(self, success: bool, result: Dict[str, Any]):
-        """Log the final result"""
+    def log_final_result(
+        self,
+        success: bool,
+        result: Dict[str, Any],
+        agent_method: Optional[str] = None,
+    ):
+        """Log the final result.
+
+        Args:
+            success: Whether the pipeline completed successfully.
+            result: Final result payload.
+            agent_method: Source executor identifier, e.g. "llm_agent" or "recipe_agent".
+                If omitted, attempts to infer from result["method"], otherwise "unknown".
+        """
+        resolved_method = agent_method or str(result.get("method", "unknown"))
         final_data = {
             "timestamp": datetime.now().isoformat(),
             "success": success,
+            "agent_method": resolved_method,
             "result": self._serialize_value(result)
         }
         
