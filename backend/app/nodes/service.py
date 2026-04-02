@@ -98,22 +98,43 @@ class JavaMigrationAgentService:
                 commit_hash=commit_hash
             )
 
-            # PRE-READ ERROR FILES from initial errors first, then migration plan fallback
+            # PRE-READ ERROR FILES using AST minimization when possible
             import re
+            from app.utilities.dataset.find_compilation_errors import find_compilation_errors
+            from app.tools.agents.SpoonAgent import SpoonAgent
+            
+            file_contents = {}
+            errors_dict = find_compilation_errors(initial_errors or "")
+            
+            if errors_dict:
+                try:
+                    minimized_files = SpoonAgent.invoke_ast_transformation(
+                        Path(repo_path), errors_dict, include_comments=False
+                    )
+                    if minimized_files:
+                        for full_file_path, content in minimized_files.items():
+                            clean_path = full_file_path.replace("\\", "/").replace(str(repo_path).replace("\\", "/"), "").lstrip("/")
+                            file_contents[clean_path] = content
+                            print(f"[DEBUG] Spoon-minimized {clean_path} ({len(content)} chars)")
+                except Exception as e:
+                    print(f"[WARN] SpoonAgent AST minimization failed: {e}")
+
             initial_error_matches = re.findall(r'(src/main/java/[\w/]+\.java)', initial_errors or "")
             plan_matches = re.findall(r'(src/main/java/[\w/]+\.java)', migration_plan or "")
             unique_files = list(set(initial_error_matches + plan_matches))
 
-            file_contents = {}
             for file_path in unique_files:
-                try:
-                    full_path = Path(repo_path) / file_path
-                    if full_path.exists():
-                        with open(full_path, 'r', encoding='utf-8') as f:
-                            file_contents[file_path] = f.read()
-                        print(f"[DEBUG] Pre-read file: {file_path} ({len(file_contents[file_path])} chars)")
-                except Exception as e:
-                    print(f"[WARN] Could not pre-read {file_path}: {e}")
+                clean_path = file_path.lstrip("/\\").replace("\\", "/")
+                if clean_path not in file_contents:
+                    try:
+                        full_path = Path(repo_path) / file_path
+                        if full_path.exists():
+                            with open(full_path, 'r', encoding='utf-8') as f:
+                                content = f.read()
+                                file_contents[clean_path] = content
+                            print(f"[DEBUG] Pre-read raw file: {clean_path} ({len(content)} chars)")
+                    except Exception as e:
+                        print(f"[WARN] Could not pre-read {file_path}: {e}")
 
             # Build workflow
             pipeline_logger.log_stage("build_workflow", {"output_path": output_path, "tools_count": len(tools)})

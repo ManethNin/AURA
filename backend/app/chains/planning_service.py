@@ -106,6 +106,11 @@ class PlanningAgentService:
 
     # Regex compilation for performance
     JAVA_FILE_PATTERN = re.compile(r"(src[\\/][\w./-]+\.java)")
+    JAVA_BLOCK_COMMENT_PATTERN = re.compile(r"/\*.*?\*/", re.DOTALL)
+
+    # Prompt context budgets for source files
+    FILE_CONTEXT_TOTAL_CHAR_BUDGET = 24000
+    TRUNCATION_MARKER = "// ... truncated"
 
     def __init__(
         self,
@@ -228,6 +233,7 @@ class PlanningAgentService:
 
         try:
             file_contents = self._read_error_files(repo_path_obj, initial_errors)
+            file_contents = self._minimize_file_contents(file_contents)
             prompt = self._build_prompt(
                 pom_diff=pom_diff,
                 initial_errors=initial_errors,
@@ -323,7 +329,7 @@ class PlanningAgentService:
 
     @classmethod
     def _read_error_files(cls, repo_path: Path, initial_errors: str) -> Dict[str, str]:
-        """Pre-read Java source files mentioned in compilation errors.
+        """Pre-read Java source files mentioned in compilation errors, using SpoonAgent to minimize them.
 
         Args:
             repo_path: The root path of the repository.
@@ -332,25 +338,127 @@ class PlanningAgentService:
         Returns:
             A dictionary mapping file paths (relative) to their textual content.
         """
+        from app.utilities.dataset.find_compilation_errors import find_compilation_errors
+        from app.tools.agents.SpoonAgent import SpoonAgent
+        
         file_contents: Dict[str, str] = {}
         if not initial_errors:
             return file_contents
 
+        # Use Spoon to minimize AST based on actual maven error coordinates first
+        errors_dict = find_compilation_errors(initial_errors)
+        if errors_dict:
+            try:
+                minimized_files = SpoonAgent.invoke_ast_transformation(
+                    repo_path, errors_dict, include_comments=False
+                )
+                if minimized_files:
+                    for full_file_path, content in minimized_files.items():
+                        # Extract relative path ensuring forward slashes
+                        clean_path = full_file_path.replace("\\", "/").replace(str(repo_path).replace("\\", "/"), "").lstrip("/")
+                        file_contents[clean_path] = content
+                        logger.debug(
+                            f"[PlanningAgent] Spoon-minimized {clean_path} ({len(content)} chars)"
+                        )
+            except Exception as e:
+                logger.warning(f"[PlanningAgent] SpoonAgent AST minimization failed: {e}")
+
+        # Fallback: find any extra java files regex finds that Spoon might have missed
         unique_files = list(set(cls.JAVA_FILE_PATTERN.findall(initial_errors)))
 
         for file_path in unique_files:
-            try:
-                full_path = repo_path / file_path
-                if full_path.exists():
-                    content = full_path.read_text(encoding="utf-8")
-                    file_contents[file_path] = content
-                    logger.debug(
-                        f"[PlanningAgent] Pre-read {file_path} ({len(content)} chars)"
-                    )
-            except OSError as e:
-                logger.warning(f"[PlanningAgent] Could not read {file_path}: {e}")
+            clean_path = file_path.lstrip("/\\").replace("\\", "/")
+            if clean_path not in file_contents:
+                try:
+                    full_path = repo_path / file_path
+                    if full_path.exists():
+                        content = full_path.read_text(encoding="utf-8")
+                        file_contents[clean_path] = content
+                        logger.debug(
+                            f"[PlanningAgent] Pre-read raw {clean_path} ({len(content)} chars, fallback)"
+                        )
+                except OSError as e:
+                    logger.warning(f"[PlanningAgent] Could not read {file_path}: {e}")
 
         return file_contents
+
+    @classmethod
+    def _minimize_java_source(cls, source: str, max_chars: Optional[int] = None) -> str:
+        """Strip Java source to reduce prompt size while preserving useful structure.
+
+        Steps:
+            1) Remove block comments (including Javadoc).
+            2) Remove line comments when // is likely not inside a string literal.
+            3) Collapse repeated blank lines.
+            4) Trim leading/trailing whitespace per line.
+            5) Optionally truncate to max_chars and append truncation marker.
+        """
+        if not source:
+            return ""
+
+        # 1) Remove block comments and Javadoc.
+        minimized = cls.JAVA_BLOCK_COMMENT_PATTERN.sub("", source)
+
+        # 2) Remove line comments with a lightweight quote-balance heuristic.
+        processed_lines: List[str] = []
+        for line in minimized.splitlines():
+            comment_index = line.find("//")
+            if comment_index != -1:
+                quote_count_before_comment = line[:comment_index].count('"')
+                if quote_count_before_comment % 2 == 0:
+                    line = line[:comment_index]
+            processed_lines.append(line)
+
+        # 3) Collapse runs of blank lines down to one.
+        collapsed_lines: List[str] = []
+        previous_blank = False
+        for line in processed_lines:
+            is_blank = line.strip() == ""
+            if is_blank and previous_blank:
+                continue
+            collapsed_lines.append(line if not is_blank else "")
+            previous_blank = is_blank
+
+        # 4) Trim each line.
+        stripped_lines = [line.strip() for line in collapsed_lines]
+
+        minimized = "\n".join(stripped_lines).strip()
+
+        # 5) Optional truncation with explicit marker.
+        if max_chars is not None and max_chars > 0 and len(minimized) > max_chars:
+            marker = cls.TRUNCATION_MARKER
+            marker_with_newline = f"\n{marker}"
+
+            if max_chars <= len(marker):
+                return marker[:max_chars]
+
+            cutoff = max_chars - len(marker_with_newline)
+            if cutoff <= 0:
+                return marker[:max_chars]
+
+            minimized = minimized[:cutoff].rstrip() + marker_with_newline
+
+        return minimized
+
+    @classmethod
+    def _minimize_file_contents(cls, file_contents: Dict[str, str]) -> Dict[str, str]:
+        """Apply Java source minimization and optional per-file truncation budget."""
+        if not file_contents:
+            return file_contents
+
+        per_file_budget = max(1, cls.FILE_CONTEXT_TOTAL_CHAR_BUDGET // len(file_contents))
+        minimized_contents: Dict[str, str] = {}
+
+        for path, content in file_contents.items():
+            if path.lower().endswith(".java"):
+                minimized_contents[path] = cls._minimize_java_source(
+                    content,
+                    max_chars=per_file_budget,
+                )
+            else:
+                minimized_contents[path] = content
+
+        return minimized_contents
 
     @staticmethod
     def _build_prompt(

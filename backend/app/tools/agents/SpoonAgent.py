@@ -26,14 +26,19 @@ class SpoonAgent:
 
         input_data = []
         for file_name, errors in maven_errors_dict.items():
-            for line, column in errors:
-                input_data.append(f"{base_path /file_name}:{line}:{column}")
+            for error_entry in errors:
+                line = error_entry[0]
+                column = error_entry[1] if len(error_entry) > 1 else 0
+                # Pass relative path to avoid Windows drive letter colon ':' splitting issues in Java Scanner
+                clean_file_name = file_name.lstrip("/")
+                input_data.append(f"{clean_file_name}:{line}:{column}")
         input_data.append(SpoonAgent.END_OF_INPUT_MARKER)
         input_string = "\n".join(input_data) + "\n"
 
         try:
+            # Set cwd to base_path so the Java process can find the relative paths
             result = subprocess.run(
-                command, input=input_string, capture_output=True, text=True, check=True
+                command, input=input_string, capture_output=True, text=True, check=True, cwd=str(base_path)
             )
 
             # Parse the output
