@@ -457,6 +457,11 @@ class RecipeOrchestrator:
             with open(yaml_path, 'r') as f:
                 yaml_content = f.read()
             logger.info(f"[RecipeOrchestrator] rewrite.yaml content:\n{yaml_content}")
+            logger.info(
+                "[RecipeOrchestrator][Terminal] Generated rewrite.yaml at %s:\n%s",
+                yaml_path,
+                yaml_content,
+            )
             
             # Log rewrite.yaml generation
             if self.pipeline_logger:
@@ -534,6 +539,16 @@ class RecipeOrchestrator:
             with executor.start_container():
                 # Run rewrite with maven_only flag to skip compilation if appropriate
                 rewrite_success, rewrite_output, rewrite_error = executor.run_rewrite(maven_only=maven_only)
+                logger.info(
+                    "[RecipeOrchestrator][Terminal] mvn rewrite:run finished (success=%s, output_chars=%s)",
+                    rewrite_success,
+                    len(rewrite_output) if rewrite_output else 0,
+                )
+                if rewrite_error:
+                    logger.error(
+                        "[RecipeOrchestrator][Terminal] mvn rewrite:run error:\n%s",
+                        rewrite_error,
+                    )
                 
                 # Log rewrite execution
                 if self.pipeline_logger:
@@ -554,6 +569,7 @@ class RecipeOrchestrator:
                             "reason": "OpenRewrite execution failed",
                             "error": rewrite_error[:500] if rewrite_error else rewrite_output[:500],
                             "recipes_attempted": [r.name for r in selected_recipes],
+                            "fallback_to_llm_agent": True,
                             "failure_timestamp": __import__('datetime').datetime.now().isoformat()
                         })
                     

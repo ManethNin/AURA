@@ -14,6 +14,46 @@ from app.config.config import settings
 from app.utilities.logger import logger
 from app.tools.agents.DockerAgent import DockerAgent
 
+
+def _truncate_terminal_output(output: str, max_chars: int = 12000) -> str:
+    """Keep terminal logs readable while preserving the most relevant trailing output."""
+    if len(output) <= max_chars:
+        return output
+    return "[...output truncated...]\n" + output[-max_chars:]
+
+
+def _summarize_maven_output(output: str, exit_code: int, context: str) -> str:
+    """Build a concise summary of Maven output for terminal logs."""
+    lines = [line.strip() for line in output.splitlines() if line.strip()]
+    if not lines:
+        return f"{context}: exit={exit_code}, no output"
+
+    key_markers = (
+        "BUILD SUCCESS",
+        "BUILD FAILURE",
+        "[ERROR]",
+        "[WARNING]",
+        "Made changes",
+        "Results:",
+        "Active recipe",
+    )
+    key_lines = [line for line in lines if any(marker in line for marker in key_markers)]
+    key_lines = key_lines[:8]
+    tail_lines = lines[-8:]
+
+    summary_parts = [
+        f"{context}: exit={exit_code}, total_lines={len(lines)}",
+    ]
+
+    if key_lines:
+        summary_parts.append("Key lines:")
+        summary_parts.extend(f"- {line}" for line in key_lines)
+
+    summary_parts.append("Tail:")
+    summary_parts.extend(f"- {line}" for line in tail_lines)
+
+    return "\n".join(summary_parts)
+
 class RecipeExecutor:
     """
     Executes OpenRewrite recipes using Maven.
@@ -103,6 +143,10 @@ class RecipeExecutor:
             )
             discover_text = discover_output.decode('utf-8', errors='replace') if discover_output else ""
             logger.info(f"Recipe discovery result (exit={exit_code}):\n{discover_text[-1500:]}")
+            logger.info(
+                "[RecipeExecutor][Terminal] %s",
+                _summarize_maven_output(discover_text, exit_code, "mvn rewrite:discover"),
+            )
         except Exception as e:
             logger.warning(f"Recipe discovery failed: {e}")
         
@@ -142,6 +186,10 @@ class RecipeExecutor:
             output_text = output.decode('utf-8', errors='replace') if output else ""
             
             success = exit_code == 0
+            logger.info(
+                "[RecipeExecutor][Terminal] %s",
+                _summarize_maven_output(output_text, exit_code, "mvn rewrite:run"),
+            )
             
             if success:
                 logger.info("OpenRewrite recipes executed successfully")
@@ -288,6 +336,14 @@ class RecipeExecutorLocal:
             )
             
             success = result.returncode == 0
+            combined_output = (
+                f"STDOUT:\n{result.stdout or ''}\n\n"
+                f"STDERR:\n{result.stderr or ''}"
+            )
+            logger.info(
+                "[RecipeExecutorLocal][Terminal] %s",
+                _summarize_maven_output(combined_output, result.returncode, "mvn rewrite:run"),
+            )
             if success:
                 logger.info(f"[RecipeExecutorLocal] mvn rewrite:run completed successfully")
             else:

@@ -459,9 +459,26 @@ def _apply_recipe_agent(
         if recipe_result and recipe_result.get("success"):
             logger.info(f"[RecipeAgent] Successfully fixed using recipes for {repo_name}")
             return recipe_result
-            
-        logger.info("[RecipeAgent] Recipe fix not applicable, falling back to LLM agent")
+
+        fallback_reason = (
+            recipe_result.get("message", "Recipe fix not applicable") if recipe_result else "Recipe fix not applicable"
+        )
+        pipeline_logger.log_stage("llm_agent_fallback", {
+            "reason": fallback_reason,
+            "repo_slug": repo_name,
+            "commit_sha": commit_hash,
+            "recipe_result_success": recipe_result.get("success") if recipe_result else False,
+            "fallback_timestamp": __import__('datetime').datetime.now().isoformat(),
+        })
+        logger.info(f"[RecipeAgent] {fallback_reason}, falling back to LLM agent")
     except Exception as e:
+        pipeline_logger.log_stage("llm_agent_fallback", {
+            "reason": "Recipe agent exception",
+            "error": str(e),
+            "repo_slug": repo_name,
+            "commit_sha": commit_hash,
+            "fallback_timestamp": __import__('datetime').datetime.now().isoformat(),
+        })
         logger.warning(f"[RecipeAgent] Recipe agent failed: {e}, falling back to LLM agent")
     
     return None
@@ -492,6 +509,13 @@ def _apply_llm_agent(
         A dictionary containing the agent's processing result.
     """
     agent_service = JavaMigrationAgentService()
+
+    pipeline_logger.log_stage("llm_agent_fallback_start", {
+        "reason": "Invoking llm_agent after recipe stage",
+        "repo_slug": repo_name,
+        "commit_hash": commit_hash,
+        "timestamp": __import__('datetime').datetime.now().isoformat(),
+    })
 
     pipeline_logger.log_stage("llm_agent_input", {
         "pom_diff": pom_diff,
