@@ -37,11 +37,13 @@ class Settings(BaseSettings):
 
     # LLM Configuration
     LLM_PROVIDER: str = "groq"  # Options: "groq", "openrouter", or "gemini"
+    PLANNING_PROVIDER: str = "groq"  # Options: "groq", "gpt-oss-120b", "openrouter", "gemini"
+    PLANNING_MODEL: Optional[str] = None  # Optional override; if unset, provider-specific planning model is used
 
     # Groq Configuration
     GROQ_API_KEY: Optional[str] = None
     GROQ_MODEL: str = "llama-3.3-70b-versatile"  # Default for Recipe/LLM agents
-    GROQ_PLANNING_MODEL: str = "llama-3.3-70b-versatile"  # Model for Planning agent
+    GROQ_PLANNING_MODEL: str = "openai/gpt-oss-120b"  # Model for Planning agent
 
     # Gemini Configuration
     GOOGLE_API_KEY: Optional[str] = None
@@ -64,6 +66,10 @@ class Settings(BaseSettings):
     JAPICMP_JAR_PATH: Optional[str] = None
     JAPICMP_ARGS_TEMPLATE: Optional[str] = "--old {old_jar} --new {new_jar} --output-format json"
     MAVEN_EXECUTABLE: str = "mvn"
+    MAVEN_DOCKER_CACHE_DIR: Optional[str] = None  # Defaults to ~/.aura/m2-cache
+    MAVEN_DOCKER_THREADS: str = "1C"  # Maven reactor threads, e.g. "1C" or "2"
+    MAVEN_DOCKER_USE_CLEAN: bool = False  # Set True to force mvn clean ...
+    MAVEN_DOCKER_OPTS: str = "-Xmx2g"
     
     # App Config
     MAX_REPAIR_ATTEMPTS: int = 3

@@ -212,160 +212,170 @@ class JapiCmpAgent:
         except Exception as e:
             return "", str(e)
 
+    def _extract_maven_symbols(self, compilation_errors: str) -> tuple[set, set, set]:
+        """
+        Extract three distinct symbol sets from Maven compilation errors.
+        Returns: (missing_classes, missing_packages, fully_qualified_refs)
+        """
+        missing_classes = set()
+        missing_packages = set()
+        fq_refs = set()  # e.g. "com.hazelcast.core.Member"
+
+        # Pattern 1: "package com.hazelcast.monitor does not exist"
+        for match in re.finditer(r'package\s+([\w.]+)\s+does not exist', compilation_errors):
+            missing_packages.add(match.group(1))
+
+        # Pattern 2: "[ERROR]   symbol:   class MaxSizeConfig"  (the indented symbol line)
+        for match in re.finditer(r'symbol:\s+class\s+([A-Z]\w+)', compilation_errors):
+            missing_classes.add(match.group(1))
+
+        # Pattern 3: "[ERROR]   location: package com.hazelcast.config"
+        # Pair these with the symbol line above them to build FQNs
+        lines = compilation_errors.splitlines()
+        last_class = None
+        for line in lines:
+            sym = re.search(r'symbol:\s+class\s+([A-Z]\w+)', line)
+            if sym:
+                last_class = sym.group(1)
+            loc = re.search(r'location:\s+(?:class|package)\s+([\w.]+)', line)
+            if loc and last_class:
+                fq_refs.add(f"{loc.group(1)}.{last_class}")
+                last_class = None  # consume it
+
+        return missing_classes, missing_packages, fq_refs
+
     def _summarize_revapi_output(self, raw_output: str, compilation_errors: str = "") -> str:
         """
-        Summarize REVAPI output to show only changes directly causing the compilation errors.
-        
-        Extracts specific missing symbols from Maven compilation errors and filters
-        RevAPI changes to only show API changes that affect those symbols.
+        Filter RevAPI output to only changes that explain the Maven compilation errors.
         """
-        missing_packages = set()
-        missing_classes = set()
-        error_file_paths = set()
-        
+        missing_classes, missing_packages, fq_refs = set(), set(), set()
+
         if compilation_errors:
-            # Extract missing packages from "package X does not exist" errors
-            # Matches: "package com.hazelcast.config does not exist"
-            package_pattern = r'package\s+([\w.$]+)\s+does not exist'
-            for match in re.finditer(package_pattern, compilation_errors):
-                pkg = match.group(1)
-                # Only add if it looks like a real package (has at least one dot)
-                if '.' in pkg:
-                    missing_packages.add(pkg)
-            
-            # Extract missing class names from "cannot find symbol" errors
-            # Matches: "[ERROR]   symbol:   class MaxSizeConfig"
-            #          "[ERROR] /path/File.java:[19,46] error: cannot find symbol"
-            #          followed by "class SomeClass" on next line
-            symbol_class_pattern = r'symbol:\s*(?:class|method|variable)\s+([A-Z]\w*)'
-            for match in re.finditer(symbol_class_pattern, compilation_errors):
-                cls = match.group(1)
-                # Filter out generic words that aren't class names
-                if cls not in ('class', 'method', 'variable', 'type', 'annotation'):
-                    missing_classes.add(cls)
-            
-            # Extract class names from the line after "cannot find symbol"
-            # Format: "[ERROR]  class MaxSizeConfig"
-            standalone_class_pattern = r'^\s*\[ERROR\]\s+class\s+([A-Z]\w*)'
-            for match in re.finditer(standalone_class_pattern, compilation_errors, re.MULTILINE):
-                missing_classes.add(match.group(1))
-            
-            # Extract file paths from errors to understand context
-            # Matches: "/mnt/repo/src/java/org/jivesoftware/.../ClusteredCacheFactory.java:[22,28]"
-            file_pattern = r'([^\s]+\.(?:java|xml)):\[\d+,\d+\]'
-            for match in re.finditer(file_pattern, compilation_errors):
-                error_file_paths.add(match.group(1))
-        
-        # Strict filtering: only return changes related to extracted symbols
-        use_strict_filter = bool(missing_packages or missing_classes)
-        
+            missing_classes, missing_packages, fq_refs = self._extract_maven_symbols(compilation_errors)
+
+        use_strict_filter = bool(missing_classes or missing_packages)
+
         lines = raw_output.split('\n')
         filtered_changes = []
         current_change = []
         current_old_line = ""
         current_new_line = ""
         is_breaking = False
-        
+
         for line in lines:
-            # Skip log lines and headers
             if any(x in line for x in ['INFO', 'WARN', 'Analysis results', 'Old API:', 'New API:']):
                 continue
-            
+
             stripped = line.strip()
-            
-            # Detect new change entry
+
             if stripped.startswith('old:') or (stripped.startswith('new:') and not current_change):
-                # Save previous change if it passes our filter
+                # Flush previous change
                 if current_change and is_breaking:
-                    if self._is_relevant_change(current_old_line, current_new_line, missing_packages, missing_classes, error_file_paths, use_strict_filter):
+                    if not use_strict_filter or self._is_relevant_change(current_old_line, current_new_line,
+                             missing_packages, missing_classes,
+                             fq_refs, use_strict_filter):
                         filtered_changes.append('\n'.join(current_change))
-                
-                # Start new change
+
                 current_change = [line]
-                if stripped.startswith('old:'):
-                    current_old_line = stripped
-                    current_new_line = ""
-                else:
-                    current_new_line = stripped
-                    current_old_line = ""
+                current_old_line = stripped if stripped.startswith('old:') else ""
+                current_new_line = stripped if stripped.startswith('new:') else ""
                 is_breaking = False
             elif current_change:
                 current_change.append(line)
-                # Track the old/new lines for filtering
                 if stripped.startswith('old:'):
                     current_old_line = stripped
                 elif stripped.startswith('new:'):
                     current_new_line = stripped
-                # Detect breaking severity
                 if 'BINARY: BREAKING' in line or 'SOURCE: BREAKING' in line:
                     is_breaking = True
-        
-        # Don't forget the last change
+
+        # Flush last change
         if current_change and is_breaking:
-            if self._is_relevant_change(current_old_line, current_new_line, missing_packages, missing_classes, error_file_paths, use_strict_filter):
+            if not use_strict_filter or self._is_relevant_change(
+                current_old_line, current_new_line,
+                missing_packages, missing_classes, fq_refs, use_strict_filter
+            ):
                 filtered_changes.append('\n'.join(current_change))
-        
+
         if not filtered_changes:
-            if compilation_errors:
-                return "No breaking API changes detected for the missing packages/classes in your errors"
-            return "No breaking API changes detected"
-        
-        # Format concisely - show what package/class is missing and what changed
+            return (
+                "No RevAPI changes matched the missing symbols.\n"
+                f"Searched for classes: {sorted(missing_classes)}\n"
+                f"Searched for packages: {sorted(missing_packages)}"
+                if compilation_errors else
+                "No breaking API changes detected"
+            )
+
         result = ""
         if missing_packages:
-            result = f"Missing package(s): {', '.join(sorted(missing_packages))}\n"
+            result += f"Missing packages: {', '.join(sorted(missing_packages))}\n"
         if missing_classes:
-            result += f"Missing class(es): {', '.join(sorted(missing_classes))}\n"
-        
+            result += f"Missing classes:  {', '.join(sorted(missing_classes))}\n"
+        if fq_refs:
+            result += f"Reconstructed FQNs: {', '.join(sorted(fq_refs))}\n"
+
         result += f"\nRelevant API changes ({len(filtered_changes)} found):\n\n"
-        # Limit to 10 changes for token efficiency
         result += "\n\n".join(filtered_changes[:10])
-        
+
         if len(filtered_changes) > 10:
             result += f"\n\n... and {len(filtered_changes) - 10} more related changes"
-        
+
         return result
     
-    def _is_relevant_change(self, old_line: str, new_line: str, missing_packages: set, missing_classes: set, error_file_paths: set, strict: bool) -> bool:
+    def _is_relevant_change(
+        self,
+        old_line: str,
+        new_line: str,
+        missing_packages: set,
+        missing_classes: set,
+        fq_refs: set,        # replaces error_file_paths — reconstructed FQNs from maven
+        strict: bool
+    ) -> bool:
         """
-        Check if a REVAPI change is relevant to the compilation errors.
-        
-        For strict filtering (when we have specific missing packages/classes):
-        - The OLD element must contain the missing package or class name
-        - Matching is done on fully-qualified names, not substrings
-        
-        For loose filtering (no specific errors extracted):
-        - Return False to avoid flooding with irrelevant changes
+        Check if a RevAPI change is relevant to the compilation errors.
+
+        Matching priority (highest confidence first):
+        1. Reconstructed FQN match — e.g. "com.hazelcast.core.Member"
+        2. Package prefix match    — e.g. "com.hazelcast.monitor"
+        3. Simple class name match — e.g. "Member" (word boundary, fallback only)
+
+        Checks both old: and new: lines, because a moved class shows its
+        original location in old: and its new location in new:.
         """
         if not old_line:
             return False
-        
+
         if not strict:
+            # Don't silently return nothing — caller should log a warning
+            # if this path is hit unexpectedly
             return False
-        
-        # Extract the fully-qualified type name from the old: line
-        # Format: "old: method void com.example.Class.method()"
-        #         "old: class com.example.Class"
-        #         "old: field com.example.Class.field"
-        old_content = old_line[4:].strip()  # Remove "old:" prefix
-        
-        # Check for exact package match (package prefix match)
+
+        old_content = old_line[4:].strip()   # strip "old:" prefix
+        new_content = new_line[4:].strip() if new_line.startswith('new:') else ""
+
+        # 1. FQN match — most precise, check both old and new
+        for fqn in fq_refs:
+            if fqn in old_content or fqn in new_content:
+                return True
+
+        # 2. Package prefix match — "com.hazelcast.monitor" in old FQN
         for pkg in missing_packages:
-            # Match if the old element is within the missing package
-            # e.g., missing package "com.hazelcast.config" matches "class com.hazelcast.config.MaxSizeConfig"
-            if f' {pkg}.' in old_content or f' {pkg}(' in old_content or old_content.endswith(f' {pkg}'):
-                return True
-            # Also match fully qualified class names starting with this package
-            if re.search(rf'\b{re.escape(pkg)}\.[A-Z]\w*', old_content):
-                return True
-        
-        # Check for exact class name match (must be part of a fully-qualified name)
+            pkg_prefix = f'{pkg}.'
+            for content in (old_content, new_content):
+                if (
+                    pkg_prefix in content
+                    or content.endswith(f' {pkg}')
+                    or re.search(rf'\b{re.escape(pkg)}\.[A-Z]\w*', content)
+                ):
+                    return True
+
+        # 3. Simple class name — word boundary on both sides to avoid
+        #    "Member" matching "MembershipListener" or "TeamMember"
         for cls in missing_classes:
-            # Match "com.hazelcast.MaxSizeConfig" but not "SomeMaxSizeConfigHelper"
-            # Use word boundary to ensure exact class name match
-            if re.search(rf'\b{re.escape(cls)}\b', old_content):
+            pattern = rf'(?<![A-Za-z]){re.escape(cls)}(?![A-Za-z])'
+            if re.search(pattern, old_content) or re.search(pattern, new_content):
                 return True
-        
+
         return False
 
     def _summarize_japicmp_output(self, raw_output: str, compilation_errors: str = "") -> str:
@@ -638,13 +648,14 @@ class JapiCmpAgent:
         if jar_path.exists():
             return jar_path
 
-        if not shutil.which(self.maven_executable):
+        maven_exec = shutil.which(self.maven_executable)
+        if not maven_exec:
             return None
 
         # Try to download the artifact
         try:
             cmd = [
-                self.maven_executable,
+                maven_exec,
                 "-q",
                 "dependency:get",
                 f"-Dartifact={group_id}:{artifact_id}:{version}",

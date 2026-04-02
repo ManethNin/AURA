@@ -6,6 +6,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Dict, Tuple
 
+from app.config.config import settings
 from app.tools.agents.aider.AdvancedDiffAgent import UnifiedDiffCoder
 from app.tools.agents.DockerAgent import DockerAgent
 from app.tools.agents.LSPAgent import extract_error_lines
@@ -39,6 +40,27 @@ class MavenReproducerAgent:
         self.repo_dir = project_path
         self.results_dir = tempfile.mkdtemp()
         self.input_dir = tempfile.mkdtemp()
+        self.m2_cache_dir = self._resolve_m2_cache_dir()
+
+    def _resolve_m2_cache_dir(self) -> str:
+        configured = settings.MAVEN_DOCKER_CACHE_DIR
+        cache_dir = Path(configured) if configured else Path.home() / ".aura" / "m2-cache"
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        return str(cache_dir)
+
+    def _maven_common_flags(self) -> str:
+        threads = settings.MAVEN_DOCKER_THREADS or "1C"
+        return (
+            "-B -ntp -nsu "
+            f"-T {threads} "
+            "-Dmaven.repo.local=/mnt/m2/repository"
+        )
+
+    def _maven_exec_env(self) -> Dict[str, str]:
+        maven_opts = settings.MAVEN_DOCKER_OPTS or "-Xmx2g"
+        return {
+            "MAVEN_OPTS": maven_opts,
+        }
 
     @contextmanager
     def start_container(self):
@@ -53,8 +75,9 @@ class MavenReproducerAgent:
                             "mode": "rw",
                         },
                         self.input_dir: {"bind": "/mnt/input", "mode": "rw"},
+                        self.m2_cache_dir: {"bind": "/mnt/m2", "mode": "rw"},
                     },
-                    setup_command="mkdir -p /app",
+                    setup_command="mkdir -p /app /mnt/m2/repository",
                 )
             )
             print("repo at", self.repo_dir)
@@ -150,18 +173,23 @@ class MavenReproducerAgent:
         initial_error_scan: bool = False,
     ) -> Tuple[Tuple[bool, bool], str]:
         try:
-            reproduction_command = "mvn clean test -Dsurefire.printSummary=true -Dsurefire.redirectTestOutputToFile=false"
+            base_flags = self._maven_common_flags()
+            clean_prefix = "clean " if settings.MAVEN_DOCKER_USE_CLEAN else ""
+            reproduction_command = (
+                f"mvn {clean_prefix}test {base_flags} "
+                "-Dsurefire.printSummary=true -Dsurefire.redirectTestOutputToFile=false"
+            )
 
             if self.force_upgrade_compiler_version:
                 reproduction_command += " -Dmaven.compiler.source=8 -Dmaven.compiler.target=8 -Dmaven.compiler.release=8 -Dmaven.compiler.testSource=8 -Dmaven.compiler.testTarget=8"
-
-            reproduction_command += " -B"
 
             if collect_all_errors:
                 reproduction_command += " -fn"
 
             if not run_tests:
-                reproduction_command = "mvn clean compile -DskipTests -B"
+                reproduction_command = (
+                    f"mvn {clean_prefix}compile -DskipTests {base_flags}"
+                )
                 if collect_all_errors:
                     reproduction_command += " -fn"
 
@@ -175,7 +203,10 @@ class MavenReproducerAgent:
 
             print(f"Running maven command {timeout_command}")
             output_code, docker_output = self.dockerAgent.execute_command(
-                self.container, timeout_command, "/mnt/repo"
+                self.container,
+                timeout_command,
+                "/mnt/repo",
+                environment=self._maven_exec_env(),
             )
             logging.debug("[MavenReproducer] Maven output code: %s", output_code)
             # logging.info("docker_output %s", docker_output)

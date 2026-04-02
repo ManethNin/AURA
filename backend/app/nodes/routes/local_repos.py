@@ -42,7 +42,6 @@ __all__ = [
 # --- Constants ---
 LOCAL_MODE_ERROR: Final[str] = "This endpoint is only available in LOCAL_MODE"
 DEFAULT_COMMIT: Final[str] = "local"
-PLANNING_PROVIDER: Final[str] = "openrouter"
 MAVEN_TIMEOUT_SEC: Final[int] = 300
 RECIPE_AGENT_METHOD: Final[str] = "recipe_agent"
 LLM_AGENT_METHOD: Final[str] = "llm_agent"
@@ -371,7 +370,7 @@ def _create_migration_plan(
 
     logger.info(f"[PlanningAgent] Generating migration plan for {repo_slug}")
     try:
-        planning_service = PlanningAgentService(provider=PLANNING_PROVIDER)
+        planning_service = PlanningAgentService()
         plan_result = planning_service.create_plan(
             repo_path=str(repo_path),
             commit_hash=commit_hash,

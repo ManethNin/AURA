@@ -10,6 +10,7 @@ import docker
 import docker.models
 import docker.models.containers
 import docker.types
+from docker.errors import ImageNotFound
 
 
 class DockerError(Exception):
@@ -58,10 +59,23 @@ class DockerAgent:
         self.project_path = Path(project_path)
         self.tmpdir = tempfile.TemporaryDirectory(delete=False)
         self.tmpdirname = Path(self.tmpdir.name)
+        self._image_ready = False
 
-    def pull_image(self) -> docker.models.images.Image: 
-        # print(f"Pulling image {self.image}...")
-        return self.client.images.pull(self.image)
+    def pull_image(self, force: bool = False) -> docker.models.images.Image:
+        if self._image_ready and not force:
+            return self.client.images.get(self.image)
+
+        if not force:
+            try:
+                image = self.client.images.get(self.image)
+                self._image_ready = True
+                return image
+            except ImageNotFound:
+                pass
+
+        image = self.client.images.pull(self.image)
+        self._image_ready = True
+        return image
 
     def create_container_shell(self) -> docker.models.containers.Container:
         container = self.client.containers.create(
@@ -213,7 +227,11 @@ class DockerAgent:
         return exec_log.output.decode("utf-8")
 
     def execute_command(
-        self, container: docker.models.containers.Container, command: str, workdir: str
+        self,
+        container: docker.models.containers.Container,
+        command: str,
+        workdir: str,
+        environment: Optional[dict[str, str]] = None,
     ) -> str:
         """
         Executes a command in the container.
@@ -225,7 +243,11 @@ class DockerAgent:
         Returns:
         - str: The output of the command.
         """
-        exec_status = container.exec_run(cmd=command, workdir=workdir)
+        exec_status = container.exec_run(
+            cmd=command,
+            workdir=workdir,
+            environment=environment,
+        )
         return exec_status.exit_code, exec_status.output.decode("utf-8")
 
     def execute_command_demux(self, container, command):
@@ -255,7 +277,7 @@ class DockerAgent:
         - str: The container ID.
         """
         # Start the container with mounts
-        self.pull_image()
+        self.pull_image(force=False)
         container = self.client.containers.create(
             image=self.image,
             # command="/bin/bash",  # Keeps the container running

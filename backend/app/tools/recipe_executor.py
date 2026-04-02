@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Tuple
 from contextlib import contextmanager
 
+from app.config.config import settings
 from app.utilities.logger import logger
 from app.tools.agents.DockerAgent import DockerAgent
 
@@ -26,8 +27,22 @@ class RecipeExecutor:
         self.docker_agent = DockerAgent(self.MAVEN_IMAGE, project_path)
         self.container = None
         self.results_dir = tempfile.mkdtemp()
+        self.m2_cache_dir = self._resolve_m2_cache_dir()
         logger.info(f"[RecipeExecutor] Initialized with project at {self.project_path}, results dir: {self.results_dir}")
         logger.info(f"[RecipeExecutor] Initialized with project at {self.project_path}, results dir: {self.results_dir}")
+
+    def _resolve_m2_cache_dir(self) -> str:
+        configured = settings.MAVEN_DOCKER_CACHE_DIR
+        cache_dir = Path(configured) if configured else Path.home() / ".aura" / "m2-cache"
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        return str(cache_dir)
+
+    def _maven_exec_env(self) -> dict[str, str]:
+        return {"MAVEN_OPTS": settings.MAVEN_DOCKER_OPTS or "-Xmx2g"}
+
+    def _maven_common_flags(self) -> str:
+        threads = settings.MAVEN_DOCKER_THREADS or "1C"
+        return "-B -ntp -nsu -Dmaven.repo.local=/mnt/m2/repository -T " + threads
     
     @contextmanager
     def start_container(self):
@@ -39,8 +54,9 @@ class RecipeExecutor:
                     mounts={
                         str(self.project_path): {"bind": "/mnt/repo", "mode": "rw"},
                         self.results_dir: {"bind": "/mnt/data", "mode": "rw"},
+                        self.m2_cache_dir: {"bind": "/mnt/m2", "mode": "rw"},
                     },
-                    setup_command="mkdir -p /app",
+                    setup_command="mkdir -p /app /mnt/m2/repository",
                 )
             )
             self.container = container
@@ -73,14 +89,17 @@ class RecipeExecutor:
             raise RuntimeError("Container not started. Use start_container() context manager.")
         
         # First, discover available recipes to verify our recipe is found
-        discover_cmd = "cd /mnt/repo && mvn rewrite:discover -B 2>&1 | tail -100"
+        discover_cmd = (
+            "cd /mnt/repo && mvn rewrite:discover "
+            f"{self._maven_common_flags()} 2>&1 | tail -100"
+        )
         logger.info(f"Discovering recipes: {discover_cmd}")
         
         try:
             exit_code, discover_output = self.container.exec_run(
                 cmd=["sh", "-c", discover_cmd],
                 workdir="/mnt/repo",
-                environment={"MAVEN_OPTS": "-Xmx2g"}
+                environment=self._maven_exec_env()
             )
             discover_text = discover_output.decode('utf-8', errors='replace') if discover_output else ""
             logger.info(f"Recipe discovery result (exit={exit_code}):\n{discover_text[-1500:]}")
@@ -101,12 +120,15 @@ class RecipeExecutor:
                 "-Dmaven.main.skip=true -Dmaven.test.skip=true "
                 "-Dcheckstyle.skip=true -Denforcer.skip=true "
                 "-Dspotbugs.skip=true -Dpmd.skip=true "
-                "-B 2>&1"
+                f"{self._maven_common_flags()} 2>&1"
             )
         else:
             # For Java recipes, we need full compilation - but this won't work on broken projects
             # This is a known limitation - Java recipes require compilable code
-            command = "cd /mnt/repo && mvn org.openrewrite.maven:rewrite-maven-plugin:5.43.0:run -B 2>&1"
+            command = (
+                "cd /mnt/repo && mvn org.openrewrite.maven:rewrite-maven-plugin:5.43.0:run "
+                f"{self._maven_common_flags()} 2>&1"
+            )
         
         logger.info(f"Executing: {command}")
         
@@ -114,9 +136,7 @@ class RecipeExecutor:
             exit_code, output = self.container.exec_run(
                 cmd=["sh", "-c", command],
                 workdir="/mnt/repo",
-                environment={
-                    "MAVEN_OPTS": "-Xmx2g"
-                }
+                environment=self._maven_exec_env()
             )
             
             output_text = output.decode('utf-8', errors='replace') if output else ""
@@ -163,10 +183,10 @@ class RecipeExecutor:
                 "cd /mnt/repo && mvn rewrite:dryRun "
                 "-Dmaven.main.skip=true -Dmaven.test.skip=true "
                 "-Dcheckstyle.skip=true -Denforcer.skip=true "
-                "-B"
+                f"{self._maven_common_flags()}"
             )
         else:
-            command = "cd /mnt/repo && mvn rewrite:dryRun -B"
+            command = f"cd /mnt/repo && mvn rewrite:dryRun {self._maven_common_flags()}"
         
         logger.info(f"Executing dry run: {command}")
         
@@ -174,9 +194,7 @@ class RecipeExecutor:
             exit_code, output = self.container.exec_run(
                 cmd=["sh", "-c", command],
                 workdir="/mnt/repo",
-                environment={
-                    "MAVEN_OPTS": "-Xmx2g"
-                }
+                environment=self._maven_exec_env()
             )
             
             output_text = output.decode('utf-8', errors='replace') if output else ""
@@ -199,7 +217,7 @@ class RecipeExecutor:
         if self.container is None:
             raise RuntimeError("Container not started. Use start_container() context manager.")
         
-        command = "cd /mnt/repo && mvn compile -B -q"
+        command = f"cd /mnt/repo && mvn compile {self._maven_common_flags()} -q"
         
         logger.info("Compiling project after rewrite...")
         
@@ -207,9 +225,7 @@ class RecipeExecutor:
             exit_code, output = self.container.exec_run(
                 cmd=["sh", "-c", command],
                 workdir="/mnt/repo",
-                environment={
-                    "MAVEN_OPTS": "-Xmx2g"
-                }
+                environment=self._maven_exec_env()
             )
             
             output_text = output.decode('utf-8', errors='replace') if output else ""

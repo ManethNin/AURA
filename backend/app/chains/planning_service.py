@@ -91,7 +91,7 @@ class PlanningAgentService:
 
     # Provider Constants
     PROVIDER_GEMINI = "gemini"
-    PROVIDER_GROQ_NATIVE = "gpt-oss-120"
+    PROVIDER_GROQ_NATIVE = "gpt-oss-120b"
     PROVIDER_GROQ_LANGCHAIN = "groq"
     PROVIDER_OPENROUTER = "openrouter"
 
@@ -116,17 +116,18 @@ class PlanningAgentService:
         """Initialize the planning service with a configurable LLM provider.
 
         Args:
-            provider: LLM provider identifier (defaults to settings.LLM_PROVIDER).
-                Valid options: "groq", "gpt-oss-120", "openrouter", or "gemini".
+            provider: LLM provider identifier (defaults to settings.PLANNING_PROVIDER).
+                Valid options: "groq", "gpt-oss-120b", "openrouter", or "gemini".
             api_key: Provider API key (defaults to appropriate key from settings).
-            model: Target model name (defaults to appropriate model from settings).
+            model: Target model name (defaults to settings.PLANNING_MODEL if set,
+                otherwise provider-specific planning defaults).
         """
-        self.provider = provider or settings.LLM_PROVIDER
+        self.provider = provider or settings.PLANNING_PROVIDER
         self.client: Optional[Any] = None
         self.llm: Optional[Union[ChatGoogleGenerativeAI, ChatGroq]] = None
-        self.model: Optional[str] = None
+        self.model: Optional[str] = model or settings.PLANNING_MODEL
 
-        self._initialize_provider(api_key, model)
+        self._initialize_provider(api_key, self.model)
 
     def _initialize_provider(self, api_key: Optional[str], model: Optional[str]) -> None:
         """Set up the appropriate LLM client based on the selected provider.
@@ -166,7 +167,7 @@ class PlanningAgentService:
     def _setup_groq_langchain(self, api_key: Optional[str], model: Optional[str]) -> None:
         """Initialize the standard Groq client via LangChain."""
         key = api_key or settings.GROQ_API_KEY
-        self.model = model or settings.GROQ_MODEL
+        self.model = model or settings.GROQ_PLANNING_MODEL
         self.llm = ChatGroq(
             groq_api_key=key,
             model_name=self.model,
