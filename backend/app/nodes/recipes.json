@@ -47,7 +47,7 @@
   },
   {
     "name": "org.openrewrite.java.ChangePackage",
-    "description": "Changes the package of Java classes. Use when an entire package has been renamed (e.g., javax.annotation to jakarta.annotation).",
+    "description": "Renames an entire Java package across all source files. Use ONLY when ALL classes in the old package move to the SAME new package. Do NOT use when classes from one package scatter to multiple different packages — use ChangeType for each class individually instead.",
     "arguments": ["oldPackageName", "newPackageName", "recursive"],
     "required_arguments": ["oldPackageName", "newPackageName"],
     "example": {
